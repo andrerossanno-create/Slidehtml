@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASMA 2026 — quando o pulmão cheio parece estar sem ar | Dr. André Rossanno</title>
+<!--
+  AULA EM SLIDES · ASMA (GINA 2026) — Dr. André Rossanno
+  Mesmo padrão dos decks de FSSL e Diarreia Aguda em Pediatria:
+  trilho de fonte à esquerda (chips de procedência), pares conceito -> plantão,
+  cortina "escreva a sua conduta primeiro", notas de fala, índice, modo projeção.
+  Arquivo único, 100% offline: sem CDN, sem libs, sem fontes externas, sem imagens.
+  Atalhos: setas/espaço = navegar · R = revelar · N = notas · G = índice · P = projeção · F = tela cheia
+-->
+<style>
+:root{
+  --bg:#f5f8fb; --card:#ffffff; --ink:#17222f; --ink2:#4a5a6d; --linha:#e0e8f1;
+  --navy:#13243c; --azul:#1282A2; --azul-fraco:#e8f4f8;
+  --verde:#1e8f5e; --verde-fraco:#e9f7f0;
+  --ambar:#b8860b; --ambar-fraco:#fdf4e0;
+  --vermelho:#c0392b; --vermelho-fraco:#fdeceb;
+  --mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  --sans:"Nunito","Trebuchet MS",Arial,sans-serif;
+  --script:"Dancing Script","Segoe Script","Brush Script MT",cursive;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+h1,h2,h3{margin:0 0 10px;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+p{margin:0 0 10px}
+b,strong{font-weight:800}
+a{color:var(--azul)}
+:focus-visible{outline:3px solid var(--azul);outline-offset:2px;border-radius:6px}
+
+/* ---------- barra superior ---------- */
+.top{position:fixed;top:0;left:0;right:0;height:46px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:10px;padding:0 12px;z-index:60}
+.top .marca{font-weight:900;font-size:14px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .marca span{color:#8fd3e6}
+.top .sp{flex:1}
+.btn{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:7px;cursor:pointer}
+.btn:hover{background:rgba(255,255,255,.22)}
+.btn.on{background:#8fd3e6;color:var(--navy);border-color:#8fd3e6;font-weight:700}
+.conta{font-family:var(--mono);font-size:12px;color:#bcd3e4;white-space:nowrap}
+.prog{position:fixed;top:46px;left:0;right:0;height:6px;background:#dbe5ef;z-index:59;cursor:pointer}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--azul),var(--verde));width:0}
+
+/* ---------- slide ---------- */
+.deck{padding-top:52px}
+.slide{display:none;grid-template-columns:238px minmax(0,1fr);min-height:calc(100vh - 52px)}
+.slide.on{display:grid}
+.rail{border-right:1px solid var(--linha);background:#fff;padding:22px 16px 26px}
+.rail .rn{font-family:var(--mono);font-size:30px;font-weight:700;color:#c3d2e0;line-height:1}
+.rail .rt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:6px 0 14px}
+.rail .flab{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#96a7b8;margin-bottom:8px}
+.chip{display:block;font-size:11.5px;line-height:1.35;padding:7px 9px;border-radius:8px;margin-bottom:7px;border-left:4px solid}
+.c-dir{background:var(--verde-fraco);border-color:var(--verde);color:#14603f}
+.c-loc{background:var(--ambar-fraco);border-color:var(--ambar);color:#7a5a00}
+.c-cor{background:var(--vermelho-fraco);border-color:var(--vermelho);color:#8f2b20}
+.c-aula{background:var(--azul-fraco);border-color:var(--azul);color:#0c5b70}
+
+.stage{padding:26px 40px 90px;max-width:1180px}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--azul);margin-bottom:8px;display:flex;gap:10px;align-items:center}
+.kick .kn{color:#a9bacb}
+.slide h2{font-size:31px}
+.sub{font-size:16.5px;color:var(--ink2);margin:-2px 0 16px;max-width:70ch}
+
+/* blocos */
+.card{background:var(--card);border:1px solid var(--linha);border-radius:14px;padding:16px 18px;margin:0 0 14px}
+.card h3{font-size:17px;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tag{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;margin-bottom:8px}
+.t-azul{background:var(--azul-fraco);color:#0c5b70}
+.t-verde{background:var(--verde-fraco);color:#14603f}
+.t-ambar{background:var(--ambar-fraco);color:#7a5a00}
+.t-vermelho{background:var(--vermelho-fraco);color:#8f2b20}
+.bx{border-radius:12px;padding:14px 16px;margin:0 0 14px;border:1px solid}
+.bx-azul{background:var(--azul-fraco);border-color:#bfe0e9}
+.bx-verde{background:var(--verde-fraco);border-color:#bfe5d3}
+.bx-ambar{background:var(--ambar-fraco);border-color:#f0dcae}
+.bx-vermelho{background:var(--vermelho-fraco);border-color:#f2c8c3}
+.bx h3{font-size:16px}
+ul,ol{margin:0 0 10px;padding-left:20px}
+li{margin-bottom:5px}
+.mono{font-family:var(--mono);font-size:13.5px}
+.mn{font-family:var(--mono);font-weight:700;color:var(--azul)}
+.frase{font-size:19px;font-weight:800;color:var(--navy);border-left:5px solid var(--azul);padding:6px 0 6px 14px;margin:14px 0}
+.assin{font-family:var(--script);font-size:24px;color:var(--navy);text-align:right;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{border:1px solid var(--linha);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#eef3f8;font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+td b{color:var(--navy)}
+.dose{font-family:var(--mono);font-size:13.5px;background:#f2f6fa;border-radius:6px;padding:1px 5px}
+
+/* mnemônico */
+.mnem{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.mnem div{flex:1 1 150px;background:#fff;border:1px solid var(--linha);border-top:4px solid var(--azul);border-radius:10px;padding:10px 12px}
+.mnem b{display:block;font-family:var(--mono);font-size:22px;color:var(--azul);line-height:1}
+.mnem span{font-size:13.5px;color:var(--ink2)}
+
+/* caso / cortina */
+.slide.caso .stage{background:linear-gradient(180deg,#fff8f6 0,rgba(255,248,246,0) 320px)}
+.caso-hd{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--vermelho);margin-bottom:8px}
+.vitais{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.vitais span{font-family:var(--mono);font-size:13px;background:#fff;border:1px solid var(--linha);border-radius:8px;padding:5px 9px}
+.vitais span b{color:var(--vermelho)}
+.cortina{border:2px dashed #d9b8b2;background:#fffdfc;border-radius:14px;padding:18px;text-align:center;margin:12px 0}
+.cortina p{font-size:15.5px;color:var(--ink2);max-width:56ch;margin:0 auto 12px}
+.cortina .rv{background:var(--vermelho);color:#fff;border:none;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:11px 18px;border-radius:9px;cursor:pointer;font-weight:700}
+.cortina .rv:hover{filter:brightness(1.08)}
+.resp{display:none}
+.resp.on{display:block;animation:sobe .22s ease-out}
+@keyframes sobe{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.presc{background:#fff;border:1px solid var(--linha);border-left:5px solid var(--verde);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.presc h3{font-size:15px;color:#14603f}
+.presc ol{padding-left:18px}
+.presc li{font-size:14.8px}
+
+/* notas do professor */
+.notas{position:fixed;left:0;right:0;bottom:0;max-height:58vh;overflow:auto;background:var(--navy);color:#e8f1f8;z-index:70;transform:translateY(101%);transition:transform .2s;padding:18px 22px 26px}
+.notas.on{transform:none}
+.notas h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8fd3e6;margin:0 0 10px}
+.notas .nb{margin-bottom:12px;font-size:15px;max-width:100ch}
+.notas .nb b{color:#ffd98a;display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.notas .fonte{border-top:1px solid rgba(255,255,255,.16);padding-top:10px;font-size:12.5px;color:#a8c2d6}
+.notas .fechar{position:absolute;right:14px;top:12px}
+
+/* índice */
+.idx{position:fixed;inset:0;background:rgba(19,36,60,.97);z-index:80;overflow:auto;padding:64px 24px 40px;display:none}
+.idx.on{display:block}
+.idx h3{color:#fff;font-size:20px;margin-bottom:14px;text-align:center}
+.idxg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;max-width:1180px;margin:0 auto}
+.idxg button{text-align:left;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);color:#e8f1f8;border-radius:10px;padding:9px 11px;cursor:pointer;font-family:var(--sans);font-size:13.5px;line-height:1.25}
+.idxg button:hover{background:rgba(143,211,230,.25)}
+.idxg button i{display:block;font-family:var(--mono);font-size:10px;color:#8fd3e6;font-style:normal;letter-spacing:.1em;margin-bottom:3px}
+.idxg button.ec{border-left:4px solid var(--vermelho)}
+
+/* modo projeção */
+body.aprs .slide{grid-template-columns:minmax(0,1fr)}
+body.aprs .rail{display:none}
+body.aprs .kick .kn{display:none}
+body.aprs .stage{padding:34px 6vw 90px;max-width:1500px}
+body.aprs .slide h2{font-size:40px}
+body.aprs .sub{font-size:19px}
+body.aprs .stage,body.aprs td,body.aprs li,body.aprs p{font-size:17.5px}
+body.aprs table{font-size:16.5px}
+
+/* rodapé fixo de navegação */
+.nav{position:fixed;right:16px;bottom:16px;display:flex;gap:8px;z-index:58}
+.nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--linha);background:#fff;color:var(--navy);font-size:19px;cursor:pointer;box-shadow:0 3px 10px rgba(19,36,60,.12)}
+.nav button:hover{background:var(--azul);color:#fff}
+
+@media (max-width:900px){
+  .slide{grid-template-columns:minmax(0,1fr)}
+  .rail{border-right:none;border-bottom:1px solid var(--linha);display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:12px}
+  .rail .rn{font-size:20px}.rail .rt{margin:0 8px 0 0}.rail .flab{display:none}
+  .chip{margin:0;font-size:11px}
+  .stage{padding:18px 16px 96px}
+  .slide h2{font-size:24px}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .top .marca{font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  .top,.prog,.nav,.notas,.idx,.rail,.cortina .rv,.cortina p{display:none!important}
+  .deck{padding:0}
+  .slide{display:block!important;page-break-after:always;min-height:0}
+  .stage{padding:0 0 18px;max-width:100%}
+  .resp{display:block!important}
+  .cortina{border:none;padding:0;text-align:left}
+  body{background:#fff;font-size:12px}
+  .slide h2{font-size:19px}
+}
+
+/* ===== acréscimos: mnemônico DELICIA (slide do risco escondido) e escada do degrau inicial ===== */
+.del{display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:10px;margin:4px 0 14px}
+.del>div{background:#fff;border:1px solid var(--linha);border-left:5px solid var(--azul);border-radius:10px;padding:10px 12px}
+.del .l{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:26px;font-weight:700;color:var(--azul);line-height:1}
+.del .l em{font-style:normal;font-size:19px}
+.del .nm{display:block;font-weight:800;font-size:13.5px;color:var(--navy);margin:5px 0 3px;letter-spacing:.01em}
+.del .q{font-size:13px;color:var(--ink2);line-height:1.4}
+.del .q b{color:var(--navy)}
+.vered{background:var(--navy);color:#fff;border-radius:14px;padding:20px 18px;text-align:center;margin:14px 0}
+.vered b{display:block;font-size:26px;line-height:1.15;letter-spacing:-.01em}
+.vered span{display:block;margin-top:10px;font-size:15px;color:#bfe0e9}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 12px}
+.tri>div{background:#fff;border:1px solid var(--linha);border-top:4px solid var(--azul);border-radius:12px;padding:12px 14px}
+.tri .em{font-size:26px;line-height:1}
+.tri h3{font-size:16px;margin:6px 0 6px}
+.tri ul{margin:0;padding-left:18px;font-size:13.5px}
+.ancora{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;text-align:center;background:#fff;border:2px dashed var(--azul);border-radius:12px;padding:14px;margin:6px 0 14px}
+.ancora b{font-family:var(--mono);font-size:19px;color:var(--navy);letter-spacing:.02em}
+.ancora small{display:block;width:100%;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.escada{display:grid;gap:10px;margin:6px 0 14px}
+.deg{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;align-items:center;border-radius:12px;padding:13px 16px;border:1px solid}
+.deg .cond{font-weight:800;color:var(--navy);font-size:15px}
+.deg .trat{font-size:14.5px}
+.deg .trat b{display:block;font-family:var(--mono);font-size:17px;margin-bottom:3px}
+.deg-v{background:var(--verde-fraco);border-color:#bfe5d3}
+.deg-v .trat b{color:#14603f}
+.deg-a{background:var(--ambar-fraco);border-color:#f0dcae;margin-left:38px}
+.deg-a .trat b{color:#7a5a00}
+.deg-r{background:var(--vermelho-fraco);border-color:#f2c8c3;margin-left:76px}
+.deg-r .trat b{color:#8f2b20}
+.btn-aplicar{display:block;width:100%;background:var(--azul);color:#fff;border:none;border-radius:11px;padding:14px 20px;margin-top:6px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;cursor:pointer}
+.btn-aplicar:hover{filter:brightness(1.08)}
+@media (max-width:900px){
+  .tri{grid-template-columns:1fr}
+  .deg{grid-template-columns:1fr;gap:6px}
+  .deg-a,.deg-r{margin-left:0}
+  .vered b{font-size:20px}
+}
+@media print{.btn-aplicar{display:none!important}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="marca">ASMA <span>2026</span> · quando o pulmão cheio parece estar sem ar</div>
+  <div class="sp"></div>
+  <span class="conta" id="conta">01</span>
+  <button class="btn" id="bIdx" aria-label="Índice de slides">Índice</button>
+  <button class="btn" id="bNot" aria-label="Notas de fala">Notas</button>
+  <button class="btn" id="bPrj" aria-label="Modo projeção">Projeção</button>
+  <button class="btn" id="bFul" aria-label="Tela cheia">⛶</button>
+</div>
+<div class="prog" id="prog" role="progressbar" aria-label="Progresso da aula"><i id="progi"></i></div>
+
+<div class="deck" id="deck">
+<!-- ============ ABERTURA ============ -->
+<section class="slide" data-t="Abertura" data-tit="Capa">
+ <div class="rail"><div class="rn"></div><div class="rt">Abertura</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — Global Strategy for Asthma Management and Prevention (paráfrase, sem reprodução de figuras)</span>
+  <span class="chip c-aula">Aula "Manejo Ambulatorial da Asma — Atualizações do GINA 2026", Dr. Renato Miranda Lima, Pneumologia FMUSP / Medicina Interna USP</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Aula de graduação, internato e residência <span class="kn"></span></div>
+  <h2 style="font-size:44px;line-height:1.05">ASMA 2026<br><span style="color:var(--azul)">quando o pulmão cheio parece estar sem ar</span></h2>
+  <p class="sub" style="font-size:18px">Da troca gasosa à decisão na emergência — fisiologia, diagnóstico, controle, trilhas de tratamento e crise, atualizados pela GINA 2026.</p>
+  <div class="bx bx-azul">
+   <p style="margin:0;font-size:17px"><b>A pergunta que atravessa a aula inteira:</b> por que a paciente sente que não consegue <i>puxar</i> ar, se o problema fisiológico dominante é não conseguir <i>esvaziar</i> o pulmão?</p>
+  </div>
+  <div class="assin">Dr. André Rossanno</div>
+  <p class="mono" style="color:var(--ink2);font-size:12px">Material educacional. Não substitui bula, protocolo institucional nem avaliação médica individual.</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Hoje a gente não vai decorar bombinha. Vamos entender o que o ar precisa vencer para sair, e só depois escolher o remédio. Quem entende a saída do ar acerta a crise, acerta o ventilador e acerta a prescrição de casa.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Levantem a mão: asma é uma doença da inspiração ou da expiração? Guardem a resposta, vamos voltar nela.</div>
+   <div class="nb"><b>Ponte</b>Antes do conteúdo, dois minutos explicando como o deck funciona — porque a aula tem cortina de conduta.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Abertura" data-tit="Como esta aula funciona">
+ <div class="rail"><div class="rn"></div><div class="rt">Abertura</div>
+  <div class="flab">Legenda dos chips</div>
+  <span class="chip c-dir">Verde — recomendação de diretriz (GINA 2026 e afins)</span>
+  <span class="chip c-loc">Âmbar — depende de formulação, aprovação ou protocolo local</span>
+  <span class="chip c-cor">Vermelho — correção de material antigo que ainda circula</span>
+  <span class="chip c-aula">Azul — aula-fonte usada como base</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Como esta aula funciona <span class="kn"></span></div>
+  <h2>Cada slide diz de onde veio</h2>
+  <p class="sub">À esquerda de cada tela existe um trilho de procedência. Nada aqui é afirmado sem dizer se é diretriz, se varia com o serviço, ou se é correção de algo que se ensinava antes.</p>
+  <div class="grid2">
+   <div class="card"><span class="tag t-azul">Ritmo</span><h3>Conceito → plantão</h3><p>Os slides andam em pares. Primeiro o conceito. Logo depois, o mesmo conceito virando decisão: <b>“🚨 você está no plantão”</b>.</p></div>
+   <div class="card"><span class="tag t-vermelho">Regra da cortina</span><h3>Escreva a sua conduta primeiro</h3><p>Nos slides de plantão a conduta fica coberta. Pense, escreva, e só então revele (clique ou tecla <b class="mono">R</b>). Ler resposta pronta não treina decisão.</p></div>
+  </div>
+  <div class="bx bx-verde">
+   <h3>As 6 perguntas obrigatórias de todo caso</h3>
+   <ol style="margin-bottom:0"><li>Qual é a gravidade e existe ameaça imediata à vida?</li><li>O que entra nos primeiros 10 minutos?</li><li>Dose, dispositivo e intervalo — escritos, não “a critério”.</li><li>O que <b>não</b> fazer neste paciente.</li><li>O que reavaliar e em quanto tempo.</li><li>O que muda no tratamento de casa a partir de hoje.</li></ol>
+  </div>
+  <p class="mono">Atalhos: <b>← →</b> ou espaço navegam · <b>R</b> revela · <b>N</b> notas de fala · <b>G</b> índice · <b>P</b> projeção · <b>F</b> tela cheia</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>Esse trilho da esquerda existe porque asma é campeã de mito antigo. Sempre que eu disser algo que contraria o que vocês ouviram no quarto ano, vai ter um chip vermelho ali do lado.</div>
+   <div class="nb"><b>Erro comum</b>Aluno que só lê a resposta revelada. Combine com a turma: quem não escreveu, não revela.</div>
+   <div class="nb"><b>Ponte</b>Vamos conhecer a paciente que vai atravessar a aula inteira.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Abertura" data-tit="A paciente que atravessa a aula">
+ <div class="rail"><div class="rn"></div><div class="rt">Abertura · caso</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — avaliação da exacerbação (parâmetros de gravidade)</span>
+  <span class="chip c-cor">Caso construído para a aula; não é paciente real</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 O caso condutor · tempo zero</div>
+  <h2>Marina, 23 anos, asma desde a infância</h2>
+  <p class="sub">Adesão irregular ao controlador. Usa “a bombinha azul” cada vez com mais frequência — três frascos nos últimos oito meses. Chega à emergência com dispneia progressiva há 12 horas, após quadro gripal.</p>
+  <div class="vitais"><span>FR <b>32/min</b></span><span>FC <b>118 bpm</b></span><span>SpO₂ <b>89%</b> em ar ambiente</span><span>Fala <b>frases curtas</b></span><span>Musculatura acessória <b>presente</b></span><span>Sibilos <b>difusos</b></span></div>
+  <div class="cortina">
+   <p><b>Antes de qualquer conduta, responda:</b> qual é a primeira ameaça à vida dela agora — falta de oxigênio, broncoespasmo ou fadiga muscular?</p>
+   <button class="rv">Revelar o modo de pensar</button>
+   <div class="resp" style="text-align:left">
+    <div class="bx bx-azul"><p style="margin:0">As três coexistem, mas se organizam no tempo: <b>o broncoespasmo é a causa</b>, <b>a hipoxemia é a consequência mais fácil de corrigir</b> (oxigênio resolve o número, não a doença) e <b>a fadiga é a que mata</b> — e é a única que não aparece no oxímetro.</p></div>
+    <p>Guarde esta frase: <b>o oxímetro mede o resultado, não o esforço.</b> A aula inteira é sobre enxergar o esforço.</p>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Ela vai voltar cinco vezes na aula. A cada retorno, um pedaço do raciocínio novo é cobrado. No fim, vocês vão decidir se ela vai para casa, para a enfermaria ou para a UTI.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Três frascos de bombinha azul em oito meses. Isso é sinal de quê? (Resposta: de risco, não de alívio.)</div>
+   <div class="nb"><b>Ponte</b>Para entender por que ela cansa, precisamos saber o que o ar precisa vencer.</div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO 1 — FISIOLOGIA ============ -->
+<section class="slide" data-t="Ato 1 · Fisiologia" data-tit="O que o ar precisa vencer">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 1 · Fisiologia</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Fisiologia respiratória clássica (equação do movimento do sistema respiratório)</span>
+  <span class="chip c-cor">Retirado do material antigo: fórmulas isoladas de PaO₂ por idade e contas de PaO₂/FiO₂ sem ligação com a decisão</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 1 · A armadilha de ar <span class="kn"></span></div>
+  <h2>O que o ar precisa vencer para entrar — e para sair</h2>
+  <p class="sub">Toda pressão gasta na respiração se divide em duas contas. Saber em qual delas a doença mexeu já entrega o diagnóstico funcional.</p>
+  <div class="grid2">
+   <div class="card" style="border-top:4px solid var(--azul)"><span class="tag t-azul">Conta 1</span><h3>Pressão resistiva</h3><p>É o preço de <b>mover ar por um tubo</b>. Depende do calibre da via aérea e do fluxo.</p><p class="mono">Sobe na <b>asma</b> e na DPOC.</p></div>
+   <div class="card" style="border-top:4px solid var(--vermelho)"><span class="tag t-vermelho">Conta 2</span><h3>Pressão elástica</h3><p>É o preço de <b>esticar o pulmão e a caixa torácica</b>. Depende da complacência.</p><p class="mono">Sobe na pneumonia extensa, na SDRA, na fibrose.</p></div>
+  </div>
+  <div class="bx bx-ambar">
+   <h3>Obstrutivo × restritivo em uma linha</h3>
+   <p style="margin:0"><b>Obstrutivo:</b> o pulmão enche, mas não <b>esvazia</b> — o problema é o tempo de saída. <b>Restritivo:</b> o pulmão não <b>enche</b> — o problema é o volume que entra. A asma é a doença da saída.</p>
+  </div>
+  <p class="frase">Na asma, o pulmão não está vazio pedindo ar. Está cheio, preso e cansado tentando expulsá-lo.</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Peça para a turma soprar por um canudo fino: a sensação de peito cheio aparece em 20 segundos. Isso é a conta resistiva subindo e o pulmão não esvaziando.</div>
+   <div class="nb"><b>Erro comum</b>Achar que dispneia sempre significa "falta de ar entrando". Na asma, é ar sobrando dentro.</div>
+   <div class="nb"><b>Ponte</b>Agora: o que exatamente estreitou esse tubo?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 1 · Fisiologia" data-tit="Plantão — dois dispneicos">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 1 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Padrões espirométricos — interpretação funcional (ATS/ERS)</span>
+  <span class="chip c-loc">Confirmação de restrição exige volumes pulmonares (pletismografia), nem sempre disponível no pronto-socorro</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no plantão</div>
+  <h2>Dois pacientes dispneicos, dois pulmões diferentes</h2>
+  <div class="grid2">
+   <div class="card"><b>Paciente A</b> — 23 anos, sibilos, expiração prolongada, tórax hiperinsuflado, melhora parcial após bombinha.</div>
+   <div class="card"><b>Paciente B</b> — 61 anos, crepitações finas, tórax que "não expande", SpO₂ 90%, sem sibilos.</div>
+  </div>
+  <div class="cortina">
+   <p>Sem espirometria na mão: em qual deles o problema é <b>encher</b> e em qual é <b>esvaziar</b>? E qual conta de pressão está alta em cada um?</p>
+   <button class="rv">Revelar a leitura</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Como raciocinar</h3>
+     <ol>
+      <li><b>Paciente A — obstrutivo.</b> Problema em <b>esvaziar</b>. Pressão <b>resistiva</b> alta. Espera-se VEF₁/CVF reduzida, curva fluxo-volume com concavidade na alça expiratória e resposta ao broncodilatador.</li>
+      <li><b>Paciente B — restritivo.</b> Problema em <b>encher</b>. Pressão <b>elástica</b> alta (complacência baixa). Espera-se CVF reduzida com VEF₁/CVF preservada ou até alta, e curva de forma preservada, porém "pequena".</li>
+      <li><b>Cuidado:</b> espirometria sozinha <b>sugere</b> restrição; confirmar exige medida de volumes pulmonares.</li>
+     </ol>
+    </div>
+    <div class="bx bx-vermelho"><p style="margin:0"><b>O que não fazer:</b> tratar o paciente B com doses repetidas de broncodilatador só porque está dispneico. Falta de sibilo com dispneia grave também pede outra hipótese — inclusive, na asma, a mais perigosa de todas (voltaremos a ela).</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Pergunta para a turma</b>Se a CVF caiu nos dois, o que separa? (A relação VEF₁/CVF e a forma da curva.)</div>
+   <div class="nb"><b>Erro comum</b>Chamar de restrição toda CVF baixa. Aprisionamento aéreo grave também derruba a CVF — e é obstrução.</div>
+   <div class="nb"><b>Ponte</b>Vamos abrir o brônquio e ver as três coisas que o estreitam.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 1 · Fisiologia" data-tit="BEM — os três estreitadores">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 1 · Fisiologia</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — limitação variável ao fluxo expiratório: broncoconstrição, edema/inflamação da parede e hipersecreção</span>
+  <span class="chip c-aula">Aula FMUSP — slide "Fisiopatologia: limitação ao fluxo aéreo" (edema da parede · broncoconstrição aguda · muco · remodelamento)</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 1 · Mnemônico obrigatório <span class="kn"></span></div>
+  <h2>Na crise, o brônquio não está <span style="color:var(--azul)">BEM</span></h2>
+  <div class="mnem">
+   <div><b>B</b><span><b>Broncoespasmo</b> — músculo liso contraído. É o que a bombinha desfaz em minutos.</span></div>
+   <div><b>E</b><span><b>Edema e inflamação</b> da parede. É o que o corticoide desfaz em horas a dias.</span></div>
+   <div><b>M</b><span><b>Muco</b> espesso, tampões mucosos. É o que nenhuma das duas desfaz depressa.</span></div>
+  </div>
+  <div class="bx bx-azul">
+   <h3>Por que um estreitamento pequeno faz um estrago grande</h3>
+   <p>Em fluxo laminar, a resistência é proporcional a <b class="mono">1/r⁴</b>. Reduzir o raio à metade multiplica a resistência por cerca de <b>16</b>. É uma âncora conceitual — a via aérea real tem fluxo turbulento e ramificado —, mas explica por que edema de 1 mm derruba o fluxo.</p>
+   <table style="margin-top:8px"><tr><th>Raio restante</th><th>80%</th><th>60%</th><th>50%</th></tr><tr><td>Resistência relativa</td><td>≈ 2,4×</td><td>≈ 7,7×</td><td>≈ 16×</td></tr></table>
+  </div>
+  <div class="bx bx-ambar"><p style="margin:0"><b>Quarto elemento, fora da crise:</b> o <b>remodelamento</b> — espessamento da parede, fibrose subepitelial, hipertrofia do músculo liso. Ele é a parte da obstrução que pode se tornar <b>pouco reversível</b>, e é o argumento fisiológico para não deixar o paciente anos só com resgate.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Três coisas estreitam: músculo, parede e muco. Cada uma tem um remédio e um relógio diferente. Quem trata só a primeira acha que resolveu — e o paciente volta em 6 horas.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"O broncoespasmo é o único mecanismo da obstrução na asma." Falso — e é justamente por isso que corticoide entra cedo.</div>
+   <div class="nb"><b>Ponte</b>Se o tubo estreitou, por que a expiração sofre mais que a inspiração?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 1 · Fisiologia" data-tit="Plantão — só a bombinha não bastou">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 1 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — corticoide sistêmico precoce na exacerbação; corticoide inalatório como base do tratamento</span>
+  <span class="chip c-cor">Correção: "melhorou com a bombinha, pode ir para casa sem corticoide" — conduta desatualizada</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no plantão</div>
+  <h2>“Fiz três nebulizações e ele melhorou. Libero?”</h2>
+  <p class="sub">Homem, 28 anos. Chegou com sibilos difusos e dispneia. Após três séries de salbutamol, refere melhora, ainda com sibilos esparsos e expiração prolongada. Quer ir embora porque trabalha às 7h.</p>
+  <div class="cortina">
+   <p>Usando o <b>BEM</b>: o que exatamente foi tratado nessas três nebulizações — e o que continua acontecendo dentro do brônquio dele?</p>
+   <button class="rv">Revelar a conduta</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Conduta</h3>
+     <ol>
+      <li>O broncodilatador desfez o <b>B</b> (músculo). O <b>E</b> (edema/inflamação) e o <b>M</b> (muco) continuam lá — e são o motivo clássico do retorno em poucas horas.</li>
+      <li><b>Corticoide sistêmico precoce:</b> prednisolona ou prednisona <span class="dose">40–50 mg VO pela manhã, 5 a 7 dias</span> no adulto. Sem desmame se o uso for menor que 2 semanas.</li>
+      <li>Não liberar no pico do efeito do broncodilatador: observar por <b>1 a 2 horas após a última dose</b> e reavaliar antes da alta.</li>
+      <li><b>A alta é uma consulta de asma:</b> sair com esquema contendo <b>corticoide inalatório</b>, checar técnica, plano de ação escrito e retorno em 2 a 7 dias.</li>
+     </ol>
+    </div>
+    <div class="bx bx-vermelho"><p style="margin:0"><b>Não faça:</b> alta só com SABA para uso "se precisar". Alívio isolado sem anti-inflamatório é exatamente o padrão que aumenta exacerbação e mortalidade.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Confundir melhora sintomática com resolução da inflamação. O sibilo some antes do edema.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Qual dos três — B, E ou M — o corticoide sistêmico ataca? (E, principalmente; e ajuda o M com o tempo.)</div>
+   <div class="nb"><b>Ponte</b>Agora a mecânica: por que a expiração é o lado fraco.</div>
+  </div>
+ </div>
+</section>
+<section class="slide" data-t="Ato 2 · A armadilha de ar" data-tit="Por que a expiração sofre mais">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 2 · Armadilha</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Fisiologia: compressão dinâmica das vias aéreas, constante de tempo (τ = R × C)</span>
+  <span class="chip c-dir">GINA 2026 — hiperinsuflação dinâmica na exacerbação grave</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 2 · O ar fica preso <span class="kn"></span></div>
+  <h2>Por que é pior na expiração</h2>
+  <div class="grid2">
+   <div class="card"><span class="tag t-azul">Inspiração</span><p>A pressão pleural fica <b>negativa</b>. Ela puxa a via aérea para fora e <b>ajuda a manter o tubo aberto</b>.</p></div>
+   <div class="card" style="border-top:4px solid var(--vermelho)"><span class="tag t-vermelho">Expiração</span><p>A pressão pleural fica <b>positiva</b> (mais ainda com esforço). Ela <b>comprime a via aérea já estreitada</b> — compressão dinâmica. Soprar com força piora.</p></div>
+  </div>
+  <div class="bx bx-azul">
+   <h3>A constante de tempo explica o resto</h3>
+   <p style="margin:0"><b class="mono">τ = Resistência × Complacência.</b> Na asma a resistência está alta, logo cada unidade pulmonar <b>demora mais para esvaziar</b>. E o tempo expiratório disponível depende da frequência respiratória: quanto mais rápido ela respira, <b>menos tempo sobra para sair</b>.</p>
+  </div>
+  <div class="bx bx-vermelho">
+   <h3>A sequência que fecha o ciclo</h3>
+   <p style="margin:0" class="mono">estreitamento → τ longa → expiração incompleta → <b>aprisionamento aéreo</b> → CRF sobe (<b>hiperinsuflação dinâmica</b>) → <b>auto-PEEP</b> → diafragma achatado e encurtado → mais trabalho → <b>fadiga</b></p>
+  </div>
+  <p><b>Auto-PEEP</b> é pressão alveolar positiva ainda presente no fim da expiração porque o pulmão não terminou de esvaziar. Não confunda com a PEEP que o ventilador aplica.</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Taquipneia parece proteção, mas na asma é armadilha: encurta a expiração e empilha ar. É o engarrafamento na pista de saída do aeroporto.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"Auto-PEEP é a PEEP que eu programei." Não: é a que o paciente fabricou por não esvaziar.</div>
+   <div class="nb"><b>Ponte</b>Se ele está cheio de ar, por que a saturação cai?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 2 · A armadilha de ar" data-tit="Plantão — o CO₂ que não cai">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 2 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — sinais de exacerbação grave/ameaçadora e falência ventilatória iminente</span>
+  <span class="chip c-cor">Correção: critérios rígidos de intubação por um número isolado de PaO₂ ou PaCO₂ foram abandonados — decide-se pela tendência clínica</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Marina, 40 minutos depois</div>
+  <h2>A gasometria “melhorou”. A paciente não.</h2>
+  <div class="vitais"><span>FR <b>34/min</b></span><span>Fala <b>palavras isoladas</b></span><span>SpO₂ <b>90%</b> com O₂</span><span>Entrada de ar <b>reduzida</b></span><span>pH <b>7,36</b></span><span>PaCO₂ <b>41 mmHg</b></span></div>
+  <p>Há 40 minutos, a PaCO₂ era 28 mmHg.</p>
+  <div class="cortina">
+   <p>Um colega comemora: “o CO₂ normalizou”. Você concorda? O que essa PaCO₂ de 41 significa <b>nesta</b> paciente?</p>
+   <button class="rv">Revelar a interpretação</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Interpretação</h3>
+     <ol>
+      <li>Na crise, a PaCO₂ começa <b>baixa</b> (hiperventilação). Uma PaCO₂ que <b>sobe rumo ao normal em paciente ainda muito dispneico</b> é <b>falsa normalidade</b>: significa que a ventilação minuto está caindo — o músculo está falhando.</li>
+      <li>Isso é <b>sinal de alarme de falência ventilatória iminente</b>, não de melhora. Um número igual (40 mmHg) é tranquilizador no repouso e ameaçador no meio do esforço máximo.</li>
+      <li><b>Conduta:</b> intensificar broncodilatador, garantir corticoide sistêmico, considerar sulfato de magnésio IV na refratariedade e <b>acionar cuidado intensivo agora</b> — não esperar o próximo gás.</li>
+      <li>A decisão de intubar integra <b>consciência, exaustão, fala, entrada de ar e resposta ao tratamento</b>. Nenhum número isolado autoriza ou proíbe.</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0"><b>Quando pedir gasometria:</b> exacerbação grave/ameaçadora, deterioração, suspeita de hipercapnia ou exaustão, dúvida diagnóstica. <b>Não é exame de rotina</b> em toda crise.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Tratar gasometria como boletim de notas. Ela é uma foto; a doença é um filme.</div>
+   <div class="nb"><b>Pergunta para a turma</b>O que vocês pediriam para confirmar a fadiga? (Nada de laboratório: olhar a fala, a musculatura, a consciência e a entrada de ar.)</div>
+   <div class="nb"><b>Ponte</b>Fechando a fisiologia: por que a SpO₂ caiu e por que o oxímetro engana.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 2 · A armadilha de ar" data-tit="V/Q, oximetria e o alvo de O₂">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 2 · Troca gasosa</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — oxigenoterapia titulada com alvo de SpO₂ <b>92–95%</b> em adultos</span>
+  <span class="chip c-cor">Correção: material antigo trazia alvo 93–95% e oxigênio "no máximo" — hoje se titula</span>
+  <span class="chip c-loc">Ajustar o alvo à altitude local; oximetria pode superestimar a saturação em pessoas de pele escura com hipoxemia</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 2 · Troca gasosa <span class="kn"></span></div>
+  <h2>Por que a SpO₂ cai — e por que ela mente</h2>
+  <div class="bx bx-azul">
+   <p style="margin:0">O mecanismo dominante da hipoxemia na crise é a <b>desigualdade ventilação/perfusão</b>: unidades mal ventiladas (brônquio estreitado, tampão de muco) seguem perfundidas. Por isso a hipoxemia costuma <b>responder bem ao oxigênio</b> — e por isso o oxigênio <b>não trata a obstrução</b>.</p>
+  </div>
+  <div class="grid2">
+   <div class="card"><span class="tag t-verde">Alvo</span><h3>SpO₂ 92–95% no adulto</h3><p>Oxigênio <b>titulado</b>, por cateter ou máscara. Em criança, alvo habitual 94–98%. Hiperóxia não acelera nada e pode piorar a relação V/Q.</p></div>
+   <div class="card"><span class="tag t-ambar">Antes de acreditar no número</span><h3>Checklist do oxímetro</h3><ul style="margin:0"><li>Curva pletismográfica presente e pulso compatível com a FC?</li><li>Perfusão periférica, tremor, movimento?</li><li>Esmalte, unha postiça, luz ambiente, sensor mal posicionado?</li><li>Pele escura com hipoxemia: risco de <b>superestimar</b> a saturação.</li></ul></div>
+  </div>
+  <p class="frase">Um bom número em uma paciente que fala por palavras não é uma boa notícia.</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>O oxímetro é o painel de segurança do aeroporto. Ele avisa que faltou oxigênio — não avisa que a pista está entupida nem que o piloto está exausto.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"SpO₂ 94% afasta gravidade." Não afasta: gravidade na asma se lê no esforço e no fluxo.</div>
+   <div class="nb"><b>Ponte</b>Encerramos a fisiologia. Vamos confirmar que isso é asma.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 2 · A armadilha de ar" data-tit="Plantão — o tórax que ficou silencioso">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 2 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — tórax silencioso como sinal de exacerbação ameaçadora à vida</span>
+  <span class="chip c-cor">Correção: "sumiram os sibilos, melhorou" — erro clássico e potencialmente fatal</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no plantão</div>
+  <h2>“Doutor, os sibilos sumiram!”</h2>
+  <p class="sub">Adolescente de 16 anos, crise há 3 horas. Estava com sibilos difusos altos. Agora, após duas séries de broncodilatador, o interno relata: ausculta “limpa”. Ele está sonolento, sentado, apoiado nos braços, FR 36, SpO₂ 88%.</p>
+  <div class="cortina">
+   <p>O que aconteceu com esse tórax? Qual é a sua próxima ação — e em quanto tempo?</p>
+   <button class="rv">Revelar a conduta</button>
+   <div class="resp" style="text-align:left">
+    <div class="bx bx-vermelho"><p style="margin:0"><b>Tórax silencioso = fluxo criticamente baixo.</b> O sibilo precisa de ar em movimento para existir. Quando quase não passa ar, o ruído desaparece. Somado a sonolência e SpO₂ &lt; 92%, isto é <b>exacerbação ameaçadora à vida</b>.</p></div>
+    <div class="presc">
+     <h3>Primeiros 10 minutos</h3>
+     <ol>
+      <li><b>Chamar ajuda / acionar cuidado intensivo imediatamente</b> e preparar via aérea — sem atrasar o tratamento.</li>
+      <li><b>Salbutamol</b> em dose alta e repetida: <span class="dose">6–10 jatos por pMDI + espaçador</span> ou <span class="dose">5 mg nebulizados</span>, repetindo conforme necessidade a cada 20–30 min.</li>
+      <li><b>Ipratrópio</b> <span class="dose">4 jatos</span> junto ao salbutamol, até 3 vezes (dose nominal conforme o dispositivo local).</li>
+      <li><b>Oxigênio titulado</b> para SpO₂ 92–95% (criança 94–98%).</li>
+      <li><b>Corticoide sistêmico agora</b>, VO se deglute com segurança; IV se não deglute ou vomita.</li>
+      <li>Refratário ao tratamento inicial intensivo: considerar <b>sulfato de magnésio IV</b> (referência educacional no adulto: 2 g em 20 min, conforme protocolo local).</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0"><b>Sinais de ameaça imediata:</b> sonolência ou confusão, cianose, tórax silencioso, incapacidade de falar/beber/deitar. Qualquer um deles muda o cenário de "tratar e reavaliar" para "tratar e transferir".</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>Sibilo é sinal de que ainda passa ar. Silêncio com paciente pior é o alarme que ninguém pode perder no plantão.</div>
+   <div class="nb"><b>Erro comum</b>Registrar "ausculta limpa" sem correlacionar com esforço e saturação.</div>
+   <div class="nb"><b>Ponte</b>Trocamos de ato: como se confirma que isso tudo é asma.</div>
+  </div>
+ </div>
+</section>
+<!-- ============ ATO 3 — DIAGNÓSTICO ============ -->
+<section class="slide" data-t="Ato 3 · Diagnóstico" data-tit="Definição e os dois pilares — VARIA">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 3 · Diagnóstico</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — definição de asma e critérios diagnósticos (paráfrase)</span>
+  <span class="chip c-cor">Correção do material de 2020: "o diagnóstico de asma é essencialmente clínico" — incompleto</span>
+  <span class="chip c-aula">Aula FMUSP — fluxograma diagnóstico: sintomas → espirometria → (se normal) broncoprovocação; biomarcadores apoiam</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 3 · Confirmar, não só ouvir sibilos <span class="kn"></span></div>
+  <h2>Dois pilares sustentam o diagnóstico</h2>
+  <div class="grid2">
+   <div class="card" style="border-top:4px solid var(--azul)"><span class="tag t-azul">Pilar 1</span><h3>História de sintomas respiratórios variáveis</h3><p>Sibilância, dispneia, aperto no peito e tosse que <b>variam em intensidade e ao longo do tempo</b>, pioram à noite/ao despertar e são desencadeados por exercício, riso, alérgenos, ar frio e viroses.</p></div>
+   <div class="card" style="border-top:4px solid var(--verde)"><span class="tag t-verde">Pilar 2</span><h3>Limitação <i>variável</i> ao fluxo expiratório, documentada</h3><p>Prova broncodilatadora, variabilidade do PFE, broncoprovocação ou variação entre consultas. <b>Sempre que possível, antes de rotular o paciente para a vida toda.</b></p></div>
+  </div>
+  <h3 style="margin-top:6px">Mnemônico <span class="mn">VARIA</span></h3>
+  <div class="mnem">
+   <div><b>V</b><span><b>Variação</b> dos sintomas no tempo e com gatilhos</span></div>
+   <div><b>A</b><span><b>Airflow</b> expiratório variável comprovado</span></div>
+   <div><b>R</b><span><b>Resposta</b> ao broncodilatador ou PFE seriado</span></div>
+   <div><b>I</b><span><b>Inflamação</b> tipo 2 (FeNO, eosinófilos) <i>apoia</i>, não confirma sozinha</span></div>
+   <div><b>A</b><span><b>Alternativas</b> avaliadas e afastadas</span></div>
+  </div>
+  <div class="bx bx-ambar"><p style="margin:0"><b>Duas frases que não podem ser ditas:</b> “exame físico normal afasta asma” e “espirometria normal exclui asma”. Fora da crise, o exame e a função podem ser inteiramente normais.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Asma não é diagnóstico de impressão. É sintoma variável mais prova de variabilidade. O melhor momento de documentar é antes de começar o controlador — depois fica difícil.</div>
+   <div class="nb"><b>Pegadinha de prova</b>FeNO alto confirma asma? Não. Apoia fenótipo tipo 2 em contexto típico.</div>
+   <div class="nb"><b>Ponte</b>Vamos ao exame que documenta o pilar 2.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 3 · Diagnóstico" data-tit="Plantão — rotular sem provar">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 3 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — documentar a variabilidade antes de iniciar controlador, sempre que possível</span>
+  <span class="chip c-loc">Acesso à espirometria varia muito entre serviços; registrar o que foi possível fazer e o plano de confirmação</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no ambulatório</div>
+  <h2>“Ele tem sibilo quando corre. Já começo o controlador?”</h2>
+  <p class="sub">Rapaz de 17 anos, tosse e chiado ao esforço há um ano, pior no inverno, sem despertares noturnos. Exame físico normal hoje. Mãe pede “a bombinha preventiva”.</p>
+  <div class="cortina">
+   <p>Você inicia tratamento? O que precisa ficar registrado <b>hoje</b> no prontuário para não travar o diagnóstico depois?</p>
+   <button class="rv">Revelar a conduta</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Conduta</h3>
+     <ol>
+      <li><b>Tratar não é proibido — rotular sem prova é.</b> Se os sintomas justificam, inicie tratamento contendo corticoide inalatório e <b>documente que o diagnóstico ainda não foi confirmado objetivamente</b>.</li>
+      <li><b>Peça espirometria com prova broncodilatadora</b> o quanto antes — de preferência <b>antes</b> de o controlador mascarar a variabilidade, ou em janela combinada de suspensão conforme o serviço.</li>
+      <li>Enquanto isso, <b>diário de PFE por 2 semanas</b> com o melhor valor pessoal, e registro dos gatilhos.</li>
+      <li>Se a espirometria vier normal e a suspeita continuar: repetir <b>durante os sintomas</b>, considerar <b>broncoprovocação</b> e reavaliar diagnósticos alternativos.</li>
+      <li>Marque retorno com <b>data</b> para reconfirmar o diagnóstico. Asma "por inércia" é como muita gente toma corticoide inalatório por dez anos sem nunca ter tido asma.</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0"><b>Sintomas só ao exercício em jovem?</b> Pense também em obstrução laríngea induzível, destreinamento e hiperventilação. A confirmação objetiva separa os três.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Pergunta para a turma</b>Quem já viu prontuário com "asmático" sem nenhuma espirometria na vida? Todo mundo. É isso que estamos consertando.</div>
+   <div class="nb"><b>Ponte</b>Então vamos ler espirometria de verdade.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 3 · Diagnóstico" data-tit="Espirometria: o que cada número diz">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 3 · Função pulmonar</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Padronização ATS/ERS de espirometria; GINA 2026 para uso diagnóstico</span>
+  <span class="chip c-aula">Aula FMUSP — curvas volume-tempo e fluxo-volume: normal, asma pré-BD e asma pós-BD</span>
+  <span class="chip c-loc">Preferir o <b>limite inferior da normalidade</b> a uma razão fixa em adultos; valores de referência conforme o laboratório</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 3 · Função pulmonar <span class="kn"></span></div>
+  <h2>Três números e uma forma</h2>
+  <table>
+   <tr><th>Medida</th><th>O que é</th><th>O que a asma faz</th></tr>
+   <tr><td><b>VEF₁</b></td><td>Volume expirado no <b>1º segundo</b> de uma expiração forçada máxima</td><td>Cai — é o número que mais responde ao broncodilatador</td></tr>
+   <tr><td><b>CVF</b></td><td>Volume total expirado forçadamente</td><td>Normal no começo; <b>cai quando há aprisionamento aéreo</b></td></tr>
+   <tr><td><b>VEF₁/CVF</b></td><td>Proporção que define o padrão</td><td><b>Reduzida</b> — a assinatura da obstrução</td></tr>
+  </table>
+  <div class="grid2" style="margin-top:14px">
+   <div class="card"><span class="tag t-azul">Curva fluxo-volume</span><p>Na obstrução, a alça expiratória fica <b>côncava</b> ("escavada"), com queda precoce do fluxo. Após o broncodilatador, a concavidade <b>se abre</b>.</p></div>
+   <div class="card"><span class="tag t-ambar">Curva volume-tempo</span><p>O asmático <b>demora</b> a atingir o platô — é a constante de tempo longa aparecendo no papel.</p></div>
+  </div>
+  <div class="bx bx-azul"><p style="margin:0"><b>Regra de leitura:</b> cada VEF₁ do laudo representa o <b>maior valor entre manobras reprodutíveis</b>. Laudo sem critério de aceitabilidade não serve para fechar diagnóstico.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Não decore o laudo inteiro. Olhe a relação para saber o padrão, o VEF₁ para saber o tamanho do problema e a forma da curva para confirmar com os olhos.</div>
+   <div class="nb"><b>Pegadinha de prova</b>CVF baixa não é sinônimo de restrição — pode ser aprisionamento.</div>
+   <div class="nb"><b>Ponte</b>E o critério que define resposta ao broncodilatador em 2026?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 3 · Diagnóstico" data-tit="Plantão — a prova broncodilatadora">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 3 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Critério de resposta broncodilatadora <b>ATS/ERS 2005</b>, mantido na referência da GINA 2026: aumento de VEF₁ <b>ou</b> CVF ≥ 12% do basal <b>E</b> ≥ 200 mL</span>
+  <span class="chip c-cor">A proposta de 2022 (ganho &gt; 10% do previsto) foi <b>rejeitada</b> por subdiagnóstico — especialmente em homens jovens</span>
+  <span class="chip c-loc">Em crianças: aumento do VEF₁ ≥ 12% <b>do previsto</b></span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no ambulatório</div>
+  <h2>Três laudos na mesa. Quais confirmam variabilidade?</h2>
+  <table>
+   <tr><th>Paciente</th><th>VEF₁ pré</th><th>VEF₁ pós</th><th>Ganho</th></tr>
+   <tr><td><b>A</b> — homem, 24 anos</td><td>3,10 L</td><td>3,52 L</td><td>+420 mL · +13,5%</td></tr>
+   <tr><td><b>B</b> — mulher, 52 anos</td><td>1,60 L</td><td>1,78 L</td><td>+180 mL · +11,3%</td></tr>
+   <tr><td><b>C</b> — menina, 9 anos (previsto 1,80 L)</td><td>1,35 L</td><td>1,58 L</td><td>+230 mL · +17% do pré · <b>+12,8% do previsto</b></td></tr>
+  </table>
+  <div class="cortina">
+   <p>Aplique o critério de 2026. Quem tem prova broncodilatadora <b>positiva</b>? E o que você faz com quem não tem?</p>
+   <button class="rv">Revelar a resposta</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Resposta</h3>
+     <ol>
+      <li><b>A — positiva.</b> Adulto: precisa de <b>≥12% do basal E ≥200 mL</b>. Ele tem os dois (13,5% e 420 mL).</li>
+      <li><b>B — negativa.</b> Tem os 11,3% (abaixo de 12%) e só 180 mL. <b>Falta um dos dois critérios ⇒ não é positiva.</b> E negativa <b>não exclui asma</b>: repetir durante sintomas, PFE seriado, broncoprovocação.</li>
+      <li><b>C — positiva</b> pelo critério pediátrico: VEF₁ com ganho <b>≥12% do previsto</b>.</li>
+      <li><b>Por que não mudou o critério:</b> a proposta de 2022 de usar ganho &gt;10% do previsto foi <b>rejeitada</b> — na prática <b>subdiagnosticava</b>, sobretudo homens jovens com função basal alta.</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0"><b>Detalhe que derruba prova:</b> o critério vale para VEF₁ <b>ou</b> CVF. Um ganho isolado de CVF ≥12% e ≥200 mL também é resposta positiva — típico de quem tinha muito aprisionamento.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Aceitar "aumentou 15%" sem checar os mililitros. São dois critérios simultâneos no adulto.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Por que exigir mililitros além do percentual? (Para não transformar ruído de medida em diagnóstico.)</div>
+   <div class="nb"><b>Ponte</b>E quando a espirometria vem completamente normal?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 3 · Diagnóstico" data-tit="Função normal: PFE, broncoprovocação e FeNO">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 3 · Diagnóstico</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — variabilidade média diária do PFE &gt; 10% em adultos e &gt; 13% em crianças; FeNO &gt; 50 ppb (adulto/adolescente) e &gt; 35 ppb (criança) apoiam asma tipo 2</span>
+  <span class="chip c-aula">Aula FMUSP — broncoprovocação positiva: <b>queda &gt; 20% do VEF₁</b>; alternativa é tratamento de prova com investigação de diferenciais</span>
+  <span class="chip c-cor">Correção: tabelas fixas de PFE por sexo e altura saem do centro — o padrão é o <b>melhor valor pessoal</b></span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 3 · Quando a função vem normal <span class="kn"></span></div>
+  <h2>Espirometria normal não fecha porta nenhuma</h2>
+  <div class="grid3">
+   <div class="card"><span class="tag t-azul">Caminho 1</span><h3>PFE como filme</h3><p>Diário por <b>2 semanas</b>, 2 medidas/dia, técnica correta, comparado ao <b>melhor valor pessoal</b>.</p><p class="mono">Variabilidade média diária <b>&gt;10%</b> (adulto) e <b>&gt;13%</b> (criança) apoia asma.</p></div>
+   <div class="card"><span class="tag t-verde">Caminho 2</span><h3>Broncoprovocação</h3><p>Indicada quando os sintomas são típicos e a função está normal.</p><p class="mono"><b>Positiva: queda &gt;20% do VEF₁</b> em relação ao basal.</p><p>Negativa em paciente sintomático fora de tratamento pesa <b>contra</b> asma.</p></div>
+   <div class="card"><span class="tag t-ambar">Caminho 3</span><h3>Biomarcadores</h3><p><b>FeNO</b> &gt;50 ppb (adulto/adolescente) ou &gt;35 ppb (criança) e <b>eosinofilia</b> apoiam asma <b>tipo 2</b> em contexto típico.</p><p><b>Valores baixos não excluem asma</b> — e nenhum deles confirma sozinho.</p></div>
+  </div>
+  <div class="bx bx-ambar"><p style="margin:0"><b>Antes de dizer "normal":</b> confira se houve suspensão adequada do broncodilatador, se o exame foi feito <b>fora</b> de sintomas e se o esforço foi aceitável. E existe a via pragmática: <b>tratamento de prova</b> com reavaliação objetiva marcada — combinada com investigação de diferenciais, nunca no lugar dela.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>PFE não é fotografia, é filme. Um valor solto não diz nada; a variação ao longo de duas semanas diz quase tudo.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"FeNO normal exclui asma." Não exclui — pode ser asma não tipo 2 ou paciente em corticoide inalatório.</div>
+   <div class="nb"><b>Ponte</b>E se não for asma coisa nenhuma?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 3 · Diagnóstico" data-tit="Plantão — nem tudo que sibila é asma">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 3 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — diagnósticos diferenciais da sibilância e comorbidades que pioram o controle</span>
+  <span class="chip c-aula">Aula FMUSP — asma e vias aéreas superiores: <b>cerca de 80% dos asmáticos têm rinite alérgica</b>; rinossinusopatia, DRGE e obesidade como comorbidades a tratar</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no plantão</div>
+  <h2>Quatro pacientes “com crise de asma”</h2>
+  <ul>
+   <li><b>1.</b> Mulher, 34 anos, ruído inspiratório alto no pescoço, aperto na garganta, começa e cessa em minutos, SpO₂ normal, sem resposta ao broncodilatador.</li>
+   <li><b>2.</b> Homem, 68 anos, tabagista 50 maços-ano, dispneia progressiva há anos, ortopneia recente e edema de MMII.</li>
+   <li><b>3.</b> Criança de 2 anos, sibilância <b>súbita</b>, unilateral, sem história prévia, engasgo há 1 hora.</li>
+   <li><b>4.</b> Mulher, 41 anos, dispneia súbita, dor pleurítica, taquicardia, pós-operatório recente.</li>
+  </ul>
+  <div class="cortina">
+   <p>Qual é a pista discriminadora de cada um — e o que muda na sua conduta imediata?</p>
+   <button class="rv">Revelar as pistas</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Leitura</h3>
+     <ol>
+      <li><b>Obstrução laríngea induzível.</b> Ruído <b>inspiratório</b> cervical, início/fim abruptos, saturação preservada, sem resposta a broncodilatador. Tratamento é fonoaudiológico/comportamental — não é escalonar bombinha.</li>
+      <li><b>DPOC com componente de insuficiência cardíaca.</b> Carga tabágica, curso progressivo, ortopneia e edema. Sibilo cardíaco existe.</li>
+      <li><b>Corpo estranho.</b> Início súbito, achado <b>unilateral</b>, história de engasgo. Conduta é via aérea/broncoscopia, não corticoide.</li>
+      <li><b>Tromboembolismo pulmonar.</b> Dispneia súbita com dor pleurítica e fator de risco. Sibilo pode existir e engana.</li>
+     </ol>
+    </div>
+    <div class="bx bx-verde"><p style="margin:0"><b>E na asma confirmada, olhe para cima:</b> cerca de <b>80%</b> dos asmáticos têm <b>rinite alérgica</b>. Rinossinusopatia, DRGE e obesidade são comorbidades que sabotam o controle — tratar a via aérea superior é parte de tratar a inferior.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Pergunta para a turma</b>Quem já tratou "asma refratária" que era refluxo, rinite não tratada ou técnica inalatória errada?</div>
+   <div class="nb"><b>Ponte</b>Diagnóstico feito. Agora, três palavras que não são sinônimos: controle, risco e gravidade.</div>
+  </div>
+ </div>
+</section>
+<!-- ============ ATO 4 — CONTROLE, RISCO E GRAVIDADE ============ -->
+<section class="slide" data-t="Ato 4 · Controle e risco" data-tit="Três gavetas que não se misturam">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 4 · Controle</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — avaliação em domínios separados: controle sintomático, risco futuro e gravidade retrospectiva</span>
+  <span class="chip c-cor">Correção: a classificação antiga em "intermitente / persistente leve, moderada, grave" no primeiro atendimento saiu de cena</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 4 · Três palavras diferentes <span class="kn"></span></div>
+  <h2>Controle, risco e gravidade</h2>
+  <div class="grid3">
+   <div class="card" style="border-top:4px solid var(--azul)"><span class="tag t-azul">Gaveta 1</span><h3>Controle sintomático</h3><p>Como ele passou nas <b>últimas 4 semanas</b>. Responde 4 perguntas. Muda de consulta para consulta.</p></div>
+   <div class="card" style="border-top:4px solid var(--vermelho)"><span class="tag t-vermelho">Gaveta 2</span><h3>Risco futuro</h3><p>Probabilidade de <b>exacerbação, perda de função e efeitos adversos</b>. Pode estar alto mesmo com paciente <b>sem sintomas hoje</b>.</p></div>
+   <div class="card" style="border-top:4px solid var(--verde)"><span class="tag t-verde">Gaveta 3</span><h3>Gravidade da doença</h3><p>Definida <b>retrospectivamente</b>: quanto tratamento foi necessário para <b>obter</b> controle. Não se define na primeira consulta.</p></div>
+  </div>
+  <div class="bx bx-ambar">
+   <h3>Onde entra a função pulmonar</h3>
+   <p style="margin:0">VEF₁ <b>não é</b> uma das quatro perguntas de controle. Ele entra como <b>fator de risco</b> (VEF₁ &lt; 60% do previsto pesa) e como acompanhamento — inclusive no paciente que "não sente nada" porque se acostumou a viver limitado.</p>
+  </div>
+  <div class="bx bx-azul"><p style="margin:0"><b>Leve, difícil de tratar e grave:</b> <b>leve</b> = controlada com CI-formoterol conforme necessário ou CI diário em dose baixa; <b>difícil de tratar</b> = não controlada apesar de CI-LABA em dose média/alta, muitas vezes por causas <b>corrigíveis</b>; <b>grave</b> = permanece não controlada apesar de adesão e otimização, ou precisa desse nível de tratamento para manter controle.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Se misturar as três gavetas, o paciente sem sintoma e com duas idas ao pronto-socorro no ano sai da consulta com menos tratamento. É exatamente esse o erro que mata.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"Gravidade é o quanto ele sibila hoje." Isso é exacerbação, não gravidade da doença.</div>
+   <div class="nb"><b>Ponte</b>As quatro perguntas do controle, em mnemônico.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 4 · Controle e risco" data-tit="Plantão — DELICIA e o risco escondido">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 4 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — controle: 4 perguntas das últimas 4 semanas; 0 = controlada, 1–2 = parcialmente, 3–4 = não controlada</span>
+  <span class="chip c-dir">GINA 2026 — ≥3 frascos de SABA (200 doses) por ano: maior risco de exacerbação; ≥12 frascos/ano: associação com maior risco de morte</span>
+  <span class="chip c-dir">GINA 2026 — fatores de risco futuro: exacerbação no último ano, VEF₁ reduzido, adesão/técnica inadequadas, tratamento sem corticoide inalatório</span>
+  <span class="chip c-aula">Aula FMUSP — tabela de avaliação do controle dos sintomas (bem controlado / parcialmente / não controlado)</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no ambulatório</div>
+  <h2>Ele diz que está ótimo. Está?</h2>
+  <p class="sub">Homem, 30 anos. “Doutor, minha asma está sob controle.” Nas últimas 4 semanas: sem despertares noturnos, sem limitação de atividade, sintomas diurnos 1×/semana. Usa apenas SABA como alívio, cerca de 1×/semana. No último ano: <b>uma exacerbação com ida ao pronto-socorro e corticoide oral</b>, e retirou <b>4 frascos</b> de salbutamol na farmácia. VEF₁ 58% do previsto.</p>
+  <div class="cortina">
+   <p>Antes de responder, pergunte-se: “controlado” e “de baixo risco” são a mesma coisa? Passe o paciente pelo <span class="mn">DELICIA</span>.</p>
+   <button class="rv">Revelar o DELICIA e a análise</button>
+   <div class="resp" style="text-align:left">
+    <h3 style="font-size:19px;margin-bottom:8px">O que perguntar: <span class="mn" style="font-size:22px">DELICIA</span></h3>
+    <div class="del">
+     <div><span class="l">D <em>🌙</em></span><span class="nm">DESPERTARES</span><span class="q">“A asma está <b>acordando</b> o paciente à noite?”</span></div>
+     <div><span class="l">E <em>🚨</em></span><span class="nm">EXACERBAÇÕES</span><span class="q">Teve crise no último ano? Precisou de <b>corticoide sistêmico</b>, atendimento de <b>emergência</b> ou <b>internação</b>?</span></div>
+     <div><span class="l">L <em>🏃</em></span><span class="nm">LIMITAÇÃO</span><span class="q">“A asma impede <b>exercício, trabalho, escola</b> ou atividades habituais?”</span></div>
+     <div><span class="l">I <em>💨</em></span><span class="nm">INALADOR DE RESGATE</span><span class="q">Com que frequência usa o alívio? E, à parte, há <b>consumo excessivo de SABA</b>? Excesso de SABA é <b>marcador de risco</b>.</span></div>
+     <div><span class="l">C <em>☀️</em></span><span class="nm">CONTROLE DOS SINTOMAS</span><span class="q">Frequência dos <b>sintomas diurnos</b> nas últimas 4 semanas.</span></div>
+     <div><span class="l">I <em>🫁</em></span><span class="nm">INSUFICIÊNCIA DA FUNÇÃO PULMONAR</span><span class="q">Função pulmonar, sobretudo <b>VEF₁ reduzido</b>. Neste caso: <b>58% do previsto</b>.</span></div>
+     <div><span class="l">A <em>🎯</em></span><span class="nm">ADESÃO + TÉCNICA</span><span class="q">Toma como prescrito? Usa o dispositivo direito? E está mesmo recebendo tratamento <b>contendo corticoide inalatório</b>?</span></div>
+    </div>
+    <div class="grid2">
+     <div class="bx bx-verde" style="margin:0">
+      <h3>🟢 Como ele está? <span style="font-weight:600;color:var(--ink2)">— controle atual</span></h3>
+      <ul style="margin:0"><li>Sintomas diurnos <b>1×/semana</b> (não &gt;2×)</li><li><b>Sem</b> despertar noturno</li><li><b>Sem</b> limitação de atividade</li><li>Alívio ~1×/semana (uso pré-exercício não conta)</li></ul>
+      <p style="margin:10px 0 0"><b>Sintomas atuais: CONTROLADOS (0 de 4).</b> E é aqui que a consulta ruim termina.</p>
+     </div>
+     <div class="bx bx-vermelho" style="margin:0">
+      <h3>🔴 O que pode acontecer? <span style="font-weight:600;color:var(--ink2)">— risco futuro</span></h3>
+      <ul style="margin:0"><li><b>Exacerbação grave</b> no último ano, com <b>corticoide oral</b> e pronto-socorro</li><li><b>4 frascos</b> de salbutamol no ano</li><li><b>VEF₁ 58%</b> do previsto (&lt; 60%)</li><li>Tratamento <b>apenas com SABA</b>, sem corticoide inalatório</li></ul>
+      <p style="margin:10px 0 0"><b>Risco futuro: ALTO.</b></p>
+     </div>
+    </div>
+    <div class="vered"><b>“CONTROLADO” não significa “BAIXO RISCO”.</b><span>🧠 O DELICIA separa duas perguntas diferentes: <b>como ele ESTÁ</b> → de <b>quanto ele ARRISCA</b>.</span></div>
+    <div class="presc">
+     <h3>Conduta</h3>
+     <ol>
+      <li><b>Não reduzir nada.</b> Sintoma controlado com risco alto não autoriza step-down.</li>
+      <li>Garantir esquema <b>contendo corticoide inalatório</b> — preferencialmente CI-formoterol como alívio.</li>
+      <li>Checar <b>técnica e adesão</b>, entregar <b>plano de ação escrito</b> e reavaliar com <b>função pulmonar</b>.</li>
+      <li>Contar frascos de SABA a cada consulta: a pergunta é “quantos frascos no ano?”, não “usa muito?”.</li>
+     </ol>
+    </div>
+    <div class="bx bx-vermelho"><p style="margin:0"><b>Aritmética que assusta:</b> ≥3 frascos/ano já sinaliza risco de exacerbação. <b>≥12 frascos/ano</b> associa-se a risco muito elevado de <b>morte</b>. Pergunte quantos frascos, não “usa muito?”.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>O DELICIA existe para impedir o erro mais comum do ambulatório: o paciente diz que está bem, a gente registra "controlado" e a consulta acaba ali. Sete letras, quatro delas olham para o futuro.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Quantas dessas perguntas vocês realmente fazem no ambulatório? Elas levam menos de um minuto.</div>
+   <div class="nb"><b>Erro comum</b>Contar o uso de SABA antes do exercício como descontrole. Não conta. E confundir controle sintomático com risco futuro — são gavetas diferentes.</div>
+   <div class="nb"><b>Ponte</b>Ele está com risco alto: subo a etapa agora?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 4 · Controle e risco" data-tit="Antes de subir etapa, chame a TIA-C">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 4 · Step-up</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — antes do step-up: técnica inalatória, adesão, exposições/gatilhos, comorbidades e confirmação do diagnóstico</span>
+  <span class="chip c-aula">Aula FMUSP — "Tratamento: desafios" — assegurar aderência + <b>checar técnica</b>, controlar fatores de risco, tratar comorbidades (rinossinusopatia, DRGE, obesidade)</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 4 · A barreira obrigatória <span class="kn"></span></div>
+  <h2>Antes de subir a escada, chame a <span style="color:var(--azul)">TIA-C</span></h2>
+  <div class="mnem">
+   <div><b>T</b><span><b>Técnica inalatória</b> — peça para ele demonstrar, com o próprio dispositivo, na sua frente</span></div>
+   <div><b>I</b><span><b>Interrupções e adesão</b> — quantos dias esqueceu? comprou o frasco? entendeu que é diário?</span></div>
+   <div><b>A</b><span><b>Agentes desencadeantes</b> — tabaco/vape, mofo, ácaro, animal, ocupação, β-bloqueador, AINE</span></div>
+   <div><b>C</b><span><b>Comorbidades e confirmação</b> — rinossinusite, DRGE, obesidade, ansiedade… e será que é mesmo asma?</span></div>
+  </div>
+  <div class="bx bx-vermelho">
+   <p style="margin:0">Boa parte da “asma que não responde” é <b>asma difícil de tratar por causa corrigível</b>, não asma grave. Subir etapa sem passar pela TIA-C significa aumentar dose, custo e efeito adverso sem tocar no problema real.</p>
+  </div>
+  <div class="bx bx-verde"><p style="margin:0"><b>Checar técnica é prescrição:</b> escolher o dispositivo faz parte da receita. pMDI com espaçador exige coordenação; DPI exige fluxo inspiratório suficiente; névoa suave é mais lenta. Considere idade, cognição, força inspiratória, custo, acesso e preferência — e reveja a técnica em <b>toda</b> consulta.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>Regra da minha enfermaria: ninguém sobe de etapa sem ter demonstrado a técnica na minha frente. Metade resolve ali.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Quantos aqui sabem usar um pMDI com espaçador corretamente? Vamos demonstrar.</div>
+   <div class="nb"><b>Ponte</b>Passada a barreira, entramos no tratamento de manutenção — e na mudança de paradigma da última década.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 4 · Controle e risco" data-tit="Plantão — a receita que só piora">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 4 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — não usar SABA isoladamente; todo paciente deve receber tratamento contendo corticoide inalatório</span>
+  <span class="chip c-cor">Correção: uso regular de SABA isolado aumenta hiperresponsividade e inflamação e reduz a resposta broncodilatadora</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no plantão</div>
+  <h2>“Ele já usa bombinha todo dia e não melhora”</h2>
+  <p class="sub">Rapaz de 19 anos, terceira ida ao pronto-socorro em 5 meses. Receita atual, escrita por três serviços diferentes: <span class="mono">salbutamol spray 2 jatos 4×/dia + se necessário</span>. Nenhum controlador. Diz que “sem a bombinha não consegue dormir”.</p>
+  <div class="cortina">
+   <p>Escreva o que está errado na receita e o que você faria diferente <b>hoje</b>, antes de ele sair.</p>
+   <button class="rv">Revelar a correção</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Correção da receita</h3>
+     <ol>
+      <li><b>Erro central:</b> SABA como único tratamento. Ele alivia por minutos e <b>não trata a inflamação</b> — mascara a piora e aumenta o risco de exacerbação grave e de morte.</li>
+      <li><b>Todo</b> adulto, adolescente e criança de 6–11 anos com asma deve receber tratamento <b>contendo corticoide inalatório</b>.</li>
+      <li>Prefira a <b>Trilha 1</b>: alívio com <b>CI-formoterol</b> em dose baixa — o mesmo jato que abre o brônquio entrega anti-inflamatório.</li>
+      <li>Ele já tem sintomas quase diários e exacerbações: começar em nível de <b>manutenção e alívio (MART)</b>, não em alívio isolado.</li>
+      <li>Passe a <span class="mn">TIA-C</span>, entregue <b>plano de ação escrito</b> e marque retorno. Conte os frascos: 3 idas em 5 meses é sinal de alto risco.</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0"><b>Frase para o paciente:</b> "a bombinha azul abre a porta por alguns minutos; o corticoide inalatório apaga o incêndio dentro da parede. Você vem tratando só a porta."</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Renovar receita de resgate sem olhar se existe controlador. É a receita mais perigosa da medicina ambulatorial.</div>
+   <div class="nb"><b>Ponte</b>Agora as duas trilhas, com nome e sobrenome.</div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO 5 — TRATAMENTO DE MANUTENÇÃO ============ -->
+<section class="slide" data-t="Ato 5 · Manutenção" data-tit="Duas trilhas: AIR e MART">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 5 · Manutenção</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — Trilha 1 (alívio com CI-formoterol) preferida; Trilha 2 alternativa com alívio por CI-SABA ou SABA, sempre garantindo CI</span>
+  <span class="chip c-aula">Aula FMUSP — etapas de tratamento GINA 2026 (≥12 anos): "manutenção e resgate com CI/formoterol reduz risco de exacerbação comparado ao resgate com SABA"</span>
+  <span class="chip c-loc">Disponibilidade e aprovação das combinações variam por país e por serviço</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 5 · A chave com duas funções <span class="kn"></span></div>
+  <h2>Trilha 1 e Trilha 2 — e a diferença entre AIR e MART</h2>
+  <div class="grid2">
+   <div class="card" style="border-top:4px solid var(--verde)"><span class="tag t-verde">Trilha 1 — preferida</span><p><b>O alívio é CI-formoterol.</b> Cada resgate carrega anti-inflamatório junto.</p>
+    <ul style="margin:0"><li><b>Etapas 1–2:</b> CI-formoterol dose baixa <b>conforme necessário</b> — é o <b>AIR</b> (alívio anti-inflamatório, sem manutenção diária).</li><li><b>Etapa 3:</b> <b>MART</b> — manutenção em dose baixa + <b>o mesmo inalador</b> no alívio.</li><li><b>Etapa 4:</b> MART com manutenção em <b>dose média</b>.</li><li><b>Etapa 5:</b> avaliação especializada, fenotipagem, LAMA e/ou biológicos; CI-LABA em dose alta por período de teste; corticoide oral de manutenção só como último recurso.</li></ul></div>
+   <div class="card" style="border-top:4px solid var(--ambar)"><span class="tag t-ambar">Trilha 2 — alternativa</span><p><b>O alívio é CI-SABA ou SABA</b>, mas o CI está sempre garantido.</p>
+    <ul style="margin:0"><li><b>Etapa 1:</b> CI-SABA conforme necessário — ou tomar CI sempre que usar SABA, se a combinação não existir.</li><li><b>Etapa 2:</b> CI diário em dose baixa.</li><li><b>Etapa 3:</b> CI-LABA diário em dose baixa.</li><li><b>Etapa 4:</b> CI-LABA diário em dose média.</li><li><b>Etapa 5:</b> referência e fenotipagem.</li></ul>
+    <p class="mono" style="margin:8px 0 0">Escolher a Trilha 2 exige perguntar: ele vai mesmo tomar o CI diário?</p></div>
+  </div>
+  <div class="bx bx-vermelho"><p style="margin:0"><b>Duas travas:</b> nunca prescrever <b>LABA sem CI</b>; e <b>só combinações com formoterol</b> podem ser usadas como MART — CI-LABA com salmeterol ou vilanterol <b>não</b> serve para alívio.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>AIR e MART usam a mesma dupla. A diferença é se existe dose fixa diária. Nas etapas 1 e 2, só quando precisar; da 3 em diante, manutenção mais alívio no mesmo dispositivo.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"Posso usar salmeterol como resgate?" Não. Só formoterol tem início rápido para isso.</div>
+   <div class="nb"><b>Ponte</b>Onde exatamente esse paciente entra na escada?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 5 · Manutenção" data-tit="Em qual degrau ele começa?">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 5 · Manutenção</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — escolha do tratamento inicial em adultos e adolescentes pela apresentação: frequência de sintomas, despertar noturno, função pulmonar e exacerbação recente</span>
+  <span class="chip c-aula">Aula FMUSP — "Tratamento: por onde começar (≥12 anos)", caminho preferencial (Trilha 1)</span>
+  <span class="chip c-loc">Disponibilidade das combinações com formoterol varia por país e por serviço</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 5 · O raciocínio antes da receita <span class="kn"></span></div>
+  <h2>Antes de escolher o tratamento: em qual degrau ele começa?</h2>
+  <p class="sub">GINA 2026 · Tratamento inicial · Adultos e adolescentes · Trilha 1 preferencial</p>
+  <div class="tri">
+   <div><div class="em">😮‍💨</div><h3>1. Quanto incomoda?</h3><ul><li>Frequência dos sintomas</li><li>Sintomas diurnos</li><li>Despertares noturnos</li><li>Necessidade de alívio</li></ul></div>
+   <div><div class="em">🫁</div><h3>2. Quanto obstrui?</h3><ul><li>Função pulmonar</li><li>Principalmente o <b>VEF₁</b></li><li>Normal, levemente reduzida ou reduzida</li></ul></div>
+   <div><div class="em">🚨</div><h3>3. Quanto assusta?</h3><ul><li><b>Exacerbação recente</b></li><li>Corticoide sistêmico recente</li><li>Emergência ou internação</li><li>Outros fatores importantes de risco</li></ul></div>
+  </div>
+  <div class="ancora"><b>😮‍💨 INCOMODA → 🫁 OBSTRUI → 🚨 ASSUSTA</b><small>Sintomas → função pulmonar → risco</small></div>
+  <div class="cortina">
+   <p>Com as três respostas na mão, o degrau inicial se escolhe sozinho. <b>Diga qual é antes de revelar.</b></p>
+   <button class="rv">Revelar a escada terapêutica</button>
+   <div class="resp" style="text-align:left">
+    <div class="escada">
+     <div class="deg deg-v"><div class="cond">🟢 Poucos sintomas · menor risco</div><div class="trat"><b>AIR</b>CI-formoterol em <b>baixa dose conforme necessário</b>. <i>“Precisou → usou.”</i></div></div>
+     <div class="deg deg-a"><div class="cond">🟡 Sintomas frequentes · despertar noturno · função reduzida</div><div class="trat"><b>MART baixa dose</b>CI-formoterol em manutenção + <b>o mesmo inalador</b> no alívio. <i>“Mantém + resgata.”</i></div></div>
+     <div class="deg deg-r"><div class="cond">🔴 Sintomas diários · maior comprometimento <b>ou exacerbação recente</b></div><div class="trat"><b>MART dose média</b>Manutenção + alívio, com avaliação clínica da necessidade de tratamento adicional conforme o quadro.</div></div>
+    </div>
+    <div class="bx bx-vermelho">
+     <h3>🚨 Exacerbação recente pesa muito</h3>
+     <p style="margin:0">Uma semana tranquila <b>não apaga</b> uma exacerbação recente. Ela pode, sozinha, modificar o ponto de partida terapêutico.</p>
+    </div>
+    <div class="vered"><b>“Agora não procure primeiro a medicação.”</b><span>Pergunte: quanto <b>INCOMODA</b>, quanto <b>OBSTRUI</b> e quanto <b>ASSUSTA</b>?</span></div>
+    <button class="btn-aplicar" onclick="prox()">Aplicar nos 3 pacientes →</button>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Todo mundo quer começar perguntando "qual bombinha?". A pergunta certa vem antes, e são três: quanto incomoda, quanto obstrui e quanto assusta. A escada é só a consequência.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Qual das três perguntas é a que mais sobe o paciente de degrau sozinha? (A terceira: exacerbação recente.)</div>
+   <div class="nb"><b>Erro comum</b>Escolher o degrau pela impressão do dia da consulta, ignorando a crise do mês passado.</div>
+   <div class="nb"><b>Ponte</b>Agora sim: três pacientes, três pontos de partida.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 5 · Manutenção" data-tit="Plantão — por onde começar (≥12 anos)">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 5 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-aula">Aula FMUSP — "Tratamento: por onde começar (≥12 anos)", caminho preferencial, adaptado do GINA 2026</span>
+  <span class="chip c-dir">GINA 2026 — escolha do tratamento inicial pela apresentação (frequência de sintomas, despertar noturno, função pulmonar, exacerbação recente)</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no ambulatório</div>
+  <h2>Três pacientes, três pontos de partida</h2>
+  <ul>
+   <li><b>A</b> — 22 anos, chiado ao correr, sintomas 2×/semana, sem despertar noturno, espirometria normal.</li>
+   <li><b>B</b> — 35 anos, sintomas 4–5×/semana, acorda 1×/semana com tosse, VEF₁ 74% do previsto.</li>
+   <li><b>C</b> — 48 anos, sintomas <b>diários</b>, acorda quase toda noite, VEF₁ 62%, teve exacerbação com corticoide oral há 3 semanas.</li>
+  </ul>
+  <div class="cortina">
+   <p>Onde cada um começa no caminho preferencial? Escreva a prescrição em uma linha para cada.</p>
+   <button class="rv">Revelar o ponto de partida</button>
+   <div class="resp" style="text-align:left">
+    <table>
+     <tr><th>Apresentação</th><th>Começar com (Trilha 1)</th></tr>
+     <tr><td>Sintomas pouco frequentes (≤2×/semana) <b>ou</b> menos de 3–5×/semana com função normal ou levemente reduzida</td><td><b>CI-formoterol dose baixa conforme necessário</b> (AIR)</td></tr>
+     <tr><td>Sintomas ≥4×/semana <b>ou</b> despertar noturno ≥1×/semana <b>ou</b> função pulmonar reduzida</td><td><b>CI-formoterol dose baixa em manutenção + alívio</b> (MART baixa dose)</td></tr>
+     <tr><td>Sintomas <b>diários</b> <b>ou</b> despertar ≥1×/semana <b>e</b> função reduzida, <b>ou exacerbação recente</b></td><td><b>CI-formoterol dose média em manutenção + alívio</b> (MART dose média); considerar curso curto de corticoide sistêmico conforme o quadro</td></tr>
+    </table>
+    <div class="presc" style="margin-top:12px">
+     <h3>Aplicando</h3>
+     <ol><li><b>A →</b> AIR: CI-formoterol dose baixa <b>só quando precisar</b>. Nada de SABA isolado.</li>
+     <li><b>B →</b> MART em dose baixa: manutenção diária + o mesmo inalador no alívio.</li>
+     <li><b>C →</b> MART em dose média, com plano de ação escrito e retorno curto; avaliar necessidade de corticoide sistêmico pelo quadro atual.</li></ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0">Nas três linhas, o item que mais “sobe” o paciente sozinho é <b>exacerbação recente</b>. Ela reclassifica o risco mesmo que a semana tenha sido tranquila.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Começar pela gravidade percebida no dia da consulta e ignorar a exacerbação do mês passado.</div>
+   <div class="nb"><b>Ponte</b>E as crianças de 6 a 11 anos? E como se desce a escada?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 5 · Manutenção" data-tit="Crianças 6–11 anos e o step-down">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 5 · Manutenção</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — faixa 6–11 anos: etapa 1 pode incluir CI-formoterol dose baixa conforme necessário ou CI sempre que o SABA for usado; etapa 2 CI diário em dose baixa</span>
+  <span class="chip c-dir">GINA 2026 — step-down após 2–3 meses de bom controle: reduzir CI de manutenção em 25–50%; não suspender totalmente o CI em adultos e adolescentes</span>
+  <span class="chip c-loc">Formulações, aprovações e faixas etárias variam por país — conferir bula e disponibilidade local</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 5 · Duas pontas da escada <span class="kn"></span></div>
+  <h2>Criança de 6 a 11 anos · e como descer com segurança</h2>
+  <div class="grid2">
+   <div class="card" style="border-top:4px solid var(--azul)"><span class="tag t-azul">6 a 11 anos</span>
+    <ul style="margin:0"><li><b>Etapa 1:</b> AIR com CI-formoterol dose baixa conforme necessário, <b>ou</b> CI sempre que o SABA for usado — conforme formulação e aprovação local.</li><li><b>Etapa 2:</b> CI diário em dose baixa.</li><li><b>Etapa 3:</b> CI dose média, CI-LABA dose baixa ou MART em dose baixa.</li><li><b>Etapas 4–5:</b> avaliação especializada e opções individualizadas.</li></ul>
+    <p class="mono" style="margin:8px 0 0"><b>Nunca extrapolar doses de adulto para criança.</b></p></div>
+   <div class="card" style="border-top:4px solid var(--verde)"><span class="tag t-verde">Step-down</span>
+    <ul style="margin:0"><li>Só após <b>2 a 3 meses</b> de bom controle e sem exacerbação.</li><li>Reduzir o CI de manutenção em <b>25–50%</b>.</li><li>Escolher o <b>momento</b>: não descer em infecção respiratória, viagem, gravidez ou estação de pico alérgico.</li><li>Documentar controle e função antes e depois, entregar <b>plano de ação</b> e reavaliar.</li><li><b>Não suspender completamente</b> o corticoide inalatório em adultos e adolescentes.</li></ul></div>
+  </div>
+  <div class="bx bx-ambar"><p style="margin:0"><b>Sobre o montelucaste:</b> é menos eficaz que o CI para prevenir exacerbações e traz alerta de <b>efeitos neuropsiquiátricos</b> (alterações de sono, humor, comportamento; ideação suicida em relatos). Opção de segunda linha em situações selecionadas e com o alerta explicado à família.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>Descer dose é ato médico planejado, com data, dose e plano escrito. Sumir com o corticoide inalatório porque "está bem" é como tirar o extintor porque não teve incêndio esse mês.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Quando NÃO descer? (Na virose, na gravidez, antes de viagem, no pico de alérgeno.)</div>
+   <div class="nb"><b>Ponte</b>Passamos à emergência. Marina piorou.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 5 · Manutenção" data-tit="Plantão — asma grave e biológicos">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 5 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — asma grave: fenotipagem e terapias dirigidas (anti-IgE, anti-IL-5/5R, anti-IL-4Rα, anti-TSLP)</span>
+  <span class="chip c-loc">Critérios de indicação, biomarcadores exigidos e disponibilidade dependem de aprovação e protocolo local</span>
+  <span class="chip c-aula">Aula FMUSP — etapa 5: considerar LAMA, referenciar avaliação fenotípica, trial de CI-formoterol em dose alta, anti-IgE / anti-IL5-5R / anti-IL4R / anti-TSLP</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está no ambulatório de referência</div>
+  <h2>“Já está no máximo e continua exacerbando”</h2>
+  <p class="sub">Mulher, 44 anos, CI-formoterol em dose alta com boa adesão comprovada, técnica correta, sem tabagismo. Três cursos de corticoide oral no último ano. Eosinófilos 480/µL, FeNO 62 ppb, rinossinusite com pólipos.</p>
+  <div class="cortina">
+   <p>Antes de chamar de asma grave, o que precisa estar checado? E o que vem depois?</p>
+   <button class="rv">Revelar o caminho</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Caminho</h3>
+     <ol>
+      <li><b>Reconfirmar o diagnóstico</b> e passar de novo a <span class="mn">TIA-C</span>. Só depois disso "difícil de tratar" vira "grave".</li>
+      <li><b>Otimizar o que já existe:</b> dose, dispositivo, tratamento da rinossinusopatia com pólipos, DRGE e obesidade; considerar adicionar <b>LAMA</b>.</li>
+      <li><b>Fenotipar:</b> eosinófilos, FeNO, IgE e sensibilizações, história de exacerbações e comorbidades tipo 2.</li>
+      <li><b>Terapias dirigidas</b> em serviço especializado, conforme critérios locais: <b>anti-IgE</b> (omalizumabe); <b>anti-IL-5/5R</b> (mepolizumabe, reslizumabe, benralizumabe); <b>anti-IL-4Rα</b> (dupilumabe); <b>anti-TSLP</b> (tezepelumabe).</li>
+      <li><b>Corticoide oral de manutenção é último recurso</b> — e obriga plano de proteção contra efeitos adversos.</li>
+     </ol>
+    </div>
+    <div class="bx bx-verde"><p style="margin:0">O perfil dela (eosinofilia, FeNO alto, pólipos nasais) é típico de <b>inflamação tipo 2</b> — justamente o grupo em que as terapias dirigidas costumam ser consideradas. Nenhum biomarcador, porém, garante resposta.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Chamar de asma grave o paciente que nunca teve a técnica inalatória observada.</div>
+   <div class="nb"><b>Ponte</b>De volta ao pronto-socorro: Marina está pior.</div>
+  </div>
+ </div>
+</section>
+<!-- ============ ATO 6 — EXACERBAÇÃO ============ -->
+<section class="slide" data-t="Ato 6 · Exacerbação" data-tit="MUDO — moderada × grave">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 6 · Crise</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — avaliação da gravidade da exacerbação e sinais de ameaça à vida</span>
+  <span class="chip c-loc">Em menores de 18 anos, considerar escore validado (ex.: PRAM) conforme o serviço</span>
+  <span class="chip c-cor">Correção: avaliar e tratar ao mesmo tempo — não atrasar tratamento para completar a coleta de dados</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 6 · Reconhecer <span class="kn"></span></div>
+  <h2>Quando o peito fica <span style="color:var(--vermelho)">MUDO</span>, a equipe age mais alto</h2>
+  <div class="mnem">
+   <div><b>M</b><span><b>Mente alterada</b> — sonolência, confusão, agitação</span></div>
+   <div><b>U</b><span><b>Uma palavra</b> por vez, ou incapaz de falar, beber ou deitar</span></div>
+   <div><b>D</b><span><b>Diminuição</b> importante da entrada de ar ou <b>tórax silencioso</b></span></div>
+   <div><b>O</b><span><b>Oxigenação baixa</b> — SpO₂ &lt; 92% (e cianose)</span></div>
+  </div>
+  <table>
+   <tr><th></th><th>Moderada</th><th>Grave / ameaça à vida</th></tr>
+   <tr><td><b>Fala</b></td><td>Frases</td><td>Palavras; incapaz de falar, beber ou deitar</td></tr>
+   <tr><td><b>Postura</b></td><td>Prefere sentar</td><td>Curvada para a frente, tripé</td></tr>
+   <tr><td><b>FR</b></td><td>Aumentada, ≤ 30/min</td><td>&gt; 30/min</td></tr>
+   <tr><td><b>SpO₂</b> (ar ambiente)</td><td>≥ 92%</td><td>&lt; 92%</td></tr>
+   <tr><td><b>PFE</b></td><td>50–70% do melhor/previsto</td><td>&lt; 50%</td></tr>
+   <tr><td><b>Ausculta</b></td><td>Sibilos</td><td>Entrada de ar reduzida ou <b>tórax silencioso</b></td></tr>
+  </table>
+  <div class="bx bx-vermelho"><p style="margin:0"><b>Ameaça imediata à vida:</b> sonolência, confusão ou cianose. Diante de qualquer um: tratar em dose máxima e <b>acionar cuidado intensivo agora</b>.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Você classifica a crise com os olhos e os ouvidos: fala, postura, musculatura, entrada de ar. Oxímetro e PFE confirmam — não substituem.</div>
+   <div class="nb"><b>Pegadinha de prova</b>PFE 45% do melhor pessoal com paciente falando frases: continue tratando como grave. O pior parâmetro manda.</div>
+   <div class="nb"><b>Ponte</b>Classificada a crise, o que entra nos primeiros minutos.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 6 · Exacerbação" data-tit="Plantão — SATO: prescrever a crise">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 6 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — tratamento inicial da exacerbação: SABA repetido, ipratrópio na grave/resposta insuficiente, O₂ titulado 92–95%, corticoide sistêmico precoce</span>
+  <span class="chip c-cor">Fora do fluxograma: <b>fenoterol</b> (maior risco cardiovascular e de mortalidade), <b>aminofilina/teofilina</b>, antibiótico, sedativo e adrenalina de rotina</span>
+  <span class="chip c-loc">Doses nominais por jato variam com a formulação — conferir rótulo e protocolo institucional</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Marina, agora</div>
+  <h2>Escreva a prescrição dos primeiros 30 minutos</h2>
+  <div class="vitais"><span>FR <b>34/min</b></span><span>Fala <b>palavras</b></span><span>Prefere <b>sentada</b></span><span>SpO₂ <b>88%</b> AA</span><span>PFE <b>38%</b> do melhor pessoal</span><span>FC <b>124 bpm</b></span></div>
+  <div class="cortina">
+   <p>Classifique e prescreva: droga, dose, dispositivo, intervalo e alvo. Depois liste o que você <b>não</b> vai prescrever.</p>
+   <button class="rv">Revelar a prescrição</button>
+   <div class="resp" style="text-align:left">
+    <p><b>Classificação: exacerbação grave.</b> Mnemônico <span class="mn">SATO</span>:</p>
+    <div class="presc">
+     <h3>Primeiros 30 minutos</h3>
+     <ol>
+      <li><b>S — Salbutamol</b> (SABA de referência): <span class="dose">6–10 jatos por pMDI + espaçador</span>, um jato por vez, agitando antes de cada um, <b>ou</b> <span class="dose">5 mg nebulizado</span>. Repetir conforme necessidade a cada <b>20–30 minutos</b>. Na moderada: 4–6 jatos, até 3 vezes.</li>
+      <li><b>A — Antimuscarínico:</b> <span class="dose">ipratrópio 4 jatos</span> junto ao salbutamol, até 3 vezes, nas exacerbações graves ou com resposta insuficiente.</li>
+      <li><b>T — Titular oxigênio</b> para <b>SpO₂ 92–95%</b> no adulto (94–98% em criança). Titular, não “15 L para todo mundo”.</li>
+      <li><b>O — Oral (ou EV) corticoide precocemente:</b> adulto <span class="dose">prednisolona 40–50 mg pela manhã, 5–7 dias</span>; criança <span class="dose">1–2 mg/kg/dia, máximo 40 mg, 3–5 dias</span>. VO se deglute com segurança. <b>Sem desmame</b> se o uso for &lt; 2 semanas.</li>
+      <li><b>Refratária ao tratamento inicial intensivo:</b> considerar <b>sulfato de magnésio IV</b> — referência educacional no adulto <span class="dose">2 g em 20 min</span>, conforme protocolo local. <b>Não é rotina</b>, e magnésio nebulizado não é recomendado de rotina.</li>
+     </ol>
+    </div>
+    <div class="bx bx-vermelho">
+     <h3>O que NÃO prescrever</h3>
+     <p style="margin:0">Sedativo (nunca). Antibiótico de rotina. Radiografia e gasometria de rotina. Aminofilina/teofilina. Fenoterol inalatório. Adrenalina para asma isolada — na <b>anafilaxia</b>, aí sim, adrenalina IM vem primeiro. E não atrasar a transferência do paciente grave.</p>
+    </div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>SATO não é ordem de importância, é lista de conferência: nenhum dos quatro pode faltar na crise grave. O que mais esquecem é o corticoide precoce.</div>
+   <div class="nb"><b>Erro comum</b>Nebulização contínua sem reavaliar e sem corticoide. E oxigênio no máximo "porque é crise".</div>
+   <div class="nb"><b>Ponte</b>Uma hora depois: para casa, para a enfermaria ou para a UTI?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Ato 6 · Exacerbação" data-tit="Reavaliar em 1 hora, alta e pós-alta">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 6 · Decisão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — reavaliação em 1 hora (ou antes), critérios de alta e conduta pós-alta</span>
+  <span class="chip c-cor">Correção: alta com SABA isolado "se precisar" — a alta deve iniciar ou intensificar tratamento contendo CI</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 6 · A hora que decide <span class="kn"></span></div>
+  <h2>Reavaliar em 1 hora — ou antes, se piorar</h2>
+  <div class="grid3">
+   <div class="card" style="border-top:4px solid var(--verde)"><span class="tag t-verde">Melhora</span><p>Observar, planejar alta, checar técnica, escrever plano de ação.</p></div>
+   <div class="card" style="border-top:4px solid var(--ambar)"><span class="tag t-ambar">Resposta incompleta</span><p>Repetir e intensificar broncodilatador, garantir corticoide, considerar magnésio e <b>internação</b>.</p></div>
+   <div class="card" style="border-top:4px solid var(--vermelho)"><span class="tag t-vermelho">Piora</span><p>Cuidado intensivo. Preparar via aérea. Não esperar “mais uma nebulização”.</p></div>
+  </div>
+  <p class="mono">O que reavaliar: fala, consciência, postura, FR, musculatura acessória, entrada de ar, FC, SpO₂ e PFE quando viável.</p>
+  <div class="grid2">
+   <div class="bx bx-verde"><h3>Critérios que apoiam a alta</h3><ul style="margin:0"><li>Melhora <b>sustentada por 1–2 horas</b> após a última dose de salbutamol</li><li>Quadro clínico leve, sem sinais de gravidade</li><li><b>SpO₂ ≥ 92%</b> em ar ambiente</li><li><b>PFE em melhora e &gt; 70%</b> do melhor pessoal ou previsto</li><li>Suporte domiciliar e compreensão do plano</li></ul></div>
+   <div class="bx bx-azul"><h3>A alta é o começo de um tratamento novo</h3><ul style="margin:0"><li><b>Iniciar ou aumentar</b> tratamento contendo <b>CI</b>; em ≥12 anos, preferir <b>MART</b> com CI-formoterol quando disponível</li><li>Alívio <b>conforme necessário</b>, não agendado</li><li>Completar o corticoide sistêmico e <b>corrigir a técnica</b></li><li><b>Plano de ação escrito</b></li><li>Retorno em <b>2–7 dias</b> (adulto) e <b>2–5 dias</b> (criança)</li><li>Encaminhar se &gt; 1 curso de corticoide oral no último ano</li></ul></div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>A parte mais negligenciada do plantão de asma é a receita da alta. É ali que se decide se ele volta em três semanas.</div>
+   <div class="nb"><b>Pergunta para a turma</b>Quantos de vocês já deram alta de crise de asma <b>sem</b> corticoide inalatório na receita?</div>
+   <div class="nb"><b>Ponte</b>E quando nem isso segura?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 6 · Exacerbação" data-tit="Plantão — casa, enfermaria ou UTI?">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 6 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">GINA 2026 — decisão de destino após reavaliação; sinais de falência ventilatória iminente</span>
+  <span class="chip c-loc">Disponibilidade de leito, transporte e vigilância variam — a decisão considera também o que o serviço consegue oferecer</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Marina, 1 hora depois do SATO</div>
+  <h2>Três desfechos possíveis. Qual é o dela?</h2>
+  <div class="vitais"><span>Fala <b>frases curtas</b></span><span>FR <b>26/min</b></span><span>SpO₂ <b>94%</b> com O₂ 2 L</span><span>PFE <b>52%</b> do melhor pessoal</span><span>Entrada de ar <b>melhor, com sibilos</b></span><span>Alerta, <b>consegue beber</b></span></div>
+  <div class="cortina">
+   <p>Casa, enfermaria ou UTI? Justifique com os números — e escreva o que vai na receita <b>hoje</b>, seja qual for o destino.</p>
+   <button class="rv">Revelar a decisão</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Decisão</h3>
+     <ol>
+      <li><b>Resposta incompleta ⇒ não é alta.</b> PFE 52% (abaixo de 70%), ainda depende de oxigênio, fala frases curtas. <b>Internação em enfermaria</b>, mantendo broncodilatador de horário/necessidade e corticoide sistêmico, com reavaliações seriadas.</li>
+      <li><b>Iria para casa</b> se: melhora sustentada por 1–2 h após a última dose, SpO₂ ≥ 92% <b>em ar ambiente</b>, PFE &gt; 70% e em melhora, suporte em casa e plano entendido.</li>
+      <li><b>Iria para a UTI</b> se: sonolência, confusão, exaustão, tórax silencioso, esforço que <b>diminui</b> com piora clínica, hipoxemia refratária, PaCO₂ subindo com acidemia ou instabilidade hemodinâmica.</li>
+      <li><b>Na receita, hoje, em qualquer cenário:</b> esquema contendo <b>CI</b> (preferir MART com CI-formoterol), técnica revista, plano de ação escrito, corticoide sistêmico completado e <b>retorno em 2–7 dias</b>. Contar frascos de SABA do último ano.</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0">Marina chegou usando três frascos de SABA em oito meses e sem controlador. Se ela sair daqui com a mesma receita, ela volta — e da próxima vez pode ser com o tórax silencioso.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Erro comum</b>Dar alta com PFE 50% porque "está falando melhor". O critério é objetivo.</div>
+   <div class="nb"><b>Ponte</b>Último ato: quando o músculo desiste.</div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO 7 — UTI E VENTILAÇÃO ============ -->
+<section class="slide" data-t="Ato 7 · UTI e ventilação" data-tit="SAIR — ventilar o asmático">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 7 · Ventilação</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Princípios fisiológicos da ventilação na obstrução grave: prevenir hiperinsuflação dinâmica, hipercapnia permissiva, monitorar auto-PEEP e pressão de platô</span>
+  <span class="chip c-loc">Parâmetros iniciais são <b>exemplo educacional</b>, não prescrição universal — individualizar e seguir protocolo da unidade</span>
+  <span class="chip c-cor">Correção: evidência para VNI na asma é limitada; ela não deve atrasar a intubação do paciente em deterioração</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Ato 7 · Quando o paciente cansa <span class="kn"></span></div>
+  <h2>Ventilar asma é gerenciar a <span style="color:var(--vermelho)">saída</span> do ar</h2>
+  <div class="mnem">
+   <div><b>S</b><span><b>Segurar</b> a frequência respiratória (ex.: 8–12/min)</span></div>
+   <div><b>A</b><span><b>Aumentar</b> o tempo expiratório (I:E prolongada)</span></div>
+   <div><b>I</b><span><b>Inspirar rápido</b> — fluxo inspiratório alto, tempo inspiratório curto</span></div>
+   <div><b>R</b><span><b>Reduzir</b> a ventilação-minuto e aceitar hipercapnia permissiva quando apropriado</span></div>
+  </div>
+  <div class="grid2">
+   <div class="card"><span class="tag t-azul">Exemplo inicial educacional</span><ul style="margin:0"><li>Volume corrente <b>6–8 mL/kg de peso predito</b></li><li>FR <b>8–12/min</b></li><li>Fluxo inspiratório alto / Ti curto</li><li>PEEP externa <b>baixa e individualizada</b></li><li>FiO₂ titulada</li></ul></div>
+   <div class="card"><span class="tag t-vermelho">O monitor que importa</span><ul style="margin:0"><li><b>Curva fluxo-tempo:</b> o fluxo expiratório precisa <b>voltar a zero</b> antes da próxima inspiração</li><li><b>Pausa expiratória</b> mede auto-PEEP total</li><li><b>Pausa inspiratória</b> mede pressão de platô — buscar geralmente <b>&lt; 30 cmH₂O</b>, interpretando a complacência da parede torácica</li></ul></div>
+  </div>
+  <div class="bx bx-vermelho"><p style="margin:0"><b>Nunca “corrigir o CO₂” aumentando cegamente a frequência.</b> Mais FR = menos tempo expiratório = mais ar preso = mais auto-PEEP = mais hipotensão e risco de barotrauma. O caminho é o oposto.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Na SDRA a gente briga por volume e pressão. Na asma a gente briga por tempo. É contraintuitivo: ventilar menos para ventilar melhor.</div>
+   <div class="nb"><b>Pegadinha de prova</b>"Aumentei a FR e o CO₂ subiu ainda mais." Exato — porque o pulmão parou de esvaziar.</div>
+   <div class="nb"><b>Ponte</b>E quando a pressão despenca logo depois da intubação?</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Ato 7 · UTI e ventilação" data-tit="Plantão — hipotensão após intubar">
+ <div class="rail"><div class="rn"></div><div class="rt">Ato 7 · plantão</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Fisiologia: hiperinsuflação dinâmica reduz retorno venoso; diagnóstico diferencial com pneumotórax hipertensivo e hipovolemia</span>
+  <span class="chip c-loc">Desconexão transitória do ventilador é <b>manobra de resgate</b> por equipe treinada, com monitorização — não conduta de rotina</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🚨 Você está na UTI</div>
+  <h2>Intubou. Dois minutos depois, a pressão caiu.</h2>
+  <p class="sub">Asmático intubado por exaustão. PA 70×40 mmHg, FC 140, SpO₂ caindo, pressão de pico alta, murmúrio reduzido bilateralmente, ventilador com FR programada em 20/min.</p>
+  <div class="cortina">
+   <p>Quais são as três causas principais e qual é a <b>primeira</b> manobra?</p>
+   <button class="rv">Revelar a sequência</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Sequência</h3>
+     <ol>
+      <li><b>Pense em três:</b> (1) <b>hiperinsuflação dinâmica com auto-PEEP</b> reduzindo o retorno venoso — a mais comum; (2) <b>pneumotórax hipertensivo</b>; (3) <b>hipovolemia</b> (paciente desidratado, com pressão positiva recém-instalada e efeito de drogas da indução).</li>
+      <li><b>Primeira manobra:</b> na deterioração extrema, <b>desconectar brevemente</b> do ventilador e permitir a exalação, com compressão torácica passiva se necessário, enquanto se avalia o resto. Se a pressão melhora rápido, o problema era ar preso.</li>
+      <li><b>Ajustar o ventilador com o SAIR:</b> reduzir FR, encurtar o tempo inspiratório, prolongar a expiração, reduzir a ventilação-minuto. Verificar se o fluxo expiratório retorna a zero.</li>
+      <li><b>Volume</b> conforme necessidade e <b>reavaliar pneumotórax</b> (exame, ultrassom à beira do leito). Aqui, sim, a imagem é urgente — no plantão de crise, ela não é rotina.</li>
+      <li><b>Não “normalizar” o CO₂.</b> Aceitar hipercapnia permissiva enquanto o pH e o contexto permitirem, com cautela em hipertensão intracraniana, arritmias graves e gestação.</li>
+     </ol>
+    </div>
+    <div class="bx bx-ambar"><p style="margin:0"><b>Prevenção começa antes:</b> pré-oxigenar bem, equipe experiente, plano de via aérea e <b>antecipar</b> a hipotensão — ela é esperada, não é surpresa.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 30 segundos</b>Se a pressão cai logo após intubar um asmático, o ventilador é suspeito número um. Desconectar por alguns segundos é diagnóstico e tratamento.</div>
+   <div class="nb"><b>Ponte</b>Vamos fechar: revisão de 60 segundos.</div>
+  </div>
+ </div>
+</section>
+<!-- ============ FECHAMENTO ============ -->
+<section class="slide" data-t="Fechamento" data-tit="Revisão de 60 segundos">
+ <div class="rail"><div class="rn"></div><div class="rt">Fechamento</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Síntese dos pontos ancorados na GINA 2026 ao longo da aula</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Fechamento · recuperação ativa <span class="kn"></span></div>
+  <h2>Revisão de 60 segundos</h2>
+  <p class="sub">Feche o slide e reconstrua em voz alta. Se travar em algum elo, é ali que você precisa voltar.</p>
+  <div class="grid2">
+   <div class="card"><span class="tag t-azul">A cadeia da fisiologia</span><p class="mono"><b>BEM</b> (broncoespasmo · edema · muco) → resistência ↑ (1/r⁴) → expiração lenta (τ = R×C) → <b>aprisionamento</b> → hiperinsuflação e <b>auto-PEEP</b> → diafragma achatado → <b>fadiga</b>; V/Q desigual → hipoxemia; PaCO₂ baixa → “normal” → alta.</p></div>
+   <div class="card"><span class="tag t-verde">Os cinco mnemônicos</span><ul style="margin:0"><li><b>BEM</b> — o que estreita o brônquio</li><li><b>VARIA</b> — como se confirma o diagnóstico</li><li><b>DONA</b> — as 4 perguntas do controle</li><li><b>TIA-C</b> — o que checar antes de subir etapa</li><li><b>MUDO</b> / <b>SATO</b> / <b>SAIR</b> — crise grave, tratamento inicial e ventilação</li></ul></div>
+  </div>
+  <div class="grid3">
+   <div class="card"><span class="tag t-ambar">Números que caem em prova</span><ul style="margin:0"><li>BD positiva (adulto): <b>≥12% E ≥200 mL</b></li><li>BD (criança): <b>≥12% do previsto</b></li><li>Broncoprovocação: queda <b>&gt;20% VEF₁</b></li><li>PFE: variabilidade <b>&gt;10%</b> adulto, <b>&gt;13%</b> criança</li><li>FeNO: <b>&gt;50 ppb</b> adulto, <b>&gt;35 ppb</b> criança</li></ul></div>
+   <div class="card"><span class="tag t-ambar">Na crise</span><ul style="margin:0"><li>SpO₂ alvo <b>92–95%</b> (criança 94–98%)</li><li>Salbutamol <b>4–6</b> jatos (moderada) · <b>6–10</b> ou 5 mg neb (grave)</li><li>Ipratrópio <b>4 jatos</b>, até 3×</li><li>Prednisolona <b>40–50 mg, 5–7 dias</b>; criança <b>1–2 mg/kg (máx 40), 3–5 dias</b></li><li>Alta: PFE <b>&gt;70%</b>, SpO₂ ≥92% em AA</li></ul></div>
+   <div class="card"><span class="tag t-vermelho">Risco</span><ul style="margin:0"><li><b>≥3 frascos</b> de SABA/ano → risco de exacerbação</li><li><b>≥12 frascos</b>/ano → risco de morte</li><li>VEF₁ <b>&lt;60%</b> do previsto</li><li>Exacerbação grave, intubação ou UTI prévias</li><li>Controle 0 / 1–2 / 3–4 itens</li></ul></div>
+  </div>
+  <p class="frase">Abrir o brônquio salva o minuto. Tratar a inflamação protege o futuro.</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Peça a três alunos que recontem a cadeia em voz alta, cada um pegando de onde o outro parou. Recuperação ativa vale mais que reler o slide.</div>
+   <div class="nb"><b>Ponte</b>Antes do fim: o que exatamente mudou em relação ao que se ensinava.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Fechamento" data-tit="O que mudou do material antigo para 2026">
+ <div class="rail"><div class="rn"></div><div class="rt">Fechamento</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-cor">Correções aplicadas ao material de 2020 usado como base desta remasterização</span>
+  <span class="chip c-dir">Todas ancoradas na GINA 2026 e nos critérios funcionais vigentes</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Fechamento · o que saiu e o que entrou <span class="kn"></span></div>
+  <h2>Onze coisas que mudaram — e você vai ouvir o contrário por aí</h2>
+  <table>
+   <tr><th>O que se dizia</th><th>O que vale em 2026</th></tr>
+   <tr><td>“Asma é diagnóstico essencialmente clínico”</td><td>Sintomas variáveis <b>+ evidência objetiva</b> de fluxo expiratório variável, sempre que possível</td></tr>
+   <tr><td>Reversibilidade só pelo VEF₁</td><td><b>VEF₁ ou CVF</b>, ≥12% <b>e</b> ≥200 mL (adulto); ≥12% do previsto (criança). Proposta de 2022 (&gt;10% do previsto) <b>rejeitada</b> por subdiagnóstico</td></tr>
+   <tr><td>Tabela de PFE por sexo e altura como padrão</td><td><b>Melhor valor pessoal</b> e variabilidade seriada</td></tr>
+   <tr><td>SABA isolado como resgate</td><td><b>Nunca</b> SABA isolado. Todo paciente com tratamento contendo <b>CI</b></td></tr>
+   <tr><td>“Intermitente / persistente” logo na primeira consulta</td><td>Separar <b>controle</b>, <b>risco futuro</b> e <b>gravidade</b> (esta, retrospectiva)</td></tr>
+   <tr><td>Trilha única de tratamento</td><td><b>Trilha 1</b> (CI-formoterol no alívio; AIR nas etapas 1–2, MART nas 3–4) e <b>Trilha 2</b> alternativa</td></tr>
+   <tr><td>Fenoterol na crise</td><td><b>Fora.</b> Salbutamol é o SABA de referência</td></tr>
+   <tr><td>Aminofilina/teofilina no fluxograma</td><td><b>Fora</b> do manejo rotineiro da exacerbação</td></tr>
+   <tr><td>O₂ com alvo 93–95%, ou “no máximo”</td><td>O₂ <b>titulado</b> para <b>92–95%</b> no adulto (94–98% em criança)</td></tr>
+   <tr><td>Radiografia, gasometria e antibiótico de rotina</td><td>Só por gravidade, deterioração ou suspeita alternativa</td></tr>
+   <tr><td>Corticoide oral longo com desmame</td><td>Adulto 40–50 mg por 5–7 dias; criança 1–2 mg/kg (máx 40) por 3–5 dias; <b>sem desmame</b> se &lt; 2 semanas</td></tr>
+  </table>
+  <div class="bx bx-ambar"><p style="margin:0"><b>Nota de honestidade intelectual:</b> várias dessas “mudanças” já eram recomendação antes de 2026 — o que mudou foi o material antigo continuar circulando. O chip vermelho no trilho marca correção de conteúdo, não necessariamente novidade do ano.</p></div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>O que dizer em 40 segundos</b>Deixe explícito para a turma: se um preceptor disser o contrário, não é briga — é material antigo. Mostre a linha da tabela.</div>
+   <div class="nb"><b>Ponte</b>Última tela de treino: a estação prática.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide caso" data-t="Fechamento" data-tit="Estação prática de 5 minutos">
+ <div class="rail"><div class="rn"></div><div class="rt">Fechamento · estação</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Itens do checklist derivados das condutas da GINA 2026 apresentadas nesta aula</span>
+  <span class="chip c-loc">Nota de corte sugerida provisoriamente em 70% enquanto não houver dado local (borderline regression ou Angoff modificado)</span>
+ </div>
+ <div class="stage">
+  <div class="caso-hd">🎯 Estação prática · 5 minutos</div>
+  <h2>Exacerbação grave em adulto</h2>
+  <p class="sub"><b>Cenário para o candidato:</b> mulher, 26 anos, asmática, chega à emergência com dispneia. Fala palavras isoladas, prefere sentada, FR 32, FC 126, SpO₂ 89% em ar ambiente, sibilos difusos com entrada de ar reduzida. Você tem 5 minutos para avaliar, classificar, prescrever e definir a reavaliação.</p>
+  <div class="cortina">
+   <p>Faça a estação inteira em voz alta <b>antes</b> de abrir o gabarito.</p>
+   <button class="rv">Revelar o gabarito (14 pontos)</button>
+   <div class="resp" style="text-align:left">
+    <div class="presc">
+     <h3>Gabarito — 14 pontos · corte sugerido 10 (70%)</h3>
+     <ol>
+      <li>Avalia e trata <b>simultaneamente</b>; não atrasa tratamento para completar dados <span class="mono">(1)</span></li>
+      <li>Classifica como <b>exacerbação grave</b> com justificativa (fala, FR, SpO₂, entrada de ar) <span class="mono">(2)</span></li>
+      <li>Procura sinais de <b>ameaça imediata</b>: sonolência/confusão, cianose, tórax silencioso <span class="mono">(1)</span></li>
+      <li>Considera e afasta <b>anafilaxia</b> e outros diferenciais <span class="mono">(1)</span></li>
+      <li><b>Salbutamol</b> em dose de crise grave, com dispositivo e intervalo explícitos <span class="mono">(2)</span></li>
+      <li><b>Ipratrópio</b> associado <span class="mono">(1)</span></li>
+      <li><b>Oxigênio titulado</b> para alvo 92–95% <span class="mono">(1)</span></li>
+      <li><b>Corticoide sistêmico precoce</b> com dose e duração <span class="mono">(2)</span></li>
+      <li>Cita <b>magnésio IV</b> apenas como opção na refratariedade <span class="mono">(1)</span></li>
+      <li>Lista o que <b>não</b> fazer: sedativo, antibiótico/RX/gasometria de rotina, aminofilina, fenoterol <span class="mono">(1)</span></li>
+      <li>Define <b>reavaliação em 1 hora</b> com parâmetros objetivos e critérios de alta/internação/UTI <span class="mono">(1)</span></li>
+     </ol>
+    </div>
+    <div class="bx bx-vermelho"><p style="margin:0"><b>Erros que reprovam independentemente da nota:</b> sedar o paciente; dar alta sem tratamento contendo CI; usar apenas SABA sem corticoide sistêmico na crise grave; retardar a transferência do paciente com sinal de ameaça à vida.</p></div>
+   </div>
+  </div>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Como aplicar</b>Dois alunos: um candidato, um examinador com o gabarito na mão. Cinco minutos cronometrados, feedback de dois minutos. Troque os papéis.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-t="Fechamento" data-tit="Referências e encerramento">
+ <div class="rail"><div class="rn"></div><div class="rt">Fechamento</div>
+  <div class="flab">Procedência</div>
+  <span class="chip c-dir">Fontes normativas da aula</span>
+  <span class="chip c-cor">Material educacional original — sem reprodução de figuras ou tabelas protegidas</span>
+ </div>
+ <div class="stage">
+  <div class="kick">Referências <span class="kn"></span></div>
+  <h2>De onde veio cada afirmação</h2>
+  <ol>
+   <li><b>Global Initiative for Asthma (GINA).</b> Global Strategy for Asthma Management and Prevention, <b>2026</b> — relatório completo, guia resumido e conjuntos de slides. Disponível em ginasthma.org. <i>Todo o conteúdo aqui é paráfrase original; nenhuma figura ou tabela protegida foi reproduzida.</i></li>
+   <li><b>Aula “Manejo Ambulatorial da Asma — Atualizações do GINA 2026”</b>, Dr. Renato Miranda Lima, Disciplina de Pneumologia FMUSP / Medicina Interna — Clínica Médica USP (capturas usadas como base para os slides de diagnóstico funcional, controle, início de tratamento e desafios do tratamento).</li>
+   <li><b>ATS/ERS.</b> Critérios de interpretação de testes de função pulmonar e de resposta broncodilatadora (referência de 2005 mantida para o critério ≥12% e ≥200 mL).</li>
+   <li><b>Pizzichini MMM, Carvalho-Pinto RM, Cançado JED, et al.</b> Recomendações para o manejo da asma da Sociedade Brasileira de Pneumologia e Tisiologia. <i>J Bras Pneumol</i>, 2020.</li>
+   <li><b>Porsbjerg C, et al.</b> Domínios fisiopatológicos da asma (hiper-responsividade, resposta imune aberrante, remodelamento estrutural e imune). <i>Lancet Respir Med</i>, 2025.</li>
+  </ol>
+  <div class="bx bx-ambar"><p style="margin:0"><b>Aviso de uso:</b> material educacional. Doses, dispositivos e disponibilidade variam com a formulação, a aprovação regulatória e o protocolo institucional. Confira sempre o rótulo e a rotina do seu serviço. <b>Não substitui avaliação médica individual.</b></p></div>
+  <p class="frase">Na asma grave, o pulmão não está vazio pedindo ar; está cheio, preso e cansado tentando expulsá-lo.</p>
+  <div class="assin">Dr. André Rossanno</div>
+  <p class="mono" style="text-align:right;color:var(--ink2);font-size:12px">memoriapotencial.com.br · © 2026 — uso comercial proibido</p>
+  <div class="nsrc" hidden>
+   <div class="nb"><b>Encerramento</b>Feche voltando à pergunta da capa: por que ela sentia falta de ar se estava cheia de ar? Quem sabe responder isso conduz a crise inteira.</div>
+  </div>
+ </div>
+</section>
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <button id="bPrev" aria-label="Slide anterior">‹</button>
+  <button id="bNext" aria-label="Próximo slide">›</button>
+</div>
+
+<div class="notas" id="notas" aria-live="polite">
+  <button class="btn fechar" id="bFechaNotas">Fechar</button>
+  <h4>Notas de fala do professor</h4>
+  <div id="notasBody"></div>
+  <div class="fonte" id="notasFonte"></div>
+</div>
+
+<div class="idx" id="idx" role="dialog" aria-label="Índice de slides">
+  <h3>Índice — clique para ir ao slide</h3>
+  <div class="idxg" id="idxg"></div>
+</div>
+
+<script>
+/* ================= estado e montagem ================= */
+var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var total = slides.length;
+var atual = 0;
+
+/* numera o trilho, o kicker e monta o índice */
+var idxg = document.getElementById('idxg');
+slides.forEach(function(s, i){
+  var num = String(i+1).padStart(2,'0');
+  var rn = s.querySelector('.rn'); if(rn) rn.textContent = num;
+  var kn = s.querySelector('.kn'); if(kn) kn.textContent = num + ' / ' + total;
+
+  var b = document.createElement('button');
+  var eCaso = s.classList.contains('caso');
+  if(eCaso) b.className = 'ec';
+  b.innerHTML = '<i>' + num + ' · ' + (s.dataset.t || '') + '</i>' + (eCaso ? '🚨 ' : '') + (s.dataset.tit || '');
+  b.addEventListener('click', function(){ ir(i); fecharIdx(); });
+  idxg.appendChild(b);
+});
+
+function ir(i){
+  if(i < 0) i = 0; if(i > total-1) i = total-1;
+  slides[atual].classList.remove('on');
+  atual = i;
+  slides[atual].classList.add('on');
+  window.scrollTo(0,0);
+  document.getElementById('conta').textContent = String(atual+1).padStart(2,'0') + '/' + total;
+  document.getElementById('progi').style.width = ((atual+1)/total*100) + '%';
+  montarNotas();
+}
+function prox(){ ir(atual+1); }
+function ante(){ ir(atual-1); }
+
+/* ================= cortina "escreva primeiro" ================= */
+document.querySelectorAll('.cortina .rv').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var r = btn.parentElement.querySelector('.resp');
+    if(!r) return;
+    r.classList.add('on');
+    btn.style.display = 'none';
+  });
+});
+function revelarAtual(){
+  var b = slides[atual].querySelector('.cortina .rv');
+  if(b && b.style.display !== 'none') b.click();
+}
+
+/* ================= notas de fala ================= */
+var notas = document.getElementById('notas');
+function montarNotas(){
+  var src = slides[atual].querySelector('.nsrc');
+  document.getElementById('notasBody').innerHTML = src ? src.innerHTML : '<div class="nb">Sem notas para este slide.</div>';
+  var chips = slides[atual].querySelectorAll('.rail .chip');
+  var txt = [];
+  chips.forEach(function(c){ txt.push(c.textContent.trim()); });
+  document.getElementById('notasFonte').innerHTML = txt.length ? '<b>Procedência deste slide:</b> ' + txt.join(' · ') : '';
+}
+function toggleNotas(){
+  notas.classList.toggle('on');
+  document.getElementById('bNot').classList.toggle('on', notas.classList.contains('on'));
+}
+document.getElementById('bNot').addEventListener('click', toggleNotas);
+document.getElementById('bFechaNotas').addEventListener('click', toggleNotas);
+
+/* ================= índice ================= */
+var idx = document.getElementById('idx');
+function abrirIdx(){ idx.classList.add('on'); document.getElementById('bIdx').classList.add('on'); }
+function fecharIdx(){ idx.classList.remove('on'); document.getElementById('bIdx').classList.remove('on'); }
+function toggleIdx(){ idx.classList.contains('on') ? fecharIdx() : abrirIdx(); }
+document.getElementById('bIdx').addEventListener('click', toggleIdx);
+idx.addEventListener('click', function(e){ if(e.target === idx) fecharIdx(); });
+
+/* ================= modo projeção e tela cheia ================= */
+document.getElementById('bPrj').addEventListener('click', function(){
+  document.body.classList.toggle('aprs');
+  this.classList.toggle('on', document.body.classList.contains('aprs'));
+});
+document.getElementById('bFul').addEventListener('click', function(){
+  if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+  else if(document.exitFullscreen){ document.exitFullscreen(); }
+});
+
+/* ================= navegação ================= */
+document.getElementById('bPrev').addEventListener('click', ante);
+document.getElementById('bNext').addEventListener('click', prox);
+document.getElementById('prog').addEventListener('click', function(e){
+  var r = this.getBoundingClientRect();
+  ir(Math.round((e.clientX - r.left)/r.width * (total-1)));
+});
+document.addEventListener('keydown', function(e){
+  var k = e.key;
+  if(k === 'ArrowRight' || k === 'PageDown' || k === ' '){ e.preventDefault(); prox(); }
+  else if(k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); ante(); }
+  else if(k === 'Home'){ e.preventDefault(); ir(0); }
+  else if(k === 'End'){ e.preventDefault(); ir(total-1); }
+  else if(k === 'Escape'){ fecharIdx(); notas.classList.remove('on'); document.getElementById('bNot').classList.remove('on'); }
+  else if(k === 'r' || k === 'R'){ revelarAtual(); }
+  else if(k === 'n' || k === 'N'){ toggleNotas(); }
+  else if(k === 'g' || k === 'G'){ toggleIdx(); }
+  else if(k === 'p' || k === 'P'){ document.getElementById('bPrj').click(); }
+  else if(k === 'f' || k === 'F'){ document.getElementById('bFul').click(); }
+});
+
+/* toque: arrastar para os lados */
+var x0 = null, y0 = null;
+document.addEventListener('touchstart', function(e){ x0 = e.changedTouches[0].clientX; y0 = e.changedTouches[0].clientY; }, {passive:true});
+document.addEventListener('touchend', function(e){
+  if(x0 === null) return;
+  var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){ dx < 0 ? prox() : ante(); }
+  x0 = null; y0 = null;
+}, {passive:true});
+
+/* início */
+ir(0);
+</script>
+</body>
+</html>

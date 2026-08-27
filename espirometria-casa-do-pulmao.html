@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espirometria do Zero — A Casa do Pulmão | Dr. André Rossanno</title>
+<meta name="description" content="Aula interativa de espirometria: CVF, VEF1, VEF1/CVF, obstrução, restrição, asma e DPOC pela metáfora da Casa do Pulmão.">
+<style>
+/* ============================================================
+   ESPIROMETRIA DO ZERO — A CASA DO PULMÃO
+   Arquivo único, offline, sem bibliotecas externas.
+   Dr. André Rossanno — memoriapotencial.com.br
+   ============================================================ */
+:root{
+  --papel:#f4f7fa;
+  --carta:#ffffff;
+  --tinta:#12293d;
+  --tinta-2:#41596e;
+  --linha:#d8e3ec;
+
+  --azul:#1282A2;          /* normalidade / conceito */
+  --azul-fundo:#e4f2f7;
+  --azul-forte:#0b5f79;
+
+  --obst:#d1572c;          /* obstrução */
+  --obst-fundo:#fdeee7;
+
+  --verde:#1e8f5e;         /* melhora / resposta */
+  --verde-fundo:#e6f5ee;
+
+  --roxo:#6d4aa8;          /* asma */
+  --roxo-fundo:#f0eafb;
+
+  --dpoc:#7a6a52;          /* DPOC */
+  --dpoc-fundo:#f1ede4;
+
+  --ouro:#a8791b;          /* pegadinha de prova */
+  --ouro-fundo:#fdf3d9;
+
+  --u:9px;                 /* unidade tipográfica: definida por JS */
+  --r:calc(var(--u)*1.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(circle at 12% 8%, #eaf3f8 0%, transparent 45%),
+    radial-gradient(circle at 88% 92%, #f6efe6 0%, transparent 45%),
+    var(--papel);
+  color:var(--tinta);
+  font-family:'Nunito','Trebuchet MS',Arial,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid var(--azul);outline-offset:3px}
+
+/* ---------- palco 16:9 ---------- */
+#palco{
+  position:relative;
+  width:min(100vw, calc((100vh - 74px) * 16 / 9));
+  height:min(calc(100vh - 74px), calc(100vw * 9 / 16));
+  background:var(--carta);
+  border-radius:calc(var(--u)*1.6);
+  box-shadow:0 calc(var(--u)*2) calc(var(--u)*6) rgba(18,41,61,.13);
+  overflow:hidden;
+}
+.slide{
+  position:absolute;inset:0;
+  padding:calc(var(--u)*4) calc(var(--u)*5.5);
+  display:none;
+  flex-direction:column;
+  overflow:auto;
+  animation:entra .34s ease both;
+}
+.slide.ativo{display:flex}
+@keyframes entra{from{opacity:0;transform:translateY(calc(var(--u)*1.6))}to{opacity:1;transform:none}}
+body.sem-mov .slide{animation:none}
+body.sem-mov *{transition:none!important;animation-duration:.001s!important}
+
+/* ---------- tipografia ---------- */
+.kicker{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  font-size:calc(var(--u)*1.35);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--azul);font-weight:700;margin-bottom:calc(var(--u)*1.2)}
+.kicker.k-obst{color:var(--obst)} .kicker.k-asma{color:var(--roxo)}
+.kicker.k-dpoc{color:var(--dpoc)} .kicker.k-ouro{color:var(--ouro)}
+.kicker.k-verde{color:var(--verde)}
+h1{font-size:calc(var(--u)*6.4);line-height:1.02;font-weight:900;letter-spacing:-.02em}
+h2{font-size:calc(var(--u)*4.3);line-height:1.06;font-weight:900;letter-spacing:-.015em}
+h3{font-size:calc(var(--u)*2.8);line-height:1.15;font-weight:800}
+p,li{font-size:calc(var(--u)*2.05);line-height:1.42;color:var(--tinta-2)}
+.grande{font-size:calc(var(--u)*3);line-height:1.25;color:var(--tinta);font-weight:700}
+.pequeno{font-size:calc(var(--u)*1.5);line-height:1.4}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
+.centro{text-align:center}
+.assin{font-family:'Dancing Script','Segoe Script',cursive;font-size:calc(var(--u)*3.4);color:var(--tinta)}
+strong{color:var(--tinta)}
+.sp{margin-top:calc(var(--u)*2)}
+.sp3{margin-top:calc(var(--u)*3)}
+
+/* frase entre aspas, recorrente na aula */
+.fala{
+  font-size:calc(var(--u)*2.5);line-height:1.3;font-style:italic;font-weight:700;
+  color:var(--tinta);border-left:calc(var(--u)*.55) solid var(--azul);
+  padding-left:calc(var(--u)*1.6);
+}
+.fala.f-obst{border-color:var(--obst)} .fala.f-asma{border-color:var(--roxo)}
+.fala.f-dpoc{border-color:var(--dpoc)} .fala.f-ouro{border-color:var(--ouro)}
+.filo{
+  font-size:calc(var(--u)*2.2);font-style:italic;color:var(--tinta-2);
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+  padding:calc(var(--u)*1.4) 0;
+}
+
+/* ---------- estruturas ---------- */
+.linha-2{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*3);align-items:center;flex:1}
+.linha-3{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*2);align-items:stretch}
+.corpo{flex:1;display:flex;flex-direction:column;justify-content:center;gap:calc(var(--u)*2)}
+.cartao{
+  background:var(--carta);border:calc(var(--u)*.2) solid var(--linha);
+  border-radius:var(--r);padding:calc(var(--u)*2.2);
+}
+.cartao.c-azul{background:var(--azul-fundo);border-color:#bcdfeb}
+.cartao.c-obst{background:var(--obst-fundo);border-color:#f3cdbc}
+.cartao.c-verde{background:var(--verde-fundo);border-color:#bde3d0}
+.cartao.c-asma{background:var(--roxo-fundo);border-color:#d7c8f0}
+.cartao.c-dpoc{background:var(--dpoc-fundo);border-color:#ddd3c0}
+.cartao.c-ouro{background:var(--ouro-fundo);border-color:#eddba8}
+.rotulo{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.3);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.85}
+
+/* ---------- botões ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:calc(var(--u)*.8);
+  background:var(--azul);color:#fff;font-weight:800;
+  font-size:calc(var(--u)*1.9);padding:calc(var(--u)*1.2) calc(var(--u)*2.4);
+  border-radius:calc(var(--u)*.9);transition:transform .15s, box-shadow .15s, background .15s;
+  box-shadow:0 calc(var(--u)*.4) 0 rgba(0,0,0,.12);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn.b-obst{background:var(--obst)} .btn.b-verde{background:var(--verde)}
+.btn.b-asma{background:var(--roxo)} .btn.b-dpoc{background:var(--dpoc)}
+.btn.b-ouro{background:var(--ouro)}
+.btn.b-vazado{background:transparent;color:var(--azul);box-shadow:inset 0 0 0 calc(var(--u)*.25) var(--azul)}
+.btn-fila{display:flex;flex-wrap:wrap;gap:calc(var(--u)*1.2)}
+
+/* ---------- quiz ---------- */
+.quiz{display:flex;flex-direction:column;gap:calc(var(--u)*1.1)}
+.opc{
+  display:flex;align-items:flex-start;gap:calc(var(--u)*1.2);text-align:left;
+  background:#fff;border:calc(var(--u)*.22) solid var(--linha);border-radius:calc(var(--u)*.9);
+  padding:calc(var(--u)*1.25) calc(var(--u)*1.6);font-size:calc(var(--u)*1.85);
+  font-weight:700;color:var(--tinta);transition:border-color .15s,background .15s,transform .12s;
+}
+.opc:hover{border-color:var(--azul);transform:translateX(3px)}
+.opc .marca{font-family:'IBM Plex Mono',monospace;color:var(--azul);font-weight:800;min-width:calc(var(--u)*2)}
+.opc.certa{background:var(--verde-fundo);border-color:var(--verde);color:#12603f}
+.opc.errada{background:var(--obst-fundo);border-color:var(--obst);color:#8f331a}
+.opc.mostra-certa{background:var(--verde-fundo);border-color:var(--verde)}
+.opc[disabled]{cursor:default;transform:none}
+.feedback{
+  display:none;border-radius:calc(var(--u)*.9);padding:calc(var(--u)*1.6);
+  font-size:calc(var(--u)*1.8);line-height:1.35;
+  background:var(--azul-fundo);border-left:calc(var(--u)*.5) solid var(--azul);color:var(--tinta);
+}
+.feedback.aberto{display:block;animation:entra .3s ease both}
+.feedback b{color:var(--azul-forte)}
+
+/* revelação manual (modo ocultar respostas) */
+.oculto.escondido{display:none!important}
+.btn-revelar{
+  align-self:flex-start;background:var(--ouro-fundo);color:var(--ouro);
+  box-shadow:inset 0 0 0 calc(var(--u)*.25) var(--ouro);
+  font-weight:800;font-size:calc(var(--u)*1.7);
+  padding:calc(var(--u)*.9) calc(var(--u)*2);border-radius:calc(var(--u)*.9);
+  display:none;
+}
+.btn-revelar.visivel{display:inline-flex;align-items:center;gap:calc(var(--u)*.7)}
+
+/* ---------- barra inferior ---------- */
+#barra{
+  width:min(100vw, calc((100vh - 74px) * 16 / 9));
+  display:flex;align-items:center;gap:calc(var(--u)*1);
+  padding:calc(var(--u)*.9) calc(var(--u)*1.4);
+}
+.ctrl{
+  background:#fff;border:1px solid var(--linha);border-radius:calc(var(--u)*.8);
+  padding:calc(var(--u)*.75) calc(var(--u)*1.3);font-weight:800;
+  font-size:calc(var(--u)*1.45);color:var(--tinta);
+  display:inline-flex;align-items:center;gap:calc(var(--u)*.6);transition:background .15s,color .15s;
+}
+.ctrl:hover{background:var(--azul-fundo)}
+.ctrl.on{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+.ctrl.discreto{opacity:.72;font-weight:700}
+#contador{font-family:'IBM Plex Mono',monospace;font-weight:700;
+  font-size:calc(var(--u)*1.4);color:var(--tinta-2);min-width:calc(var(--u)*6);text-align:center}
+#trilho{flex:1;height:calc(var(--u)*.7);background:#dde7ef;border-radius:99px;overflow:hidden;cursor:pointer}
+#preenche{height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--verde));
+  border-radius:99px;transition:width .3s ease}
+
+/* ---------- mapa da aula ---------- */
+#mapa{
+  position:fixed;inset:0;background:rgba(10,26,38,.93);z-index:60;
+  display:none;flex-direction:column;padding:3vh 4vw;overflow:auto;
+}
+#mapa.aberto{display:flex}
+#mapa h3{color:#fff;font-size:calc(var(--u)*3);margin-bottom:calc(var(--u)*.6)}
+#mapa .pequeno{color:#9fc0d4}
+#mapaGrade{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:calc(var(--u)*1);margin-top:calc(var(--u)*2);
+}
+.mapa-item{
+  text-align:left;color:#eaf3f8;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);border-radius:calc(var(--u)*.8);
+  padding:calc(var(--u)*1.1) calc(var(--u)*1.3);font-size:calc(var(--u)*1.5);font-weight:700;
+  display:flex;gap:calc(var(--u)*1);transition:background .15s;
+}
+.mapa-item:hover{background:rgba(255,255,255,.18)}
+.mapa-item .n{font-family:'IBM Plex Mono',monospace;color:#6fc4dd;min-width:calc(var(--u)*2.6)}
+.mapa-item.atual{background:var(--azul);border-color:var(--azul)}
+
+/* ---------- modo professor ---------- */
+#prof{
+  position:fixed;right:0;top:0;bottom:0;width:min(30vw,400px);z-index:55;
+  background:#12293d;color:#dceaf3;padding:2.2vh 1.6vw;overflow:auto;
+  transform:translateX(102%);transition:transform .3s ease;box-shadow:-8px 0 24px rgba(0,0,0,.25);
+}
+#prof.aberto{transform:none}
+#prof .cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:calc(var(--u)*1.4)}
+#prof h4{font-size:calc(var(--u)*1.9);color:#fff}
+.prof-bloco{margin-bottom:calc(var(--u)*1.8)}
+.prof-bloco .rot{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.15);
+  letter-spacing:.12em;text-transform:uppercase;color:#6fc4dd;margin-bottom:calc(var(--u)*.4)}
+.prof-bloco p{font-size:calc(var(--u)*1.5);color:#dceaf3;line-height:1.4}
+#prof .fechar{background:rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;color:#fff;font-weight:800}
+
+/* ---------- desenhos ---------- */
+svg{display:block;max-width:100%;height:auto}
+.svg-cheio{width:100%;height:auto}
+.pulsa{animation:pulsa 1.8s ease-in-out infinite}
+@keyframes pulsa{0%,100%{opacity:1}50%{opacity:.55}}
+.dica{
+  display:inline-block;font-size:calc(var(--u)*1.4);font-weight:800;color:var(--azul);
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;
+}
+
+/* medidor grande de números */
+.num{font-family:'IBM Plex Mono',monospace;font-weight:700;
+  font-size:calc(var(--u)*4.4);line-height:1;color:var(--tinta)}
+.num.n-azul{color:var(--azul)} .num.n-obst{color:var(--obst)} .num.n-verde{color:var(--verde)}
+.unid{font-size:calc(var(--u)*1.7);color:var(--tinta-2);font-weight:700}
+
+/* sliders */
+.slider-linha{display:flex;align-items:center;gap:calc(var(--u)*1.2);margin:calc(var(--u)*.7) 0}
+.slider-linha label{font-size:calc(var(--u)*1.6);font-weight:800;min-width:calc(var(--u)*11)}
+.slider-linha output{font-family:'IBM Plex Mono',monospace;font-weight:700;
+  font-size:calc(var(--u)*1.7);min-width:calc(var(--u)*6);text-align:right}
+input[type=range]{flex:1;accent-color:var(--azul);height:calc(var(--u)*2.4)}
+input[type=range].r-verde{accent-color:var(--verde)}
+
+/* barras comparativas */
+.barra-cx{display:flex;align-items:flex-end;gap:calc(var(--u)*1.6);height:calc(var(--u)*16)}
+.barra{width:calc(var(--u)*4.6);border-radius:calc(var(--u)*.5) calc(var(--u)*.5) 0 0;
+  background:var(--azul);transition:height .35s ease;position:relative}
+.barra.b-pos{background:var(--verde)}
+.barra .tag{position:absolute;top:calc(var(--u)*-2.4);left:50%;transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.3);font-weight:700;white-space:nowrap}
+.barra .pe{position:absolute;bottom:calc(var(--u)*-2.2);left:50%;transform:translateX(-50%);
+  font-size:calc(var(--u)*1.25);font-weight:800;white-space:nowrap;color:var(--tinta-2)}
+
+/* placar / jogo */
+.placar{font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:calc(var(--u)*2.2)}
+.chip{display:inline-flex;align-items:center;gap:calc(var(--u)*.5);
+  background:#fff;border:1px solid var(--linha);border-radius:99px;
+  padding:calc(var(--u)*.5) calc(var(--u)*1.2);font-size:calc(var(--u)*1.4);font-weight:800}
+.chip.ok{background:var(--verde-fundo);border-color:var(--verde);color:#12603f}
+.chip.no{background:var(--obst-fundo);border-color:var(--obst);color:#8f331a}
+
+/* palácio */
+.palacio-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*1.2)}
+.sala{
+  text-align:left;border-radius:var(--r);padding:calc(var(--u)*1.4);
+  border:calc(var(--u)*.22) solid var(--linha);background:#fff;transition:transform .15s,border-color .15s;
+}
+.sala:hover{transform:translateY(-3px);border-color:var(--azul)}
+.sala .ic{font-size:calc(var(--u)*2.8);line-height:1}
+.sala .tit{font-size:calc(var(--u)*1.7);font-weight:900;margin-top:calc(var(--u)*.4)}
+.sala .desc{font-size:calc(var(--u)*1.35);color:var(--tinta-2);margin-top:calc(var(--u)*.4);display:none}
+.sala.aberta .desc{display:block}
+.sala.aberta{border-color:var(--azul);background:var(--azul-fundo)}
+
+@media (max-width:820px){
+  .linha-2,.linha-3,.palacio-grade{grid-template-columns:1fr}
+  #prof{width:86vw}
+}
+@media print{
+  #barra,#mapa,#prof{display:none!important}
+  .slide{display:flex!important;position:relative;page-break-after:always;height:auto}
+  .oculto.escondido{display:block!important}
+  .feedback{display:block!important}
+}
+</style>
+</head>
+<body>
+<div id="palco">
+
+<!-- ============ SLIDE 1 — ABERTURA ============ -->
+<section class="slide ativo" data-t="Abertura — a casa do pulmão">
+  <div class="linha-2">
+    <div>
+      <div class="kicker">Aula prática · Função pulmonar</div>
+      <h1>ESPIROMETRIA</h1>
+      <h3 class="sp" style="color:var(--azul)">O pulmão tentando escapar de uma casa</h3>
+      <p class="sp">Asma × DPOC para quem ainda acha que VEF1/CVF é senha de Wi‑Fi.</p>
+      <div class="fala sp3">“Se eu tenho ar dentro do pulmão, por que às vezes ele não consegue sair?”</div>
+      <p class="pequeno sp" style="color:var(--azul)">Guarde a pergunta. A aula inteira é a resposta.</p>
+    </div>
+    <div id="casaAbertura"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 — QUANTO × QUÃO RÁPIDO ============ -->
+<section class="slide" data-t="A única pergunta que importa">
+  <div class="kicker">Bloco 1 · Chunking</div>
+  <h2>A espirometria só faz duas perguntas</h2>
+  <div class="linha-2 sp">
+    <div>
+      <button class="btn" style="font-size:calc(var(--u)*3.2);padding:calc(var(--u)*2) calc(var(--u)*3)"
+              onclick="revelaBloco('r-quanto',this)">QUANTO?</button>
+      <div id="r-quanto" class="cartao c-azul sp" style="display:none">
+        <div class="rotulo" style="color:var(--azul)">🪣 Resposta 1</div>
+        <h3 class="sp" style="color:var(--azul)">CVF</h3>
+        <p class="sp">Quanto ar você consegue expulsar <strong>no total</strong>.</p>
+      </div>
+    </div>
+    <div>
+      <button class="btn b-obst" style="font-size:calc(var(--u)*3.2);padding:calc(var(--u)*2) calc(var(--u)*3)"
+              onclick="revelaBloco('r-rapido',this)">QUÃO RÁPIDO?</button>
+      <div id="r-rapido" class="cartao c-obst sp" style="display:none">
+        <div class="rotulo" style="color:var(--obst)">⏱️ Resposta 2</div>
+        <h3 class="sp" style="color:var(--obst)">VEF1</h3>
+        <p class="sp">Quanto ar sai no <strong>primeiro segundo</strong> da expiração forçada.</p>
+      </div>
+    </div>
+  </div>
+  <p class="pequeno sp3 centro" style="color:var(--tinta-2)">Todo o resto da aula nasce dessas duas perguntas.</p>
+</section>
+
+<!-- ============ SLIDE 3 — CVF: O BALDE ============ -->
+<section class="slide" data-t="CVF — o balde">
+  <div class="kicker">🪣 Primeiro símbolo</div>
+  <h2>CVF — Capacidade Vital Forçada</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div id="baldeCena"></div>
+      <div class="btn-fila sp centro">
+        <button class="btn" onclick="animaBalde()">INSPIRA FUNDO E SOPRA</button>
+      </div>
+    </div>
+    <div>
+      <div class="fala">“Todo o ar que consegui colocar para fora.”</div>
+      <p class="sp">Inspiração máxima → sopro forçado até não sair mais nada. O que caiu no balde é a CVF.</p>
+      <div class="cartao c-azul sp">
+        <div class="rotulo" style="color:var(--azul)">Pergunta mental</div>
+        <div class="grande sp">“QUANTO ar saiu no total?”</div>
+      </div>
+      <h3 class="sp3">Teste sua memória</h3>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>Ar eliminado no primeiro segundo</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>Todo o volume expirado forçadamente</span></button>
+        <button class="opc" data-ok="0"><span class="marca">C</span><span>Velocidade máxima do fluxo</span></button>
+      </div>
+      <div class="feedback"><b>B.</b> CVF é volume total, não velocidade e não tempo. Velocidade vem no próximo símbolo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 — VEF1: A CORRIDA DE 1 SEGUNDO ============ -->
+<section class="slide" data-t="VEF1 — a corrida de 1 segundo">
+  <div class="kicker k-obst">⏱️ Segundo símbolo</div>
+  <h2>VEF1 — Volume Expiratório Forçado no 1º segundo</h2>
+  <div class="linha-2 sp">
+    <div id="cronoCena"></div>
+    <div>
+      <div class="btn-fila"><button class="btn b-obst" onclick="animaCrono()">3… 2… 1… SOPRA!</button></div>
+      <div class="fala f-obst sp3">“Não quero saber tudo que saiu.<br>Quero saber quanto conseguiu escapar RAPIDAMENTE.”</div>
+      <div class="cartao c-obst sp">
+        <div class="rotulo" style="color:var(--obst)">Pergunta mental</div>
+        <div class="grande sp">“Quanto saiu RÁPIDO?”</div>
+      </div>
+      <p class="pequeno sp">O paciente continua soprando depois do 1º segundo — o VEF1 apenas fotografa esse primeiro instante.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5 — JUNTE OS DOIS ============ -->
+<section class="slide" data-t="Junte os dois — nasce a porta">
+  <div class="kicker">🚪 Terceiro símbolo</div>
+  <h2>Junte os dois e nasce a PORTA</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div class="cartao c-azul">
+        <div class="rotulo">Paciente 1</div>
+        <div class="sp"><span class="num n-azul">4,0</span> <span class="unid">L · CVF</span></div>
+        <div class="sp"><span class="num n-azul">3,2</span> <span class="unid">L · VEF1</span></div>
+      </div>
+      <div class="fala sp3">“Que porcentagem do ar saiu no primeiro segundo?”</div>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>50%</span></button>
+        <button class="opc" data-ok="0"><span class="marca">B</span><span>64%</span></button>
+        <button class="opc" data-ok="1"><span class="marca">C</span><span>80%</span></button>
+      </div>
+      <div class="feedback">
+        <b>3,2 ÷ 4,0 = 0,80</b> → VEF1/CVF = <b>80%</b>. Oitenta por cento de tudo que havia para sair já saiu no primeiro segundo. Porta larga.
+      </div>
+    </div>
+    <div><div id="portaS5"></div></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 — PRIMEIRO PACIENTE PROBLEMA ============ -->
+<section class="slide" data-t="Primeiro paciente-problema">
+  <div class="kicker k-obst">Raciocínio</div>
+  <h2>Segundo paciente. Mesma casa, outra história.</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div class="cartao c-obst">
+        <div class="rotulo" style="color:var(--obst)">Paciente 2</div>
+        <div class="sp"><span class="num n-obst">4,0</span> <span class="unid">L · CVF</span></div>
+        <div class="sp"><span class="num n-obst">2,0</span> <span class="unid">L · VEF1</span></div>
+      </div>
+      <div class="fala f-obst sp3">“O pulmão tem ar. Então qual parece ser o problema?”</div>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>Falta de ar dentro do pulmão</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>O ar está tendo dificuldade para sair rapidamente</span></button>
+        <button class="opc" data-ok="0"><span class="marca">C</span><span>O pulmão possui volume aumentado</span></button>
+      </div>
+      <div class="feedback">
+        <b>2,0 ÷ 4,0 = 0,50.</b> A casa continua com 4 litros. O que mudou foi a <b>saída</b>: metade do ar ficou para trás no primeiro segundo. Porta estreita → <b>OBSTRUÇÃO</b>.
+      </div>
+    </div>
+    <div><div id="portaS6"></div></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7 — A GRANDE IMAGEM MENTAL ============ -->
+<section class="slide" data-t="Obstrução = porta estreita">
+  <div class="centro"><div class="kicker k-obst" style="text-align:center">Imagem-mãe da aula</div></div>
+  <h2 class="centro" style="color:var(--obst)">🚧 OBSTRUÇÃO = PORTA ESTREITA</h2>
+  <div class="linha-2 sp" style="align-items:center">
+    <div id="casaCongest"></div>
+    <div>
+      <div class="fala f-obst">“O problema não é necessariamente quanto existe dentro da casa.<br>O problema é a velocidade com que consegue sair.”</div>
+      <p class="sp3">Casa de tamanho normal. Cheia de ar. Mas a saída virou um gargalo — e forma‑se fila.</p>
+      <div class="cartao c-ouro sp">
+        <div class="rotulo" style="color:var(--ouro)">Guarde assim</div>
+        <p class="sp">Obstrução é um problema de <strong>fluxo</strong>, não de estoque.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8 — O BAIRRO DA OBSTRUÇÃO ============ -->
+<section class="slide" data-t="Quem mora no bairro da obstrução?">
+  <div class="kicker">Duas casas, a mesma porta estreita</div>
+  <h2>Quem mora no bairro da obstrução?</h2>
+  <div class="linha-2 sp">
+    <div class="centro">
+      <div id="casaAsma8"></div>
+      <h3 style="color:var(--roxo)">ASMA</h3>
+    </div>
+    <div class="centro">
+      <div id="casaDpoc8"></div>
+      <h3 style="color:var(--dpoc)">DPOC</h3>
+    </div>
+  </div>
+  <div class="centro sp3">
+    <div class="fala" style="border:none;padding:0;font-style:italic">“As duas têm a porta estreita. Então como vou diferenciá‑las?”</div>
+    <div class="btn-fila sp" style="justify-content:center">
+      <button class="btn b-verde" onclick="revelaBloco('r-bd8',this)">💨💊 DÊ O BRONCODILATADOR</button>
+    </div>
+    <div id="r-bd8" class="cartao c-verde sp" style="display:none;max-width:70%;margin:calc(var(--u)*2) auto 0">
+      <p>O broncodilatador não entrega o nome da doença. Ele responde a outra pergunta: <strong>essa porta muda?</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9 — ASMA: A PORTA SANFONADA ============ -->
+<section class="slide" data-t="Asma — a porta sanfonada">
+  <div class="kicker k-asma">🪗 Personagem 1</div>
+  <h2 style="color:var(--roxo)">ASMA — a porta sanfonada</h2>
+  <div class="linha-2 sp">
+    <div id="portaAsma"></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn b-asma" onclick="asmaEstado('crise')">Momento de crise</button>
+        <button class="btn b-verde" onclick="asmaEstado('bd')">💨 Broncodilatador</button>
+        <button class="btn b-vazado" onclick="asmaEstado('bem')">Dia bom</button>
+      </div>
+      <h2 class="sp3" style="color:var(--roxo);font-size:calc(var(--u)*5)">VARIABILIDADE</h2>
+      <p class="sp">A asma é uma <strong>limitação variável do fluxo expiratório</strong>. A mesma porta pode estar estreita à noite, quase normal pela manhã e abrir depois do broncodilatador.</p>
+      <div class="cartao c-ouro sp">
+        <div class="rotulo" style="color:var(--ouro)">Não simplifique</div>
+        <p class="sp">Asma não é apenas “reversível”. O conceito maior é <strong>variação do fluxo ao longo do tempo</strong>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10 — DPOC: A PORTA ENFERRUJADA ============ -->
+<section class="slide" data-t="DPOC — a porta enferrujada">
+  <div class="kicker k-dpoc">🚪 Personagem 2</div>
+  <h2 style="color:var(--dpoc)">DPOC — a porta enferrujada</h2>
+  <div class="linha-2 sp">
+    <div id="portaDpoc"></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn b-dpoc" onclick="dpocEstado('pre')">Pré‑broncodilatador</button>
+        <button class="btn b-verde" onclick="dpocEstado('pos')">💨 Pós‑broncodilatador</button>
+      </div>
+      <p class="sp3">A porta abre <strong>um pouco</strong> — e continua anormalmente estreita. A limitação ao fluxo <strong>persiste</strong>.</p>
+      <div class="cartao c-ouro sp">
+        <div class="rotulo" style="color:var(--ouro)">⚠️ Pegadinha de prova</div>
+        <div class="grande sp">“Se houve resposta ao broncodilatador, obrigatoriamente é asma.”</div>
+        <div class="quiz sp" data-quiz>
+          <button class="opc" data-ok="0"><span class="marca">V</span><span>VERDADEIRO</span></button>
+          <button class="opc" data-ok="1"><span class="marca">F</span><span>FALSO</span></button>
+        </div>
+        <div class="feedback"><b>FALSO.</b> Pacientes com DPOC também podem melhorar após broncodilatador. A magnitude da resposta, isoladamente, não estabelece o diagnóstico diferencial.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11 — FRASE DE OURO ============ -->
+<section class="slide" data-t="Frase de ouro">
+  <div class="corpo centro" style="gap:calc(var(--u)*1.4)">
+    <div class="kicker k-ouro" style="text-align:center">Âncora de memória</div>
+    <h2 style="font-size:calc(var(--u)*5.4)">A <span style="color:var(--azul)">RELAÇÃO</span> encontra a <span style="color:var(--obst)">🚧 OBSTRUÇÃO</span></h2>
+    <div id="fraseParte2" style="visibility:hidden">
+      <h2 style="font-size:calc(var(--u)*5.4)">O <span style="color:var(--verde)">BRONCODILATADOR</span> investiga a <span style="color:var(--roxo)">🔄 VARIAÇÃO</span></h2>
+    </div>
+    <div class="btn-fila sp" style="justify-content:center">
+      <button class="btn b-ouro" onclick="document.getElementById('fraseParte2').style.visibility='visible';this.style.display='none'">REVELAR A SEGUNDA METADE</button>
+    </div>
+    <p class="filo sp3" style="max-width:70%;margin:0 auto">“O número é apenas a sombra do fenômeno fisiológico.”</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 12 — CURVA FLUXO-VOLUME DO ZERO ============ -->
+<section class="slide" data-t="Curva fluxo-volume: os eixos">
+  <div class="kicker">Antes do gráfico, os eixos</div>
+  <h2>Curva fluxo‑volume — do zero</h2>
+  <div class="linha-2 sp">
+    <div id="eixosCena"></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn" onclick="eixoPasso(1)">Eixo vertical</button>
+        <button class="btn" onclick="eixoPasso(2)">Eixo horizontal</button>
+        <button class="btn b-verde" onclick="eixoPasso(3)">Construir a curva</button>
+      </div>
+      <div class="cartao c-azul sp3">
+        <div class="rotulo" style="color:var(--azul)">↕ Fluxo</div>
+        <p class="sp">“Quão rápido o ar está saindo agora?” — litros por segundo.</p>
+      </div>
+      <div class="cartao sp">
+        <div class="rotulo">↔ Volume</div>
+        <p class="sp">“Quanto ar já saiu até aqui?” — litros acumulados.</p>
+      </div>
+      <p class="pequeno sp">O ponto caminha da esquerda para a direita enquanto o pulmão esvazia. A curva não é um desenho pronto: ela é <strong>construída</strong> durante o sopro.</p>
+      <p class="pequeno sp" style="color:var(--tinta-2)">Nesta aula mostramos apenas a alça <strong>expiratória</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 13 — CURVA NORMAL ============ -->
+<section class="slide" data-t="A curva normal">
+  <div class="kicker">Anatomia do sopro</div>
+  <h2>A curva normal</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div id="curvaNormal"></div>
+      <div class="btn-fila sp centro"><button class="btn" onclick="animaSopro('curvaNormal')">▶ ANIMAR SOPRO</button></div>
+    </div>
+    <div>
+      <ol style="list-style:none;display:flex;flex-direction:column;gap:calc(var(--u)*.9)">
+        <li><span class="mono" style="color:var(--azul);font-weight:800">1 ·</span> início da expiração</li>
+        <li><span class="mono" style="color:var(--azul);font-weight:800">2 ·</span> subida rápida do fluxo</li>
+        <li><span class="mono" style="color:var(--azul);font-weight:800">3 ·</span> pico de fluxo expiratório</li>
+        <li><span class="mono" style="color:var(--azul);font-weight:800">4 ·</span> queda progressiva, quase reta</li>
+        <li><span class="mono" style="color:var(--azul);font-weight:800">5 ·</span> fim da expiração — o balde esvaziou</li>
+      </ol>
+      <div class="cartao c-azul sp3">
+        <p>O pico chega <strong>cedo</strong> e a descida é <strong>retilínea</strong>. Guarde esse contorno: é a régua de comparação de tudo que vem a seguir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 14 — ALGUÉM MORDEU A CURVA ============ -->
+<section class="slide" data-t="Obstrução — alguém mordeu a curva">
+  <div class="kicker k-obst">Imagem mental</div>
+  <h2>Alguém deu uma mordida na barriga da curva</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div id="curvaMordida"></div>
+      <div class="btn-fila sp centro">
+        <button class="btn b-obst" onclick="morde()">🦷 MORDER A CURVA</button>
+        <button class="btn b-vazado" onclick="desmorde()">Voltar ao normal</button>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:var(--obst)">CONCAVIDADE EXPIRATÓRIA</h3>
+      <p class="sp">Na obstrução, a descida deixa de ser reta e “afunda” para dentro. O fluxo despenca cedo e o final do sopro se arrasta.</p>
+      <div class="fala f-obst sp3">“A curva obstruída tem a barriga mordida.”</div>
+      <p class="sp">Compare as duas ao lado e escolha:</p>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>A curva de descida reta</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>A curva com a barriga escavada</span></button>
+      </div>
+      <div class="feedback"><b>B.</b> Concavidade + pico mais baixo + cauda longa = padrão obstrutivo. A relação VEF1/CVF confirma numericamente o que o olho já viu.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 15 — O ALUNO DIAGNOSTICA ============ -->
+<section class="slide" data-t="Você diagnostica: três curvas">
+  <div class="kicker">Retrieval practice</div>
+  <h2>“Qual parece ter uma porta estreita?”</h2>
+  <div class="linha-3 sp">
+    <div class="centro"><div id="curvaA"></div><h3>A</h3></div>
+    <div class="centro"><div id="curvaB"></div><h3>B</h3></div>
+    <div class="centro"><div id="curvaC"></div><h3>C</h3></div>
+  </div>
+  <div class="quiz sp" data-quiz style="flex-direction:row">
+    <button class="opc" data-ok="0" style="flex:1"><span class="marca">A</span><span>Curva A</span></button>
+    <button class="opc" data-ok="1" style="flex:1"><span class="marca">B</span><span>Curva B</span></button>
+    <button class="opc" data-ok="0" style="flex:1"><span class="marca">C</span><span>Curva C</span></button>
+  </div>
+  <div class="feedback"><b>B é a obstrutiva</b> — pico baixo e barriga escavada. <b>A é normal</b>. <b>C é estreita e alta</b>: pouco volume total com contorno preservado — aspecto <b>sugestivo de restrição</b>, que ainda precisa ser confirmado.</div>
+</section>
+
+<!-- ============ SLIDE 16 — RESTRIÇÃO: NÃO É A PORTA ============ -->
+<section class="slide" data-t="Restrição = casa pequena">
+  <div class="kicker">Quarto símbolo</div>
+  <h2>🏠 RESTRIÇÃO = CASA PEQUENA</h2>
+  <div class="linha-2 sp">
+    <div class="centro">
+      <div id="casaObst16"></div>
+      <h3 class="sp" style="color:var(--obst)">Obstrução</h3>
+      <p class="pequeno">casa normal + porta estreita</p>
+    </div>
+    <div class="centro">
+      <div id="casaRestr16"></div>
+      <h3 class="sp" style="color:var(--azul)">Restrição</h3>
+      <p class="pequeno">casa pequena + porta proporcionalmente normal</p>
+    </div>
+  </div>
+  <div class="cartao c-azul sp3">
+    <p>Na restrição a porta não precisa estar estreita. Simplesmente há <strong>menos volume disponível</strong> dentro da casa.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 17 — COMO A RESTRIÇÃO APARECE ============ -->
+<section class="slide" data-t="Como a restrição aparece">
+  <div class="kicker">Leitura dos números</div>
+  <h2>Como a restrição costuma aparecer</h2>
+  <div class="linha-3 sp">
+    <div class="cartao c-azul centro"><div class="rotulo">CVF</div><div class="num n-azul sp">↓</div><p class="pequeno sp">reduzida</p></div>
+    <div class="cartao c-azul centro"><div class="rotulo">VEF1</div><div class="num n-azul sp">↓</div><p class="pequeno sp">reduzido proporcionalmente</p></div>
+    <div class="cartao c-verde centro"><div class="rotulo">VEF1/CVF</div><div class="num n-verde sp">=</div><p class="pequeno sp">normal ou até aumentada</p></div>
+  </div>
+  <div class="cartao c-ouro sp3">
+    <div class="rotulo" style="color:var(--ouro)">⚠️ Trava conceitual</div>
+    <h3 class="sp" style="color:var(--ouro)">A ESPIROMETRIA NÃO CONFIRMA RESTRIÇÃO SOZINHA.</h3>
+    <p class="sp">Ela apenas <strong>sugere</strong>. A confirmação exige a medida dos volumes pulmonares: <strong>CPT reduzida</strong>.</p>
+    <p class="pequeno sp">CPT = Capacidade Pulmonar Total — todo o ar contido no pulmão ao final de uma inspiração máxima, incluindo o volume que nunca é expirado. Por isso a espirometria não a enxerga.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 18 — ARMADILHA IMPORTANTÍSSIMA ============ -->
+<section class="slide" data-t="Armadilha — obstrutivo com CVF baixa">
+  <div class="kicker k-ouro">Armadilha importantíssima</div>
+  <h2>“Paciente obstrutivo com CVF baixa obrigatoriamente tem distúrbio misto?”</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">1</span><span>SIM</span></button>
+        <button class="opc" data-ok="1"><span class="marca">2</span><span>NÃO</span></button>
+      </div>
+      <div class="feedback">
+        <b>NÃO.</b> Na obstrução importante o ar não consegue sair por completo e fica <b>preso</b>. O volume que sobra dentro do tórax rouba espaço da manobra e a CVF cai — sem que exista qualquer doença restritiva.
+        <br><br>Para afirmar componente restritivo verdadeiro pode ser necessária a avaliação dos <b>volumes pulmonares / CPT</b>.
+      </div>
+    </div>
+    <div class="centro">
+      <div id="casaPreso"></div>
+      <h3 class="sp" style="color:var(--obst)">🎈 APRISIONAMENTO AÉREO</h3>
+      <p class="pequeno sp">Porta estreita + balões que não conseguem sair.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 19 — ALGORITMO VISUAL ============ -->
+<section class="slide" data-t="Algoritmo visual">
+  <div class="kicker">Síntese operacional</div>
+  <h2>O algoritmo em três perguntas</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div id="fluxoCena"></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn" onclick="fluxoPasso()">▶ Avançar no fluxograma</button>
+        <button class="btn b-vazado" onclick="fluxoReset()">Reiniciar</button>
+      </div>
+      <div id="fluxoTexto" class="cartao sp3"><p>Clique em avançar para percorrer o raciocínio passo a passo com a turma.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 20 — ASMA: O FILME ============ -->
+<section class="slide" data-t="Asma — o filme">
+  <div class="kicker k-asma">O mesmo paciente, quatro momentos</div>
+  <h2 style="color:var(--roxo)">Asma: o filme</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div id="filmeAsma"></div>
+      <div class="btn-fila sp centro">
+        <button class="btn b-asma" onclick="filme('manha')">☀️ Manhã</button>
+        <button class="btn b-asma" onclick="filme('noite')">🌙 Noite</button>
+        <button class="btn b-obst" onclick="filme('gatilho')">🏃 Exercício/alérgeno</button>
+        <button class="btn b-verde" onclick="filme('bd')">💨 Broncodilatador</button>
+      </div>
+    </div>
+    <div>
+      <div class="fala f-asma">“Qual palavra explica melhor essa doença?”</div>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>Restrição</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>Variabilidade</span></button>
+        <button class="opc" data-ok="0"><span class="marca">C</span><span>Fibrose</span></button>
+        <button class="opc" data-ok="0"><span class="marca">D</span><span>Volume</span></button>
+      </div>
+      <div class="feedback"><b>VARIABILIDADE.</b> A largura da porta muda com o horário, com o gatilho e com o tratamento. Nenhuma foto isolada conta a história inteira.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 21 — ESPIROMETRIA NORMAL EXCLUI ASMA? ============ -->
+<section class="slide" data-t="Espirometria normal exclui asma?">
+  <div class="corpo">
+    <div class="kicker k-ouro">Pergunta que derruba prova e plantão</div>
+    <h2 style="font-size:calc(var(--u)*5)">ESPIROMETRIA NORMAL <span style="color:var(--tinta-2)">=</span> SEM ASMA?</h2>
+    <div class="quiz sp" data-quiz style="flex-direction:row;max-width:60%">
+      <button class="opc" data-ok="0" style="flex:1"><span class="marca">1</span><span>SIM</span></button>
+      <button class="opc" data-ok="1" style="flex:1"><span class="marca">2</span><span>NÃO</span></button>
+    </div>
+    <div class="feedback">
+      <b>NÃO.</b> Justamente por ser variável, a asma pode ser examinada em um momento de função pulmonar normal ou quase normal — e o exame sai normal.
+      <br><br>O diagnóstico depende do <b>contexto clínico</b> somado à demonstração objetiva de <b>variabilidade</b> quando ela pode ser obtida (prova broncodilatadora, variação do PFE, teste de broncoprovocação, resposta ao tratamento).
+    </div>
+    <p class="filo sp3">“Antes de perguntar qual doença é, pergunte o que o pulmão está fazendo.”</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 22 — DPOC: O FILME ============ -->
+<section class="slide" data-t="DPOC — o filme">
+  <div class="kicker k-dpoc">Três ingredientes</div>
+  <h2 style="color:var(--dpoc)">DPOC: o filme</h2>
+  <div class="linha-3 sp">
+    <div class="cartao c-dpoc centro"><div class="num" style="font-size:calc(var(--u)*3.4)">🚬</div><h3 class="sp" style="font-size:calc(var(--u)*2.1)">Exposição de risco</h3><p class="pequeno sp">tabaco, biomassa, ocupacional</p></div>
+    <div class="cartao c-dpoc centro"><div class="num" style="font-size:calc(var(--u)*3.4)">🫁</div><h3 class="sp" style="font-size:calc(var(--u)*2.1)">Sintomas compatíveis</h3><p class="pequeno sp">dispneia progressiva, tosse, expectoração</p></div>
+    <div class="cartao c-dpoc centro"><div class="num" style="font-size:calc(var(--u)*3.4)">🚪</div><h3 class="sp" style="font-size:calc(var(--u)*2.1)">Limitação persistente</h3><p class="pequeno sp">demonstrada <strong>após</strong> broncodilatador</p></div>
+  </div>
+  <div class="linha-2 sp3" style="align-items:center">
+    <div id="filmeDpoc"></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn b-dpoc" onclick="filmeD('pre')">Pré‑BD</button>
+        <button class="btn b-verde" onclick="filmeD('pos')">Pós‑BD</button>
+      </div>
+      <p class="sp3">Melhorou alguma coisa? Pode. Voltou ao normal? Não. Na DPOC, a obstrução é caracterizada <strong>na avaliação pós‑broncodilatador</strong>, dentro do contexto clínico adequado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 23 — ASMA × DPOC ============ -->
+<section class="slide" data-t="Asma × DPOC">
+  <div class="kicker">Comparação</div>
+  <h2>Asma × DPOC — sem tabela gigante</h2>
+  <div class="linha-2 sp">
+    <div class="cartao c-asma">
+      <h3 style="color:var(--roxo)">🫁 ASMA</h3>
+      <p class="sp">🪗 porta sanfonada</p>
+      <p>🔄 variabilidade é o conceito central</p>
+      <p>💨 o broncodilatador pode gerar grande mudança</p>
+      <p>🕒 a função pulmonar pode variar muito com o tempo</p>
+    </div>
+    <div class="cartao c-dpoc">
+      <h3 style="color:var(--dpoc)">🚬 DPOC</h3>
+      <p class="sp">🚪 porta cronicamente estreita</p>
+      <p>🧱 limitação persistente ao fluxo</p>
+      <p>💨 o broncodilatador também pode melhorar o fluxo</p>
+      <p>🚬 o contexto de exposição é fundamental</p>
+    </div>
+  </div>
+  <div class="cartao c-ouro sp3 centro">
+    <h3 style="color:var(--ouro)">NÃO DIAGNOSTIQUE APENAS PELA RESPOSTA AO BRONCODILATADOR.</h3>
+    <p class="pequeno sp">Idade, exposição, padrão dos sintomas, variabilidade ao longo do tempo e persistência da obstrução compõem o diagnóstico. Existem ainda pacientes com características das duas doenças.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 24 — O QUE O BD ESTÁ TESTANDO ============ -->
+<section class="slide" data-t="Laboratório do broncodilatador">
+  <div class="kicker k-verde">Laboratório interativo</div>
+  <h2>O que o broncodilatador está testando?</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <div class="slider-linha"><label>VEF1 antes</label><input type="range" id="sVefPre" min="0.5" max="5" step="0.05" value="1.60" oninput="calcBD()"><output id="oVefPre">1,60 L</output></div>
+      <div class="slider-linha"><label>VEF1 depois</label><input type="range" class="r-verde" id="sVefPos" min="0.5" max="5" step="0.05" value="2.00" oninput="calcBD()"><output id="oVefPos">2,00 L</output></div>
+      <div class="slider-linha"><label>CVF antes</label><input type="range" id="sCvfPre" min="1" max="6" step="0.05" value="3.20" oninput="calcBD()"><output id="oCvfPre">3,20 L</output></div>
+      <div class="slider-linha"><label>CVF depois</label><input type="range" class="r-verde" id="sCvfPos" min="1" max="6" step="0.05" value="3.50" oninput="calcBD()"><output id="oCvfPos">3,50 L</output></div>
+      <div class="cartao sp" id="bdResultado"></div>
+    </div>
+    <div class="centro">
+      <div class="barra-cx" style="justify-content:center" id="bdBarras">
+        <div style="text-align:center"><div class="barra" id="bVefPre" style="height:40%"><span class="tag">VEF1</span><span class="pe">antes</span></div></div>
+        <div style="text-align:center"><div class="barra b-pos" id="bVefPos" style="height:50%"><span class="tag">VEF1</span><span class="pe">depois</span></div></div>
+        <div style="width:calc(var(--u)*2)"></div>
+        <div style="text-align:center"><div class="barra" id="bCvfPre" style="height:64%"><span class="tag">CVF</span><span class="pe">antes</span></div></div>
+        <div style="text-align:center"><div class="barra b-pos" id="bCvfPos" style="height:70%"><span class="tag">CVF</span><span class="pe">depois</span></div></div>
+      </div>
+      <p class="pequeno sp3" style="margin-top:calc(var(--u)*4)">Repare: às vezes o VEF1 quase não muda, mas a <strong>CVF</strong> sobe — o paciente esvaziou melhor porque desaprisionou ar. Isso também é resposta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 25 — CRITÉRIOS DE RESPOSTA ============ -->
+<section class="slide" data-t="Critérios de resposta broncodilatadora">
+  <div class="kicker">Números, agora com cuidado</div>
+  <h2>Critérios de resposta broncodilatadora</h2>
+  <div class="linha-2 sp">
+    <div class="cartao c-azul">
+      <div class="rotulo" style="color:var(--azul)">Critério clássico · adotado pelo GINA em adultos</div>
+      <h3 class="sp">↑ VEF1 ≥ 12% <span style="color:var(--tinta-2)">E</span> ≥ 200 mL</h3>
+      <p class="pequeno sp">Variação em relação ao valor pré‑broncodilatador. Em crianças, o GINA usa aumento do VEF1 &gt; 12% do previsto.</p>
+    </div>
+    <div class="cartao c-verde">
+      <div class="rotulo" style="color:var(--verde)">Padrão técnico ATS/ERS 2022 de interpretação</div>
+      <h3 class="sp">↑ &gt; 10% do valor previsto</h3>
+      <p class="pequeno sp">Para VEF1 <strong>ou</strong> CVF. Referenciar a variação ao previsto reduz o viés contra pacientes com valores basais muito baixos ou muito altos.</p>
+    </div>
+  </div>
+  <div class="cartao c-ouro sp">
+    <div class="rotulo" style="color:var(--ouro)">⚠️ ATENÇÃO: CRITÉRIOS DIFERENTES</div>
+    <p class="sp">Os dois critérios convivem na literatura e <strong>não classificam os mesmos pacientes</strong>. Sempre diga qual você usou. Na prática do diagnóstico de asma, muitos serviços mantêm o ≥12% e ≥200 mL por receio de subdiagnosticar com o corte do previsto.</p>
+  </div>
+  <div class="cartao c-obst sp centro">
+    <h3 style="color:var(--obst)">RESPOSTA ≠ DIAGNÓSTICO</h3>
+    <p class="pequeno sp">Um número isolado não transforma um paciente em asmático. Referências: GINA (asma), GOLD (DPOC), ATS/ERS (interpretação da espirometria) — sempre na versão vigente.</p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 26 — LLN E Z-SCORE ============ -->
+<section class="slide" data-t="LLN e z-score">
+  <div class="kicker">Por que “normal” não é um número só</div>
+  <h2>LLN e z‑score, sem estatística pesada</h2>
+  <div class="linha-2 sp">
+    <div id="gaussCena"></div>
+    <div>
+      <p>Uma mulher de 25 anos e um homem de 78 anos não deveriam ser medidos pela mesma régua. Idade, sexo, altura e ancestralidade mudam o valor <strong>esperado</strong>.</p>
+      <div class="cartao c-azul sp">
+        <div class="rotulo" style="color:var(--azul)">LLN — Limite Inferior da Normalidade</div>
+        <p class="sp">O ponto abaixo do qual estão os 5% mais baixos de pessoas saudáveis semelhantes ao seu paciente.</p>
+      </div>
+      <div class="cartao sp">
+        <div class="rotulo">Z‑SCORE</div>
+        <p class="sp">Quantos desvios‑padrão o paciente está do esperado. O LLN corresponde ao z‑score de −1,645.</p>
+      </div>
+      <div class="fala sp3">“Normal não é um número mágico igual para todo mundo.”</div>
+      <div class="btn-fila sp"><button class="btn" onclick="animaGauss()">Marcar o LLN na curva</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 27 — MAS E O 0,70 NA DPOC? ============ -->
+<section class="slide" data-t="O 0,70 da DPOC">
+  <div class="kicker k-dpoc">Discussão obrigatória</div>
+  <h2>Mas… e o 0,70 na DPOC?</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div class="cartao c-dpoc">
+        <div class="rotulo" style="color:var(--dpoc)">Critério operacional GOLD</div>
+        <h3 class="sp">VEF1/CVF pós‑BD &lt; 0,70</h3>
+        <p class="pequeno sp">Confirma a limitação persistente ao fluxo aéreo no paciente com sintomas e exposição compatíveis. É um corte fixo, escolhido por simplicidade e reprodutibilidade.</p>
+      </div>
+      <div class="cartao c-azul sp">
+        <div class="rotulo" style="color:var(--azul)">Interpretação fisiológica</div>
+        <h3 class="sp">VEF1/CVF abaixo do LLN</h3>
+        <p class="pequeno sp">Compara o paciente com seus semelhantes. É a lógica do laudo de função pulmonar.</p>
+      </div>
+    </div>
+    <div>
+      <div id="reguaIdade"></div>
+      <div class="slider-linha sp"><label>Idade</label><input type="range" id="sIdade" min="20" max="85" step="1" value="30" oninput="mexeIdade()"><output id="oIdade">30 anos</output></div>
+      <div id="idadeTexto" class="cartao sp"></div>
+      <div class="cartao c-ouro sp">
+        <p class="pequeno">Não são regras em conflito: são <strong>perguntas diferentes</strong>. Uma classifica a doença DPOC; a outra interpreta o exame. Diga sempre qual está usando.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 28 — CASO 1 ============ -->
+<section class="slide" data-t="Caso 1 — 22 anos, sintomas variáveis">
+  <div class="kicker k-asma">Caso clínico 1</div>
+  <h2>22 anos, dispneia episódica, chiado, piora noturna</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div class="cartao c-asma">
+      <p>Sintomas <strong>variáveis</strong>, alguns dias completamente assintomática.</p>
+      <p class="sp">Espirometria: <span class="mono">CVF 3,80 L · VEF1 2,30 L · VEF1/CVF 0,61</span></p>
+      <p class="sp">Após broncodilatador: <span class="mono">VEF1 2,80 L (+0,50 L; +22%)</span></p>
+      <div class="btn-fila sp3"><button class="btn b-asma" onclick="passoCaso('caso1')">▶ Próxima pergunta</button></div>
+    </div>
+    <div id="caso1" class="quiz">
+      <div class="cartao passo"><b>1.</b> Existe obstrução?<div class="resp-passo sp"><p>Sim: a relação está reduzida (0,61). A relação é o que faz o diagnóstico de padrão obstrutivo.</p></div></div>
+      <div class="cartao passo"><b>2.</b> Qual dado você procurou primeiro?<div class="resp-passo sp"><p>VEF1/CVF. Não o VEF1 isolado, não a CVF isolada.</p></div></div>
+      <div class="cartao passo"><b>3.</b> O que o broncodilatador acrescentou?<div class="resp-passo sp"><p>Demonstrou variação do fluxo: +0,50 L e +22%, atendendo ao critério clássico de ≥12% e ≥200 mL.</p></div></div>
+      <div class="cartao passo"><b>4.</b> Isso sozinho fecha o diagnóstico?<div class="resp-passo sp"><p>Não. Resposta ≠ diagnóstico. O achado apoia, mas não substitui o quadro clínico.</p></div></div>
+      <div class="cartao passo"><b>5.</b> O contexto favorece qual doença?<div class="resp-passo sp"><p>Idade jovem + sintomas variáveis + piora noturna + obstrução com grande variação = quadro compatível com <b>asma</b>.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 29 — CASO 2 ============ -->
+<section class="slide" data-t="Caso 2 — 68 anos, tabagista">
+  <div class="kicker k-dpoc">Caso clínico 2</div>
+  <h2>68 anos, tabagismo relevante, dispneia progressiva</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div class="cartao c-dpoc">
+      <p>Tosse crônica há anos, dispneia que piora ano após ano — sem períodos realmente livres de sintomas.</p>
+      <p class="sp">Pré‑BD: <span class="mono">CVF 3,10 L · VEF1 1,50 L · VEF1/CVF 0,48</span></p>
+      <p class="sp">Pós‑BD: <span class="mono">VEF1 1,66 L · CVF 3,30 L · VEF1/CVF 0,50</span></p>
+      <div class="btn-fila sp3"><button class="btn b-dpoc" onclick="passoCaso('caso2')">▶ Próxima pergunta</button></div>
+    </div>
+    <div id="caso2" class="quiz">
+      <div class="cartao passo"><b>1.</b> Obstrutivo ou restritivo?<div class="resp-passo sp"><p>Obstrutivo — a relação está muito reduzida.</p></div></div>
+      <div class="cartao passo"><b>2.</b> Qual parâmetro demonstrou a obstrução?<div class="resp-passo sp"><p>VEF1/CVF. O VEF1 sozinho gradua a intensidade, não define o padrão.</p></div></div>
+      <div class="cartao passo"><b>3.</b> Por que observar o pós‑BD?<div class="resp-passo sp"><p>Porque na DPOC a limitação ao fluxo precisa se mostrar <b>persistente</b> após o broncodilatador — e aqui a relação continuou 0,50.</p></div></div>
+      <div class="cartao passo"><b>4.</b> O contexto favorece qual diagnóstico?<div class="resp-passo sp"><p>Idade, exposição, sintomas progressivos e obstrução persistente = quadro compatível com <b>DPOC</b>. Note que houve alguma melhora com o BD — e isso não transforma o caso em asma.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 30 — CASO PEGADINHA ============ -->
+<section class="slide" data-t="Caso pegadinha — misto?">
+  <div class="kicker k-ouro">Caso pegadinha</div>
+  <h2>Obstrução + CVF reduzida. É distúrbio misto?</h2>
+  <div class="linha-2 sp">
+    <div>
+      <div class="cartao c-ouro">
+        <p class="mono" style="font-size:calc(var(--u)*2)">VEF1/CVF ↓↓ &nbsp;·&nbsp; CVF ↓ &nbsp;·&nbsp; VEF1 ↓↓</p>
+      </div>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">1</span><span>SIM, com certeza.</span></button>
+        <button class="opc" data-ok="1"><span class="marca">2</span><span>NÃO POSSO AFIRMAR AINDA.</span></button>
+      </div>
+      <div class="feedback">
+        <b>Não posso afirmar ainda.</b> A CVF baixa aqui pode ser apenas consequência do <b>aprisionamento aéreo</b>: o ar que não sai ocupa espaço e encurta a manobra.
+        <br><br>Só os <b>volumes pulmonares</b> resolvem: se a CPT estiver reduzida, existe restrição associada; se estiver normal ou aumentada, era aprisionamento.
+      </div>
+    </div>
+    <div class="centro"><div id="pulmaoBaloes"></div><p class="pequeno sp">Balões presos dentro da casa.</p></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 31 — BATALHA DAS CURVAS ============ -->
+<section class="slide" data-t="🏆 Batalha das curvas">
+  <div class="kicker">Interleaving · jogo</div>
+  <h2>Batalha das curvas</h2>
+  <div class="linha-2 sp" style="align-items:center">
+    <div class="centro"><div id="jogoCurva"></div><p class="pequeno sp" id="jogoRodada">Curva 1 de 6</p></div>
+    <div>
+      <p class="grande">Que padrão é este?</p>
+      <div class="btn-fila sp">
+        <button class="btn" onclick="jogoResp('normal')">NORMAL</button>
+        <button class="btn b-obst" onclick="jogoResp('obst')">OBSTRUTIVA</button>
+        <button class="btn b-vazado" onclick="jogoResp('restr')">SUGESTIVA DE RESTRIÇÃO</button>
+      </div>
+      <div id="jogoFeedback" class="feedback sp"></div>
+      <div class="sp3"><span class="placar">🏆 PLACAR: <span id="jogoPlacar">0</span> / 6</span></div>
+      <div class="btn-fila sp"><button class="btn b-vazado" onclick="jogoIniciar()">Reiniciar jogo</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 32 — MONTE SUA ESPIROMETRIA ============ -->
+<section class="slide" data-t="Monte sua própria espirometria">
+  <div class="kicker">Generation effect</div>
+  <h2>Monte sua própria espirometria</h2>
+  <div class="linha-2 sp" style="align-items:center">
+    <div>
+      <div class="slider-linha"><label>CVF</label><input type="range" id="sSimCvf" min="1" max="6" step="0.1" value="4.0" oninput="simula()"><output id="oSimCvf">4,0 L</output></div>
+      <div class="slider-linha"><label>VEF1</label><input type="range" id="sSimVef" min="0.5" max="5" step="0.1" value="3.2" oninput="simula()"><output id="oSimVef">3,2 L</output></div>
+      <div class="cartao sp" id="simResultado"></div>
+      <div class="cartao c-ouro sp">
+        <div class="rotulo" style="color:var(--ouro)">SIMULAÇÃO EDUCACIONAL</div>
+        <p class="pequeno sp">Serve para enxergar a relação matemática entre dois números. Não interpreta paciente, não substitui valores previstos, LLN ou contexto clínico.</p>
+      </div>
+    </div>
+    <div class="centro"><div id="portaSim"></div></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 33 — DESAFIO DE 5 SEGUNDOS ============ -->
+<section class="slide" data-t="Desafio de 5 segundos">
+  <div class="kicker">Repetição espaçada dentro da aula</div>
+  <h2>Desafio de 5 segundos</h2>
+  <div class="corpo centro">
+    <div class="cartao c-azul" style="padding:calc(var(--u)*4)">
+      <div class="rotulo" id="flashRot">Estímulo</div>
+      <h2 class="sp" id="flashFrente" style="font-size:calc(var(--u)*4.6)"></h2>
+      <div id="flashVerso" class="sp3" style="visibility:hidden">
+        <h2 style="font-size:calc(var(--u)*4);color:var(--verde)" id="flashTexto"></h2>
+        <p class="pequeno sp" id="flashNota"></p>
+      </div>
+    </div>
+    <div class="btn-fila sp3" style="justify-content:center">
+      <button class="btn b-ouro" onclick="flashRevela()">REVELAR</button>
+      <button class="btn" onclick="flashProx()">Próximo →</button>
+    </div>
+    <p class="pequeno" id="flashCont"></p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 34 — PALÁCIO DA MEMÓRIA ============ -->
+<section class="slide" data-t="Palácio da memória">
+  <div class="kicker">Palácio da memória · a casa inteira</div>
+  <h2>Clique em cada objeto da casa</h2>
+  <div class="palacio-grade sp">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🪣</div><div class="tit">Sala 1 — o balde</div><div class="desc">CVF: todo o ar que consegui colocar para fora.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">⏱️</div><div class="tit">Corredor — o cronômetro</div><div class="desc">VEF1: o que saiu no primeiro segundo.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🚪</div><div class="tit">A porta</div><div class="desc">VEF1/CVF: a eficiência da saída. É ela que encontra a obstrução.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🚧</div><div class="tit">Casa com porta estreita</div><div class="desc">OBSTRUÇÃO: relação reduzida, problema de fluxo.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🏠</div><div class="tit">Casa pequena</div><div class="desc">RESTRIÇÃO: pouco volume; a espirometria sugere, a CPT confirma.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🪗</div><div class="tit">Porta sanfonada</div><div class="desc">ASMA: variabilidade do fluxo ao longo do tempo.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🚬</div><div class="tit">Porta enferrujada</div><div class="desc">DPOC: limitação persistente, demonstrada no pós‑BD.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🥄</div><div class="tit">Curva mordida</div><div class="desc">CONCAVIDADE expiratória: a assinatura visual da obstrução.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🎈</div><div class="tit">Balões presos</div><div class="desc">APRISIONAMENTO AÉREO: derruba a CVF sem existir restrição.</div></button>
+  </div>
+</section>
+
+<!-- ============ SLIDE 35 — RESUMO EM UMA TELA ============ -->
+<section class="slide" data-t="Resumo em uma única tela">
+  <div class="kicker">Revisão de 60 segundos</div>
+  <h2>Tudo em uma tela</h2>
+  <div class="linha-3 sp" style="gap:calc(var(--u)*1.4)">
+    <div class="cartao c-azul"><div class="rotulo">QUANTO?</div><h3 class="sp">🪣 CVF</h3></div>
+    <div class="cartao c-azul"><div class="rotulo">QUÃO RÁPIDO?</div><h3 class="sp">⏱️ VEF1</h3></div>
+    <div class="cartao c-azul"><div class="rotulo">A PORTA?</div><h3 class="sp">🚪 VEF1/CVF</h3></div>
+  </div>
+  <div class="linha-2 sp" style="gap:calc(var(--u)*1.4)">
+    <div class="cartao c-obst"><div class="rotulo" style="color:var(--obst)">PORTA ESTREITA?</div><h3 class="sp">🚧 OBSTRUÇÃO</h3></div>
+    <div class="cartao"><div class="rotulo">CASA PEQUENA?</div><h3 class="sp">🏠 RESTRIÇÃO <span class="pequeno">(confirme com CPT)</span></h3></div>
+  </div>
+  <div class="linha-2 sp" style="gap:calc(var(--u)*1.4)">
+    <div class="cartao c-asma"><div class="rotulo" style="color:var(--roxo)">PORTA VARIÁVEL?</div><h3 class="sp">🫁 ASMA</h3></div>
+    <div class="cartao c-dpoc"><div class="rotulo" style="color:var(--dpoc)">PORTA PERSISTENTEMENTE ESTREITA?</div><h3 class="sp">🚬 DPOC</h3></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 36 — TESTE FINAL ============ -->
+<section class="slide" data-t="Teste final — 8 questões">
+  <div class="kicker k-ouro">Teste final</div>
+  <h2 id="tfTitulo">Questão 1 de 8</h2>
+  <div class="corpo" style="justify-content:flex-start">
+    <p class="grande" id="tfEnunciado"></p>
+    <div class="quiz sp" id="tfOpcoes"></div>
+    <div class="feedback" id="tfFeedback"></div>
+    <div class="btn-fila sp">
+      <button class="btn b-ouro" id="tfRevelar" onclick="tfRevela()" style="display:none">REVELAR</button>
+      <button class="btn" id="tfProx" onclick="tfProxima()" style="display:none">Próxima →</button>
+      <button class="btn b-vazado" onclick="tfIniciar()">Reiniciar teste</button>
+      <span class="placar" style="align-self:center">Acertos: <span id="tfPlacar">0</span></span>
+    </div>
+    <div id="tfFinal" class="cartao c-verde sp" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 37 — A PERGUNTA FINAL ============ -->
+<section class="slide" data-t="A pergunta final">
+  <div class="corpo centro">
+    <h2 style="font-size:calc(var(--u)*4.6);max-width:80%;margin:0 auto">
+      “ANTES DE OLHAR O NOME DA DOENÇA,<br>O QUE A ESPIROMETRIA ESTÁ TENTANDO ME DIZER?”
+    </h2>
+    <div class="btn-fila sp3" style="justify-content:center">
+      <button class="btn b-ouro" style="font-size:calc(var(--u)*2.4)" onclick="revelaBloco('respFinal',this)">REVELAR</button>
+    </div>
+    <div id="respFinal" style="display:none">
+      <h2 class="sp3" style="font-size:calc(var(--u)*5.2);color:var(--azul)">QUANTO AR SAI</h2>
+      <h2 style="font-size:calc(var(--u)*5.2);color:var(--obst)">E QUÃO RÁPIDO ELE CONSEGUE SAIR.</h2>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 38 — ENCERRAMENTO ============ -->
+<section class="slide" data-t="Encerramento">
+  <div class="linha-2" style="align-items:center">
+    <div id="casaFinal"></div>
+    <div>
+      <div class="kicker">Fim da aula</div>
+      <h2 style="font-size:calc(var(--u)*4.6)">“Não decore primeiro o número.<br>Descubra o que aconteceu com a porta.”</h2>
+      <div class="cartao c-azul sp3">
+        <p class="mono" style="font-size:calc(var(--u)*1.9);color:var(--azul);font-weight:700">
+          A RELAÇÃO encontra a OBSTRUÇÃO.<br>O BRONCODILATADOR investiga a VARIAÇÃO.
+        </p>
+      </div>
+      <p class="filo sp3">“Memorizar sem compreender transforma conhecimento em areia. O mecanismo transforma‑o em estrutura.”</p>
+      <div class="assin sp3">Dr. André Rossanno</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /#palco -->
+
+<!-- ============ BARRA DE CONTROLE ============ -->
+<div id="barra">
+  <button class="ctrl" onclick="vai(-1)" title="Slide anterior (←)">←</button>
+  <button class="ctrl" onclick="vai(1)" title="Próximo slide (→)">→</button>
+  <span id="contador">1 / 38</span>
+  <div id="trilho" onclick="pulaTrilho(event)" title="Clique para navegar"><div id="preenche"></div></div>
+  <button class="ctrl" onclick="abreMapa()" title="Mapa da aula (M)">🗺️ Mapa da aula</button>
+  <button class="ctrl" id="btnOcultar" onclick="alternaOcultar()" title="Ocultar respostas (O)">🙈 Ocultar respostas</button>
+  <button class="ctrl discreto" id="btnProf" onclick="alternaProf()" title="Modo professor (P)">🎓 Professor</button>
+  <button class="ctrl discreto" onclick="telaCheia()" title="Tela cheia (F)">⛶</button>
+</div>
+
+<!-- ============ MAPA DA AULA ============ -->
+<div id="mapa" onclick="if(event.target.id==='mapa')fechaMapa()">
+  <h3>Mapa da aula</h3>
+  <p class="pequeno">38 telas · clique para ir direto · ESC fecha</p>
+  <div id="mapaGrade"></div>
+</div>
+
+<!-- ============ MODO PROFESSOR ============ -->
+<aside id="prof">
+  <div class="cab">
+    <h4>🎓 Modo professor</h4>
+    <button class="fechar" onclick="alternaProf()">fechar</button>
+  </div>
+  <div id="profConteudo"></div>
+</aside>
+
+<style>
+.passo{opacity:.45;transition:opacity .25s}
+.passo.aberto{opacity:1;border-color:var(--azul)}
+.resp-passo{display:none}
+.passo.aberto .resp-passo{display:block}
+.passo b{color:var(--azul);font-size:calc(var(--u)*1.9)}
+.passo p{font-size:calc(var(--u)*1.7)}
+</style>
+
+<script>
+/* ==========================================================
+   1. NÚCLEO — dimensionamento, navegação, mapa, professor
+   ========================================================== */
+var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var atual = 0;
+var TOTAL = slides.length;
+var ocultarRespostas = true;
+
+function ajustaUnidade(){
+  var palco = document.getElementById('palco');
+  var u = palco.clientWidth / 100;
+  document.documentElement.style.setProperty('--u', u + 'px');
+}
+window.addEventListener('resize', ajustaUnidade);
+
+function mostra(i){
+  if(i < 0) i = 0;
+  if(i > TOTAL - 1) i = TOTAL - 1;
+  slides[atual].classList.remove('ativo');
+  atual = i;
+  slides[atual].classList.add('ativo');
+  slides[atual].scrollTop = 0;
+  document.getElementById('contador').textContent = (atual + 1) + ' / ' + TOTAL;
+  document.getElementById('preenche').style.width = ((atual + 1) / TOTAL * 100) + '%';
+  atualizaProf();
+  marcaMapa();
+  aoEntrar(atual);
+}
+function vai(d){ mostra(atual + d); }
+function pulaTrilho(e){
+  var t = document.getElementById('trilho').getBoundingClientRect();
+  mostra(Math.floor((e.clientX - t.left) / t.width * TOTAL));
+}
+
+/* ---- mapa ---- */
+function montaMapa(){
+  var g = document.getElementById('mapaGrade');
+  g.innerHTML = '';
+  slides.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.className = 'mapa-item';
+    b.innerHTML = '<span class="n">' + String(i + 1).padStart(2, '0') + '</span><span>' + (s.dataset.t || '') + '</span>';
+    b.onclick = function(){ mostra(i); fechaMapa(); };
+    g.appendChild(b);
+  });
+}
+function marcaMapa(){
+  var itens = document.querySelectorAll('.mapa-item');
+  for(var i = 0; i < itens.length; i++) itens[i].classList.toggle('atual', i === atual);
+}
+function abreMapa(){ document.getElementById('mapa').classList.add('aberto'); marcaMapa(); }
+function fechaMapa(){ document.getElementById('mapa').classList.remove('aberto'); }
+
+/* ---- tela cheia ---- */
+function telaCheia(){
+  if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+  else if(document.exitFullscreen){ document.exitFullscreen(); }
+  setTimeout(ajustaUnidade, 300);
+}
+
+/* ---- teclado ---- */
+document.addEventListener('keydown', function(e){
+  var alvo = e.target && e.target.tagName;
+  if(alvo === 'INPUT' || alvo === 'TEXTAREA' || alvo === 'SELECT') return;
+  if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); vai(1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); vai(-1); }
+  else if(e.key === 'Home'){ mostra(0); }
+  else if(e.key === 'End'){ mostra(TOTAL - 1); }
+  else if(e.key === 'f' || e.key === 'F'){ telaCheia(); }
+  else if(e.key === 'm' || e.key === 'M'){ document.getElementById('mapa').classList.contains('aberto') ? fechaMapa() : abreMapa(); }
+  else if(e.key === 'p' || e.key === 'P'){ alternaProf(); }
+  else if(e.key === 'o' || e.key === 'O'){ alternaOcultar(); }
+  else if(e.key === 'Escape'){ fechaMapa(); }
+});
+
+/* ---- toque ---- */
+var tx = 0;
+document.getElementById('palco').addEventListener('touchstart', function(e){ tx = e.changedTouches[0].clientX; }, {passive:true});
+document.getElementById('palco').addEventListener('touchend', function(e){
+  var d = e.changedTouches[0].clientX - tx;
+  if(Math.abs(d) > 70) vai(d < 0 ? 1 : -1);
+}, {passive:true});
+
+/* ==========================================================
+   2. MODO OCULTAR RESPOSTAS + MOTOR DE QUIZ
+   ========================================================== */
+function alternaOcultar(){
+  ocultarRespostas = !ocultarRespostas;
+  var b = document.getElementById('btnOcultar');
+  b.classList.toggle('on', ocultarRespostas);
+  b.textContent = ocultarRespostas ? '🙈 Ocultar respostas' : '👁️ Respostas imediatas';
+}
+
+function montaQuizzes(){
+  document.querySelectorAll('[data-quiz]').forEach(function(q){
+    var fb = q.nextElementSibling;
+    if(fb && fb.classList.contains('feedback')){
+      var rb = document.createElement('button');
+      rb.className = 'btn-revelar';
+      rb.textContent = '👁️ REVELAR RESPOSTA';
+      rb.onclick = function(){ revelaQuiz(q); };
+      q.parentNode.insertBefore(rb, fb);
+      q._botao = rb;
+      q._fb = fb;
+    }
+    q.querySelectorAll('.opc').forEach(function(o){
+      o.onclick = function(){
+        if(q._revelado) return;
+        if(ocultarRespostas){
+          q.querySelectorAll('.opc').forEach(function(x){ x.style.borderColor = ''; x.style.background = ''; });
+          o.style.borderColor = 'var(--azul)';
+          o.style.background = 'var(--azul-fundo)';
+          q._escolha = o;
+          if(q._botao) q._botao.classList.add('visivel');
+        } else {
+          q._escolha = o;
+          revelaQuiz(q);
+        }
+      };
+    });
+  });
+}
+function revelaQuiz(q){
+  q._revelado = true;
+  q.querySelectorAll('.opc').forEach(function(o){
+    o.style.borderColor = ''; o.style.background = '';
+    var certo = o.dataset.ok === '1';
+    if(certo) o.classList.add(q._escolha === o ? 'certa' : 'mostra-certa');
+    else if(q._escolha === o) o.classList.add('errada');
+    o.setAttribute('disabled', 'disabled');
+  });
+  if(q._fb) q._fb.classList.add('aberto');
+  if(q._botao) q._botao.classList.remove('visivel');
+}
+
+/* revelação simples de blocos */
+function revelaBloco(id, botao){
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.style.display = 'block';
+  el.style.animation = 'entra .35s ease both';
+  if(botao) botao.classList.add('on');
+}
+
+/* casos clínicos passo a passo */
+function passoCaso(id){
+  var c = document.getElementById(id);
+  var passos = c.querySelectorAll('.passo');
+  for(var i = 0; i < passos.length; i++){
+    if(!passos[i].classList.contains('aberto')){ passos[i].classList.add('aberto'); return; }
+  }
+}
+
+/* ==========================================================
+   3. MODO PROFESSOR
+   ========================================================== */
+var PROF = {
+1:{o:'Abrir a aula com uma pergunta viva, sem entregar vocabulário técnico.',p:'Se o pulmão está cheio de ar, por que às vezes o ar não sai?',r:'Porque a saída — a via aérea — pode estar estreitada.',e:'Aluno tenta responder com nome de doença antes de pensar no mecanismo.',f:'Hoje ninguém vai decorar número. Vamos consertar uma porta.'},
+2:{o:'Reduzir a espirometria a duas perguntas (chunking).',p:'Se você fosse inventar o exame, o que mediria?',r:'Quanto sai e em quanto tempo.',e:'Achar que o exame mede oxigenação.',f:'Espirometria não mede oxigênio. Mede saída de ar.'},
+3:{o:'Fixar CVF como volume total expirado forçadamente.',p:'CVF é volume ou velocidade?',r:'Volume.',e:'Confundir CVF com capacidade vital lenta ou com volume corrente.',f:'O balde não tem pressa: só interessa quanto coube nele.'},
+4:{o:'Fixar VEF1 como fatia de tempo dentro da CVF.',p:'O VEF1 está dentro ou fora da CVF?',r:'Dentro — é a primeira parcela dela.',e:'Tratar VEF1 e CVF como medidas independentes.',f:'O VEF1 é o primeiro segundo da mesma história.'},
+5:{o:'Construir a relação por divisão, não por memorização.',p:'Divida 3,2 por 4. O que esse número significa?',r:'A fração do volume total que saiu no primeiro segundo.',e:'Somar em vez de dividir; ler 80% como “80% do previsto”.',f:'A relação não fala do previsto. Fala do próprio paciente.'},
+6:{o:'Deduzir obstrução a partir dos números, antes de nomear.',p:'O pulmão tem quatro litros para colocar para fora. Se só dois saem no primeiro segundo, o problema é falta de ar ou dificuldade de saída?',r:'Dificuldade para eliminar rapidamente o ar.',e:'Dizer que “falta ar no pulmão” porque o VEF1 está baixo.',f:'A casa está cheia. Quem falhou foi a porta.'},
+7:{o:'Instalar a imagem-mãe da aula.',p:'O que mudou entre o paciente 1 e o paciente 2?',r:'A largura da porta, não o tamanho da casa.',e:'Achar que obstrução significa pulmão vazio.',f:'Obstrução é problema de fluxo, não de estoque.'},
+8:{o:'Criar a tensão que justifica o broncodilatador.',p:'Duas casas com a mesma porta estreita. Qual exame separa as duas?',r:'Nenhum exame isolado; o broncodilatador acrescenta informação sobre variação.',e:'Responder “a espirometria já diferencia”.',f:'A porta estreita é o sintoma comum. O que difere é o comportamento dela.'},
+9:{o:'Ensinar asma como variabilidade, não apenas reversibilidade.',p:'A porta da asma é sempre estreita?',r:'Não — ela varia com o tempo, o gatilho e o tratamento.',e:'Reduzir asma a “obstrução reversível”.',f:'A asma é uma porta sanfonada: depende do dia.'},
+10:{o:'Derrubar a equação resposta ao BD = asma.',p:'Paciente com DPOC pode melhorar com broncodilatador?',r:'Pode.',e:'Fechar asma só porque houve resposta.',f:'Melhorar é comum. Normalizar é que é raro na DPOC.'},
+11:{o:'Consolidar a âncora verbal da aula.',p:'Quem encontra a obstrução? Quem investiga a variação?',r:'A relação encontra; o broncodilatador investiga.',e:'Inverter os papéis e usar o VEF1 isolado para diagnosticar padrão.',f:'Repita comigo antes de virar o slide.'},
+12:{o:'Alfabetizar nos eixos antes de mostrar curvas.',p:'O que está no eixo vertical? E no horizontal?',r:'Fluxo (velocidade) e volume (quanto já saiu).',e:'Achar que o eixo horizontal é tempo.',f:'Não é tempo. É volume já expelido.'},
+13:{o:'Fixar o contorno normal como régua de comparação.',p:'Em que momento do sopro está o pico?',r:'Bem no início.',e:'Imaginar pico no meio da expiração.',f:'Sobe como foguete e desce como rampa.'},
+14:{o:'Ensinar a concavidade expiratória visualmente.',p:'O que aconteceu com a barriga da curva?',r:'Ficou escavada — o fluxo caiu cedo demais.',e:'Olhar só a altura do pico e ignorar o formato.',f:'Alguém deu uma mordida na curva.'},
+15:{o:'Praticar recuperação com três padrões misturados.',p:'Qual curva tem porta estreita? E qual é apenas pequena?',r:'B obstrutiva, A normal, C sugestiva de restrição.',e:'Chamar a curva pequena e alta de obstrutiva.',f:'Curva magra não é curva mordida.'},
+16:{o:'Separar restrição de obstrução pela metáfora do tamanho da casa.',p:'Na restrição, o problema é a porta?',r:'Não; é o volume disponível.',e:'Aplicar a relação reduzida à restrição.',f:'Casa pequena, porta normal.'},
+17:{o:'Impedir o diagnóstico de restrição pela espirometria isolada.',p:'A espirometria confirma restrição?',r:'Não; sugere. Confirma-se com CPT reduzida.',e:'Laudar restrição só com CVF baixa.',f:'A espirometria levanta a suspeita; os volumes assinam embaixo.'},
+18:{o:'Introduzir aprisionamento aéreo como causa de CVF baixa.',p:'Por que a CVF cai num obstrutivo grave?',r:'Porque o ar fica preso e encurta a manobra.',e:'Chamar automaticamente de distúrbio misto.',f:'Nem toda CVF baixa é pulmão pequeno.'},
+19:{o:'Organizar a leitura em uma sequência fixa.',p:'Qual é sempre a primeira coisa que você olha?',r:'A relação VEF1/CVF.',e:'Começar pelo VEF1 previsto.',f:'Primeiro a porta. Depois o tamanho da casa.'},
+20:{o:'Mostrar a asma como filme, não como foto.',p:'A mesma paciente teria o mesmo exame de manhã e à noite?',r:'Não necessariamente.',e:'Basear-se em um único exame.',f:'Uma foto não conta um filme.'},
+21:{o:'Impedir a exclusão de asma por exame normal.',p:'Exame normal hoje exclui asma?',r:'Não.',e:'Dar alta com “espirometria normal, não é asma”.',f:'A porta pode estar aberta justamente no dia do exame.'},
+22:{o:'Fixar limitação persistente e avaliação pós-BD na DPOC.',p:'Por que a DPOC se caracteriza no pós-broncodilatador?',r:'Para mostrar que a limitação persiste.',e:'Diagnosticar DPOC só com exame pré-BD.',f:'Abriu um pouco, mas continua apertada.'},
+23:{o:'Comparar sem transformar em tabela decorada.',p:'Qual palavra define cada uma?',r:'Asma: variabilidade. DPOC: persistência.',e:'Usar a magnitude da resposta como critério diferencial único.',f:'Duas palavras bastam.'},
+24:{o:'Fazer o aluno gerar os cálculos da prova broncodilatadora.',p:'Se o VEF1 quase não muda mas a CVF sobe, houve resposta?',r:'Pode ter havido — o paciente esvaziou melhor.',e:'Olhar apenas o VEF1.',f:'Às vezes quem responde é o balde, não o cronômetro.'},
+25:{o:'Apresentar critérios com fonte e sem transformar número em diagnóstico.',p:'Qual critério você usou para dizer que houve resposta?',r:'Depende do documento adotado — declare qual.',e:'Citar “12%” sem dizer de onde vem, ou misturar critérios.',f:'Número sem referência é chute com jaleco.'},
+26:{o:'Introduzir LLN e z-score sem estatística pesada.',p:'Por que 80% do previsto pode não servir para todos?',r:'Porque a dispersão do normal muda com idade, sexo e altura.',e:'Tratar todo valor abaixo de 80% como doença.',f:'Normal é um intervalo, não um número.'},
+27:{o:'Separar critério operacional GOLD de interpretação por LLN.',p:'O 0,70 é fisiologia ou convenção?',r:'É convenção operacional — útil, mas com limitações nos extremos de idade.',e:'Achar que os dois critérios se contradizem.',f:'São perguntas diferentes, não brigas.'},
+28:{o:'Aplicar a sequência de leitura em um caso de asma.',p:'Qual dado você olhou primeiro?',r:'A relação.',e:'Começar pela resposta ao broncodilatador.',f:'Ordem importa: relação, depois variação.'},
+29:{o:'Aplicar a sequência em um caso de DPOC com alguma resposta.',p:'Houve melhora. Isso vira asma?',r:'Não — a obstrução persistiu e o contexto é outro.',e:'Trocar o diagnóstico por causa da melhora.',f:'A porta abriu um pouco e continuou estreita.'},
+30:{o:'Consolidar a armadilha do distúrbio misto.',p:'O que falta para afirmar restrição associada?',r:'Volumes pulmonares — CPT.',e:'Laudar misto direto.',f:'Aqui a resposta certa é “ainda não sei”.'},
+31:{o:'Interleaving: misturar os três padrões sob pressão.',p:'Antes de responder: o que o formato da descida está dizendo?',r:'Reta = normal; escavada = obstrução; estreita e alta = sugestiva de restrição.',e:'Responder pelo tamanho e não pelo formato.',f:'Formato primeiro, tamanho depois.'},
+32:{o:'Ver a matemática da relação em tempo real.',p:'O que acontece com a porta se eu só reduzir a CVF?',r:'A relação sobe — a porta parece mais larga.',e:'Usar o simulador como se fosse laudo.',f:'É uma calculadora com desenho, não um exame.'},
+33:{o:'Recuperação rápida em flashcards.',p:'Responda antes de eu revelar.',r:'Ver cada cartão.',e:'Deixar o professor responder junto.',f:'Cinco segundos. Sem consultar.'},
+34:{o:'Fechar o palácio da memória com objetos ancorados.',p:'Percorra a casa comigo e diga o que é cada objeto.',r:'Balde, cronômetro, porta, casa pequena, sanfona, ferrugem, mordida, balões.',e:'Lembrar da imagem sem o conceito.',f:'Ande pela casa mentalmente. Objeto por objeto.'},
+35:{o:'Revisão de 60 segundos.',p:'Diga a aula inteira em sete palavras-chave.',r:'CVF, VEF1, relação, obstrução, restrição, asma, DPOC.',e:'Recitar sem entender.',f:'Se fechar essa tela e repetir, a aula pegou.'},
+36:{o:'Avaliar com mistura de conceito, cálculo, curva e pegadinha.',p:'Justifique antes de escolher.',r:'Ver explicações do teste.',e:'Escolher por eliminação sem raciocínio.',f:'Erre aqui, para não errar no paciente.'},
+37:{o:'Reduzir a aula a uma pergunta transferível.',p:'O que a espirometria está tentando me dizer?',r:'Quanto ar sai e quão rápido ele sai.',e:'Buscar o nome da doença primeiro.',f:'Sempre comece por essa pergunta.'},
+38:{o:'Encerrar com a âncora e a assinatura.',p:'O que você leva daqui?',r:'A porta.',e:'—',f:'Não decore o número. Descubra o que aconteceu com a porta.'}
+};
+function alternaProf(){
+  var p = document.getElementById('prof');
+  p.classList.toggle('aberto');
+  document.getElementById('btnProf').classList.toggle('on', p.classList.contains('aberto'));
+  atualizaProf();
+}
+function atualizaProf(){
+  var d = PROF[atual + 1];
+  var c = document.getElementById('profConteudo');
+  if(!d){ c.innerHTML = '<p>—</p>'; return; }
+  c.innerHTML =
+    '<div class="prof-bloco"><div class="rot">Slide ' + (atual + 1) + ' · objetivo</div><p>' + d.o + '</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Pergunta oral</div><p>“' + d.p + '”</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Resposta esperada</div><p>' + d.r + '</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Erro mais provável</div><p>' + d.e + '</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Frase para usar</div><p>“' + d.f + '”</p></div>';
+}
+</script>
+<script>
+/* ==========================================================
+   4. DESENHOS — casa, porta, balde, cronômetro, curvas
+   ========================================================== */
+var COR = {azul:'#1282A2', obst:'#d1572c', verde:'#1e8f5e', roxo:'#6d4aa8', dpoc:'#7a6a52', ouro:'#a8791b'};
+var FUNDO = {azul:'#e4f2f7', obst:'#fdeee7', verde:'#e6f5ee', roxo:'#f0eafb', dpoc:'#f1ede4', ouro:'#fdf3d9'};
+function el(id){ return document.getElementById(id); }
+function fmt(n, d){ return n.toFixed(d === undefined ? 2 : d).replace('.', ','); }
+
+/* ---------- CASA ---------- */
+function casaSVG(o){
+  o = o || {};
+  var k = o.cor || 'azul', c = COR[k], f = FUNDO[k];
+  var g = Math.max(0.04, Math.min(1, o.porta === undefined ? 0.85 : o.porta));
+  var vao = 16 + 62 * g, x1 = 200 - vao / 2, folha = (90 - vao) / 2;
+  var s = o.pequena ? 0.60 : 1;
+  var setas = '';
+  var nSetas = g > 0.6 ? 3 : (g > 0.3 ? 2 : 1);
+  for(var i = 0; i < nSetas; i++){
+    var yy = 300 + i * 0;
+    setas += '<path d="M' + (200 - 14 + i * 14) + ' 300 l6 12 l6 -12" fill="none" stroke="' + c + '" stroke-width="3" stroke-linecap="round" opacity="' + (0.35 + 0.2 * g) + '"/>';
+  }
+  var presos = '';
+  if(o.presos){
+    var pos = [[150,175],[248,168],[168,215],[236,214],[200,240],[130,205]];
+    for(var j = 0; j < o.presos && j < pos.length; j++){
+      presos += '<g opacity=".9"><circle cx="' + pos[j][0] + '" cy="' + pos[j][1] + '" r="11" fill="#fff" stroke="' + COR.obst + '" stroke-width="2.5"/>' +
+                '<path d="M' + pos[j][0] + ' ' + (pos[j][1] + 11) + ' l0 9" stroke="' + COR.obst + '" stroke-width="2"/></g>';
+    }
+  }
+  var fila = '';
+  if(o.fila){
+    var fp = [[178,252],[222,252],[166,272],[234,272],[200,268]];
+    for(var q = 0; q < fp.length; q++) fila += '<circle cx="' + fp[q][0] + '" cy="' + fp[q][1] + '" r="7" fill="' + c + '" opacity=".55"/>';
+  }
+  var pulmao =
+    '<path d="M198 152 c-4 0 -8 3 -12 9 c-9 13 -21 31 -23 51 c-2 19 7 33 21 32 c9 -1 14 -8 14 -18 z" fill="#fff" stroke="' + c + '" stroke-width="3"/>' +
+    '<g transform="translate(400,0) scale(-1,1)"><path d="M198 152 c-4 0 -8 3 -12 9 c-9 13 -21 31 -23 51 c-2 19 7 33 21 32 c9 -1 14 -8 14 -18 z" fill="#fff" stroke="' + c + '" stroke-width="3"/></g>' +
+    '<rect x="194" y="128" width="12" height="28" rx="4" fill="#fff" stroke="' + c + '" stroke-width="3"/>';
+  return '<svg viewBox="0 0 400 330" class="svg-cheio" role="img" aria-label="Casa do pulmão">' +
+    '<g transform="translate(200,318) scale(' + s + ') translate(-200,-318)">' +
+      '<polygon points="200,24 376,118 24,118" fill="' + c + '" opacity=".92"/>' +
+      '<rect x="52" y="114" width="296" height="184" rx="8" fill="' + f + '" stroke="' + c + '" stroke-width="4"/>' +
+      pulmao + presos + fila +
+      '<rect x="155" y="228" width="90" height="70" fill="#fff" stroke="' + c + '" stroke-width="4"/>' +
+      '<rect x="155" y="228" width="' + folha + '" height="70" fill="' + c + '" opacity=".85"/>' +
+      '<rect x="' + (245 - folha) + '" y="228" width="' + folha + '" height="70" fill="' + c + '" opacity=".85"/>' +
+      setas +
+      '<line x1="10" y1="298" x2="390" y2="298" stroke="#c9d7e2" stroke-width="3"/>' +
+    '</g></svg>';
+}
+function desenhaCasa(id, o){ var e = el(id); if(e) e.innerHTML = casaSVG(o); }
+
+/* ---------- PORTA EM PRIMEIRO PLANO ---------- */
+var PORTAS = {};
+function portaSVG(o){
+  var k = o.cor || 'azul', c = COR[k], f = FUNDO[k];
+  var rel = Math.max(0, Math.min(1, o.rel));
+  var abre = 20 + 168 * rel, folha = (220 - abre) / 2;
+  var textura = '';
+  if(o.sanfona){
+    for(var i = 0; i < 6; i++) textura += '<line x1="' + (52 + i * (folha / 6)) + '" y1="34" x2="' + (52 + i * (folha / 6)) + '" y2="278" stroke="#fff" stroke-width="2" opacity=".55"/>';
+  }
+  var ferrugem = o.ferrugem ? '<g opacity=".5"><circle cx="70" cy="90" r="7" fill="#8a5a2b"/><circle cx="84" cy="180" r="5" fill="#8a5a2b"/><circle cx="248" cy="120" r="6" fill="#8a5a2b"/><circle cx="236" cy="220" r="5" fill="#8a5a2b"/></g>' : '';
+  var setas = '';
+  var n = Math.max(1, Math.round(rel * 4));
+  for(var s = 0; s < n; s++){
+    setas += '<path d="M' + (160 - 24 + s * 16) + ' 150 l0 -18 l10 9 z" fill="' + COR.verde + '" opacity=".8"/>';
+  }
+  return '<svg viewBox="0 0 320 330" class="svg-cheio" role="img" aria-label="Porta do pulmão">' +
+    '<rect x="30" y="14" width="260" height="286" rx="10" fill="' + f + '"/>' +
+    '<rect x="46" y="28" width="228" height="256" rx="6" fill="#fff" stroke="' + c + '" stroke-width="6"/>' +
+    '<rect x="50" y="32" width="' + folha + '" height="248" fill="' + c + '" opacity=".9"/>' + textura +
+    '<rect x="' + (270 - folha) + '" y="32" width="' + folha + '" height="248" fill="' + c + '" opacity=".9"/>' +
+    ferrugem + setas +
+    '<text x="160" y="320" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="21" font-weight="700" fill="' + c + '">' + (o.rotulo || '') + '</text>' +
+    '</svg>';
+}
+function desenhaPorta(id, o){
+  var e = el(id); if(!e) return;
+  PORTAS[id] = o; e.innerHTML = portaSVG(o);
+}
+function animaPorta(id, alvo, rotuloFn){
+  var o = PORTAS[id]; if(!o) return;
+  var de = o.rel, dt = 520, t0 = performance.now();
+  if(document.body.classList.contains('sem-mov')){ o.rel = alvo; if(rotuloFn) o.rotulo = rotuloFn(alvo); desenhaPorta(id, o); return; }
+  function passo(t){
+    var p = Math.min(1, (t - t0) / dt), e2 = p < .5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+    o.rel = de + (alvo - de) * e2;
+    if(rotuloFn) o.rotulo = rotuloFn(o.rel);
+    desenhaPorta(id, o);
+    if(p < 1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+
+/* ---------- CURVAS FLUXO-VOLUME ---------- */
+var VMAX = 6, FMAX = 11, PX0 = 54, PX1 = 404, PY0 = 26, PY1 = 250;
+function px(v){ return PX0 + v / VMAX * (PX1 - PX0); }
+function py(f){ return PY1 - f / FMAX * (PY1 - PY0); }
+var CFG = {
+  normal:{fvc:4.2, pef:9.2, vp:0.45, exp:1.05},
+  obst:  {fvc:3.9, pef:5.0, vp:0.35, exp:2.6},
+  restr: {fvc:2.1, pef:7.2, vp:0.28, exp:1.0}
+};
+function pontosCurva(t, mod){
+  mod = mod || {};
+  var c = CFG[t];
+  var fvc = c.fvc * (mod.fvc || 1), pef = c.pef * (mod.pef || 1), vp = c.vp, ex = c.exp;
+  var pts = [];
+  for(var i = 0; i <= 60; i++){
+    var v = fvc * i / 60, f;
+    if(v <= vp) f = pef * (1 - Math.pow(1 - v / vp, 2));
+    else { var x = (v - vp) / (fvc - vp); f = pef * Math.pow(1 - x, ex); }
+    pts.push([v, f]);
+  }
+  return pts;
+}
+function caminho(pts){
+  return pts.map(function(p, i){ return (i ? 'L' : 'M') + px(p[0]).toFixed(1) + ' ' + py(p[1]).toFixed(1); }).join(' ');
+}
+function svgCurva(id, lista, o){
+  o = o || {};
+  var eixos = '', i;
+  for(i = 0; i <= VMAX; i++){
+    eixos += '<line x1="' + px(i) + '" y1="' + PY1 + '" x2="' + px(i) + '" y2="' + (PY1 + 6) + '" stroke="#9db2c2" stroke-width="2"/>' +
+             '<text x="' + px(i) + '" y="' + (PY1 + 24) + '" text-anchor="middle" font-size="13" fill="#6b8095" font-family="IBM Plex Mono, monospace">' + i + '</text>';
+  }
+  for(i = 0; i <= FMAX; i += 2){
+    eixos += '<line x1="' + (PX0 - 6) + '" y1="' + py(i) + '" x2="' + PX0 + '" y2="' + py(i) + '" stroke="#9db2c2" stroke-width="2"/>' +
+             '<text x="' + (PX0 - 11) + '" y="' + (py(i) + 5) + '" text-anchor="end" font-size="13" fill="#6b8095" font-family="IBM Plex Mono, monospace">' + i + '</text>';
+  }
+  var corY = o.destaqueY ? COR.azul : '#7d93a6', corX = o.destaqueX ? COR.azul : '#7d93a6';
+  var lw = o.destaqueY ? 5 : 3, lwx = o.destaqueX ? 5 : 3;
+  var curvas = '', legenda = '';
+  (lista || []).forEach(function(item, n){
+    var pts = pontosCurva(item.tipo, item.mod);
+    var cc = COR[item.cor || 'azul'];
+    curvas += '<path id="' + id + '-p' + n + '" d="' + caminho(pts) + '" fill="none" stroke="' + cc + '" stroke-width="4.5" stroke-linejoin="round" ' +
+              (item.tracejado ? 'stroke-dasharray="8 7" ' : '') + 'opacity="' + (item.opac || 1) + '"/>';
+    if(item.rotulo){
+      legenda += '<text x="' + (PX1 - 4) + '" y="' + (40 + n * 20) + '" text-anchor="end" font-size="14" font-weight="700" fill="' + cc + '" font-family="IBM Plex Mono, monospace">' + item.rotulo + '</text>';
+    }
+  });
+  var bola = o.bola ? '<circle id="' + id + '-bola" cx="' + px(0) + '" cy="' + py(0) + '" r="9" fill="' + COR.obst + '" opacity="0"/>' : '';
+  var mini = o.pulmao ? '<g id="' + id + '-pulmao" transform="translate(360,64)"><path d="M0 0 c-4 0 -8 3 -11 8 c-8 12 -17 26 -19 43 c-1 16 6 27 18 27 c8 -1 12 -7 12 -15 z" fill="#fff" stroke="' + COR.azul + '" stroke-width="3"/><g transform="scale(-1,1)"><path d="M0 0 c-4 0 -8 3 -11 8 c-8 12 -17 26 -19 43 c-1 16 6 27 18 27 c8 -1 12 -7 12 -15 z" fill="#fff" stroke="' + COR.azul + '" stroke-width="3"/></g></g>' : '';
+  return '<svg viewBox="0 0 420 300" class="svg-cheio" role="img" aria-label="Curva fluxo-volume">' +
+    '<line x1="' + PX0 + '" y1="' + PY1 + '" x2="' + PX1 + '" y2="' + PY1 + '" stroke="' + corX + '" stroke-width="' + lwx + '"/>' +
+    '<line x1="' + PX0 + '" y1="' + PY1 + '" x2="' + PX0 + '" y2="' + PY0 + '" stroke="' + corY + '" stroke-width="' + lw + '"/>' +
+    eixos +
+    '<text x="' + (PX0 + (PX1 - PX0) / 2) + '" y="' + (PY1 + 46) + '" text-anchor="middle" font-size="15" font-weight="800" fill="' + corX + '" font-family="IBM Plex Mono, monospace">VOLUME (L)</text>' +
+    '<text transform="translate(16,' + (PY0 + (PY1 - PY0) / 2) + ') rotate(-90)" text-anchor="middle" font-size="15" font-weight="800" fill="' + corY + '" font-family="IBM Plex Mono, monospace">FLUXO (L/s)</text>' +
+    curvas + legenda + mini + bola +
+    '</svg>';
+}
+function desenhaCurva(id, lista, o){ var e = el(id); if(e) e.innerHTML = svgCurva(id, lista, o); }
+
+function animaSopro(id, cb){
+  var p = document.querySelector('#' + id + ' path[id$="-p0"]');
+  var b = el(id + '-bola'), pu = el(id + '-pulmao');
+  if(!p || !b) { if(cb) cb(); return; }
+  var L = p.getTotalLength(), t0 = performance.now(), dur = 2600;
+  b.setAttribute('opacity', '1');
+  function passo(t){
+    var k = Math.min(1, (t - t0) / dur);
+    var pt = p.getPointAtLength(L * k);
+    b.setAttribute('cx', pt.x); b.setAttribute('cy', pt.y);
+    if(pu) pu.setAttribute('transform', 'translate(360,64) scale(' + (1 - 0.55 * k) + ')');
+    if(k < 1) requestAnimationFrame(passo); else if(cb) cb();
+  }
+  requestAnimationFrame(passo);
+}
+
+/* ---------- BALDE (CVF) ---------- */
+function baldeSVG(nivel){
+  var h = 130 * Math.max(0, Math.min(1, nivel));
+  return '<svg viewBox="0 0 360 330" class="svg-cheio" role="img" aria-label="Balde da CVF">' +
+    '<defs><clipPath id="clipBalde"><path d="M110 180 L250 180 L232 312 L128 312 Z"/></clipPath></defs>' +
+    '<g id="pulmaoBalde">' +
+      '<path d="M178 46 c-5 0 -9 4 -13 10 c-10 15 -23 34 -25 56 c-2 21 8 36 23 35 c10 -1 15 -9 15 -20 z" fill="#fff" stroke="' + COR.azul + '" stroke-width="3.5"/>' +
+      '<g transform="translate(360,0) scale(-1,1)"><path d="M182 46 c-5 0 -9 4 -13 10 c-10 15 -23 34 -25 56 c-2 21 8 36 23 35 c10 -1 15 -9 15 -20 z" fill="#fff" stroke="' + COR.azul + '" stroke-width="3.5"/></g>' +
+      '<rect x="174" y="22" width="12" height="26" rx="4" fill="#fff" stroke="' + COR.azul + '" stroke-width="3.5"/>' +
+    '</g>' +
+    '<g id="jatoBalde" opacity="0"><path d="M180 150 l0 26" stroke="' + COR.azul + '" stroke-width="7" stroke-linecap="round" opacity=".6"/></g>' +
+    '<path d="M110 180 L250 180 L232 312 L128 312 Z" fill="#fff" stroke="' + COR.azul + '" stroke-width="5"/>' +
+    '<rect x="108" y="' + (312 - h) + '" width="146" height="' + h + '" fill="' + COR.azul + '" opacity=".35" clip-path="url(#clipBalde)"/>' +
+    '<rect x="102" y="170" width="156" height="14" rx="7" fill="' + COR.azul + '"/>' +
+    '<text x="180" y="304" text-anchor="middle" font-size="20" font-weight="800" fill="' + COR.azul + '" font-family="IBM Plex Mono, monospace">CVF</text>' +
+    '</svg>';
+}
+function animaBalde(){
+  var alvo = el('baldeCena'); if(!alvo) return;
+  var t0 = performance.now(), dur = 2200;
+  function passo(t){
+    var k = Math.min(1, (t - t0) / dur);
+    alvo.innerHTML = baldeSVG(k);
+    var j = el('jatoBalde'); if(j) j.setAttribute('opacity', k < 1 ? '1' : '0');
+    if(k < 1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+
+/* ---------- CRONÔMETRO (VEF1) ---------- */
+function cronoSVG(txt, ang, frac){
+  var cx = 180, cy = 150, r = 96;
+  var ticks = '';
+  for(var i = 0; i < 12; i++){
+    var a = i * 30 * Math.PI / 180;
+    ticks += '<line x1="' + (cx + Math.sin(a) * (r - 12)) + '" y1="' + (cy - Math.cos(a) * (r - 12)) +
+             '" x2="' + (cx + Math.sin(a) * (r - 3)) + '" y2="' + (cy - Math.cos(a) * (r - 3)) + '" stroke="' + COR.obst + '" stroke-width="3" opacity=".55"/>';
+  }
+  var ar = ang * Math.PI / 180;
+  return '<svg viewBox="0 0 360 330" class="svg-cheio" role="img" aria-label="Cronômetro do VEF1">' +
+    '<rect x="168" y="24" width="24" height="16" rx="4" fill="' + COR.obst + '"/>' +
+    '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="#fff" stroke="' + COR.obst + '" stroke-width="7"/>' + ticks +
+    '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + Math.sin(ar) * (r - 24)) + '" y2="' + (cy - Math.cos(ar) * (r - 24)) + '" stroke="' + COR.obst + '" stroke-width="5" stroke-linecap="round"/>' +
+    '<circle cx="' + cx + '" cy="' + cy + '" r="7" fill="' + COR.obst + '"/>' +
+    '<text x="' + cx + '" y="' + (cy + 62) + '" text-anchor="middle" font-size="30" font-weight="800" fill="' + COR.obst + '" font-family="IBM Plex Mono, monospace">' + txt + '</text>' +
+    '<rect x="70" y="268" width="220" height="30" rx="8" fill="#eef4f8" stroke="#cfdde7" stroke-width="2"/>' +
+    '<rect x="70" y="268" width="' + (220 * frac) + '" height="30" rx="8" fill="' + COR.obst + '" opacity=".8"/>' +
+    '<text x="180" y="316" text-anchor="middle" font-size="17" font-weight="800" fill="' + COR.obst + '" font-family="IBM Plex Mono, monospace">VEF1 · 1º SEGUNDO</text>' +
+    '</svg>';
+}
+function animaCrono(){
+  var alvo = el('cronoCena'); if(!alvo) return;
+  var seq = ['3', '2', '1'], i = 0;
+  alvo.innerHTML = cronoSVG('3', 0, 0);
+  var it = setInterval(function(){
+    i++;
+    if(i < 3){ alvo.innerHTML = cronoSVG(seq[i], 0, 0); }
+    else{
+      clearInterval(it);
+      var t0 = performance.now(), dur = 1600;
+      (function passo(t){
+        var k = Math.min(1, (t - t0) / dur);
+        alvo.innerHTML = cronoSVG(k < 1 ? 'SOPRA!' : '1,0 s', k * 360, k * 0.8);
+        if(k < 1) requestAnimationFrame(passo);
+      })(performance.now());
+    }
+  }, 700);
+}
+</script>
+<script>
+/* ==========================================================
+   5. INTERAÇÕES DE CADA SLIDE
+   ========================================================== */
+
+/* --- slide 12: construção dos eixos --- */
+var eixoEstado = 0;
+function eixoPasso(n){
+  eixoEstado = n;
+  if(n === 1) desenhaCurva('eixosCena', [], {destaqueY:true});
+  else if(n === 2) desenhaCurva('eixosCena', [], {destaqueX:true});
+  else{
+    desenhaCurva('eixosCena', [{tipo:'normal', cor:'azul'}], {bola:true, pulmao:true});
+    animaSopro('eixosCena');
+  }
+}
+
+/* --- slide 14: mordida na curva --- */
+function morde(){
+  desenhaCurva('curvaMordida', [
+    {tipo:'obst', cor:'obst', rotulo:'obstrutiva'},
+    {tipo:'normal', cor:'azul', tracejado:true, opac:.55, rotulo:'normal'}
+  ]);
+}
+function desmorde(){ desenhaCurva('curvaMordida', [{tipo:'normal', cor:'azul', rotulo:'normal'}]); }
+
+/* --- slides 9, 10, 20, 22: portas que mudam --- */
+function relTxt(r){ return 'VEF1/CVF ' + (r > .72 ? '≈ normal' : (r > .5 ? 'reduzida' : 'muito reduzida')); }
+function asmaEstado(e){
+  var alvo = e === 'crise' ? .18 : (e === 'bd' ? .74 : .88);
+  animaPorta('portaAsma', alvo, relTxt);
+}
+function dpocEstado(e){ animaPorta('portaDpoc', e === 'pre' ? .2 : .34, relTxt); }
+function filme(e){
+  var m = {manha:.78, noite:.4, gatilho:.14, bd:.72};
+  animaPorta('filmeAsma', m[e], function(r){
+    return ({manha:'☀️ manhã', noite:'🌙 noite', gatilho:'🏃 gatilho', bd:'💨 pós-BD'})[e] + ' · ' + relTxt(r);
+  });
+}
+function filmeD(e){
+  animaPorta('filmeDpoc', e === 'pre' ? .22 : .36, function(r){
+    return (e === 'pre' ? 'pré-BD' : 'pós-BD') + ' · limitação persiste';
+  });
+}
+
+/* --- slide 24: laboratório do broncodilatador --- */
+function calcBD(){
+  var vpre = +el('sVefPre').value, vpos = +el('sVefPos').value;
+  var cpre = +el('sCvfPre').value, cpos = +el('sCvfPos').value;
+  el('oVefPre').textContent = fmt(vpre) + ' L'; el('oVefPos').textContent = fmt(vpos) + ' L';
+  el('oCvfPre').textContent = fmt(cpre) + ' L'; el('oCvfPos').textContent = fmt(cpos) + ' L';
+  var dV = vpos - vpre, dVp = vpre > 0 ? dV / vpre * 100 : 0;
+  var dC = cpos - cpre, dCp = cpre > 0 ? dC / cpre * 100 : 0;
+  var rPre = cpre > 0 ? vpre / cpre : 0, rPos = cpos > 0 ? vpos / cpos : 0;
+  el('bVefPre').style.height = (vpre / 6 * 100) + '%';
+  el('bVefPos').style.height = (vpos / 6 * 100) + '%';
+  el('bCvfPre').style.height = (cpre / 6 * 100) + '%';
+  el('bCvfPos').style.height = (cpos / 6 * 100) + '%';
+  var criterio = (dV >= 0.2 && dVp >= 12);
+  el('bdResultado').innerHTML =
+    '<div class="rotulo">Variação do VEF1</div>' +
+    '<p class="sp"><span class="mono" style="font-size:calc(var(--u)*2.2);color:' + (dV >= 0 ? COR.verde : COR.obst) + '">' + (dV >= 0 ? '+' : '') + Math.round(dV * 1000) + ' mL</span> · <b>' + (dVp >= 0 ? '+' : '') + fmt(dVp, 1) + '%</b> sobre o basal</p>' +
+    '<div class="rotulo sp">Variação da CVF</div>' +
+    '<p class="sp"><span class="mono">' + (dC >= 0 ? '+' : '') + Math.round(dC * 1000) + ' mL · ' + fmt(dCp, 1) + '%</span></p>' +
+    '<div class="rotulo sp">Relação</div>' +
+    '<p class="sp"><span class="mono">' + fmt(rPre) + ' → ' + fmt(rPos) + '</span> ' + (rPos < rPre ? '(caiu — a CVF subiu mais que o VEF1)' : '') + '</p>' +
+    '<p class="pequeno sp" style="color:' + (criterio ? COR.verde : COR.obst) + ';font-weight:800">' +
+      (criterio ? '✓ Atende ao critério clássico ≥12% E ≥200 mL' : '✗ Não atende ao critério clássico ≥12% E ≥200 mL') +
+    '</p><p class="pequeno">Lembre: o padrão ATS/ERS 2022 usa &gt;10% do <b>previsto</b> — e este simulador não conhece o previsto do paciente.</p>';
+}
+
+/* --- slide 26: curva de Gauss --- */
+function gaussSVG(marca){
+  var pts = '', i, x, y;
+  for(i = 0; i <= 100; i++){
+    var z = -3.4 + 6.8 * i / 100;
+    x = 40 + (z + 3.4) / 6.8 * 340;
+    y = 210 - Math.exp(-z * z / 2) * 150;
+    pts += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+  }
+  var xl = 40 + (-1.645 + 3.4) / 6.8 * 340;
+  var area = '';
+  if(marca){
+    var a = 'M40 210 ';
+    for(i = 0; i <= 40; i++){
+      var z2 = -3.4 + (1.755) * i / 40;
+      a += 'L' + (40 + (z2 + 3.4) / 6.8 * 340).toFixed(1) + ' ' + (210 - Math.exp(-z2 * z2 / 2) * 150).toFixed(1) + ' ';
+    }
+    a += 'L' + xl.toFixed(1) + ' 210 Z';
+    area = '<path d="' + a + '" fill="' + COR.obst + '" opacity=".25"/>' +
+           '<line x1="' + xl + '" y1="46" x2="' + xl + '" y2="210" stroke="' + COR.obst + '" stroke-width="4" stroke-dasharray="7 6"/>' +
+           '<text x="' + (xl - 6) + '" y="40" text-anchor="middle" font-size="17" font-weight="800" fill="' + COR.obst + '" font-family="IBM Plex Mono, monospace">LLN</text>' +
+           '<text x="' + (xl - 6) + '" y="236" text-anchor="middle" font-size="14" fill="' + COR.obst + '" font-family="IBM Plex Mono, monospace">z = −1,645 · 5%</text>';
+  }
+  return '<svg viewBox="0 0 420 260" class="svg-cheio" role="img" aria-label="Distribuição do normal">' +
+    area +
+    '<path d="' + pts + '" fill="none" stroke="' + COR.azul + '" stroke-width="4.5"/>' +
+    '<line x1="30" y1="210" x2="400" y2="210" stroke="#9db2c2" stroke-width="3"/>' +
+    '<line x1="210" y1="56" x2="210" y2="210" stroke="' + COR.azul + '" stroke-width="3" stroke-dasharray="5 5" opacity=".7"/>' +
+    '<text x="210" y="50" text-anchor="middle" font-size="15" font-weight="800" fill="' + COR.azul + '" font-family="IBM Plex Mono, monospace">esperado</text>' +
+    '<text x="392" y="234" text-anchor="end" font-size="13" fill="#6b8095" font-family="IBM Plex Mono, monospace">pessoas saudáveis semelhantes ao paciente</text>' +
+    '</svg>';
+}
+function animaGauss(){ el('gaussCena').innerHTML = gaussSVG(true); }
+
+/* --- slide 27: régua da idade --- */
+function reguaSVG(idade){
+  var x = 40 + (idade - 20) / 65 * 340;
+  return '<svg viewBox="0 0 420 130" class="svg-cheio" role="img" aria-label="Régua de idade">' +
+    '<rect x="40" y="54" width="113" height="16" fill="' + COR.azul + '" opacity=".35"/>' +
+    '<rect x="153" y="54" width="114" height="16" fill="' + COR.verde + '" opacity=".35"/>' +
+    '<rect x="267" y="54" width="113" height="16" fill="' + COR.dpoc + '" opacity=".45"/>' +
+    '<line x1="40" y1="62" x2="380" y2="62" stroke="#7d93a6" stroke-width="3"/>' +
+    '<text x="60" y="96" font-size="14" font-weight="800" fill="' + COR.azul + '" font-family="IBM Plex Mono, monospace">JOVEM</text>' +
+    '<text x="185" y="96" font-size="14" font-weight="800" fill="' + COR.verde + '" font-family="IBM Plex Mono, monospace">ADULTO</text>' +
+    '<text x="310" y="96" font-size="14" font-weight="800" fill="' + COR.dpoc + '" font-family="IBM Plex Mono, monospace">IDOSO</text>' +
+    '<polygon points="' + x + ',36 ' + (x - 11) + ',16 ' + (x + 11) + ',16" fill="' + COR.obst + '"/>' +
+    '<line x1="' + x + '" y1="36" x2="' + x + '" y2="76" stroke="' + COR.obst + '" stroke-width="4"/>' +
+    '</svg>';
+}
+function mexeIdade(){
+  var i = +el('sIdade').value;
+  el('oIdade').textContent = i + ' anos';
+  el('reguaIdade').innerHTML = reguaSVG(i);
+  var t;
+  if(i < 40) t = '<div class="rotulo" style="color:var(--azul)">Adulto jovem</div><p class="sp">A relação esperada é bem <strong>maior</strong> que 0,70. Aqui o corte fixo pode <strong>deixar passar</strong> obstrução real: o paciente já está abaixo do seu LLN e ainda assim tem relação acima de 0,70.</p>';
+  else if(i < 65) t = '<div class="rotulo" style="color:var(--verde)">Meia-idade</div><p class="sp">Faixa em que o corte fixo e o LLN tendem a <strong>concordar mais</strong>. É onde a convenção 0,70 funciona melhor.</p>';
+  else t = '<div class="rotulo" style="color:var(--dpoc)">Idoso</div><p class="sp">A relação esperada <strong>cai com a idade</strong>. Muitos idosos saudáveis ficam abaixo de 0,70 — o corte fixo pode <strong>rotular a mais</strong> quem só está envelhecendo.</p>';
+  el('idadeTexto').innerHTML = t;
+}
+
+/* --- slide 19: fluxograma --- */
+function cx(x, y, w, h, cor, linhas, op){
+  var t = '';
+  linhas.forEach(function(l, i){
+    t += '<text x="' + (x + w / 2) + '" y="' + (y + 26 + i * 19) + '" text-anchor="middle" font-size="' + (l.g ? 16 : 14) + '" font-weight="' + (l.g ? 800 : 600) + '" fill="' + cor + '" font-family="IBM Plex Mono, monospace">' + l.t + '</text>';
+  });
+  return '<g opacity="' + op + '"><rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="10" fill="#fff" stroke="' + cor + '" stroke-width="3.5"/>' + t + '</g>';
+}
+function fluxoSVG(p){
+  var A = COR.azul, O = COR.obst, G = COR.ouro;
+  var o1 = p >= 1 ? 1 : .12, o2 = p >= 2 ? 1 : .12, o3 = p >= 3 ? 1 : .12, o4 = p >= 4 ? 1 : .12, o5 = p >= 5 ? 1 : .12;
+  return '<svg viewBox="0 0 420 400" class="svg-cheio" role="img" aria-label="Algoritmo de leitura">' +
+    cx(110, 8, 200, 44, A, [{t:'VEF1/CVF reduzida?', g:1}], o1) +
+    '<g opacity="' + o2 + '"><path d="M150 52 L92 96" stroke="' + O + '" stroke-width="3"/><text x="104" y="76" font-size="14" font-weight="800" fill="' + O + '" font-family="IBM Plex Mono, monospace">SIM</text></g>' +
+    cx(8, 96, 190, 48, O, [{t:'🚧 PADRÃO', g:1}, {t:'OBSTRUTIVO', g:1}], o2) +
+    '<g opacity="' + o3 + '"><path d="M272 52 L322 96" stroke="' + A + '" stroke-width="3"/><text x="286" y="76" font-size="14" font-weight="800" fill="' + A + '" font-family="IBM Plex Mono, monospace">NÃO</text></g>' +
+    cx(226, 96, 190, 48, A, [{t:'Olhe a CVF', g:1}], o3) +
+    '<g opacity="' + o4 + '"><path d="M321 144 L321 186" stroke="' + A + '" stroke-width="3"/></g>' +
+    cx(226, 186, 190, 66, A, [{t:'CVF reduzida →', g:1}, {t:'sugestivo de'}, {t:'RESTRIÇÃO'}], o4) +
+    '<g opacity="' + o4 + '"><path d="M321 252 L321 292" stroke="' + A + '" stroke-width="3"/></g>' +
+    cx(226, 292, 190, 48, G, [{t:'CONFIRMAR', g:1}, {t:'com CPT ↓'}], o4) +
+    '<g opacity="' + o5 + '"><path d="M103 144 L103 186" stroke="' + O + '" stroke-width="3"/></g>' +
+    cx(8, 186, 190, 66, O, [{t:'Relação ↓ + CVF ↓', g:1}, {t:'NÃO chame de'}, {t:'misto automaticamente'}], o5) +
+    '<g opacity="' + o5 + '"><path d="M103 252 L103 292" stroke="' + G + '" stroke-width="3"/></g>' +
+    cx(8, 292, 190, 48, G, [{t:'AVALIAR VOLUMES', g:1}, {t:'aprisionamento?'}], o5) +
+    '</svg>';
+}
+var fluxoAtual = 0;
+var FLUXO_TXT = [
+  '<p>Clique em avançar para percorrer o raciocínio passo a passo com a turma.</p>',
+  '<p><strong>Pergunta 1.</strong> Sempre a mesma: a relação VEF1/CVF está reduzida? Nada de começar pelo VEF1 previsto.</p>',
+  '<p><strong>Sim →</strong> padrão obstrutivo. Só a relação define o padrão; o VEF1 vai graduar a intensidade depois.</p>',
+  '<p><strong>Não →</strong> a porta está boa. Agora olhe o tamanho da casa: a CVF.</p>',
+  '<p><strong>CVF reduzida com relação preservada →</strong> padrão sugestivo de restrição. A espirometria sugere; a CPT confirma.</p>',
+  '<p><strong>Relação reduzida + CVF reduzida →</strong> não escreva “misto” por reflexo. Pode ser aprisionamento aéreo. Volumes pulmonares resolvem.</p>'
+];
+function fluxoPasso(){
+  fluxoAtual = Math.min(5, fluxoAtual + 1);
+  el('fluxoCena').innerHTML = fluxoSVG(fluxoAtual);
+  el('fluxoTexto').innerHTML = FLUXO_TXT[fluxoAtual];
+}
+function fluxoReset(){ fluxoAtual = 0; el('fluxoCena').innerHTML = fluxoSVG(0); el('fluxoTexto').innerHTML = FLUXO_TXT[0]; }
+
+/* --- slide 31: batalha das curvas --- */
+var JOGO = [], jogoIdx = 0, jogoPontos = 0;
+var NOME = {normal:'NORMAL', obst:'OBSTRUTIVA', restr:'SUGESTIVA DE RESTRIÇÃO'};
+var EXPL = {
+  normal:'Pico precoce e descida praticamente reta, com volume adequado.',
+  obst:'Pico baixo e barriga escavada — a concavidade é a assinatura da obstrução.',
+  restr:'Contorno preservado, mas estreito: pouco volume total. Sugere restrição — confirme com CPT.'
+};
+function jogoIniciar(){
+  JOGO = [
+    {t:'normal', m:{fvc:1, pef:1}}, {t:'obst', m:{fvc:.95, pef:1.05}},
+    {t:'restr', m:{fvc:1.1, pef:.95}}, {t:'obst', m:{fvc:1.05, pef:.85}},
+    {t:'normal', m:{fvc:1.08, pef:.95}}, {t:'restr', m:{fvc:.9, pef:1.05}}
+  ].sort(function(){ return Math.random() - .5; });
+  jogoIdx = 0; jogoPontos = 0;
+  el('jogoPlacar').textContent = '0';
+  el('jogoFeedback').classList.remove('aberto');
+  jogoDesenha();
+}
+function jogoDesenha(){
+  var c = JOGO[jogoIdx];
+  desenhaCurva('jogoCurva', [{tipo:c.t, cor:'azul', mod:c.m}]);
+  el('jogoRodada').textContent = 'Curva ' + (jogoIdx + 1) + ' de 6';
+}
+function jogoResp(r){
+  if(jogoIdx >= JOGO.length) return;
+  var c = JOGO[jogoIdx], ok = (r === c.t);
+  if(ok) jogoPontos++;
+  el('jogoPlacar').textContent = jogoPontos;
+  var fb = el('jogoFeedback');
+  fb.innerHTML = (ok ? '✅ <b>Correto.</b> ' : '❌ <b>Era ' + NOME[c.t] + '.</b> ') + EXPL[c.t];
+  fb.classList.add('aberto');
+  jogoIdx++;
+  if(jogoIdx < JOGO.length){ jogoDesenha(); }
+  else{
+    var msg = jogoPontos <= 2 ? '“Volte para a casa do pulmão.”' : (jogoPontos <= 4 ? '“A porta já está ficando clara.”' : '“Você venceu a guerra das curvas.”');
+    el('jogoRodada').textContent = 'Fim · ' + jogoPontos + '/6';
+    fb.innerHTML += '<br><br>🏆 <b>' + jogoPontos + ' de 6.</b> ' + msg;
+  }
+}
+
+/* --- slide 32: simulador --- */
+function simula(){
+  var cvf = +el('sSimCvf').value, vef = +el('sSimVef').value;
+  if(vef > cvf){ vef = cvf; el('sSimVef').value = cvf; }
+  el('oSimCvf').textContent = fmt(cvf, 1) + ' L';
+  el('oSimVef').textContent = fmt(vef, 1) + ' L';
+  var r = cvf > 0 ? vef / cvf : 0;
+  desenhaPorta('portaSim', {rel:Math.max(.05, (r - .3) / .65), cor:r < .7 ? 'obst' : 'azul', rotulo:'VEF1/CVF = ' + fmt(r)});
+  var leitura = r < .7
+    ? '<p class="sp">Relação abaixo de 0,70: pela convenção operacional, porta estreita. Em um laudo real, compare com o <strong>LLN</strong> do paciente.</p>'
+    : '<p class="sp">Relação preservada: a porta está boa. Se a CVF estiver baixa, pense em <strong>casa pequena</strong> e confirme com CPT.</p>';
+  el('simResultado').innerHTML =
+    '<div class="rotulo">VEF1 ÷ CVF</div>' +
+    '<div class="num ' + (r < .7 ? 'n-obst' : 'n-azul') + ' sp">' + fmt(r) + '</div>' +
+    '<p class="pequeno sp">' + fmt(vef, 1) + ' ÷ ' + fmt(cvf, 1) + ' = ' + fmt(r) + ' → ' + Math.round(r * 100) + '%</p>' + leitura;
+}
+
+/* --- slide 33: flashcards --- */
+var FLASH = [
+  {f:'VEF1/CVF ↓', v:'OBSTRUÇÃO', n:'A relação é quem encontra a obstrução.'},
+  {f:'VEF1/CVF preservada + CVF ↓', v:'SUSPEITAR RESTRIÇÃO', n:'Suspeitar, não afirmar: confirme com CPT.'},
+  {f:'Obstrução + CVF ↓', v:'APRISIONAMENTO OU MISTO? PRECISO INVESTIGAR', n:'Volumes pulmonares decidem.'},
+  {f:'ASMA', v:'VARIABILIDADE', n:'A porta muda com o tempo, o gatilho e o tratamento.'},
+  {f:'DPOC', v:'OBSTRUÇÃO PERSISTENTE', n:'Demonstrada no pós-broncodilatador, no contexto adequado.'},
+  {f:'Espirometria normal em paciente com sintomas típicos', v:'NÃO EXCLUI ASMA', n:'O exame pode ter caído num dia bom.'}
+];
+var flashIdx = 0;
+function flashMostra(){
+  var c = FLASH[flashIdx];
+  el('flashFrente').textContent = c.f;
+  el('flashTexto').textContent = c.v;
+  el('flashNota').textContent = c.n;
+  el('flashVerso').style.visibility = 'hidden';
+  el('flashCont').textContent = 'Cartão ' + (flashIdx + 1) + ' de ' + FLASH.length;
+}
+function flashRevela(){ el('flashVerso').style.visibility = 'visible'; }
+function flashProx(){ flashIdx = (flashIdx + 1) % FLASH.length; flashMostra(); }
+
+/* --- slide 36: teste final --- */
+var TESTE = [
+  {q:'O que a relação VEF1/CVF representa?',
+   o:['O quanto o pulmão do paciente é grande', 'A fração do volume total que sai no primeiro segundo', 'A velocidade máxima do fluxo expiratório'], ok:1,
+   e:'É uma fração de volume, não uma velocidade e não um tamanho. Por isso ela enxerga a “largura da porta”.'},
+  {q:'CVF 5,0 L e VEF1 3,0 L. Qual é a relação?',
+   o:['0,40', '0,60', '0,75'], ok:1,
+   e:'3,0 ÷ 5,0 = 0,60. Relação reduzida — padrão obstrutivo, a ser interpretado com os valores de referência do paciente.'},
+  {q:'Relação preservada, CVF reduzida e VEF1 reduzido proporcionalmente. Como laudar?',
+   o:['Distúrbio obstrutivo', 'Padrão sugestivo de restrição, a confirmar com volumes pulmonares', 'Restrição confirmada'], ok:1,
+   e:'A espirometria apenas sugere restrição. A confirmação exige CPT reduzida.'},
+  {q:'Uma curva fluxo-volume com concavidade na alça expiratória indica:',
+   o:['Restrição', 'Obstrução', 'Esforço insuficiente sempre'], ok:1,
+   e:'A concavidade — a “mordida” na barriga da curva — é a assinatura visual da obstrução.'},
+  {q:'Paciente de 24 anos, chiado e tosse noturna há meses; espirometria hoje totalmente normal. Conclusão:',
+   o:['Asma está excluída', 'Exame normal não exclui asma', 'Trata-se de restrição'], ok:1,
+   e:'A asma é variável: o exame pode ser feito num período de função normal. Investigue variabilidade e use o contexto clínico.'},
+  {q:'Homem de 70 anos, tabagista, relação pós-BD 0,52; o VEF1 melhorou 15% e 250 mL após broncodilatador. O mais correto é:',
+   o:['O diagnóstico passa a ser asma', 'A resposta ao BD não exclui DPOC; a obstrução persistiu', 'Não houve resposta'], ok:1,
+   e:'Resposta ≠ diagnóstico. Pacientes com DPOC podem responder ao broncodilatador e ainda assim manter limitação persistente.'},
+  {q:'Obstrutivo grave com CVF reduzida. O que você escreve?',
+   o:['Distúrbio misto', 'Pode haver aprisionamento aéreo; avaliar volumes pulmonares antes de afirmar restrição associada', 'Restrição pura'], ok:1,
+   e:'O ar preso encurta a CVF sem que exista doença restritiva. Só a CPT separa as duas situações.'},
+  {q:'O corte VEF1/CVF < 0,70 no contexto GOLD é:',
+   o:['Um limite fisiológico válido em qualquer idade', 'Um critério operacional aplicado no exame pós-broncodilatador, com limitações nos extremos de idade', 'O mesmo que o LLN'], ok:1,
+   e:'É uma convenção prática. A interpretação fisiológica usa valores previstos e LLN, que variam com idade, sexo e altura.'}
+];
+var tfIdx = 0, tfAcertos = 0, tfEscolha = -1, tfFeito = false;
+function tfIniciar(){ tfIdx = 0; tfAcertos = 0; el('tfPlacar').textContent = '0'; el('tfFinal').style.display = 'none'; tfMostra(); }
+function tfMostra(){
+  var q = TESTE[tfIdx];
+  tfEscolha = -1; tfFeito = false;
+  el('tfTitulo').textContent = 'Questão ' + (tfIdx + 1) + ' de ' + TESTE.length;
+  el('tfEnunciado').textContent = q.q;
+  el('tfFeedback').classList.remove('aberto');
+  el('tfProx').style.display = 'none';
+  el('tfRevelar').style.display = 'none';
+  var box = el('tfOpcoes'); box.innerHTML = '';
+  q.o.forEach(function(txt, i){
+    var b = document.createElement('button');
+    b.className = 'opc';
+    b.innerHTML = '<span class="marca">' + 'ABC'[i] + '</span><span>' + txt + '</span>';
+    b.onclick = function(){
+      if(tfFeito) return;
+      tfEscolha = i;
+      Array.prototype.forEach.call(box.children, function(x){ x.style.borderColor = ''; x.style.background = ''; });
+      b.style.borderColor = 'var(--azul)'; b.style.background = 'var(--azul-fundo)';
+      if(ocultarRespostas) el('tfRevelar').style.display = 'inline-flex';
+      else tfRevela();
+    };
+    box.appendChild(b);
+  });
+}
+function tfRevela(){
+  if(tfFeito || tfEscolha < 0) return;
+  tfFeito = true;
+  var q = TESTE[tfIdx], box = el('tfOpcoes');
+  Array.prototype.forEach.call(box.children, function(x, i){
+    x.style.borderColor = ''; x.style.background = '';
+    if(i === q.ok) x.classList.add(i === tfEscolha ? 'certa' : 'mostra-certa');
+    else if(i === tfEscolha) x.classList.add('errada');
+    x.setAttribute('disabled', 'disabled');
+  });
+  if(tfEscolha === q.ok){ tfAcertos++; el('tfPlacar').textContent = tfAcertos; }
+  el('tfFeedback').innerHTML = (tfEscolha === q.ok ? '✅ <b>Correta.</b> ' : '❌ <b>Incorreta.</b> ') + q.e;
+  el('tfFeedback').classList.add('aberto');
+  el('tfRevelar').style.display = 'none';
+  el('tfProx').style.display = 'inline-flex';
+}
+function tfProxima(){
+  if(tfIdx < TESTE.length - 1){ tfIdx++; tfMostra(); }
+  else{
+    var msg = tfAcertos <= 3 ? 'Reveja a casa: balde, cronômetro e porta.' : (tfAcertos <= 6 ? 'Boa base — reforce as pegadinhas do misto e do broncodilatador.' : 'Excelente. Você já lê espirometria pelo mecanismo.');
+    el('tfFinal').style.display = 'block';
+    el('tfFinal').innerHTML = '<h3>Resultado: ' + tfAcertos + ' de ' + TESTE.length + '</h3><p class="sp">' + msg + '</p>';
+    el('tfProx').style.display = 'none';
+  }
+}
+
+/* ==========================================================
+   6. INICIALIZAÇÃO
+   ========================================================== */
+function aoEntrar(i){
+  if(i === 30 && JOGO.length === 0) jogoIniciar();
+}
+function iniciar(){
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.body.classList.add('sem-mov');
+  ajustaUnidade();
+  montaMapa();
+  montaQuizzes();
+  document.getElementById('btnOcultar').classList.add('on');
+
+  desenhaCasa('casaAbertura', {porta:.85, cor:'azul'});
+  el('baldeCena').innerHTML = baldeSVG(0);
+  el('cronoCena').innerHTML = cronoSVG('0,0 s', 0, 0);
+  desenhaPorta('portaS5', {rel:.85, cor:'azul', rotulo:'VEF1/CVF = 0,80'});
+  desenhaPorta('portaS6', {rel:.22, cor:'obst', rotulo:'VEF1/CVF = 0,50'});
+  desenhaCasa('casaCongest', {porta:.13, cor:'obst', fila:true});
+  desenhaCasa('casaAsma8', {porta:.2, cor:'roxo'});
+  desenhaCasa('casaDpoc8', {porta:.2, cor:'dpoc'});
+  desenhaPorta('portaAsma', {rel:.18, cor:'roxo', sanfona:true, rotulo:relTxt(.18)});
+  desenhaPorta('portaDpoc', {rel:.2, cor:'dpoc', ferrugem:true, rotulo:relTxt(.2)});
+  desenhaCurva('eixosCena', [], {});
+  desenhaCurva('curvaNormal', [{tipo:'normal', cor:'azul', rotulo:'normal'}], {bola:true, pulmao:true});
+  desmorde();
+  desenhaCurva('curvaA', [{tipo:'normal', cor:'azul'}]);
+  desenhaCurva('curvaB', [{tipo:'obst', cor:'obst'}]);
+  desenhaCurva('curvaC', [{tipo:'restr', cor:'azul'}]);
+  desenhaCasa('casaObst16', {porta:.13, cor:'obst'});
+  desenhaCasa('casaRestr16', {porta:.85, cor:'azul', pequena:true});
+  desenhaCasa('casaPreso', {porta:.12, cor:'obst', presos:6});
+  desenhaCasa('pulmaoBaloes', {porta:.1, cor:'obst', presos:6});
+  desenhaCasa('casaFinal', {porta:.85, cor:'azul'});
+  fluxoReset();
+  desenhaPorta('filmeAsma', {rel:.78, cor:'roxo', sanfona:true, rotulo:'☀️ manhã · VEF1/CVF ≈ normal'});
+  desenhaPorta('filmeDpoc', {rel:.22, cor:'dpoc', ferrugem:true, rotulo:'pré-BD · limitação persiste'});
+  el('gaussCena').innerHTML = gaussSVG(false);
+  mexeIdade();
+  calcBD();
+  simula();
+  flashMostra();
+  tfIniciar();
+  jogoIniciar();
+  mostra(0);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+else iniciar();
+</script>
+</body>
+</html>
