@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sepse 2026 — Reconheça · Ressuscite · Reavalie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d2237; --ink:#16283a; --bg:#f4f7fa; --card:#ffffff; --line:#dbe4ec;
+  --azul:#1282A2; --azul-soft:#e6f2f6; --azul-deep:#0b5f75;
+  --verde:#1e8f5e; --verde-soft:#e6f5ee;
+  --ambar:#b9800c; --ambar-soft:#fdf3e0;
+  --verm:#c0392b; --verm-soft:#fdecea;
+  --cinza:#6b7c8c;
+  --mon:#08161f;
+  --u:9px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Nunito','Trebuchet MS',Arial,sans-serif;
+  background:var(--bg); color:var(--ink);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+body.fullbleed{background:#0a1622}
+
+/* ---------- topbar ---------- */
+.topbar{
+  flex:0 0 auto; display:flex; align-items:center; gap:14px;
+  padding:8px 16px; background:var(--navy); color:#fff; font-size:13px;
+}
+.brand{font-weight:900; letter-spacing:.3px; font-size:15px}
+.brand small{display:block;font-weight:600;font-size:10.5px;opacity:.72;letter-spacing:.08em;text-transform:uppercase}
+.keys{margin-left:auto; display:flex; gap:6px; flex-wrap:wrap}
+.keys button{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em;
+  background:rgba(255,255,255,.10); color:#e8f1f6; border:1px solid rgba(255,255,255,.18);
+  padding:4px 8px; border-radius:6px; cursor:pointer;
+}
+.keys button:hover{background:rgba(255,255,255,.2)}
+.keys button.act{background:var(--azul);border-color:var(--azul)}
+.counter{font-family:'IBM Plex Mono',monospace;font-size:12px;opacity:.85}
+body.aprs .topbar{display:none}
+
+/* ---------- progress ---------- */
+#prog{flex:0 0 auto;height:5px;background:#dde6ee;cursor:pointer;position:relative}
+#progfill{height:100%;background:linear-gradient(90deg,var(--azul),var(--verde));width:0%}
+body.aprs #prog{height:3px}
+
+/* ---------- stage ---------- */
+#wrap{flex:1 1 auto;display:flex;align-items:center;justify-content:center;padding:14px;min-height:0}
+body.aprs #wrap{padding:0}
+#stage{
+  position:relative; width:100%; max-width:1580px; aspect-ratio:16/9;
+  background:var(--card); border-radius:14px; overflow:hidden;
+  box-shadow:0 10px 40px rgba(13,34,55,.16); border:1px solid var(--line);
+}
+body.aprs #stage{border-radius:0;box-shadow:none;border:none;max-width:none;height:100%}
+
+.slide{position:absolute;inset:0;display:none;flex-direction:row}
+.slide.on{display:flex;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+body.reduz .slide.on{animation:none}
+
+/* ---------- trilho de procedência ---------- */
+.rail{
+  flex:0 0 calc(var(--u)*15); background:#eef3f8; border-right:1px solid var(--line);
+  padding:calc(var(--u)*2.2) calc(var(--u)*1.4); display:flex; flex-direction:column; gap:calc(var(--u)*.9);
+}
+.rail .num{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.5);color:var(--cinza);letter-spacing:.06em}
+.rail .act{font-size:calc(var(--u)*1.35);font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;line-height:1.3}
+.chip{
+  font-size:calc(var(--u)*1.25); font-weight:700; line-height:1.25;
+  padding:calc(var(--u)*.55) calc(var(--u)*.7); border-radius:calc(var(--u)*.6);
+  border-left:calc(var(--u)*.42) solid;
+}
+.chip.verde{background:var(--verde-soft);border-color:var(--verde);color:#155e3f}
+.chip.azul{background:var(--azul-soft);border-color:var(--azul);color:var(--azul-deep)}
+.chip.ambar{background:var(--ambar-soft);border-color:var(--ambar);color:#8a5f06}
+.chip.verm{background:var(--verm-soft);border-color:var(--verm);color:#8e2b20}
+body.aprs .rail{display:none}
+
+/* ---------- corpo do slide ---------- */
+.body{flex:1 1 auto;padding:calc(var(--u)*3) calc(var(--u)*3.6);display:flex;flex-direction:column;justify-content:center;gap:calc(var(--u)*1.35);overflow:auto}
+body.aprs .body{padding:calc(var(--u)*3) calc(var(--u)*4.5)}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.85);letter-spacing:.14em;text-transform:uppercase;color:var(--azul);font-weight:600}
+h1{font-size:calc(var(--u)*4.9);line-height:1.1;color:var(--navy);font-weight:900;letter-spacing:-.01em}
+h2{font-size:calc(var(--u)*2.95);line-height:1.2;color:var(--navy);font-weight:800}
+p,li{font-size:calc(var(--u)*2.15);line-height:1.42}
+.lead{font-size:calc(var(--u)*2.45);color:#33475c}
+ul{padding-left:calc(var(--u)*2.4);display:flex;flex-direction:column;gap:calc(var(--u)*.55)}
+strong{font-weight:800}
+.small{font-size:calc(var(--u)*1.8);color:var(--cinza);line-height:1.38}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+.big{font-size:calc(var(--u)*6.2);font-weight:900;line-height:1.05;color:var(--navy);letter-spacing:-.02em}
+.huge{font-size:calc(var(--u)*8.5);font-weight:900;line-height:1;color:var(--navy)}
+.center{align-items:center;justify-content:center;text-align:center}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*1.6)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*1.4)}
+.card{background:#fff;border:1px solid var(--line);border-radius:calc(var(--u)*1);padding:calc(var(--u)*1.6);box-shadow:0 2px 8px rgba(13,34,55,.05)}
+
+.box{border-radius:calc(var(--u)*1);padding:calc(var(--u)*1.5) calc(var(--u)*1.8);border-left:calc(var(--u)*.6) solid}
+.box .t{font-weight:900;font-size:calc(var(--u)*1.95);margin-bottom:calc(var(--u)*.5);letter-spacing:.01em}
+.box.verde{background:var(--verde-soft);border-color:var(--verde)}
+.box.verde .t{color:#155e3f}
+.box.azul{background:var(--azul-soft);border-color:var(--azul)}
+.box.azul .t{color:var(--azul-deep)}
+.box.ambar{background:var(--ambar-soft);border-color:var(--ambar)}
+.box.ambar .t{color:#8a5f06}
+.box.verm{background:var(--verm-soft);border-color:var(--verm)}
+.box.verm .t{color:#8e2b20}
+
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.25);font-weight:600;padding:calc(var(--u)*.35) calc(var(--u)*.8);border-radius:999px;letter-spacing:.06em}
+.tag.novo{background:#fff3d1;color:#8a5f06;border:1px solid #e6c469}
+.tag.forte{background:var(--verde-soft);color:#155e3f;border:1px solid #9ed3ba}
+.tag.cond{background:#eef3f8;color:#48607a;border:1px solid #c6d5e3}
+
+/* ---------- monitor ---------- */
+.monitor{background:var(--mon);border-radius:calc(var(--u)*1);padding:calc(var(--u)*1.4) calc(var(--u)*1.6);color:#cfe6ef;display:flex;flex-direction:column;gap:calc(var(--u)*.9)}
+.monitor .row{display:flex;gap:calc(var(--u)*1.6);flex-wrap:wrap}
+.vit{min-width:calc(var(--u)*11)}
+.vit .lb{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.2);letter-spacing:.12em;opacity:.62}
+.vit .vl{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*3.4);font-weight:600;line-height:1}
+.vit.ok .vl{color:#3fd68a}.vit.warn .vl{color:#ffc849}.vit.bad .vl{color:#ff6b5e}
+.vit.hidden{opacity:.12}
+.ecg{width:100%;height:calc(var(--u)*7)}
+.ecg path{fill:none;stroke:#3fd68a;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+
+/* ---------- cortina ---------- */
+.curtain{position:relative;border-radius:calc(var(--u)*1);overflow:hidden;border:2px dashed #b9c9d8;background:#eef3f8}
+.curtain .cover{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:calc(var(--u)*.7);background:#eef3f8;cursor:pointer;text-align:center;padding:calc(var(--u)*1.5);z-index:2
+}
+.curtain .cover b{font-size:calc(var(--u)*2.1);color:var(--navy)}
+.curtain .cover span{font-size:calc(var(--u)*1.5);color:var(--cinza)}
+.curtain.open .cover{display:none}
+.curtain .inner{padding:calc(var(--u)*1.6);background:#fff}
+
+/* ---------- interativos ---------- */
+.btn{
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:calc(var(--u)*1.6);
+  padding:calc(var(--u)*.85) calc(var(--u)*1.5);border-radius:calc(var(--u)*.8);
+  border:2px solid var(--azul);background:#fff;color:var(--azul-deep);cursor:pointer;transition:.15s
+}
+.btn:hover{background:var(--azul-soft)}
+.btn.sel{background:var(--azul);color:#fff}
+.btn.g{border-color:var(--verde);color:#155e3f}.btn.g.sel{background:var(--verde);color:#fff}
+.btn.a{border-color:var(--ambar);color:#8a5f06}.btn.a.sel{background:var(--ambar);color:#fff}
+.btn.r{border-color:var(--verm);color:#8e2b20}.btn.r.sel{background:var(--verm);color:#fff}
+.btnrow{display:flex;gap:calc(var(--u)*1);flex-wrap:wrap}
+.out{min-height:calc(var(--u)*5);font-size:calc(var(--u)*1.85);line-height:1.4}
+
+.seats{display:grid;grid-template-columns:repeat(6,1fr);gap:calc(var(--u)*.9)}
+.seat{border:2px solid var(--line);border-radius:calc(var(--u)*.8);padding:calc(var(--u)*1);text-align:center;cursor:pointer;background:#fff;transition:.15s}
+.seat .ic{font-size:calc(var(--u)*3)}
+.seat .nm{font-size:calc(var(--u)*1.35);font-weight:800;color:var(--navy)}
+.seat .an{font-size:calc(var(--u)*1.3);color:var(--verm);font-weight:700;display:none}
+.seat.on{border-color:var(--verm);background:var(--verm-soft)}
+.seat.on .an{display:block}
+
+.sema{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*1.4)}
+.lampada{border-radius:calc(var(--u)*1);padding:calc(var(--u)*1.6);text-align:center;border:3px solid transparent;opacity:.42;transition:.2s}
+.lampada.on{opacity:1;transform:scale(1.02)}
+.lampada .lz{font-size:calc(var(--u)*3.6);line-height:1}
+.lampada .ti{font-weight:900;font-size:calc(var(--u)*2);margin-top:calc(var(--u)*.5)}
+.lampada .de{font-size:calc(var(--u)*1.5);line-height:1.35;margin-top:calc(var(--u)*.5)}
+.lampada.r{background:var(--verm-soft);border-color:var(--verm)}
+.lampada.a{background:var(--ambar-soft);border-color:var(--ambar)}
+.lampada.g{background:var(--verde-soft);border-color:var(--verde)}
+
+.loop{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*1.2);flex-wrap:wrap}
+.loopnode{background:#fff;border:2px solid var(--azul);border-radius:calc(var(--u)*.8);padding:calc(var(--u)*1) calc(var(--u)*1.4);font-weight:800;font-size:calc(var(--u)*1.7);color:var(--azul-deep)}
+.loopnode.hot{background:var(--azul);color:#fff}
+.arrow{font-size:calc(var(--u)*2.4);color:var(--cinza)}
+
+.ladder{display:flex;flex-direction:column;gap:calc(var(--u)*.9)}
+.step{display:flex;align-items:center;gap:calc(var(--u)*1.2);border:2px solid var(--line);border-radius:calc(var(--u)*.8);padding:calc(var(--u)*1.1) calc(var(--u)*1.4);cursor:pointer;background:#fff}
+.step .n{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cinza);font-size:calc(var(--u)*1.6)}
+.step .tx{font-weight:800;font-size:calc(var(--u)*1.9);color:var(--navy)}
+.step .dt{font-size:calc(var(--u)*1.5);color:#4d6478;display:none;line-height:1.35}
+.step.on{border-color:var(--azul);background:var(--azul-soft)}
+.step.on .dt{display:block}
+
+.qopt{display:block;width:100%;text-align:left;margin-bottom:calc(var(--u)*.7);font-size:calc(var(--u)*1.7);padding:calc(var(--u)*.9) calc(var(--u)*1.2);border:2px solid var(--line);border-radius:calc(var(--u)*.7);background:#fff;cursor:pointer;font-family:inherit}
+.qopt:hover{border-color:var(--azul)}
+.qopt.right{border-color:var(--verde);background:var(--verde-soft);font-weight:800}
+.qopt.wrong{border-color:var(--verm);background:var(--verm-soft)}
+.qfb{font-size:calc(var(--u)*1.6);line-height:1.4;margin-top:calc(var(--u)*.8);display:none}
+.qfb.show{display:block}
+
+.chk{display:flex;align-items:center;gap:calc(var(--u)*1);font-size:calc(var(--u)*1.95);cursor:pointer;padding:calc(var(--u)*.5) 0}
+.chk input{width:calc(var(--u)*2);height:calc(var(--u)*2);accent-color:var(--verde);cursor:pointer}
+.chk.done span{text-decoration:line-through;color:var(--cinza)}
+
+.assin{font-family:'Dancing Script',cursive;font-size:calc(var(--u)*3.2);color:var(--azul-deep)}
+
+/* ---------- overlays ---------- */
+.ov{position:fixed;inset:0;background:rgba(9,22,35,.94);z-index:60;display:none;padding:26px;overflow:auto}
+.ov.on{display:block}
+.ov h3{color:#fff;font-size:20px;margin-bottom:14px}
+#idxgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.idxi{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:8px 10px;color:#dbe9f1;cursor:pointer;font-size:12.5px;line-height:1.3}
+.idxi:hover{background:var(--azul);border-color:var(--azul);color:#fff}
+.idxi b{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;opacity:.6;margin-bottom:2px}
+
+#notes{position:fixed;left:0;right:0;bottom:0;z-index:55;background:#0d2237;color:#e4eef5;padding:14px 20px;display:none;box-shadow:0 -8px 30px rgba(0,0,0,.35);max-height:44vh;overflow:auto}
+#notes.on{display:block}
+#notes .nt{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+#notes .nb{font-size:14.5px;line-height:1.55;max-width:1100px}
+#notes .nb em{color:#ffd88a;font-style:normal;font-weight:700}
+
+@media (max-width:820px){
+  #stage{aspect-ratio:auto;height:100%}
+  .rail{display:none}
+  .body{padding:16px}
+  .grid2,.grid3,.sema{grid-template-columns:1fr}
+  .seats{grid-template-columns:repeat(3,1fr)}
+  .keys button{font-size:10px;padding:3px 6px}
+}
+@media print{
+  body{overflow:visible;display:block}
+  .topbar,#prog,.ov,#notes{display:none!important}
+  #wrap{padding:0}
+  #stage{aspect-ratio:auto;box-shadow:none;border:none;max-width:none;height:auto}
+  .slide{display:flex!important;position:relative;page-break-after:always;border-bottom:1px solid #ccc}
+  .curtain .cover{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">SEPSE 2026<small>Reconheça · Ressuscite · Reavalie</small></div>
+  <div class="keys">
+    <button data-k="R" id="bR">R revelar</button>
+    <button data-k="N" id="bN">N notas</button>
+    <button data-k="G" id="bG">G índice</button>
+    <button data-k="P" id="bP">P projetar</button>
+    <button data-k="F" id="bF">F tela cheia</button>
+    <button data-k="M" id="bM">M movimento</button>
+    <button id="bMinus" title="Diminuir letras (tecla -)">A&minus;</button>
+    <button id="bPlus" title="Aumentar letras (tecla +)">A+</button>
+    <span class="counter" id="scaleOut" style="opacity:.6">100%</span>
+  </div>
+  <div class="counter"><span id="cur">1</span>/<span id="tot">0</span></div>
+</header>
+<div id="prog"><div id="progfill"></div></div>
+
+<div id="wrap"><div id="stage">
+
+<!-- ============ ATO I ============ -->
+<section class="slide" data-act="Ato I · Alguma coisa está muito errada" data-chips="azul:Caso da aula 2025">
+ <div class="body center">
+  <div class="kicker">Emergência</div>
+  <div class="huge mono" style="color:#0d2237">22h17</div>
+  <p class="lead" style="max-width:70%">Sala de emergência. Um homem acaba de entrar.<br>Ainda não temos diagnóstico. Ainda não precisamos de um.</p>
+  <svg class="ecg" id="ecg-abertura" viewBox="0 0 600 60" preserveAspectRatio="none" style="max-width:60%;height:calc(var(--u)*6)"><path d=""/></svg>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato I · Alguma coisa está muito errada" data-chips="azul:Caso da aula 2025">
+ <div class="body">
+  <div class="kicker">O paciente</div>
+  <h1>Homem, 40 anos, caminhoneiro</h1>
+  <div class="grid2">
+    <div class="card">
+      <ul>
+        <li>Tosse produtiva há alguns dias</li>
+        <li>Automedicando-se com xarope e expectorante</li>
+        <li>Três episódios de vômito</li>
+        <li>Síncope em um posto de gasolina, há 1 dia</li>
+        <li>Amparado pelos colegas caminhoneiros</li>
+        <li class="small">Nega comorbidades</li>
+      </ul>
+    </div>
+    <div class="box azul"><div class="t">Pergunta para a sala</div>
+      <p>O que você quer saber <strong>agora</strong>?</p>
+      <p class="small" style="margin-top:calc(var(--u)*.8)">Deixe três alunos responderem antes de avançar.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato I · Alguma coisa está muito errada" data-chips="azul:Caso da aula 2025|verm:Ação imediata">
+ <div class="body">
+  <div class="kicker">O monitor começa a falar</div>
+  <h2>Clique para revelar um sinal de cada vez</h2>
+  <div class="monitor" id="mon1">
+    <div class="row">
+      <div class="vit hidden bad" data-i="1"><div class="lb">FC bpm</div><div class="vl">136</div></div>
+      <div class="vit hidden bad" data-i="2"><div class="lb">FR irpm</div><div class="vl">30</div></div>
+      <div class="vit hidden bad" data-i="3"><div class="lb">SpO₂ aa</div><div class="vl">84%</div></div>
+      <div class="vit hidden bad" data-i="4"><div class="lb">PA mmHg</div><div class="vl">70/30</div></div>
+      <div class="vit hidden bad" data-i="5"><div class="lb">TEC</div><div class="vl">7s</div></div>
+      <div class="vit hidden warn" data-i="6"><div class="lb">Temp °C</div><div class="vl">38,0</div></div>
+      <div class="vit hidden warn" data-i="7"><div class="lb">Dextro</div><div class="vl">84</div></div>
+    </div>
+    <svg class="ecg" id="ecg-caso" viewBox="0 0 600 60" preserveAspectRatio="none"><path d=""/></svg>
+  </div>
+  <div class="btnrow"><button class="btn" id="revVit">Revelar próximo sinal</button><span class="small" id="vitHint" style="align-self:center">0 de 7 revelados</span></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato I · Alguma coisa está muito errada" data-chips="ambar:Decisão pedagógica">
+ <div class="body center">
+  <p class="big" id="perguntaErrada" style="text-decoration:line-through;color:#9fb0be">Qual o diagnóstico?</p>
+  <div class="curtain" style="width:80%">
+    <div class="cover"><b>Qual é a pergunta certa?</b><span>Clique ou tecle R</span></div>
+    <div class="inner center" style="display:flex;flex-direction:column;gap:calc(var(--u)*1)">
+      <p class="big" style="color:var(--verm)">QUAL A GRAVIDADE?</p>
+      <p class="lead"><strong>Este paciente está crítico.</strong></p>
+      <p class="small">Primeiro eu reconheço deterioração. Depois eu dou nome à doença.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO II ============ -->
+<section class="slide" data-act="Ato II · Infecção não é sepse" data-chips="azul:Fisiopatologia">
+ <div class="body">
+  <div class="kicker">A primeira bifurcação</div>
+  <h1>Tosse · expectoração · febre · hipoxemia</h1>
+  <p class="lead">Temos uma <strong>possível infecção</strong> — provavelmente pulmonar.</p>
+  <div class="curtain">
+    <div class="cover"><b>Isso já basta para chamar de sepse?</b><span>Clique ou tecle R</span></div>
+    <div class="inner">
+      <p class="big" style="color:var(--verm)">NÃO.</p>
+      <p class="lead">Pneumonia é infecção. Sepse é outra coisa — e a diferença não está na bactéria.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato II · Infecção não é sepse" data-chips="verde:SSC 2026 · Sepsis-3">
+ <div class="body">
+  <div class="kicker">A escada</div>
+  <div class="ladder" id="escada">
+    <div class="step" data-s="1"><span class="n">1</span><div><div class="tx">INFECÇÃO</div><div class="dt">Invasão de um sítio normalmente estéril. Sozinha, não é sepse.</div></div></div>
+    <div class="step" data-s="2"><span class="n">2</span><div><div class="tx">Resposta desregulada do hospedeiro</div><div class="dt">A resposta que deveria proteger passa a lesar o próprio organismo.</div></div></div>
+    <div class="step" data-s="3"><span class="n">3</span><div><div class="tx">DISFUNÇÃO ORGÂNICA AGUDA</div><div class="dt">O elemento que muda tudo. Operacionalizada por aumento ≥2 pontos no SOFA.</div></div></div>
+    <div class="step" data-s="4"><span class="n">4</span><div><div class="tx">SEPSE</div><div class="dt">Disfunção orgânica aguda, ameaçadora à vida, causada por infecção. SSC 2026 mantém Sepsis-3.</div></div></div>
+    <div class="step" data-s="5"><span class="n">5</span><div><div class="tx">Hipoperfusão persistente</div><div class="dt">Apesar de ressuscitação volêmica adequada.</div></div></div>
+    <div class="step" data-s="6"><span class="n">6</span><div><div class="tx">CHOQUE SÉPTICO</div><div class="dt">Subgrupo com disfunção circulatória e risco de morte substancialmente maior.</div></div></div>
+  </div>
+  <p class="small">Clique em cada degrau.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato II · Infecção não é sepse" data-chips="verde:SSC 2026 · Tabela 3|ambar:Novo em 2026">
+ <div class="body">
+  <div class="kicker">A frase para guardar</div>
+  <p class="big">“A bactéria não transforma infecção em sepse.<br>A <span style="color:var(--verm)">disfunção orgânica</span> transforma.”</p>
+  <div class="box ambar"><div class="t"><span class="tag novo">NOVO 2026</span> &nbsp;As quatro palavras que organizam a aula inteira</div>
+   <div class="grid2" style="margin-top:calc(var(--u)*.8)">
+     <p><strong>DEFINIDA</strong> · <strong>PROVÁVEL</strong></p>
+     <p><strong>POSSÍVEL</strong> · <strong>IMPROVÁVEL</strong></p>
+   </div>
+   <p class="small" style="margin-top:calc(var(--u)*.6)">A SSC 2026 criou linguagem padronizada para o <strong>grau de certeza diagnóstica</strong>, porque na prática a sepse não chega carimbada. Guarde: toda a urgência do antibiótico vai pendurar nestas quatro palavras.</p>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO III ============ -->
+<section class="slide" data-act="Ato III · O SOFA" data-chips="azul:Sepsis-3|ambar:Imagem de memória">
+ <div class="body">
+  <div class="kicker">Imagem de memória</div>
+  <h1>Quem está caindo do SOFA?</h1>
+  <div class="seats" id="sofa">
+    <div class="seat" data-o="pulmao"><div class="ic">🫁</div><div class="nm">Pulmão</div><div class="an">PaO₂/FiO₂</div></div>
+    <div class="seat" data-o="snc"><div class="ic">🧠</div><div class="nm">SNC</div><div class="an">Glasgow</div></div>
+    <div class="seat" data-o="coag"><div class="ic">🩸</div><div class="nm">Coagulação</div><div class="an">Plaquetas</div></div>
+    <div class="seat" data-o="figado"><div class="ic">🧪</div><div class="nm">Fígado</div><div class="an">Bilirrubina</div></div>
+    <div class="seat" data-o="cv"><div class="ic">🫀</div><div class="nm">Cardiovascular</div><div class="an">PAM / vasopressor</div></div>
+    <div class="seat" data-o="rim"><div class="ic">🚽</div><div class="nm">Rim</div><div class="an">Creatinina / diurese</div></div>
+  </div>
+  <p class="small">Seis assentos. Clique em cada um e veja quem já escorregou. <strong>Aumento ≥ 2 pontos = disfunção orgânica.</strong></p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato III · O SOFA" data-chips="azul:Sepsis-3">
+ <div class="body">
+  <div class="kicker">SOFA sem tortura</div>
+  <h2>O que eu preciso saber agora</h2>
+  <div class="grid2">
+   <div class="card"><ul>
+     <li><strong>Pulmão</strong> → PaO₂/FiO₂</li>
+     <li><strong>Coagulação</strong> → plaquetas</li>
+     <li><strong>Fígado</strong> → bilirrubina</li>
+   </ul></div>
+   <div class="card"><ul>
+     <li><strong>Cardiovascular</strong> → PAM / necessidade de vasopressor</li>
+     <li><strong>SNC</strong> → Glasgow</li>
+     <li><strong>Rim</strong> → creatinina / diurese</li>
+   </ul></div>
+  </div>
+  <div class="box azul"><div class="t">O que o acadêmico precisa levar</div><p>Não é decorar a matriz 0–4. É saber que existem <strong>seis sistemas</strong>, o que se olha em cada um, e que a piora de dois pontos já caracteriza disfunção.</p></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato III · O SOFA" data-chips="azul:Caso da aula 2025">
+ <div class="body">
+  <div class="kicker">Volta ao caminhoneiro</div>
+  <h1>Já existem pistas de disfunção orgânica?</h1>
+  <div class="grid3">
+    <div class="card"><p class="mono" style="font-size:calc(var(--u)*2.6);color:var(--verm)">PA 70/30</p><p class="small">Cardiovascular</p></div>
+    <div class="card"><p class="mono" style="font-size:calc(var(--u)*2.6);color:var(--verm)">SpO₂ 84%</p><p class="small">Respiratório</p></div>
+    <div class="card"><p class="mono" style="font-size:calc(var(--u)*2.6);color:var(--verm)">TEC 7 s</p><p class="small">Perfusão</p></div>
+  </div>
+  <div class="curtain">
+    <div class="cover"><b>E a consciência? E a diurese?</b><span>Clique ou tecle R</span></div>
+    <div class="inner"><p class="lead"><strong>SIM.</strong> A definição deixou de ser abstrata. Ele tem infecção provável e já tem disfunção. Isso é <strong>sepse</strong> — e a pressão sugere que já passamos do próximo degrau.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO IV ============ -->
+<section class="slide" data-act="Ato IV · Triagem" data-chips="azul:Bone 1992">
+ <div class="body">
+  <div class="kicker">Triagem — parte 1</div>
+  <h1>SIRS</h1>
+  <div class="grid2">
+   <div class="card"><ul>
+    <li>🔥 T &gt; 38 °C ou &lt; 36 °C</li>
+    <li>❤️ FC &gt; 90 bpm</li>
+    <li>🫁 FR &gt; 20 irpm ou PaCO₂ &lt; 32 mmHg</li>
+    <li>🩸 Leucócitos &gt; 12.000 ou &lt; 4.000 ou &gt;10% de bastonetes</li>
+   </ul></div>
+   <div class="curtain">
+    <div class="cover"><b>SIRS significa sepse?</b><span>Clique ou tecle R</span></div>
+    <div class="inner"><p class="big" style="color:var(--verm);font-size:calc(var(--u)*4)">NÃO.</p><p>Inflamação sistêmica não é sinônimo de infecção, e infecção não é sinônimo de sepse. Pancreatite, trauma e queimadura fazem SIRS.</p></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato IV · Triagem" data-chips="azul:Sepsis-3|ambar:Pegadinha">
+ <div class="body">
+  <div class="kicker">Triagem — parte 2</div>
+  <h1>qSOFA perdeu o emprego?</h1>
+  <div class="grid2">
+   <div class="card"><ul>
+    <li>🧠 Alteração do estado mental</li>
+    <li>🫁 FR ≥ 22 irpm</li>
+    <li>🩸 PAS ≤ 100 mmHg</li>
+   </ul><p class="small" style="margin-top:calc(var(--u)*.8)">Nasceu no Sepsis-3 como <strong>preditor de desfecho</strong> em quem já tem infecção suspeita — não como ferramenta de rastreio.</p></div>
+   <div class="curtain">
+    <div class="cover"><b>Então uso qSOFA para rastrear todo mundo?</b><span>Clique ou tecle R</span></div>
+    <div class="inner"><p class="big" style="color:var(--verm);font-size:calc(var(--u)*3.6)">NÃO.</p><p>Não perdeu o emprego. Perdeu o direito de trabalhar sozinho na porta.</p></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato IV · Triagem" data-chips="verde:SSC 2026 · statement 4|ambar:Mudou em 2026">
+ <div class="body">
+  <div class="kicker">A recomendação de 2026</div>
+  <h2><span class="tag forte">RECOMENDAÇÃO FORTE</span> &nbsp;certeza moderada</h2>
+  <p class="lead">Para pacientes agudamente enfermos <strong>no hospital</strong>, usar <strong>NEWS · NEWS2 · MEWS · SIRS</strong> <em>em preferência ao</em> <strong>qSOFA</strong> como <strong>ferramenta única</strong> de rastreio de sepse.</p>
+  <div class="grid2">
+   <div class="box verde"><div class="t">✅ Rastreio</div><p>NEWS / NEWS2 · MEWS · SIRS</p></div>
+   <div class="box verm"><div class="t">❌ Sozinho</div><p>qSOFA como única ferramenta de triagem</p></div>
+  </div>
+  <div class="box ambar"><div class="t">A nuance que faz a diferença</div><p class="small">2021 recomendava <em>contra</em> o qSOFA isolado. 2026 inverte o enunciado e recomenda <em>a favor</em> dos outros. E acrescenta: um qSOFA <strong>positivo continua sendo alerta legítimo</strong> de deterioração — em qualquer cenário de recursos. O problema é a <strong>baixa sensibilidade</strong> (≈23% numa coorte pré-hospitalar de 221 mil pacientes, em que o NEWS2 teve o melhor desempenho).</p></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato IV · Triagem" data-chips="verde:SSC 2026 · statement 5|ambar:Novo em 2026">
+ <div class="body center">
+  <p class="big">TRIAGEM ≠ DIAGNÓSTICO ≠ PROGNÓSTICO</p>
+  <div class="box verde" style="width:88%;text-align:left"><div class="t"><span class="tag novo">NOVO 2026</span> &nbsp;Declaração de boas práticas</div><p>“Sepse é um <strong>diagnóstico clínico</strong> e não deve ser confirmada nem excluída por um <strong>único biomarcador ou teste diagnóstico</strong>.”</p></div>
+  <p class="small" style="width:80%">Vale contra a procalcitonina, contra os novos testes de resposta do hospedeiro (MDW, IntelliSep, SeptiCyte, TriVerity, ImmunoScore) e contra qualquer escore. Nenhum escore substitui o cérebro clínico.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato IV · Triagem" data-chips="verde:SSC 2026 · statements 1–3|ambar:Novo em 2026">
+ <div class="body">
+  <div class="kicker">O sistema muda de marcha</div>
+  <h1>🚨 CÓDIGO SEPSE</h1>
+  <div class="grid3">
+   <div class="box verde"><div class="t">Programa institucional <span class="tag forte">FORTE</span></div><p class="small">Rastreio de pacientes agudos de alto risco + procedimentos operacionais padrão + estratégias de melhoria da qualidade.</p></div>
+   <div class="box verde"><div class="t">Code sepsis / huddle <span class="tag novo">NOVO</span></div><p class="small">Reunião multidisciplinar à beira do leito para acelerar diagnóstico e tratamento após um rastreio positivo. Recomendação condicional.</p></div>
+   <div class="box verde"><div class="t">Já na ambulância <span class="tag novo">NOVO</span></div><p class="small">Sugerido usar ferramenta padronizada de rastreio no transporte pré-hospitalar. Metade dos pacientes com sepse chega de ambulância.</p></div>
+  </div>
+  <p class="lead"><strong>Reconheceu risco? A equipe muda de marcha.</strong> Sepse não é doença de médico sozinho — é doença de sistema.</p>
+ </div>
+</section>
+
+<!-- ============ ATO V ============ -->
+<section class="slide" data-act="Ato V · Por que os órgãos caem" data-chips="azul:Fisiopatologia">
+ <div class="body">
+  <div class="kicker">A infecção acende o sistema</div>
+  <h1>Infecção → PAMPs / DAMPs → resposta imune</h1>
+  <p class="lead">O organismo reconhece padrões moleculares do patógeno (PAMPs) e da própria lesão tecidual (DAMPs) e dispara a resposta.</p>
+  <div class="box azul"><div class="t">O ponto de virada</div><p>Enquanto a resposta é <strong>proporcional</strong>, ela cura. Quando vira <strong>desregulada</strong>, ela passa a lesar o hospedeiro. Não vamos aprofundar imunologia — vamos seguir o dano.</p></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato V · Por que os órgãos caem" data-chips="azul:Fisiopatologia|azul:Aula 2025">
+ <div class="body">
+  <div class="kicker">O endotélio vira campo de batalha</div>
+  <div class="ladder" id="fisio">
+   <div class="step" data-s="1"><span class="n">🔥</span><div><div class="tx">Inflamação desregulada</div><div class="dt">Citocinas, óxido nítrico induzível, estresse oxidativo.</div></div></div>
+   <div class="step" data-s="2"><span class="n">🧱</span><div><div class="tx">Lesão endotelial e do glicocálix</div><div class="dt">A camada que protege e regula a barreira se desfaz.</div></div></div>
+   <div class="step" data-s="3"><span class="n">💧</span><div><div class="tx">Aumento da permeabilidade capilar</div><div class="dt">Líquido escapa para o interstício. Edema. Hipovolemia relativa e absoluta.</div></div></div>
+   <div class="step" data-s="4"><span class="n">🩸</span><div><div class="tx">Vasoplegia</div><div class="dt">O vaso perde o tônus. A pressão cai mesmo com débito preservado ou alto.</div></div></div>
+   <div class="step" data-s="5"><span class="n">🕸️</span><div><div class="tx">Microcirculação heterogênea</div><div class="dt">Redução da densidade capilar, trombose, fluxo desigual — capilares vizinhos, destinos opostos.</div></div></div>
+   <div class="step" data-s="6"><span class="n">🧬</span><div><div class="tx">Disfunção celular e mitocondrial</div><div class="dt">Hipóxia citopática: o oxigênio chega e a célula não consegue usar. Apoptose.</div></div></div>
+   <div class="step" data-s="7"><span class="n">🫀</span><div><div class="tx">Possível depressão miocárdica</div><div class="dt">A própria sepse pode deprimir o miocárdio — e isso muda a escolha do vasopressor lá na frente.</div></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato V · Por que os órgãos caem" data-chips="azul:Fisiopatologia|ambar:Raciocínio">
+ <div class="body">
+  <div class="kicker">O paradoxo</div>
+  <p class="big">Pode haver oxigênio no sangue<br>e ainda assim o tecido sofrer.</p>
+  <div class="loop">
+    <div class="loopnode">Oferta (DO₂)</div><span class="arrow">→</span>
+    <div class="loopnode">Microcirculação</div><span class="arrow">→</span>
+    <div class="loopnode">Utilização celular</div>
+  </div>
+  <div class="curtain">
+    <div class="cover"><b>Agora explique: por que o TEC dele chegou a 7 segundos?</b><span>Clique ou tecle R</span></div>
+    <div class="inner"><p class="lead">Vasoplegia + hipovolemia (relativa e absoluta) por extravasamento + microcirculação heterogênea = <strong>a pele deixou de ser prioridade</strong>. O TEC é a primeira janela para a microcirculação — e ele está aberto há horas.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO VI ============ -->
+<section class="slide" data-act="Ato VI · Choque" data-chips="azul:Conceito|azul:Aula 2025">
+ <div class="body center" style="gap:calc(var(--u)*.4)">
+  <p class="big" style="font-size:calc(var(--u)*5.6)">CHOQUE = HIPOPERFUSÃO TECIDUAL</p>
+  <p class="lead" style="opacity:.75">Choque = Hipoperfusão Tecidual</p>
+  <p class="lead" style="opacity:.55">Choque = Hipoperfusão Tecidual</p>
+  <p class="lead" style="opacity:.38">Choque = Hipoperfusão Tecidual</p>
+  <p class="lead" style="opacity:.22">Choque = Hipoperfusão Tecidual</p>
+  <p class="lead" style="opacity:.12">Choque = Hipoperfusão Tecidual</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato VI · Choque" data-chips="ambar:Pegadinha estrutural">
+ <div class="body">
+  <div class="kicker">A pegadinha</div>
+  <div class="grid2">
+   <div class="card"><h2>Paciente A</h2><ul class="small" style="font-size:calc(var(--u)*1.8)">
+     <li>PA <strong>110 × 70</strong></li><li>TEC 6 segundos</li><li>Confuso</li><li>Oligúrico</li></ul></div>
+   <div class="card"><h2>Paciente B</h2><ul class="small" style="font-size:calc(var(--u)*1.8)">
+     <li>PA <strong>85 × 55</strong></li><li>TEC 2 segundos</li><li>Alerta e orientado</li><li>Diurese preservada</li></ul></div>
+  </div>
+  <div class="curtain">
+    <div class="cover"><b>Qual dos dois preocupa por hipoperfusão?</b><span>Escolha antes. Clique ou tecle R</span></div>
+    <div class="inner"><p class="lead"><strong>O paciente A.</strong> Ele tem a pressão “boa” e três órgãos gritando. O paciente B tem número feio e perfusão preservada — pode ser a pressão basal dele.<br><span class="small">Se você escolheu B, você usou o monitor. Se escolheu A, você usou o paciente.</span></p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato VI · Choque" data-chips="ambar:Âncora de memória">
+ <div class="body center">
+  <p class="huge" style="font-size:calc(var(--u)*7)">“Pressão é número.<br><span style="color:var(--verm)">Choque é perfusão.</span>”</p>
+  <p class="small">Âncora nº 2 da aula.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato VI · Choque" data-chips="azul:Aula 2025|verm:Correção do material antigo">
+ <div class="body">
+  <div class="kicker">Como o corpo conta que está hipoperfundido</div>
+  <div class="grid2">
+   <div class="card"><ul style="font-size:calc(var(--u)*1.8)">
+    <li>🧠 <strong>Cérebro</strong> → confusão, obnubilação, inquietação</li>
+    <li>🖐️ <strong>Pele</strong> → TEC prolongado, pele fria e pálida, cianose, livedo (escore de <em>mottling</em>)</li>
+    <li>🚽 <strong>Rim</strong> → oligúria &lt; 0,5 mL/kg/h</li>
+    <li>🧪 <strong>Metabolismo</strong> → lactato</li>
+    <li>🍽️ <strong>Intestino</strong> → íleo, ausência de sons</li>
+   </ul></div>
+   <div class="box verm"><div class="t">⚠️ Correção do material de 2025</div>
+     <p class="small">O slide antigo definia choque séptico como sepse + “PAM &lt; 65 <strong>OU</strong> DVA” + lactato &gt; 2. O correto (Sepsis-3, mantido pela SSC 2026):</p>
+     <p style="margin-top:calc(var(--u)*.6)"><strong>Sepse + necessidade de vasopressor para manter PAM ≥ 65 mmHg <span style="color:var(--verm)">E</span> lactato &gt; 2 mmol/L, apesar de ressuscitação volêmica adequada.</strong></p>
+     <p class="small" style="margin-top:calc(var(--u)*.6)">São dois critérios simultâneos, e ambos depois do volume. Isso cai em prova.</p>
+   </div>
+  </div>
+  <p class="lead"><strong>Olhe o paciente antes de olhar o monitor.</strong></p>
+ </div>
+</section>
+
+<!-- ============ ATO VII ============ -->
+<section class="slide" data-act="Ato VII · Lactato" data-chips="ambar:Pegadinha">
+ <div class="body center">
+  <div class="kicker">Chegou o exame</div>
+  <p class="huge mono" style="color:var(--verm)">Lactato 5,2</p>
+  <div class="curtain" style="width:78%">
+    <div class="cover"><b>Isso significa metabolismo anaeróbio?</b><span>Vote antes. Clique ou tecle R</span></div>
+    <div class="inner"><p class="lead">A maioria da sala responde “sim”. E é exatamente por isso que este bloco existe.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato VII · Lactato" data-chips="azul:AMIB · aula 2025">
+ <div class="body">
+  <div class="kicker">Quebre a associação</div>
+  <h1>Lactato ↑ ≠ anaerobiose obrigatória</h1>
+  <div class="grid2">
+   <div class="box azul"><div class="t">↓ Clareamento</div><ul class="small" style="font-size:calc(var(--u)*1.6)"><li>Alteração da função hepática</li><li>Redução do fluxo sanguíneo hepático</li></ul></div>
+   <div class="box azul"><div class="t">↑ Produção</div>
+     <p class="small"><strong>Aeróbica:</strong> efeito calorigênico de adrenalina/dobutamina, alteração da piruvato desidrogenase, nitroprussiato, antirretrovirais, deficiência de tiamina, alcalose intracelular.</p>
+     <p class="small" style="margin-top:calc(var(--u)*.5)"><strong>Anaeróbica:</strong> hipóxia tecidual, hipóxia citopática.</p>
+   </div>
+  </div>
+  <p class="lead">O estímulo adrenérgico da própria sepse já sobe o lactato — <strong>sem</strong> que exista dívida de oxigênio.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato VII · Lactato" data-chips="ambar:Âncora de memória|verde:SSC 2026">
+ <div class="body">
+  <div class="kicker">A imagem mental</div>
+  <p class="big">🔥 “LACTATO É FUMAÇA.<br>Procure o incêndio.”</p>
+  <div class="grid2">
+   <div class="box verde"><div class="t">O que a SSC 2026 mantém e reforça</div><ul class="small" style="font-size:calc(var(--u)*1.6)">
+     <li>Medir lactato na sepse possível, provável ou definida e no choque séptico</li>
+     <li>Usar <strong>lactato seriado</strong> para guiar a ressuscitação</li>
+     <li>Usar o <strong>TEC</strong> para guiar a ressuscitação, como adjunto a outras medidas de perfusão</li>
+   </ul></div>
+   <div class="box ambar"><div class="t">⚠️ A ressalva de 2026 que muda a prática</div>
+    <p>Após o bolus inicial, a administração de fluido deve ser <strong>individualizada</strong> e acompanhar o <strong>decremento</strong> do lactato — <strong>em vez de infundir fluido até o lactato normalizar</strong>.</p>
+    <p class="small" style="margin-top:calc(var(--u)*.5)">Aqui morre o vício de “correr volume até zerar o lactato”.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO VIII ============ -->
+<section class="slide" data-act="Ato VIII · Agora é sua vez" data-chips="verm:Ação imediata">
+ <div class="body center">
+  <div class="kicker">O caminhoneiro volta</div>
+  <div class="monitor" style="width:92%">
+    <div class="row" style="justify-content:center">
+      <div class="vit bad"><div class="lb">FC</div><div class="vl">136</div></div>
+      <div class="vit bad"><div class="lb">PA</div><div class="vl">70/30</div></div>
+      <div class="vit bad"><div class="lb">FR</div><div class="vl">30</div></div>
+      <div class="vit bad"><div class="lb">SpO₂</div><div class="vl">84%</div></div>
+      <div class="vit bad"><div class="lb">TEC</div><div class="vl">7s</div></div>
+      <div class="vit warn"><div class="lb">T</div><div class="vl">38,0</div></div>
+    </div>
+    <svg class="ecg" id="ecg-boss1" viewBox="0 0 600 60" preserveAspectRatio="none"><path d=""/></svg>
+  </div>
+  <p class="huge" style="color:var(--verm);font-size:calc(var(--u)*6)">VOCÊ TEM 60 SEGUNDOS.</p>
+  <button class="btn r" id="crono">Iniciar cronômetro</button>
+  <p class="mono" id="cronoOut" style="font-size:calc(var(--u)*3)">60</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato VIII · Agora é sua vez" data-chips="verde:SSC 2026 · boas práticas">
+ <div class="body">
+  <div class="kicker">A B C D E</div>
+  <div class="curtain">
+    <div class="cover"><b>Diga em voz alta o que você faz. Depois compare.</b><span>Clique ou tecle R</span></div>
+    <div class="inner">
+     <div class="grid2">
+      <ul style="font-size:calc(var(--u)*1.95)">
+       <li>Monitorização (MOV)</li>
+       <li>Oxigenação / ventilação conforme necessidade</li>
+       <li>Dois acessos periféricos calibrosos</li>
+       <li>Avaliação de perfusão à beira-leito</li>
+      </ul>
+      <ul style="font-size:calc(var(--u)*1.95)">
+       <li>Lactato</li>
+       <li>Culturas</li>
+       <li>Antimicrobiano no tempo apropriado</li>
+       <li>Fluido / vasopressor conforme o quadro</li>
+       <li>Busca ativa do foco</li>
+      </ul>
+     </div>
+    </div>
+  </div>
+  <div class="box ambar"><div class="t">O erro clássico do acadêmico</div><p>Transformar isso numa <strong>fila</strong>. Não é fila de banco, é orquestra: as coisas acontecem <strong>em paralelo</strong>. “Sepse e choque séptico são emergências médicas; o tratamento e a ressuscitação devem começar imediatamente.”</p></div>
+ </div>
+</section>
+
+<!-- ============ ATO IX ============ -->
+<section class="slide" data-act="Ato IX · Culturas" data-chips="ambar:Pergunta">
+ <div class="body center">
+  <p class="big">Cultura antes<br>ou depois do antibiótico?</p>
+  <p class="lead" style="opacity:.7">Pense antes de virar o slide.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato IX · Culturas" data-chips="verde:SSC 2026 · statement 7|verm:Correção do material antigo">
+ <div class="body">
+  <div class="kicker">A resposta de 2026</div>
+  <h2><span class="tag forte">RECOMENDAÇÃO FORTE</span> &nbsp;(era mais fraca em 2021)</h2>
+  <p class="lead">Colher hemoculturas <strong>o mais cedo possível e idealmente ANTES</strong> do antimicrobiano — <strong>sem atrasar</strong> o antimicrobiano, sobretudo no paciente hipotenso.</p>
+  <div class="grid2">
+   <div class="box verm"><div class="t">O número que convence</div>
+     <p>Em 325 pacientes com hipotensão ou hipoperfusão induzida por sepse, a positividade da hemocultura caiu de <strong>31,4% → 19,4%</strong> quando colhida em média <strong>70 minutos após</strong> o antimicrobiano.</p>
+     <p class="small">Queda absoluta de 12%, relativa de 38%.</p>
+   </div>
+   <div class="box azul"><div class="t">Técnica que importa</div><ul class="small" style="font-size:calc(var(--u)*1.95)">
+     <li><strong>10 mL de sangue por frasco</strong> — volume é o principal determinante do rendimento</li>
+     <li>Patógeno identificado em ~60–70% das sepses; hemocultura positiva em apenas ~10–20%</li>
+     <li>No <strong>choque séptico</strong> o rendimento sobe para ≥ 50%</li>
+     <li>Repetir culturas para confirmar clareamento em <em>S. aureus</em>, <em>S. lugdunensis</em> e <em>Candida</em></li>
+     <li>Em cenário de baixo recurso, um único <em>set</em> pode ser justificado</li>
+   </ul></div>
+  </div>
+  <p class="lead"><strong>Culture primeiro — se isso não sacrificar o tratamento urgente.</strong></p>
+ </div>
+</section>
+
+<!-- ============ ATO X ============ -->
+<section class="slide" data-act="Ato X · Semáforo do antibiótico" data-chips="verde:SSC 2026 · Tabela 3|ambar:Interativo">
+ <div class="body">
+  <div class="kicker">Antes do semáforo, a pergunta certa</div>
+  <h1>Em qual das quatro palavras está o seu paciente?</h1>
+  <div class="btnrow" id="certeza">
+    <button class="btn r" data-c="choque">Choque séptico (possível, provável ou definido)</button>
+    <button class="btn r" data-c="def">Sepse provável ou definida, sem choque</button>
+    <button class="btn a" data-c="pos">Sepse possível, sem choque</button>
+    <button class="btn g" data-c="imp">Baixa probabilidade de infecção, sem choque</button>
+  </div>
+  <div class="sema" id="semaforo">
+    <div class="lampada r" data-l="r"><div class="lz">🔴</div><div class="ti">AGORA</div><div class="de">Antimicrobiano imediatamente, idealmente <strong>≤ 1 hora</strong> do reconhecimento. Recomendação <strong>forte</strong>.</div></div>
+    <div class="lampada a" data-l="a"><div class="lz">🟡</div><div class="ti">ATÉ 3 HORAS</div><div class="de">Investigação <strong>rápida e limitada no tempo</strong>. Se a preocupação com infecção persistir, antimicrobiano em até <strong>3 h</strong> da primeira suspeita. Condicional.</div></div>
+    <div class="lampada g" data-l="g"><div class="lz">🟢</div><div class="ti">OBSERVE</div><div class="de">Pode-se <strong>adiar</strong> o antimicrobiano, mantendo <strong>monitorização estreita</strong> e reavaliação. Condicional.</div></div>
+  </div>
+  <p class="small" id="semaOut">Escolha um cenário acima e o semáforo acende.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato X · Semáforo do antibiótico" data-chips="verde:SSC 2026 · statements 16 e 17|verm:Atenção ao enunciado">
+ <div class="body">
+  <div class="kicker">🔴 Vermelho</div>
+  <h1>Antimicrobiano imediatamente, idealmente ≤ 1 hora</h1>
+  <div class="grid2">
+   <div class="box verm"><div class="t">Statement 16</div><p>Adultos com choque séptico <strong>possível, provável ou definido</strong>.</p></div>
+   <div class="box verm"><div class="t">Statement 17</div><p>Adultos com sepse <strong>provável ou definida</strong>, <strong>sem</strong> choque.</p></div>
+  </div>
+  <div class="box ambar"><div class="t">⚠️ Detalhe que muda a resposta da prova</div><p>No <strong>choque</strong>, a pressa vale <strong>já na suspeita</strong> — “possível” choque séptico também está no vermelho. Só a <strong>sepse sem choque</strong> exige o grau “provável ou definida” para entrar no corte de 1 hora.</p></div>
+  <p class="small">Justificativa da diretriz: a associação entre tempo até o antimicrobiano e mortalidade de curto prazo é <strong>mais forte e mais consistente no choque séptico</strong>.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato X · Semáforo do antibiótico" data-chips="verde:SSC 2026 · statements 18 e 19">
+ <div class="body">
+  <div class="kicker">🟡 Amarelo</div>
+  <h1>Sepse possível, sem choque</h1>
+  <div class="grid2">
+   <div class="box ambar"><div class="t">O que fazer</div><p>Curso de investigação <strong>rápido e limitado no tempo</strong>: mais história, exame clínico e testes diagnósticos para decidir se é infecção.</p></div>
+   <div class="box ambar"><div class="t">O prazo</div><p>Se a preocupação com infecção <strong>persistir</strong>: antimicrobiano em até <strong>3 horas</strong>, contadas do momento em que a sepse foi suspeitada pela primeira vez.</p></div>
+  </div>
+  <div class="box azul"><div class="t">Como eu explico isso na enfermaria</div><p>As 3 horas são um <strong>prazo de decisão</strong>, não uma licença para esperar. Assim que a infecção bacteriana parecer a causa mais provável, dá-se o antibiótico — e no máximo em 3 h se a dúvida continuar.</p></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato X · Semáforo do antibiótico" data-chips="verde:SSC 2026 · statement 20|ambar:Honestidade científica">
+ <div class="body">
+  <div class="kicker">🟢 Verde · e o semáforo completo</div>
+  <p class="lead"><strong>Baixa probabilidade de infecção e sem choque:</strong> sugere-se <strong>adiar</strong> o antimicrobiano enquanto se monitora o paciente de perto.</p>
+  <div class="sema"><div class="lampada r on"><div class="lz">🔴</div><div class="ti">1 h</div></div><div class="lampada a on"><div class="lz">🟡</div><div class="ti">3 h</div></div><div class="lampada g on"><div class="lz">🟢</div><div class="ti">observar</div></div></div>
+  <div class="grid2">
+   <div class="box ambar"><div class="t">⚠️ Para você defender em sala</div><p class="small">Os prazos de antimicrobiano <strong>não mudaram</strong> de 2021 para 2026 — a própria diretriz escreve que estão “inalterados”. O que mudou foi o arcabouço em volta: a linguagem definida/provável/possível, o <em>stewardship</em> e a cobertura empírica dirigida. <strong>Não venda 1 h / 3 h como novidade de 2026.</strong></p></div>
+   <div class="box azul"><div class="t">Por que existe amarelo e verde</div><p class="small"><strong>10 a 30%</strong> dos pacientes inicialmente tratados como sepse terminam com diagnóstico <strong>não infeccioso ou não bacteriano</strong>. Antibiótico desnecessário também mata — resistência, disbiose, <em>C. difficile</em>, toxicidade.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato X · Semáforo do antibiótico" data-chips="verde:SSC 2026 · statements 22 e 40|ambar:Âncora de memória">
+ <div class="body">
+  <div class="kicker">Procalcitonina — o par que ninguém ensina junto</div>
+  <div class="grid2">
+   <div class="box verm"><div class="t">Para INICIAR o antibiótico</div>
+     <p>Sugere-se <strong>avaliação clínica isolada</strong>, em vez de procalcitonina + avaliação clínica, para decidir <strong>quando começar</strong>.</p>
+     <p class="small">Statement 22 · condicional, certeza muito baixa.</p></div>
+   <div class="box verde"><div class="t">Para PARAR o antibiótico</div>
+     <p>Quando a duração ótima não está clara e o foco está adequadamente controlado, sugere-se <strong>procalcitonina + avaliação clínica</strong> para decidir <strong>quando descontinuar</strong>.</p>
+     <p class="small">Statement 40 · condicional. Reforçado pelo ensaio ADAPT-Sepsis.</p></div>
+  </div>
+  <p class="big" style="font-size:calc(var(--u)*4.2);text-align:center">“A procalcitonina não abre a porta.<br>Ela pode ajudar a <span style="color:var(--verde)">fechar</span>.”</p>
+ </div>
+</section>
+
+<!-- ============ ATO XI ============ -->
+<section class="slide" data-act="Ato XI · Não basta dar antibiótico" data-chips="azul:Raciocínio clínico">
+ <div class="body">
+  <div class="kicker">A pergunta que falta</div>
+  <h1>ONDE ESTÁ O INIMIGO?</h1>
+  <div class="grid3">
+   <div class="card"><p>🫁 Pulmão</p><p>🍽️ Abdome</p><p>🚽 Trato urinário</p></div>
+   <div class="card"><p>🦵 Pele e partes moles</p><p>🔌 Cateter / dispositivo</p><p>🧠 SNC</p></div>
+   <div class="box azul"><div class="t">O foco determina</div><p class="small">Quais exames pedir · qual cobertura empírica escolher · e se existe algo a ser <strong>drenado, desobstruído ou retirado</strong>.</p></div>
+  </div>
+  <p class="lead">O acadêmico tende a pensar: sepse = volume + noradrenalina + antibiótico. Falta a pergunta do foco.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XI · Não basta dar antibiótico" data-chips="verde:SSC 2026|verm:Correção do material antigo">
+ <div class="body">
+  <div class="kicker">Antibiótico inteligente</div>
+  <div class="loop" style="flex-direction:column;align-items:stretch;gap:calc(var(--u)*.8)">
+   <div class="grid3">
+    <div class="card"><strong>FOCO provável</strong></div>
+    <div class="card"><strong>Epidemiologia local</strong></div>
+    <div class="card"><strong>Exposição antimicrobiana prévia</strong></div>
+   </div>
+   <div class="grid2">
+    <div class="card"><strong>Risco de MDR / MRSA</strong></div>
+    <div class="card"><strong>Características do hospedeiro</strong></div>
+   </div>
+   <p class="lead" style="text-align:center">↓ &nbsp;<strong>TERAPIA EMPÍRICA</strong>&nbsp; → cultura → &nbsp;<strong style="color:var(--verde)">DESCALONAR</strong></p>
+  </div>
+  <div class="box verm"><div class="t">⚠️ O que muda em relação à aula antiga</div><p class="small">A tabela fixa (“PAC = ceftriaxona + azitromicina; abdome = ceftriaxona + metronidazol; ITU = ceftriaxona”) vira <strong>exemplo</strong>, nunca regra universal. A escolha específica de antibiótico está <strong>explicitamente fora do escopo</strong> da SSC 2026, que remete às diretrizes de ESCMID/IDSA e à epidemiologia local.</p></div>
+  <p class="small">Descalonar quando há patógeno e perfil de sensibilidade: <span class="tag forte">RECOMENDAÇÃO FORTE</span> em 2026.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XI · Não basta dar antibiótico" data-chips="verde:SSC 2026 · statements 25–29|ambar:Novo em 2026">
+ <div class="body">
+  <div class="kicker">Novo em 2026</div>
+  <h1>Cobrir tudo não é cobrir bem</h1>
+  <div class="grid3">
+   <div class="box ambar"><div class="t">MDR</div><p class="small">Cobrir empiricamente <strong>só</strong> com risco específico: colonização ou infecção prévia pelo patógeno, uso prolongado de amplo espectro, internação prolongada em unidade de alta prevalência. <strong>Sem risco → não cobrir.</strong></p></div>
+   <div class="box ambar"><div class="t">Antifúngico</div><p class="small">Sugerido <strong>contra</strong> o empírico de rotina. Considerar caso a caso: imunossupressão, antibiótico prolongado, internação prolongada, foco intra-abdominal. Biomarcadores de <em>Candida</em> <strong>não</strong> devem guiar o início.</p></div>
+   <div class="box ambar"><div class="t">Anaeróbio</div><p class="small">Só com fator de risco: foco intra-abdominal, ginecológico/obstétrico profundo, fasciíte necrosante, cabeça e pescoço, empiema, abscesso de SNC. Estudos observacionais sugeriram <strong>pior desfecho</strong> com cobertura anaeróbica desnecessária.</p></div>
+  </div>
+  <div class="box verm"><div class="t">🚨 Pegadinha aplicada ao nosso caso</div><p>Pneumonia comunitária <strong>sem</strong> fator de risco para anaeróbio: cobertura anaeróbica de rotina <strong>não</strong> se justifica. Isso desmonta o velho reflexo “tosse + vômito = broncoaspiração = clindamicina”.</p></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XI · Não basta dar antibiótico" data-chips="verde:SSC 2026 · statement 33|ambar:Novo em 2026">
+ <div class="body">
+  <div class="kicker">Novo em 2026 — e vale ouro na enfermaria</div>
+  <h1>Como se infunde também é dose</h1>
+  <div class="loop">
+    <div class="loopnode hot">DOSE DE ATAQUE</div><span class="arrow">→</span>
+    <div class="loopnode">Manutenção em <strong>infusão prolongada</strong><br><span class="small">(estendida ou contínua)</span></div>
+  </div>
+  <div class="grid2">
+   <div class="box verde"><div class="t"><span class="tag forte">RECOMENDAÇÃO FORTE</span> · certeza moderada</div><p class="small">Beta-lactâmicos em <strong>infusão prolongada para a manutenção, após dose de ataque</strong>, em vez de bolus. Em 2021 isso era apenas uma sugestão.</p></div>
+   <div class="box azul"><div class="t">Os números</div><p class="small">Metanálise de <strong>18 ensaios randomizados, 9.108 pacientes</strong>, incluindo o BLING III: redução de mortalidade de curto prazo — <strong>RR 0,91 (IC95% 0,85–0,97)</strong>, cerca de <strong>25 mortes a menos por 1.000 pacientes</strong>. Mais dias vivo fora da UTI e fora do hospital.</p></div>
+  </div>
+  <p class="small">Quanto <strong>menor a meia-vida</strong> do beta-lactâmico, maior o ganho: piperacilina-tazobactam e carbapenêmicos. A dose de ataque é indispensável — sem ela, demora-se a atingir a concentração eficaz.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XI · Não basta dar antibiótico" data-chips="verde:SSC 2026 · statements 23 e 24|ambar:Âncora de memória">
+ <div class="body">
+  <div class="kicker">Controle do foco</div>
+  <div class="grid2">
+   <div class="card center" style="display:flex;flex-direction:column"><p class="huge">💊</p><p><strong>Antibiótico</strong></p></div>
+   <div class="card center" style="display:flex;flex-direction:column"><p class="huge">🩺</p><p><strong>Drenagem</strong></p></div>
+  </div>
+  <div class="curtain">
+   <div class="cover"><b>Qual antibiótico drena um abscesso?</b><span>Clique ou tecle R</span></div>
+   <div class="inner">
+     <p class="big" style="font-size:calc(var(--u)*4);color:var(--verm)">NENHUM.</p>
+     <p class="small">Avaliar rapidamente todo paciente com sepse para <strong>foco anatômico que exija controle emergencial</strong> (boas práticas). Quando indicado: <strong>controle precoce, idealmente em até ~6 h</strong> do diagnóstico (condicional, certeza muito baixa). Exemplos: abscesso intra-abdominal, peritonite por perfuração, colangite, colecistite, abscesso pélvico, pielonefrite obstruída, fasciíte necrosante, empiema, artrite séptica, dispositivo ou cateter infectado.</p>
+     <p style="margin-top:calc(var(--u)*.6)"><strong>“Antibiótico mata bactéria. Dreno resolve pus preso.”</strong></p>
+     <p class="small">Quase a frase da diretriz: esforços prolongados de estabilização clínica <strong>sem</strong> controle do foco dificilmente têm sucesso.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO XII ============ -->
+<section class="slide" data-act="Ato XII · Fluidos" data-chips="ambar:Pegadinha">
+ <div class="body center">
+  <p class="huge">30 mL/kg</p>
+  <div class="curtain" style="width:76%">
+    <div class="cover"><b>Todo mundo recebe isso, cegamente?</b><span>Clique ou tecle R</span></div>
+    <div class="inner"><p class="big" style="font-size:calc(var(--u)*4);color:var(--verm)">NÃO.</p><p class="lead">E, ao contrário do que muita gente pensa, essa nunca foi uma recomendação forte.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XII · Fluidos" data-chips="verde:SSC 2026 · statement 10|ambar:Interativo">
+ <div class="body">
+  <div class="kicker">O que 2026 realmente diz</div>
+  <h2><span class="tag cond">RECOMENDAÇÃO CONDICIONAL</span> · certeza baixa</h2>
+  <p class="lead">Na <strong>hipoperfusão induzida por sepse</strong> ou no choque séptico, sugere-se administrar <strong>pelo menos 30 mL/kg</strong> de cristaloide IV nas <strong>primeiras 3 horas</strong>.</p>
+  <div class="grid2">
+   <div class="box verde"><div class="t">As três ressalvas formais da diretriz</div><ul class="small" style="font-size:calc(var(--u)*1.95)">
+     <li>Considerar <strong>características individuais e contexto</strong> ao escolher o volume</li>
+     <li><strong>Reavaliação frequente</strong> durante e após, para evitar sub e hiperressuscitação</li>
+     <li>Calcular pelo <strong>peso real</strong> — ou peso <strong>ajustado/ideal</strong> se <strong>IMC &gt; 30</strong></li>
+   </ul></div>
+   <div class="card"><div class="t" style="font-weight:900;color:var(--azul-deep);font-size:calc(var(--u)*1.7)">Calculadora</div>
+     <p class="small">Peso (kg): <input type="number" id="pesoIn" value="70" min="20" max="200" style="width:calc(var(--u)*8);font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.8);padding:calc(var(--u)*.4);border:2px solid var(--line);border-radius:6px"></p>
+     <p class="out mono" id="pesoOut" style="color:var(--azul-deep);font-weight:600"></p>
+     <p class="small">Volume-alvo mínimo nas primeiras 3 h.</p>
+   </div>
+  </div>
+  <p class="big" style="font-size:calc(var(--u)*3.6);text-align:center">“30 mL/kg é a largada, não o piloto automático.”</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XII · Fluidos" data-chips="verde:SSC 2026 · statement 10">
+ <div class="body">
+  <div class="kicker">Quatro detalhes que valem citar</div>
+  <div class="grid2">
+   <div class="box azul"><div class="t">O que conta como hipoperfusão</div><p class="small">PAM &lt; 65, PAS &lt; 90, hipotensão <strong>relativa</strong> (PAS bem abaixo da basal conhecida) <strong>ou lactato elevado</strong>.</p></div>
+   <div class="box azul"><div class="t">Lactato intermediário já conta</div><p class="small">O corte histórico era ≥ 4 mmol/L. Mas lactato entre <strong>&gt; 2 e &lt; 4</strong> é comum na sepse, associa-se a maior mortalidade e também pode se beneficiar de volume — coerente com o corte &gt; 2 do Sepsis-3.</p></div>
+   <div class="box ambar"><div class="t">A divergência assumida</div><p class="small">A SSC diz “<strong>pelo menos</strong> 30 mL/kg”. A diretriz da ESICM 2024 diz “<strong>até</strong> 30 mL/kg”. A própria SSC 2026 cita e assume essa diferença.</p></div>
+   <div class="box ambar"><div class="t">Onde o dano realmente aparece</div><p class="small">Os prejuízos atribuídos a fluido costumam ocorrer com volumes <strong>bem maiores</strong> (&gt; 50 mL/kg). Em cenário de baixo recurso, com suporte ventilatório limitado, o risco de sobrecarga pesa mais.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XII · Fluidos" data-chips="verde:SSC 2026 · statements 43–47|verm:Correção do material antigo">
+ <div class="body">
+  <div class="kicker">Qual fluido?</div>
+  <div class="grid2">
+   <div class="box verde"><div class="t">🥇 Cristaloide <span class="tag forte">FORTE</span></div>
+     <p class="small">Primeira linha para ressuscitação.</p>
+     <p class="small" style="margin-top:calc(var(--u)*.5)"><strong>Balanceado</strong> (ex.: Ringer lactato) <strong>em preferência ao SF 0,9%</strong> na ressuscitação inicial — condicional, certeza moderada.</p>
+     <p class="small" style="margin-top:calc(var(--u)*.5)">⚠️ <strong>Exceção: sepse + TCE → SF 0,9%.</strong></p></div>
+   <div class="box verm"><div class="t">⚠️ Albumina — inverteu</div>
+     <p class="small">2026 sugere <strong>cristaloide isolado</strong> em vez de cristaloide + albumina (condicional, certeza moderada). Sem efeito em mortalidade de 28 e 90 dias (RR 1,01).</p>
+     <p class="small" style="margin-top:calc(var(--u)*.5)">Pode ser apropriada em quem <strong>já recebeu grandes volumes</strong> de cristaloide ou tem <strong>cirrose</strong>. <strong>Evitar no TCE.</strong></p>
+     <p class="small" style="margin-top:calc(var(--u)*.5)">A aula de 2025 ensinava albumina como complemento de rotina após grandes volumes — a regra agora é o inverso.</p></div>
+  </div>
+  <div class="box verm"><div class="t">Nunca</div><p>❌ <strong>Amidos</strong> — recomendação forte contra, certeza alta. &nbsp;&nbsp;❌ <strong>Gelatinas</strong> — sugerido contra.</p></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XII · Fluidos" data-chips="verde:SSC 2026 · statement 48|ambar:Novo em 2026">
+ <div class="body">
+  <div class="kicker">E depois dos 30 mL/kg?</div>
+  <h1>Liberal ou restritivo?</h1>
+  <p class="lead">Em adultos que <strong>já receberam 30 mL/kg</strong> e mantêm <strong>hipoperfusão persistente</strong>, sugere-se usar <strong>uma estratégia liberal OU uma restritiva</strong>, conforme fatores individuais do paciente e do sistema de saúde.</p>
+  <div class="box ambar"><div class="t">Este é o slide honesto da aula</div><p>A diretriz <strong>assume o empate</strong>. Não existe resposta automática para “dou mais 500 mL?”. E é exatamente isso que legitima o que vem a seguir: se não há regra, tem que haver <strong>reavaliação</strong>.</p></div>
+ </div>
+</section>
+
+<!-- ============ ATO XIII ============ -->
+<section class="slide" data-act="Ato XIII · A armadilha do próximo litro" data-chips="ambar:Decisão">
+ <div class="body">
+  <div class="kicker">Ele respondeu ao primeiro volume</div>
+  <div class="grid3">
+   <div class="card center"><p class="mono" style="font-size:calc(var(--u)*2.8);color:var(--verde)">PAM ↑</p></div>
+   <div class="card center"><p class="mono" style="font-size:calc(var(--u)*2.8);color:var(--verde)">TEC ↓</p></div>
+   <div class="card center"><p class="mono" style="font-size:calc(var(--u)*2.8);color:var(--verde)">FC ↓</p></div>
+  </div>
+  <div class="curtain">
+   <div class="cover"><b>Dou mais 500 mL?</b><span>Responda antes. Clique ou tecle R</span></div>
+   <div class="inner"><p class="lead">Não existe resposta automática — e agora você sabe que <strong>a própria diretriz diz isso</strong>. A resposta depende de duas perguntas diferentes, que quase sempre são confundidas.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XIII · A armadilha do próximo litro" data-chips="azul:Conceito|ambar:Âncora de memória">
+ <div class="body">
+  <div class="kicker">Duas perguntas, não uma</div>
+  <div class="grid2">
+   <div class="box azul"><div class="t">FLUIDO-RESPONSIVIDADE</div><p>“O débito cardíaco vai <strong>aumentar</strong> se eu der mais volume?”</p><p class="small">Medidas dinâmicas &gt; exame físico isolado ou parâmetros estáticos.</p></div>
+   <div class="box verm"><div class="t">FLUIDO-TOLERÂNCIA</div><p>“Ele <strong>suporta</strong> esse volume sem sofrer dano?”</p><p class="small">Congestão pulmonar, disfunção de VD, edema intersticial, pressão intra-abdominal.</p></div>
+  </div>
+  <p class="lead">O paciente pode <strong>responder</strong> e, ainda assim, começar a <strong>pagar caro</strong> pelo próximo litro.</p>
+  <div class="loop" id="loopFluido">
+   <div class="loopnode hot">FLUIDO</div><span class="arrow">→</span>
+   <div class="loopnode">REAVALIE</div><span class="arrow">→</span>
+   <div class="loopnode">NOVA DECISÃO</div><span class="arrow">↺</span>
+  </div>
+  <p class="small" style="text-align:center">TEC · PAM · consciência · diurese · <strong>tendência</strong> do lactato · sinais de congestão · ainda responsivo? ainda tolera?</p>
+ </div>
+</section>
+
+<!-- ============ ATO XIV ============ -->
+<section class="slide" data-act="Ato XIV · Vasopressores" data-chips="verde:SSC 2026 · hemodinâmica">
+ <div class="body">
+  <div class="kicker">O vaso perdeu o tônus</div>
+  <h1>Noradrenalina, primeira linha</h1>
+  <div class="grid2">
+   <div class="box verde"><div class="t">Em preferência a</div><ul class="small" style="font-size:calc(var(--u)*1.6)">
+     <li><strong>Dopamina</strong> (certeza alta)</li><li><strong>Adrenalina</strong> e <strong>selepressina</strong> (certeza baixa)</li>
+     <li><strong>Vasopressina</strong> ou <strong>angiotensina II</strong> como agente inicial</li>
+     <li>Sugerido <strong>contra terlipressina</strong></li></ul></div>
+   <div class="box azul"><div class="t">A torneira vascular</div><p>A vasoplegia <strong>abre a torneira demais</strong>: o mesmo volume de água já não enche o cano. A noradrenalina não “empurra sangue” — ela <strong>recupera o tônus</strong> e devolve pressão de perfusão ao circuito.</p></div>
+  </div>
+  <p class="small">Lembre do Ato V: a vasoplegia veio da inflamação sobre o endotélio. O vasopressor trata a consequência; o antibiótico e o controle do foco tratam a causa.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XIV · Vasopressores" data-chips="verde:SSC 2026 · statements 11, 12 e 42|verm:Correção do material antigo">
+ <div class="body">
+  <div class="kicker">Dois erros que costumam ser cometidos juntos</div>
+  <div class="grid2">
+   <div class="box verde"><div class="t">1 · Sequência <span class="tag novo">NOVO</span></div>
+    <p class="small">Na hipotensão induzida por sepse: <strong>bolus inicial de cristaloide, seguido de vasopressor</strong> se a hipotensão persistir.</p>
+    <p class="small" style="margin-top:calc(var(--u)*.5)">⚠️ <strong>Mas</strong>, no <strong>choque instável</strong>, a administração <strong>concomitante</strong> de vasopressor com o fluido pode ser justificada caso a caso. Sinais citados pela diretriz: PA gravemente reduzida, pele moteada, aspecto acinzentado, cianose/queda de saturação, taquicardia, alteração do estado mental.</p></div>
+   <div class="box verde"><div class="t">2 · Acesso <span class="tag novo">NOVO</span></div>
+    <p class="small">Sugere-se <strong>iniciar o vasopressor por via periférica</strong> para restaurar a PAM, <strong>em vez de adiar</strong> até garantir acesso venoso central.</p>
+    <p class="small" style="margin-top:calc(var(--u)*.5)">Taxa de complicação agrupada em 7 estudos (1.657 pacientes): <strong>≈ 6%</strong> — com protocolo de segurança: acesso de boa qualidade, vigilância frequente de extravasamento e tratamento imediato se ocorrer.</p></div>
+  </div>
+  <div class="box verm"><div class="t">⚠️ Correção da prescrição de 2025</div><p class="small">A prescrição final da aula antiga trazia <strong>cateter venoso central</strong> e <strong>pressão arterial invasiva</strong> como rotina. Em 2026 a PAI é <strong>opcional</strong> (invasiva <em>ou</em> não invasiva, condicional — com PAI aconselhada em dose intermediária a alta, dose escalonando, múltiplos vasopressores ou medidas não invasivas inconsistentes), e o CVC <strong>não pode ser motivo para atrasar a droga</strong>.</p></div>
+  <p class="lead"><strong>Não deixe o paciente hipotenso enquanto você procura o kit do central.</strong></p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XIV · Vasopressores" data-chips="verde:SSC 2026 · statements 13 e 14|ambar:Novo em 2026">
+ <div class="body">
+  <div class="kicker">O alvo</div>
+  <p class="huge">PAM 65 mmHg</p>
+  <div class="grid2">
+   <div class="box verde"><div class="t"><span class="tag forte">FORTE</span> · certeza moderada</div><p class="small">Alvo <strong>inicial</strong> de PAM de 65 mmHg, em preferência a alvos mais altos. Na prática não se mantém exatamente 65: usa-se uma faixa razoável (±5 mmHg) e titula-se dentro dela.</p></div>
+   <div class="box ambar"><div class="t"><span class="tag novo">NOVO 2026</span> · idosos</div><p class="small">Em adultos com <strong>65 anos ou mais</strong>, sugere-se faixa inicial de <strong>60–65 mmHg</strong> em vez de alvos mais altos (condicional). Menos exposição a vasopressor, sem custo de mortalidade — e um ensaio posterior mostrou <strong>mais</strong> mortalidade com alvo alto.</p></div>
+  </div>
+  <p class="lead">Não é “normalizar a pressão”. É <strong>recuperar pressão de perfusão e olhar se o órgão respondeu</strong>.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XIV · Vasopressores" data-chips="verde:SSC 2026 · hemodinâmica|verm:Correção do material antigo">
+ <div class="body">
+  <div class="kicker">A escada vasopressora</div>
+  <div class="ladder" id="escadaVaso">
+   <div class="step" data-s="1"><span class="n">1</span><div><div class="tx">NORADRENALINA</div><div class="dt">Primeira linha no choque séptico. Começar periférica se necessário.</div></div></div>
+   <div class="step" data-s="2"><span class="n">2</span><div><div class="tx">+ VASOPRESSINA</div><div class="dt">Diante de <strong>doses crescentes</strong> de noradrenalina. ⚠️ A diretriz <strong>não</strong> fixa um gatilho universal — o corte de 0,5 mcg/kg/min do slide antigo <strong>sai</strong>.</div></div></div>
+   <div class="step" data-s="3"><span class="n">3</span><div><div class="tx">+ ADRENALINA</div><div class="dt">Se a PAM permanecer inadequada apesar de noradrenalina <strong>e</strong> vasopressina. Onde não há vasopressina disponível, a adrenalina pode ser associada à noradrenalina isolada — ressalva explícita e muito pertinente à nossa realidade.</div></div></div>
+  </div>
+  <div class="grid2">
+   <div class="box ambar"><div class="t"><span class="tag novo">NOVO</span> Disfunção cardíaca concomitante</div><p class="small">Noradrenalina <strong>ou</strong> adrenalina como primeira linha. Noradrenalina preferida na <strong>taquiarritmia ou taquicardia sinusal importante</strong>; adrenalina preferida na <strong>bradiarritmia ou bradicardia sinusal importante</strong>.</p></div>
+   <div class="box verm"><div class="t">Não</div><p class="small">Betabloqueador no choque séptico: <strong>sugerido contra</strong>.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ ATO XV ============ -->
+<section class="slide" data-act="Ato XV · Reanimação não é PAM" data-chips="ambar:Mensagem de intensivista">
+ <div class="body">
+  <div class="kicker">Duas horas depois</div>
+  <p class="huge">PAM 66. Acabou?</p>
+  <div class="curtain" style="width:82%">
+   <div class="cover"><b>Acabou?</b><span>Clique ou tecle R</span></div>
+   <div class="inner">
+     <p class="big" style="font-size:calc(var(--u)*4);color:var(--verm)">NÃO.</p>
+     <div class="grid2"><ul class="small" style="font-size:calc(var(--u)*1.7)"><li>TEC ainda 6 segundos?</li><li>Continua confuso?</li></ul>
+     <ul class="small" style="font-size:calc(var(--u)*1.7)"><li>Continua oligúrico?</li><li>Lactato ainda subindo?</li></ul></div>
+     <p class="lead" style="margin-top:calc(var(--u)*.8)"><strong>“O monitor pode estar satisfeito enquanto o tecido continua pedindo socorro.”</strong></p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Ato XV · Reanimação não é PAM" data-chips="verde:SSC 2026|ambar:Escopo da aula">
+ <div class="body">
+  <div class="kicker">O que fica para a UTI</div>
+  <h2>Existe, mas não é aula de acadêmico</h2>
+  <div class="grid3">
+   <div class="card"><ul class="small" style="font-size:calc(var(--u)*1.6)"><li>Corticoide no choque refratário</li><li>Ventilação protetora e SDRA</li><li>Transfusão</li></ul></div>
+   <div class="card"><ul class="small" style="font-size:calc(var(--u)*1.6)"><li>Nutrição e profilaxias</li><li>Descalonamento e duração do antibiótico</li><li>Monitorização hemodinâmica avançada</li></ul></div>
+   <div class="box verde"><div class="t"><span class="tag novo">NOVO 2026</span> Depois da alta</div><p class="small">A diretriz agora cobre <strong>transição de cuidado e desfechos de longo prazo</strong>: reconciliação medicamentosa na alta e informação <strong>escrita e verbal</strong> ao sobrevivente e à família sobre a sepse, o que foi feito e as <strong>sequelas comuns</strong>.</p></div>
+  </div>
+  <div class="box ambar"><div class="t">Honestidade de escopo</div><p class="small">Duração do antibiótico: 2026 sugere <strong>curso mais curto</strong> quando o foco está controlado — o ensaio BALANCE (7 × 14 dias em infecção de corrente sanguínea) reforçou isso. Some do material antigo o “7 a 10 dias” automático.</p></div>
+ </div>
+</section>
+
+<!-- ============ BOSS FINAL ============ -->
+<section class="slide" data-act="Boss Final" data-chips="verm:Simulação">
+ <div class="body">
+  <div class="kicker">🏆 Boss final — agora sem respostas na tela</div>
+  <div class="monitor">
+    <div class="row" style="justify-content:center">
+      <div class="vit bad"><div class="lb">FC</div><div class="vl">136</div></div>
+      <div class="vit bad"><div class="lb">PA</div><div class="vl">70/30</div></div>
+      <div class="vit bad"><div class="lb">FR</div><div class="vl">30</div></div>
+      <div class="vit bad"><div class="lb">SpO₂</div><div class="vl">84%</div></div>
+      <div class="vit bad"><div class="lb">TEC</div><div class="vl">7s</div></div>
+      <div class="vit warn"><div class="lb">T</div><div class="vl">38,0</div></div>
+    </div>
+    <svg class="ecg" id="ecg-boss2" viewBox="0 0 600 60" preserveAspectRatio="none"><path d=""/></svg>
+  </div>
+  <div class="btnrow" id="bossBtns">
+    <button class="btn" data-b="1">1 · Reconhecer</button>
+    <button class="btn" data-b="2">2 · Ressuscitar</button>
+    <button class="btn" data-b="3">3 · Tratar a infecção</button>
+    <button class="btn" data-b="4">4 · Reavaliar</button>
+    <button class="btn" data-b="5">5 · Controlar o foco</button>
+  </div>
+  <div class="out" id="bossOut">A sala responde. O professor clica.</div>
+ </div>
+</section>
+
+<section class="slide" data-act="Boss Final" data-chips="verde:SSC 2026|verm:Atualizações da prescrição">
+ <div class="body">
+  <div class="kicker">A conduta completa</div>
+  <div class="curtain">
+   <div class="cover"><b>Escreva a sua prescrição primeiro.</b><span>Clique ou tecle R</span></div>
+   <div class="inner">
+    <div class="grid2">
+     <ul class="small" style="font-size:calc(var(--u)*1.6)">
+      <li>MOV e ABCDE · O₂ para SpO₂ &gt; 94%, IOT se necessário</li>
+      <li>Dois acessos periféricos calibrosos</li>
+      <li>Lactato + <strong>2 sets de hemocultura</strong> + hemograma, BTF, creatinina, gasometria arterial, urina 1 e urocultura, imagem</li>
+      <li><strong>Ceftriaxona 2 g + azitromicina 500 mg IV agora</strong> <span style="color:var(--verm)">(exemplo para PAC comunitária — ajustar à epidemiologia local)</span></li>
+      <li style="color:var(--verm)"><strong>Beta-lactâmico: dose de ataque e depois infusão prolongada</strong></li>
+     </ul>
+     <ul class="small" style="font-size:calc(var(--u)*1.6)">
+      <li><strong>Ringer lactato ≥ 30 mL/kg em até 3 h</strong>, reavaliando a cada etapa</li>
+      <li style="color:var(--verm)"><strong>Noradrenalina periférica</strong> já se a hipotensão persistir — ou junto do volume, pois este choque é instável. Alvo <strong>PAM 65</strong></li>
+      <li>Reavaliar perfusão, responsividade e tolerância</li>
+      <li>Buscar e controlar o foco</li>
+      <li><strong>UTI em até 6 h</strong></li>
+     </ul>
+    </div>
+    <p class="small" style="margin-top:calc(var(--u)*.6);color:var(--verm)"><strong>Em vermelho:</strong> as três atualizações frente à prescrição de 2025 — infusão prolongada, vasopressor periférico sem esperar o central, e PAI/CVC deixando de ser rotina obrigatória.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Boss Final" data-chips="verde:SSC 2026|azul:Síntese">
+ <div class="body">
+  <div class="kicker">O mapa completo</div>
+  <h2>É um circuito, não uma receita</h2>
+  <div class="loop" style="flex-direction:column;align-items:stretch">
+   <p class="lead" style="text-align:center"><strong>SUSPEITA DE INFECÇÃO</strong> → 🚨 <strong>reconhecer gravidade e disfunção</strong></p>
+   <div class="grid3">
+    <div class="card"><p class="small">🫁 ABC · monitor · acesso</p><p class="small">🧪 lactato</p><p class="small">🧫 culturas</p></div>
+    <div class="card"><p class="small">💊 antimicrobiano no tempo certo</p><p class="small">💧 cristaloide se hipoperfusão</p><p class="small">🖐️ reavaliar perfusão</p></div>
+    <div class="card"><p class="small">💉 noradrenalina se necessário</p><p class="small">🎯 PAM ~65</p><p class="small">🔎 identificar e controlar o foco</p></div>
+   </div>
+   <p class="lead" style="text-align:center">↓ &nbsp;<strong>REAVALIAR</strong>&nbsp; ↺ &nbsp;<span class="small">a seta volta ao começo</span></p>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Boss Final" data-chips="ambar:As cinco memórias">
+ <div class="body">
+  <div class="kicker">Nada de 25 mnemônicos. Só cinco.</div>
+  <div class="grid2">
+   <div class="box azul"><div class="t">① SEPSE</div><p>Infecção + <strong>disfunção orgânica aguda</strong>.</p></div>
+   <div class="box verm"><div class="t">② CHOQUE</div><p>“Pressão é número. Choque é perfusão.”</p></div>
+   <div class="box ambar"><div class="t">③ LACTATO</div><p>“Lactato é fumaça. Procure o incêndio.”</p></div>
+   <div class="box verde"><div class="t">④ ANTIBIÓTICO</div><p>🚦 1 h | 3 h | observar. E a PCT <strong>não abre a porta</strong> — pode ajudar a fechar.</p></div>
+  </div>
+  <div class="box azul" style="text-align:center"><div class="t">⑤ FLUIDO</div><p>💧 <strong>Dê → olhe → decida de novo.</strong> “30 mL/kg é a largada.”</p></div>
+ </div>
+</section>
+
+<!-- ============ ARENA / REVISÃO / FINAL ============ -->
+<section class="slide" data-act="Arena" data-chips="ambar:Recuperação ativa">
+ <div class="body">
+  <div class="kicker">Arena — <span id="qPos">1</span>/<span id="qTot">10</span> &nbsp;·&nbsp; acertos: <span id="qScore">0</span></div>
+  <h2 id="qEnun" style="font-size:calc(var(--u)*2.3)">—</h2>
+  <div id="qOpts"></div>
+  <div class="qfb" id="qFb"></div>
+  <div class="btnrow"><button class="btn" id="qNext">Próxima questão</button><button class="btn" id="qReset">Reiniciar</button></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Revisão" data-chips="azul:Síntese">
+ <div class="body">
+  <div class="kicker">Revisão de 60 segundos</div>
+  <div class="grid2">
+   <ul class="small" style="font-size:calc(var(--u)*1.85)">
+    <li>Sepse = infecção + <strong>disfunção orgânica aguda</strong> (SOFA ≥ 2)</li>
+    <li>Choque séptico = vasopressor para PAM ≥ 65 <strong>E</strong> lactato &gt; 2, apesar do volume</li>
+    <li>Rastreio: <strong>NEWS/NEWS2/MEWS/SIRS</strong> &gt; qSOFA isolado (forte)</li>
+    <li>Sepse é <strong>diagnóstico clínico</strong> — nenhum biomarcador isolado decide</li>
+    <li>Hemocultura antes do ATB, <strong>sem atrasar</strong> o ATB (forte)</li>
+    <li>🚦 1 h (choque possível/provável/definido e sepse provável/definida) · 3 h (sepse possível) · observar (baixa probabilidade)</li>
+   </ul>
+   <ul class="small" style="font-size:calc(var(--u)*1.85)">
+    <li>PCT não inicia; pode ajudar a <strong>parar</strong></li>
+    <li>MDR, antifúngico e anaeróbio: <strong>por risco</strong>, não por reflexo</li>
+    <li>Beta-lactâmico: ataque + <strong>infusão prolongada</strong> (forte)</li>
+    <li>Foco: avaliar sempre; controlar <strong>≤ ~6 h</strong> quando indicado</li>
+    <li>≥ 30 mL/kg em 3 h, individualizado e reavaliado · balanceado &gt; SF (exceto TCE) · cristaloide isolado &gt; + albumina</li>
+    <li>Noradrenalina 1ª linha · <strong>periférica</strong> · PAM 65 (60–65 se ≥ 65 anos) · depois vasopressina · depois adrenalina</li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<section class="slide" data-act="Revisão" data-chips="ambar:Repetição espaçada">
+ <div class="body">
+  <div class="kicker">Checklist de revisão espaçada</div>
+  <h2>Marque o que já revisou</h2>
+  <div class="grid3" id="chkbox">
+   <div class="card"><p><strong>Hoje</strong></p>
+     <label class="chk" data-k="h1"><input type="checkbox"><span>As cinco memórias</span></label>
+     <label class="chk" data-k="h2"><input type="checkbox"><span>Semáforo 1 h / 3 h / observar</span></label>
+     <label class="chk" data-k="h3"><input type="checkbox"><span>Definição correta de choque séptico</span></label>
+   </div>
+   <div class="card"><p><strong>Amanhã</strong></p>
+     <label class="chk" data-k="a1"><input type="checkbox"><span>Escada vasopressora, sem gatilho fixo</span></label>
+     <label class="chk" data-k="a2"><input type="checkbox"><span>Fluidos: 30 mL/kg, balanceado, albumina</span></label>
+     <label class="chk" data-k="a3"><input type="checkbox"><span>Causas de hiperlactatemia</span></label>
+   </div>
+   <div class="card"><p><strong>Em 7 dias</strong></p>
+     <label class="chk" data-k="s1"><input type="checkbox"><span>Cobertura por risco: MDR, fungo, anaeróbio</span></label>
+     <label class="chk" data-k="s2"><input type="checkbox"><span>Controle do foco e exemplos</span></label>
+     <label class="chk" data-k="s3"><input type="checkbox"><span>Refazer a Arena sem consultar</span></label>
+   </div>
+  </div>
+  <div class="btnrow"><button class="btn" id="chkReset">Limpar checklist</button><span class="small" id="chkOut" style="align-self:center"></span></div>
+ </div>
+</section>
+
+<section class="slide" data-act="Referências" data-chips="verde:Fontes">
+ <div class="body">
+  <div class="kicker">Referências</div>
+  <ul class="small" style="font-size:calc(var(--u)*1.95)">
+   <li><strong>Prescott HC, Antonelli M, Alhazzani W, et al.</strong> Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock 2026. <em>Crit Care Med</em> 2026;54(4):725–812 · <em>Intensive Care Med</em> 2026;52:863–936. Publicado em 23/03/2026. <strong>129 statements, 46 novos.</strong></li>
+   <li>Executive Summary. <em>Crit Care Med</em> 2026;54(4):715–724.</li>
+   <li>Evans L, Rhodes A, Alhazzani W, et al. Surviving Sepsis Campaign 2021. <em>Crit Care Med</em> 2021;49(11):e1063–e1143.</li>
+   <li>Singer M, et al. The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). <em>JAMA</em> 2016.</li>
+   <li>Bone RC, Balk RA, Cerra FB, et al. ACCP/SCCM Consensus Conference. <em>Chest</em> 1992;101(6):1644–55.</li>
+   <li>Machado FR, et al. The epidemiology of sepsis in Brazilian intensive care units (SPREAD). <em>Lancet Infect Dis</em> 2017;17(11):1180–9.</li>
+   <li>Instituto Latino-Americano de Sepse. Sepse: um problema de saúde pública. Brasília: CFM, 2015. · AMIB. Sepse, 2018.</li>
+   <li>Aula “Sepse para Acadêmicos 2025” — Dr. André Rossanno Mendes Almeida (caso clínico e identidade pedagógica).</li>
+  </ul>
+  <p class="small">Onde o material de 2025 divergiu da SSC 2026, o conteúdo foi atualizado e a divergência foi <strong>marcada em vermelho</strong> ao longo do deck.</p>
+ </div>
+</section>
+
+<section class="slide" data-act="Final" data-chips="ambar:Fechamento">
+ <div class="body center">
+  <div class="monitor" style="width:70%">
+    <div class="row" style="justify-content:center">
+      <div class="vit ok"><div class="lb">FC</div><div class="vl">98</div></div>
+      <div class="vit warn"><div class="lb">PA</div><div class="vl">98/58</div></div>
+      <div class="vit ok"><div class="lb">SpO₂</div><div class="vl">95%</div></div>
+      <div class="vit ok"><div class="lb">TEC</div><div class="vl">3s</div></div>
+    </div>
+    <svg class="ecg" id="ecg-final" viewBox="0 0 600 60" preserveAspectRatio="none"><path d=""/></svg>
+  </div>
+  <p class="big" style="font-size:calc(var(--u)*5)">“Você não decorou um bundle.<br>Você <span style="color:var(--verde)">tratou um paciente</span>.”</p>
+  <p class="assin">Dr. André Rossanno Mendes Almeida</p>
+  <p class="small">SEPSE 2026 · Reconheça · Ressuscite · Reavalie · memoriapotencial.com.br</p>
+ </div>
+</section>
+
+</div></div>
+
+<div class="ov" id="idx"><h3>Índice — clique para navegar &nbsp;<span style="font-size:12px;opacity:.6">(G para fechar)</span></h3><div id="idxgrid"></div></div>
+<div id="notes"><div class="nt">Nota do professor</div><div class="nb" id="notesBody"></div></div>
+
+<script>
+(function(){
+"use strict";
+var stage=document.getElementById('stage');
+var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var i=0, N=slides.length;
+document.getElementById('tot').textContent=N;
+
+/* ---------- notas do professor ---------- */
+var NOTES=[
+"Abra no escuro, sem falar. Deixe o ECG correr uns segundos. <em>Pergunta oral:</em> \"o que vocês já sabem sobre esse paciente?\" Resposta esperada: nada — e é esse o ponto.",
+"Leia a história devagar. <em>Erro provável:</em> alguém já dizer \"pneumonia\". Segure. Diga: \"eu ainda não perguntei o diagnóstico\".",
+"Revele um sinal por vez, clicando. Deixe a sala reagir a cada número. O impacto está na sequência, não no conjunto. <em>Pergunta oral:</em> \"em qual número você levantou da cadeira?\"",
+"O slide mais importante da aula para acadêmico. <em>Erro provável:</em> a turma quer nomear a doença antes de reconhecer a gravidade. Insista: primeiro reconheço deterioração, depois dou nome.",
+"Aqui a infecção entra em cena. <em>Pergunta oral:</em> \"quem aqui já chamou uma pneumonia de sepse?\" Quase todos.",
+"Clique degrau por degrau. O degrau 3 é o coração da aula. <em>Erro provável:</em> achar que a gravidade da infecção é que define sepse — não é, é a disfunção.",
+"Fixe as quatro palavras na lousa. Elas voltam no semáforo. <em>Pergunta oral:</em> \"em qual delas está o nosso caminhoneiro agora?\"",
+"Use o sofá em chamas da aula antiga como abertura visual. Clique nos seis assentos. <em>Erro provável:</em> tentar decorar a matriz 0–4 agora.",
+"Aqui você tira a pressão de cima deles. O que se cobra de acadêmico é os seis sistemas e o que se olha em cada um.",
+"Volte ao paciente. <em>Pergunta oral:</em> \"quais assentos do sofá já estão vazios nesse homem?\" Cardiovascular, respiratório, e provavelmente SNC e renal.",
+"SIRS é histórico e continua útil como rastreio. <em>Erro provável:</em> confundir SIRS com sepse. Dê o exemplo da pancreatite.",
+"Mantenha a piada da varanda — a turma lembra. <em>Erro provável:</em> achar que o qSOFA foi abolido. Ele não foi.",
+"Este é o slide da mudança de 2026. Sublinhe a inversão do enunciado: de \"contra o qSOFA\" para \"a favor dos outros\". <em>Pergunta oral:</em> \"por que uma ferramenta de rastreio precisa ser sensível, e não específica?\"",
+"Declaração de boas práticas nova. Use contra a cultura do \"pedi PCR, deu alto, é sepse\".",
+"Feche o bloco de triagem com o sistema. <em>Pergunta oral:</em> \"o que existe de código sepse no hospital em que vocês estagiam?\"",
+"Fisiopatologia começa aqui, e começa curta. Não entre em cascata de citocinas.",
+"Clique passo a passo. O passo 7 (depressão miocárdica) volta lá no vasopressor — avise isso agora.",
+"Momento em que fisiopatologia vira beira-leito. Deixe um aluno explicar o TEC em voz alta antes de revelar.",
+"Deixe a tela parada em silêncio. Não fale por cinco segundos.",
+"Peça voto de mão levantada antes de revelar. <em>Erro provável:</em> escolher o B, porque o número é pior.",
+"Âncora nº 2. Peça que a turma repita em voz alta.",
+"Aqui entra a correção do material antigo. Explique por que \"OU\" está errado: senão qualquer hipotensão viraria choque séptico.",
+"Peça voto. A maioria dirá \"sim, anaerobiose\". É o que abre o próximo slide.",
+"Este fluxograma é do material do próprio André (AMIB). Vale dizer isso — dá procedência.",
+"Duas coisas aqui: a âncora da fumaça e a ressalva nova de 2026 sobre o decremento. <em>Erro provável:</em> correr volume até o lactato normalizar.",
+"Ligue o cronômetro de verdade. A pressão do tempo é parte da aula.",
+"Deixe a sala falar antes de revelar. <em>Erro provável:</em> listar em ordem, como fila. Corrija: é em paralelo.",
+"Pergunta simples, deixe o silêncio trabalhar.",
+"O número 31,4% → 19,4% é o argumento que convence. <em>Pergunta oral:</em> \"e se eu não conseguir puncionar? Espero?\" Não — o antibiótico não espera no hipotenso.",
+"Use os botões: escolha um cenário e veja o semáforo acender. Faça a turma escolher para o caminhoneiro.",
+"Sublinhe o detalhe: \"possível\" choque séptico também é vermelho. É pegadinha de prova.",
+"Explique que 3 h é prazo de decisão, não de espera.",
+"Aqui está a honestidade científica: os prazos não são novidade de 2026. Você vai defender isso em sala — melhor dizer você mesmo.",
+"O par 22 + 40 é o que ninguém ensina junto. A frase da porta gruda.",
+"Este é o bloco que os acadêmicos costumam pular. <em>Pergunta oral:</em> \"o que você faria se o antibiótico estivesse correndo e a febre não cedesse?\"",
+"Aqui morre a tabela decorada. Deixe claro que a escolha específica está fora do escopo da SSC.",
+"Três decisões novas de 2026, todas dirigidas por risco. A pegadinha do fim aplica direto ao caso.",
+"Slide de alto retorno prático — é conduta que o interno consegue influenciar na prescrição.",
+"Deixe a pergunta do abscesso no ar. A resposta é sempre a mesma e sempre desconcerta.",
+"Peça voto antes de revelar. <em>Erro provável:</em> achar que 30 mL/kg é recomendação forte. Nunca foi.",
+"Use a calculadora com o peso de um aluno. Torna o número concreto.",
+"Slide de aprofundamento — pode ser pulado numa versão curta da aula.",
+"Duas correções aqui: balanceado e albumina. A da albumina inverte o que estava na aula antiga.",
+"Este é o slide honesto. A diretriz assume o empate, e isso legitima o loop.",
+"Peça a resposta antes. A maioria dirá \"dou\".",
+"O conceito central do bloco. Desenhe o loop no quadro se puder.",
+"Comece pela metáfora da torneira antes de dizer o nome da droga.",
+"Os dois erros práticos mais comuns do plantão. O do acesso periférico costuma surpreender a turma.",
+"PAM 65 é âncora antiga; a faixa 60–65 no idoso é nova. Diga qual é qual.",
+"Aqui sai o 0,5 mcg/kg/min do material antigo. Explique por que um gatilho fixo não sobrevive à evidência.",
+"Mensagem de intensivista, em linguagem de acadêmico.",
+"Slide de horizonte. <em>Aviso:</em> o statement de corticoide da SSC 2026 não foi reproduzido aqui por não ter sido confirmado na fonte — não cite dose nem gatilho a partir do material de 2021.",
+"Não dê respostas. Clique nos botões conforme a sala acerta.",
+"Só revele depois que alguém tiver escrito a prescrição inteira. Os itens em vermelho são as três atualizações.",
+"Feche o circuito com a mão: a seta volta ao começo.",
+"Cinco. Não seis. Peça que fechem o caderno e repitam.",
+"Deixe a Arena para o fim da aula ou para o intervalo. Comente cada gabarito.",
+"Leia em voz alta, rápido, como revisão de véspera.",
+"O checklist salva no navegador do próprio aluno. Incentive marcar hoje ainda.",
+"Mostre a referência principal na tela. Procedência importa.",
+"Última frase. Pausa. Fim."
+];
+
+/* ---------- trilho ---------- */
+slides.forEach(function(s,n){
+  var rail=document.createElement('aside'); rail.className='rail';
+  var num=document.createElement('div'); num.className='num';
+  num.textContent=(n+1<10?'0':'')+(n+1)+' / '+N; rail.appendChild(num);
+  var act=document.createElement('div'); act.className='act';
+  act.textContent=s.getAttribute('data-act')||''; rail.appendChild(act);
+  var ch=s.getAttribute('data-chips')||'';
+  ch.split('|').forEach(function(c){
+    if(!c) return;
+    var p=c.split(':'); var d=document.createElement('div');
+    d.className='chip '+(p[0]||'azul'); d.textContent=p.slice(1).join(':');
+    rail.appendChild(d);
+  });
+  s.insertBefore(rail,s.firstChild);
+});
+
+/* ---------- unidade tipográfica ---------- */
+var SCK='atlasSepse2026_v1_scale', uScale=1.14;
+try{var sv=parseFloat(localStorage.getItem(SCK)); if(sv&&sv>=.7&&sv<=2) uScale=sv;}catch(e){}
+function unit(){
+  var h=stage.clientHeight||600;
+  var boost=document.body.classList.contains('aprs')?1.10:1;
+  document.documentElement.style.setProperty('--u',((h/100)*uScale*boost)+'px');
+  var o=document.getElementById('scaleOut');
+  if(o) o.textContent=Math.round(uScale*100/1.14)+'%';
+}
+function setScale(v){
+  uScale=Math.min(1.9,Math.max(.8,v));
+  try{localStorage.setItem(SCK,String(uScale));}catch(e){}
+  unit();
+}
+window.addEventListener('resize',unit);
+
+/* ---------- ECG ---------- */
+function ecgPath(svg,bpm){
+  if(!svg) return;
+  var W=600,H=60,mid=34,beats=Math.max(3,Math.round(bpm/22));
+  var seg=W/beats,d='M0,'+mid;
+  for(var b=0;b<beats;b++){
+    var x=b*seg;
+    d+=' L'+(x+seg*0.16)+','+mid;
+    d+=' L'+(x+seg*0.22)+','+(mid-5);          /* P */
+    d+=' L'+(x+seg*0.28)+','+mid;
+    d+=' L'+(x+seg*0.36)+','+(mid+6);          /* Q */
+    d+=' L'+(x+seg*0.42)+','+(mid-26);         /* R */
+    d+=' L'+(x+seg*0.48)+','+(mid+12);         /* S */
+    d+=' L'+(x+seg*0.56)+','+mid;
+    d+=' L'+(x+seg*0.70)+','+(mid-7);          /* T */
+    d+=' L'+(x+seg*0.80)+','+mid;
+    d+=' L'+(x+seg)+','+mid;
+  }
+  var p=svg.querySelector('path'); if(p) p.setAttribute('d',d);
+}
+function drawECGs(){
+  ecgPath(document.getElementById('ecg-abertura'),136);
+  ecgPath(document.getElementById('ecg-caso'),136);
+  ecgPath(document.getElementById('ecg-boss1'),136);
+  ecgPath(document.getElementById('ecg-boss2'),136);
+  ecgPath(document.getElementById('ecg-final'),98);
+}
+
+/* ---------- navegação ---------- */
+var LS='atlasSepse2026_v1';
+function show(n){
+  if(n<0)n=0; if(n>=N)n=N-1;
+  slides[i].classList.remove('on'); i=n; slides[i].classList.add('on');
+  document.getElementById('cur').textContent=i+1;
+  document.getElementById('progfill').style.width=((i+1)/N*100)+'%';
+  document.getElementById('notesBody').innerHTML=NOTES[i]||'—';
+  try{localStorage.setItem(LS+'_slide',String(i));}catch(e){}
+  unit();
+}
+function next(){show(i+1);} function prev(){show(i-1);}
+
+document.getElementById('prog').addEventListener('click',function(e){
+  var r=this.getBoundingClientRect();
+  show(Math.floor((e.clientX-r.left)/r.width*N));
+});
+
+/* ---------- cortinas ---------- */
+function bindCurtains(){
+  document.querySelectorAll('.curtain .cover').forEach(function(c){
+    c.addEventListener('click',function(){c.parentNode.classList.add('open');});
+  });
+}
+function revealCurrent(){
+  var cs=slides[i].querySelectorAll('.curtain');
+  var done=false;
+  for(var k=0;k<cs.length;k++){ if(!cs[k].classList.contains('open')){cs[k].classList.add('open');done=true;break;} }
+  return done;
+}
+
+/* ---------- índice ---------- */
+var grid=document.getElementById('idxgrid');
+slides.forEach(function(s,n){
+  var h=s.querySelector('h1,h2,.big,.huge');
+  var t=h?h.textContent.trim().replace(/\s+/g,' ').slice(0,58):(s.getAttribute('data-act')||'Slide');
+  var d=document.createElement('div'); d.className='idxi';
+  d.innerHTML='<b>'+((n+1<10?'0':'')+(n+1))+' · '+(s.getAttribute('data-act')||'')+'</b>'+t;
+  d.addEventListener('click',function(){show(n);document.getElementById('idx').classList.remove('on');});
+  grid.appendChild(d);
+});
+
+/* ---------- toggles ---------- */
+function tog(el,cls){el.classList.toggle(cls);}
+document.getElementById('bG').onclick=function(){tog(document.getElementById('idx'),'on');};
+document.getElementById('bN').onclick=function(){tog(document.getElementById('notes'),'on');this.classList.toggle('act');};
+document.getElementById('bR').onclick=function(){revealCurrent();};
+document.getElementById('bP').onclick=function(){document.body.classList.toggle('aprs');this.classList.toggle('act');unit();};
+document.getElementById('bM').onclick=function(){document.body.classList.toggle('reduz');this.classList.toggle('act');};
+document.getElementById('bPlus').onclick=function(){setScale(uScale+0.08);};
+document.getElementById('bMinus').onclick=function(){setScale(uScale-0.08);};
+document.getElementById('bF').onclick=function(){
+  if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+  else if(document.exitFullscreen){document.exitFullscreen();}
+};
+
+document.addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+  else if(k==='Home'){show(0);} else if(k==='End'){show(N-1);}
+  else if(k==='r'||k==='R'){revealCurrent();}
+  else if(k==='n'||k==='N'){document.getElementById('bN').click();}
+  else if(k==='g'||k==='G'){document.getElementById('bG').click();}
+  else if(k==='p'||k==='P'){document.getElementById('bP').click();}
+  else if(k==='f'||k==='F'){document.getElementById('bF').click();}
+  else if(k==='m'||k==='M'){document.getElementById('bM').click();}
+  else if(k==='+'||k==='='){e.preventDefault();setScale(uScale+0.08);}
+  else if(k==='-'||k==='_'){e.preventDefault();setScale(uScale-0.08);}
+  else if(k==='0'){setScale(1.14);}
+  else if(k==='Escape'){document.getElementById('idx').classList.remove('on');}
+});
+
+var tx=null;
+stage.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+stage.addEventListener('touchend',function(e){
+  if(tx===null)return; var dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>55){ if(dx<0) next(); else prev(); } tx=null;
+},{passive:true});
+
+/* ---------- monitor progressivo ---------- */
+var vitN=0;
+var revBtn=document.getElementById('revVit');
+if(revBtn){
+  revBtn.addEventListener('click',function(){
+    vitN++;
+    var v=document.querySelector('#mon1 .vit[data-i="'+vitN+'"]');
+    if(v) v.classList.remove('hidden');
+    if(vitN>=7){ revBtn.disabled=true; revBtn.textContent='Todos revelados'; }
+    document.getElementById('vitHint').textContent=Math.min(vitN,7)+' de 7 revelados';
+  });
+}
+
+/* ---------- escadas / passos ---------- */
+document.querySelectorAll('.ladder .step').forEach(function(s){
+  s.addEventListener('click',function(){s.classList.toggle('on');});
+});
+
+/* ---------- sofá ---------- */
+document.querySelectorAll('#sofa .seat').forEach(function(s){
+  s.addEventListener('click',function(){s.classList.toggle('on');});
+});
+
+/* ---------- semáforo ---------- */
+var MAP={choque:'r',def:'r',pos:'a',imp:'g'};
+var TXT={
+ choque:'🔴 Antimicrobiano imediatamente, idealmente ≤ 1 hora. Recomendação FORTE (statement 16). Vale mesmo para choque séptico apenas POSSÍVEL.',
+ def:'🔴 Antimicrobiano imediatamente, idealmente ≤ 1 hora. Recomendação FORTE (statement 17).',
+ pos:'🟡 Investigação rápida e limitada no tempo. Se a preocupação com infecção persistir, antimicrobiano em até 3 h da primeira suspeita (statements 18 e 19).',
+ imp:'🟢 Pode-se adiar o antimicrobiano, mantendo monitorização estreita e reavaliação (statement 20).'
+};
+document.querySelectorAll('#certeza .btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#certeza .btn').forEach(function(x){x.classList.remove('sel');});
+    b.classList.add('sel');
+    var c=b.getAttribute('data-c');
+    document.querySelectorAll('#semaforo .lampada').forEach(function(l){
+      l.classList.toggle('on', l.getAttribute('data-l')===MAP[c]);
+    });
+    document.getElementById('semaOut').innerHTML=TXT[c];
+  });
+});
+
+/* ---------- calculadora 30 mL/kg ---------- */
+var pin=document.getElementById('pesoIn'), pout=document.getElementById('pesoOut');
+function calcPeso(){
+  if(!pin||!pout) return;
+  var p=parseFloat(pin.value);
+  if(!p||p<=0){pout.textContent='—';return;}
+  var v=Math.round(p*30);
+  pout.innerHTML=v+' mL &nbsp;(≈ '+(v/1000).toFixed(1).replace('.',',')+' L) em até 3 h';
+}
+if(pin){pin.addEventListener('input',calcPeso);calcPeso();}
+
+/* ---------- cronômetro ---------- */
+var cbtn=document.getElementById('crono'), cout=document.getElementById('cronoOut'), ctimer=null;
+if(cbtn){
+  cbtn.addEventListener('click',function(){
+    if(ctimer){clearInterval(ctimer);ctimer=null;cbtn.textContent='Iniciar cronômetro';cout.textContent='60';return;}
+    var t=60; cout.textContent=t; cbtn.textContent='Parar';
+    ctimer=setInterval(function(){
+      t--; cout.textContent=t;
+      if(t<=0){clearInterval(ctimer);ctimer=null;cbtn.textContent='Iniciar cronômetro';cout.textContent='TEMPO';}
+    },1000);
+  });
+}
+
+/* ---------- boss final ---------- */
+var BOSS={
+ '1':'<strong>Reconhecer.</strong> Paciente crítico. Infecção provável + disfunção orgânica = sepse; hipotensão e TEC de 7 s apontam choque. Acione o código sepse.',
+ '2':'<strong>Ressuscitar.</strong> MOV, ABCDE, O₂ para SpO₂ &gt; 94%, dois acessos periféricos. Cristaloide balanceado ≥ 30 mL/kg em até 3 h — e, porque este choque é instável, noradrenalina periférica pode entrar junto do volume. Alvo PAM 65.',
+ '3':'<strong>Tratar a infecção.</strong> Lactato + 2 sets de hemocultura antes, sem atrasar. Antimicrobiano imediatamente (≤ 1 h): este é choque séptico. Beta-lactâmico com dose de ataque e depois infusão prolongada. Sem cobertura anaeróbica de rotina.',
+ '4':'<strong>Reavaliar.</strong> TEC, PAM, consciência, diurese, tendência do lactato, sinais de congestão. Ainda é fluido-responsivo? Ainda tolera volume? Decida de novo.',
+ '5':'<strong>Controlar o foco.</strong> Onde está o inimigo? Imagem de tórax. Se houver derrame/empiema, coleção ou dispositivo, controle precoce — idealmente em até ~6 h. UTI em até 6 h.'
+};
+document.querySelectorAll('#bossBtns .btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    b.classList.add('sel');
+    document.getElementById('bossOut').innerHTML=BOSS[b.getAttribute('data-b')];
+  });
+});
+
+/* ---------- arena ---------- */
+var Q=[
+ {q:'Homem de 62 anos com pielonefrite, lúcido, PA 118/76, FR 20, creatinina subiu de 0,9 para 1,8 mg/dL. Isso é sepse?',
+  o:['Não, porque a pressão está normal','Sim: infecção + disfunção orgânica aguda','Não, porque o qSOFA é 0','Só se o lactato estiver acima de 2'],a:1,
+  e:'Sepse é infecção + disfunção orgânica aguda, e não depende de hipotensão. O qSOFA é ferramenta de rastreio/prognóstico, não define diagnóstico — e a SSC 2026 reforça que sepse é diagnóstico clínico.'},
+ {q:'Qual a recomendação da SSC 2026 para rastreio de sepse em pacientes agudamente enfermos no hospital?',
+  o:['qSOFA como ferramenta única','NEWS, NEWS2, MEWS ou SIRS em preferência ao qSOFA como ferramenta única','Procalcitonina seriada','SOFA completo na admissão'],a:1,
+  e:'Recomendação forte, certeza moderada. Em 2021 a recomendação era “contra o qSOFA isolado”; 2026 inverte o enunciado e recomenda a favor dos demais. Um qSOFA positivo continua sendo alerta legítimo.'},
+ {q:'Paciente com choque séptico POSSÍVEL, ainda sem confirmação de foco. Quando dar o antimicrobiano?',
+  o:['Em até 3 horas, após investigar','Imediatamente, idealmente em até 1 hora','Após a procalcitonina','Após as hemoculturas ficarem prontas'],a:1,
+  e:'No choque, o corte de 1 hora vale já para a sepse POSSÍVEL — statement 16. Só a sepse sem choque exige o grau “provável ou definida” para entrar no vermelho.'},
+ {q:'Sobre procalcitonina na SSC 2026, é correto afirmar:',
+  o:['Deve ser usada para decidir quando iniciar o antimicrobiano','Não deve guiar o início, mas pode auxiliar a decidir quando descontinuar','Substitui a avaliação clínica','Não é mencionada'],a:1,
+  e:'Statement 22: avaliação clínica isolada é preferida à PCT + clínica para INICIAR. Statement 40: PCT + clínica é sugerida para DESCONTINUAR quando a duração ótima não está clara e o foco está controlado. “Não abre a porta; pode ajudar a fechar.”'},
+ {q:'Qual afirmação sobre fluidos está de acordo com a SSC 2026?',
+  o:['30 mL/kg é recomendação forte para todos','Sugere-se ao menos 30 mL/kg em 3 h na hipoperfusão, individualizando e reavaliando','Coloides sintéticos são alternativa aceitável','Albumina de rotina junto do cristaloide'],a:1,
+  e:'Recomendação condicional, certeza baixa, com ressalvas formais de individualização, reavaliação frequente e uso de peso ajustado/ideal se IMC > 30. Amidos: forte contra. Albumina: sugere-se cristaloide isolado.'},
+ {q:'Adulto com sepse e traumatismo cranioencefálico. Qual cristaloide?',
+  o:['Ringer lactato','Solução salina 0,9%','Albumina 5%','Amido'],a:1,
+  e:'A preferência geral por cristaloide balanceado tem exceção explícita: em sepse + TCE, sugere-se SF 0,9%. Albumina também deve ser evitada no TCE.'},
+ {q:'Choque séptico, hipotenso, sem acesso venoso central disponível de imediato. O que a SSC 2026 sugere?',
+  o:['Aguardar o acesso central para iniciar noradrenalina','Iniciar noradrenalina por via periférica em vez de adiar','Usar dopamina até obter o central','Aumentar o volume até conseguir o central'],a:1,
+  e:'Sugere-se iniciar vasopressor perifericamente para restaurar a PAM em vez de adiar até garantir acesso central — com protocolo de segurança e vigilância de extravasamento. Taxa de complicação agrupada ≈ 6%.'},
+ {q:'Choque séptico em paciente de 78 anos. Qual alvo inicial de PAM?',
+  o:['80–85 mmHg','60–65 mmHg','Acima de 70 mmHg','Normalizar a PA basal'],a:1,
+  e:'Novo em 2026: em adultos com 65 anos ou mais, sugere-se faixa inicial de 60–65 mmHg em vez de alvos mais altos. Para os demais, o alvo inicial permanece 65 mmHg (recomendação forte).'},
+ {q:'Pneumonia comunitária com sepse, sem fatores de risco para anaeróbios ou MDR. Qual conduta empírica está alinhada a 2026?',
+  o:['Adicionar cobertura anaeróbica de rotina','Adicionar antifúngico empírico','Não incluir cobertura anaeróbica nem antifúngica de rotina','Cobrir MRSA e Pseudomonas por precaução'],a:2,
+  e:'2026 traz recomendações condicionais para cobertura de anaeróbios e de MDR apenas na presença de fatores de risco, e sugere contra o antifúngico empírico de rotina. Cobertura anaeróbica desnecessária associou-se a pior desfecho em estudos observacionais.'},
+ {q:'Sobre beta-lactâmicos na sepse, a SSC 2026 recomenda:',
+  o:['Bolus intermitente em todos','Infusão prolongada na manutenção, após dose de ataque','Dose única diária','Ajustar sempre pela procalcitonina'],a:1,
+  e:'Recomendação forte, certeza moderada (18 ECR, 9.108 pacientes, incluindo o BLING III): RR 0,91 para mortalidade de curto prazo, ~25 mortes a menos por 1.000. A dose de ataque é indispensável.'}
+];
+var qi=0,qs=0,qLock=false;
+function renderQ(){
+  var q=Q[qi];
+  document.getElementById('qPos').textContent=qi+1;
+  document.getElementById('qTot').textContent=Q.length;
+  document.getElementById('qScore').textContent=qs;
+  document.getElementById('qEnun').textContent=q.q;
+  var box=document.getElementById('qOpts'); box.innerHTML='';
+  var fb=document.getElementById('qFb'); fb.className='qfb'; fb.innerHTML='';
+  qLock=false;
+  q.o.forEach(function(t,k){
+    var b=document.createElement('button'); b.className='qopt'; b.textContent=String.fromCharCode(65+k)+') '+t;
+    b.addEventListener('click',function(){
+      if(qLock) return; qLock=true;
+      var opts=box.querySelectorAll('.qopt');
+      opts[q.a].classList.add('right');
+      if(k!==q.a){b.classList.add('wrong');} else {qs++;document.getElementById('qScore').textContent=qs;}
+      fb.className='qfb show'; fb.innerHTML='<strong>'+(k===q.a?'Correto. ':'Resposta correta: '+String.fromCharCode(65+q.a)+'. ')+'</strong>'+q.e;
+    });
+    box.appendChild(b);
+  });
+}
+if(document.getElementById('qNext')){
+  document.getElementById('qNext').addEventListener('click',function(){qi=(qi+1)%Q.length;renderQ();});
+  document.getElementById('qReset').addEventListener('click',function(){qi=0;qs=0;renderQ();});
+  renderQ();
+}
+
+/* ---------- checklist ---------- */
+var CK=LS+'_chk';
+function loadChk(){
+  var d={}; try{d=JSON.parse(localStorage.getItem(CK)||'{}');}catch(e){d={};}
+  var n=0;
+  document.querySelectorAll('#chkbox .chk').forEach(function(l){
+    var k=l.getAttribute('data-k'), inp=l.querySelector('input');
+    inp.checked=!!d[k]; l.classList.toggle('done',!!d[k]); if(d[k])n++;
+    inp.onchange=function(){
+      var dd={}; try{dd=JSON.parse(localStorage.getItem(CK)||'{}');}catch(e){dd={};}
+      dd[k]=inp.checked; try{localStorage.setItem(CK,JSON.stringify(dd));}catch(e){}
+      loadChk();
+    };
+  });
+  var o=document.getElementById('chkOut'); if(o) o.textContent=n+' de 9 concluídos';
+}
+if(document.getElementById('chkbox')){
+  loadChk();
+  document.getElementById('chkReset').addEventListener('click',function(){
+    try{localStorage.removeItem(CK);}catch(e){} loadChk();
+  });
+}
+
+/* ---------- init ---------- */
+bindCurtains();
+drawECGs();
+unit();
+var saved=0; try{saved=parseInt(localStorage.getItem(LS+'_slide')||'0',10)||0;}catch(e){saved=0;}
+slides[0].classList.add('on');
+show(saved>=0&&saved<N?saved:0);
+window.addEventListener('load',function(){unit();drawECGs();});
+})();
+</script>
+</body>
+</html>
