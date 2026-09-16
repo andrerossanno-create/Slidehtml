@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gasometria sem medo · Aula 1 — Dr. André Rossanno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10283A; --ink2:#4B6072; --paper:#F5F8FA; --card:#FFFFFF; --line:#D6E0E7;
+  --atlas:#1282A2; --atlas-s:#E3F3F7;
+  --acid:#C43E36; --acid-s:#FBE9E7;
+  --alk:#2C58A8; --alk-s:#E7EEF9;
+  --ok:#2A8756; --ok-s:#E5F4EC;
+  --warn:#B97A0E; --warn-s:#FDF3DF;
+  --night:#0C1E2C; --fs:1;
+  --sans:'Nunito','Trebuchet MS',Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--night);overflow:hidden;font-family:var(--sans);color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;margin:-450px 0 0 -800px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--paper);padding:62px 88px 84px;display:none;flex-direction:column;font-size:calc(31px * var(--fs));line-height:1.35;overflow:auto}
+.slide.on{display:flex}
+.slide.dark{background:radial-gradient(1200px 700px at 78% 30%,#163A52 0%,#0C1E2C 70%);color:#EAF2F7}
+.slide h1{font-size:1.85em;font-weight:900;line-height:1.08;margin:0 0 .45em;letter-spacing:-.01em}
+.slide h2{font-size:1.15em;font-weight:800;margin:0 0 .3em}
+.slide p{margin:.2em 0 .5em;max-width:34em}
+.kick{font-family:var(--mono);font-size:.55em;color:var(--atlas);margin-bottom:.5em;font-weight:600}
+.dark .kick{color:#6FC7DD}
+.sub{color:var(--ink2)}
+.dark .sub{color:#A9C0CF}
+.row{display:flex;gap:1em;align-items:stretch}
+.col{flex:1;min-width:0}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:.7em .9em}
+.card.acid{border-color:var(--acid);background:var(--acid-s)}
+.card.alk{border-color:var(--alk);background:var(--alk-s)}
+.card.ok{border-color:var(--ok);background:var(--ok-s)}
+.card.warn{border-color:var(--warn);background:var(--warn-s)}
+.card.atlas{border-color:var(--atlas);background:var(--atlas-s)}
+.card h2{margin-top:0}
+aside.notes{display:none}
+.small{font-size:.78em}
+.tiny{font-size:.62em}
+.mono{font-family:var(--mono)}
+.big{font-size:1.4em;font-weight:900}
+.formula{font-family:var(--mono);font-weight:600;font-size:1.05em;background:var(--card);border:2px dashed var(--atlas);border-radius:14px;padding:.35em .7em;display:inline-block}
+.c-acid{color:var(--acid)} .c-alk{color:var(--alk)} .c-ok{color:var(--ok)} .c-warn{color:var(--warn)} .c-atlas{color:var(--atlas)}
+ul.clean{list-style:none;padding:0;margin:.2em 0}
+ul.clean li{padding:.18em 0 .18em 1.1em;position:relative}
+ul.clean li:before{content:"";position:absolute;left:0;top:.72em;width:.45em;height:.45em;border-radius:50%;background:var(--atlas)}
+.acid ul.clean li:before{background:var(--acid)} .alk ul.clean li:before{background:var(--alk)} .warn ul.clean li:before{background:var(--warn)} .ok ul.clean li:before{background:var(--ok)}
+.pega{border-left:10px solid var(--warn);background:var(--warn-s);border-radius:0 14px 14px 0;padding:.45em .8em;margin-top:.5em}
+.pega b.t{color:var(--warn)}
+.fix{border-left:10px solid var(--acid);background:var(--acid-s);border-radius:0 14px 14px 0;padding:.45em .8em;margin-top:.5em}
+.synth{margin-top:auto;padding-top:.4em;font-weight:800;color:var(--atlas)}
+.synth:before{content:"Em uma linha: ";color:var(--ink2);font-weight:600}
+/* reveal */
+.step{opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s;pointer-events:none}
+.step.on{opacity:1;transform:none;pointer-events:auto}
+.reduce .step{transition:none}
+.ans{background:var(--ok-s);border:2px solid var(--ok);border-radius:14px;padding:.35em .7em;font-weight:700}
+.ans.no{background:var(--acid-s);border-color:var(--acid)}
+/* ticket: impressão de gasometria */
+.ticket{font-family:var(--mono);background:#FFFEFA;border:1px solid #CFCAB8;border-radius:6px;padding:.55em .75em .7em;box-shadow:0 10px 26px rgba(12,30,44,.18);font-size:.72em;min-width:11.5em;position:relative}
+.ticket:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;background:linear-gradient(-45deg,transparent 6px,#FFFEFA 0) 0 0/12px 12px repeat-x,linear-gradient(45deg,transparent 6px,#FFFEFA 0) 0 0/12px 12px repeat-x}
+.ticket .th{font-size:.78em;color:#6B6754;border-bottom:1px dashed #BDB7A2;padding-bottom:.25em;margin-bottom:.3em;display:flex;justify-content:space-between;gap:1em}
+.ticket .r{display:flex;justify-content:space-between;gap:.8em;padding:.06em 0}
+.ticket .r span{color:#5E5A48}
+.ticket .r b{font-weight:600;color:#1C1A12}
+.ticket .r b.lo{color:var(--acid)} .ticket .r b.hi{color:var(--alk)}
+.ticket .sep{border-top:1px dashed #BDB7A2;margin:.3em 0}
+/* seis passos */
+.steps6{display:grid;grid-template-columns:repeat(3,1fr);gap:.6em}
+.s6{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:.55em .75em;display:flex;gap:.55em;align-items:flex-start}
+.s6 .n{font-family:var(--mono);font-weight:600;background:var(--ink);color:#fff;border-radius:50%;width:1.6em;height:1.6em;flex:none;display:flex;align-items:center;justify-content:center;font-size:.8em;margin-top:.1em}
+.s6 b{display:block;font-size:1em}
+.s6 span{color:var(--ink2);font-size:.78em}
+.s6.hot{border-color:var(--atlas);background:var(--atlas-s)}
+.s6.hot .n{background:var(--atlas)}
+.trail{display:flex;gap:.3em;margin-bottom:.55em}
+.trail i{font-style:normal;font-family:var(--mono);font-size:.5em;padding:.2em .55em;border-radius:99px;background:#E6ECF1;color:var(--ink2)}
+.trail i.on{background:var(--atlas);color:#fff}
+/* tabelas */
+table.t{border-collapse:separate;border-spacing:0;width:100%;font-size:.74em;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden}
+table.t th,table.t td{padding:.4em .6em;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.t th{background:#EAF0F4;font-weight:800}
+table.t tr:last-child td{border-bottom:none}
+/* controles interativos */
+.ctl{display:flex;align-items:center;gap:.5em;margin:.25em 0;font-size:.8em}
+.ctl label{min-width:5.2em;font-weight:700}
+.ctl input[type=range]{flex:1;accent-color:var(--atlas);height:1.2em}
+.ctl input[type=number]{width:4.2em;font:inherit;font-family:var(--mono);padding:.12em .3em;border:2px solid var(--line);border-radius:10px}
+.ctl output{font-family:var(--mono);min-width:3em;text-align:right;font-weight:600}
+.btn{font:inherit;font-weight:800;font-size:.72em;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:99px;padding:.3em .9em;cursor:pointer}
+.btn.sel{background:var(--ink);color:#fff}
+.btn:focus-visible,button:focus-visible,input:focus-visible{outline:4px solid #F2B84B;outline-offset:2px}
+.verdict{font-weight:800;border-radius:14px;padding:.45em .7em;background:#EAF0F4;margin-top:.4em}
+.gauge{position:relative;height:1.1em;border-radius:99px;background:linear-gradient(90deg,var(--ok) 0 33.3%,var(--atlas) 33.3% 66.6%,var(--alk) 66.6% 100%);margin:.9em 0 .3em}
+.gauge .mk{position:absolute;top:-.45em;width:.3em;height:2em;background:var(--ink);border-radius:4px;transform:translateX(-50%);transition:left .3s}
+.gauge-l{display:flex;justify-content:space-between;font-size:.6em;color:var(--ink2);font-family:var(--mono)}
+/* moldura */
+#foot{position:absolute;left:88px;right:88px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:18px;color:var(--ink2);pointer-events:none}
+#foot .sig{font-family:'Dancing Script',cursive;font-size:28px;color:var(--atlas)}
+#foot.dk{color:#9FB6C5}
+#bar{position:absolute;left:0;bottom:0;height:7px;background:var(--atlas);transition:width .3s}
+#ui{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:6px;background:rgba(12,30,44,.9);padding:6px 8px;border-radius:99px;opacity:0;transition:opacity .3s;z-index:20}
+#ui.show{opacity:1}
+#ui button{font:700 14px var(--sans);color:#EAF2F7;background:transparent;border:1px solid #3B566A;border-radius:99px;padding:6px 12px;cursor:pointer}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:34vh;overflow:auto;background:#FFF8E6;color:#2B2410;font:600 17px/1.45 var(--sans);padding:14px 22px 18px;border-top:4px solid var(--warn);display:none;z-index:15}
+body.show-notes #notes{display:block}
+#notes b{font-family:var(--mono);color:var(--warn)}
+#grid{position:fixed;inset:0;background:rgba(8,20,30,.96);z-index:30;display:none;overflow:auto;padding:30px}
+#grid.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;align-content:start}
+#grid button{text-align:left;font:700 15px var(--sans);color:#DDE9F0;background:#14304A;border:1px solid #28506E;border-radius:12px;padding:10px 12px;cursor:pointer}
+#grid button.cur{background:var(--atlas);color:#fff}
+#grid button small{display:block;font:400 12px var(--mono);color:#8FB3C8}
+body.touch #help{display:none}
+#help{position:fixed;right:14px;top:12px;font:600 13px var(--mono);color:#6F8CA0;z-index:5}
+.vote{align-self:flex-start;font-family:var(--mono);font-size:.5em;background:var(--ink);color:#fff;padding:.25em .7em;border-radius:99px;display:inline-block;margin-bottom:.5em}
+.letter{font-weight:900;font-size:1.6em;line-height:1;color:var(--acid);width:1.1em;flex:none}
+.ltr{display:flex;gap:.45em;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:.3em .6em}
+.mnemo{font-weight:900;font-size:1.25em;line-height:1.3}
+.mnemo span{display:inline-block;padding:0 .12em;border-radius:8px}
+.mnemo span.on{background:var(--warn-s);color:var(--warn);opacity:1}
+</style></head>
+<body>
+<div id="help">← → avançar · toque na direita/esquerda · G índice · N notas · F tela cheia · + − letra</div>
+<div id="stage">
+<!-- CAPA -->
+<section class="slide dark" data-title="Capa · Aula 1">
+  <div class="row" style="flex:1;align-items:center;gap:2em">
+    <div class="col">
+      <div class="kick">gasometria sem medo · aula 1 de 3</div>
+      <h1 style="font-size:2.7em">O pH, os dois personagens e a compensação</h1>
+      <p class="sub" style="font-size:1.05em">Do zero até saber dizer se uma gasometria está compensada.</p>
+      <p style="font-family:'Dancing Script',cursive;font-size:1.6em;color:#6FC7DD;margin-top:.8em">Dr. André Rossanno</p>
+    </div>
+    <div style="transform:rotate(3deg)">
+      <div class="ticket" style="font-size:.9em">
+        <div class="th"><span>GASOMETRIA ARTERIAL</span><span>SALA 3</span></div>
+        <div class="r"><span>pH</span><b class="lo">7,26</b></div>
+        <div class="r"><span>pCO₂</span><b class="hi">60</b></div>
+        <div class="r"><span>HCO₃⁻</span><b>26</b></div>
+        <div class="sep"></div>
+        <div class="r"><span>Diagnóstico</span><b>?</b></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Ao fim desta aula o aluno deve ler esse ticket sozinho: acidose respiratória aguda.</aside>
+</section>
+
+<!-- MAPA 3 AULAS -->
+<section class="slide" data-title="O caminho em 3 aulas">
+  <div class="kick">o caminho</div>
+  <h1>Três aulas, uma de cada vez</h1>
+  <div class="row" style="gap:.8em">
+    <div class="card col atlas"><h2>Aula 1 · hoje</h2><ul class="clean small"><li>O que é pH e de onde vem o ácido</li><li>CO₂ e bicarbonato: os dois personagens</li><li>Os 4 distúrbios</li><li>Passos 1, 2 e 3: compensação</li></ul></div>
+    <div class="card col"><h2>Aula 2</h2><ul class="clean small"><li>Ânion gap e albumina</li><li>Causas: ACIDOS + lática</li><li>Gap osmolar e álcoois tóxicos</li></ul></div>
+    <div class="card col"><h2>Aula 3</h2><ul class="clean small"><li>AG normal e as ATRs</li><li>Delta/delta e distúrbios mistos</li><li>Alcalose metabólica e caso final</li></ul></div>
+  </div>
+  <p class="step" style="margin-top:.6em">Não pule de aula: a Aula 2 só faz sentido para quem domina a compensação.</p>
+  <p class="synth">Primeiro entender, depois calcular, depois decorar.</p>
+  <aside class="notes">No celular: toque na direita da tela para avançar e na esquerda para voltar. O material guarda o slide em que o aluno parou.</aside>
+</section>
+
+<!-- O QUE É GASOMETRIA -->
+<section class="slide" data-title="O que é uma gasometria">
+  <div class="kick">conhecimento básico</div>
+  <h1>O que a gasometria arterial mede</h1>
+  <div class="row" style="gap:1.4em;align-items:center">
+    <div class="col">
+      <p>Sangue de uma artéria (quase sempre a <b>radial</b>), analisado na hora. Ela responde duas perguntas:</p>
+      <div class="card atlas step"><b>1. O pulmão está oxigenando?</b><br><span class="small sub">pO₂ e saturação — não é o foco destas aulas.</span></div>
+      <div class="card warn step" style="margin-top:.5em"><b>2. O equilíbrio ácido-base está normal?</b><br><span class="small sub">pH, pCO₂ e HCO₃⁻ — é disso que vamos falar.</span></div>
+    </div>
+    <div class="ticket" style="font-size:.8em">
+      <div class="th"><span>O QUE OLHAR</span></div>
+      <div class="r"><span>pH</span><b>ácido ou básico?</b></div>
+      <div class="r"><span>pCO₂</span><b>pulmão</b></div>
+      <div class="r"><span>HCO₃⁻</span><b>rim</b></div>
+      <div class="sep"></div>
+      <div class="r"><span>pO₂ · SatO₂</span><b>oxigenação</b></div>
+    </div>
+  </div>
+  <p class="synth">Três números contam a história ácido-base: pH, pCO₂ e HCO₃⁻.</p>
+  <aside class="notes">Se perguntarem: o HCO₃⁻ da gasometria é calculado pelo aparelho a partir de pH e pCO₂.</aside>
+</section>
+
+<!-- O QUE É pH -->
+<section class="slide" data-title="O que é pH">
+  <div class="kick">conhecimento básico</div>
+  <h1>pH é uma medida invertida de ácido</h1>
+  <p>Ácido, no corpo, significa <b>H⁺</b> (íon hidrogênio). O pH mede quanto H⁺ existe — mas ao contrário.</p>
+  <div class="row" style="margin-top:.4em">
+    <div class="card col acid step" style="text-align:center"><div class="big">mais H⁺</div><div class="mono big c-acid">pH ↓</div><div class="small">acidemia</div></div>
+    <div class="card col alk step" style="text-align:center"><div class="big">menos H⁺</div><div class="mono big c-alk">pH ↑</div><div class="small">alcalemia</div></div>
+  </div>
+  <div class="card step" style="margin-top:.6em">Pense numa gangorra: <b>quando o H⁺ sobe, o pH desce</b>. Por isso "pH baixo" = "muito ácido".</div>
+  <p class="synth">pH baixo é ácido; pH alto é básico.</p>
+  <aside class="notes">Parece óbvio para o professor; para o aluno de graduação, a inversão é a primeira fonte de confusão.</aside>
+</section>
+
+<!-- LOGARÍTMICO -->
+<section class="slide" data-title="Por que brigar por 0,1 de pH">
+  <div class="kick">conhecimento básico</div>
+  <h1>Por que 0,1 de pH é muito</h1>
+  <div class="row" style="align-items:center;gap:1.4em">
+    <div class="col">
+      <p>A escala é <b>logarítmica</b>: pequenas mudanças no número escondem grandes mudanças de ácido.</p>
+      <div class="card step" style="margin-top:.4em">
+        <div class="row" style="justify-content:space-around;text-align:center">
+          <div><div class="mono big">7,40</div><div class="small sub">H⁺ ≈ 40 nmol/L</div></div>
+          <div class="big c-atlas" style="align-self:center">→</div>
+          <div><div class="mono big c-acid">7,10</div><div class="small sub">H⁺ ≈ 80 nmol/L</div></div>
+        </div>
+        <p class="small" style="text-align:center;margin:.4em auto 0"><b>Caiu só 0,3 e o ácido dobrou.</b></p>
+      </div>
+    </div>
+    <div class="col">
+      <svg viewBox="0 0 600 190" style="width:100%">
+        <rect x="20" y="70" width="560" height="44" rx="22" fill="#E6ECF1"/>
+        <rect x="20" y="70" width="112" height="44" rx="22" fill="#C43E36"/>
+        <rect x="120" y="70" width="140" height="44" fill="#F0B2AC"/>
+        <rect x="260" y="70" width="56" height="44" fill="#2A8756"/>
+        <rect x="316" y="70" width="152" height="44" fill="#AFC3E6"/>
+        <rect x="468" y="70" width="112" height="44" rx="22" fill="#2C58A8"/>
+        <g font-family="IBM Plex Mono" font-size="20" fill="#10283A" text-anchor="middle"><text x="132" y="148">6,8</text><text x="260" y="148">7,35</text><text x="316" y="148">7,45</text><text x="468" y="148">7,8</text></g>
+        <g font-family="Nunito" font-weight="800" font-size="22" text-anchor="middle"><text x="76" y="52" fill="#C43E36">risco de morte</text><text x="288" y="52" fill="#2A8756">normal</text><text x="524" y="52" fill="#2C58A8">risco de morte</text><text x="190" y="180" fill="#C43E36">acidemia</text><text x="392" y="180" fill="#2C58A8">alcalemia</text></g>
+      </svg>
+    </div>
+  </div>
+  <p class="synth">Cada 0,3 de queda no pH dobra o H⁺.</p>
+  <aside class="notes">[H⁺] = 10^−pH. A faixa compatível com a vida fica aproximadamente entre 6,8 e 7,8.</aside>
+</section>
+
+<!-- EFEITOS -->
+<section class="slide" data-title="O que acidose e alcalose fazem">
+  <div class="kick">conhecimento básico</div>
+  <h1>O que isso faz no paciente</h1>
+  <div class="row">
+    <div class="card col acid"><h2 class="c-acid">Acidose</h2><ul class="clean small"><li>Coração bate mais fraco; vasos dilatam</li><li>Noradrenalina funciona pior</li><li>K⁺ sai da célula → hipercalemia</li><li>Hemoglobina solta O₂ mais fácil</li></ul></div>
+    <div class="card col alk"><h2 class="c-alk">Alcalose</h2><ul class="clean small"><li>Cálcio ionizado cai → formigamento, cãibra</li><li>Arritmias e convulsão</li><li>K⁺ entra na célula → hipocalemia</li><li>Hemoglobina segura O₂</li></ul></div>
+  </div>
+  <div class="pega step"><b class="t">Pegadinha:</b> quem hiperventila de ansiedade sente formigar mãos e boca. É a alcalose derrubando o cálcio ionizado.</div>
+  <p class="synth">Ácido enfraquece o coração; alcalino rouba o cálcio.</p>
+  <aside class="notes">Efeito Bohr: acidose desloca a curva da Hb para a direita; alcalose para a esquerda.</aside>
+</section>
+
+<!-- DE ONDE VEM O ÁCIDO -->
+<section class="slide" data-title="De onde vem o ácido">
+  <div class="kick">conhecimento básico</div>
+  <h1>O corpo fabrica ácido o dia inteiro</h1>
+  <div class="row">
+    <div class="card col atlas"><h2>Ácido que vira gás: CO₂</h2><p class="small">Sai de todo metabolismo. É muito ácido por dia, mas o <b>pulmão</b> o elimina a cada expiração.</p><p class="small"><b>Quem cuida: pulmão · rápido</b></p></div>
+    <div class="card col warn"><h2>Ácidos que não viram gás</h2><p class="small">Vêm das proteínas da dieta, do lactato, dos cetoácidos. Não saem pela respiração.</p><p class="small"><b>Quem cuida: rim · lento</b></p></div>
+  </div>
+  <div class="card step" style="margin-top:.6em">O rim também <b>fabrica e guarda bicarbonato</b>, a base que neutraliza esses ácidos.</div>
+  <p class="synth">Pulmão tira o CO₂; rim tira os outros ácidos e repõe a base.</p>
+  <aside class="notes">Ordem de grandeza: ~15.000 mmol/dia de CO₂ versus ~1 mEq/kg/dia de ácido fixo.</aside>
+</section>
+
+<!-- A REAÇÃO -->
+<section class="slide" data-title="A reação que explica tudo">
+  <div class="kick">conceitos básicos</div>
+  <h1>A reação que explica a gasometria inteira</h1>
+  <div class="card" style="text-align:center;font-family:var(--mono);font-size:1.1em;font-weight:600;padding:.6em">
+    <span class="c-atlas">CO₂</span> + H₂O ⇄ H₂CO₃ ⇄ <span class="c-acid">H⁺</span> + <span class="c-alk">HCO₃⁻</span>
+  </div>
+  <div class="row" style="margin-top:.6em">
+    <div class="card col acid step"><b>Sobrou CO₂?</b><br><span class="small">A reação anda para a direita e fabrica H⁺. <b>CO₂ se comporta como ácido.</b></span></div>
+    <div class="card col alk step"><b>Sobrou HCO₃⁻?</b><br><span class="small">Ele captura H⁺ e o transforma em CO₂ e água. <b>HCO₃⁻ é a base.</b></span></div>
+  </div>
+  <div class="pega step"><b class="t">Grave isso:</b> CO₂ alto = mais ácido. Bicarbonato alto = mais base.</div>
+  <p class="synth">CO₂ é o ácido do pulmão; bicarbonato é a base do rim.</p>
+  <aside class="notes">Quem entende este slide não precisa decorar o sentido das setas dos distúrbios.</aside>
+</section>
+
+<!-- DOIS PERSONAGENS -->
+<section class="slide" data-title="Os dois personagens">
+  <div class="kick">conceitos básicos</div>
+  <h1>Dois personagens puxam o pH</h1>
+  <div class="row" style="gap:1em">
+    <div class="card col atlas" style="text-align:center">
+      <div class="big">pCO₂</div><div class="small sub">o ácido · controlado pelo pulmão</div>
+      <div class="row small" style="margin-top:.5em;gap:.4em">
+        <div class="card col acid">sobe → pH <b>cai</b></div><div class="card col alk">cai → pH <b>sobe</b></div>
+      </div>
+      <p class="tiny sub" style="margin:.4em auto 0">anda <b>contra</b> o pH</p>
+    </div>
+    <div class="card col atlas" style="text-align:center">
+      <div class="big">HCO₃⁻</div><div class="small sub">a base · controlada pelo rim</div>
+      <div class="row small" style="margin-top:.5em;gap:.4em">
+        <div class="card col alk">sobe → pH <b>sobe</b></div><div class="card col acid">cai → pH <b>cai</b></div>
+      </div>
+      <p class="tiny sub" style="margin:.4em auto 0">anda <b>junto</b> com o pH</p>
+    </div>
+  </div>
+  <p class="step" style="margin-top:.6em">É por isso que, mais adiante, "pH e bicarbonato no mesmo sentido" aponta um problema metabólico.</p>
+  <p class="synth">pCO₂ puxa contra o pH; bicarbonato puxa a favor.</p>
+  <aside class="notes">Este slide prepara o METABÓLICO MESMO — o gancho vem depois que a lógica já foi entendida.</aside>
+</section>
+
+<!-- BALANÇA -->
+<section class="slide" data-title="A balança: pulmão × rim">
+  <div class="kick">conceitos básicos · mexa você</div>
+  <h1>Uma balança com dois pratos</h1>
+  <div class="row" style="gap:1.4em">
+    <div class="col">
+      <p class="small">Arraste os controles e observe o ponteiro.</p>
+      <div class="ctl"><label>HCO₃⁻</label><input type="range" id="hb-h" min="4" max="45" value="24"><output id="hb-ho">24</output></div>
+      <div class="ctl"><label>pCO₂</label><input type="range" id="hb-c" min="15" max="90" value="40"><output id="hb-co">40</output></div>
+      <div class="card small step" style="margin-top:.5em"><b>Experimente:</b> baixe o HCO₃⁻ para 12. O pH cai. Agora baixe a pCO₂ até 20. O pH volta para 7,40 — o pulmão "salvou".</div>
+      <div class="formula step" style="font-size:.66em;margin-top:.5em">pH = 6,1 + log ( HCO₃⁻ ÷ 0,03 × pCO₂ )</div>
+    </div>
+    <div class="col" style="text-align:center">
+      <svg viewBox="0 0 520 300" style="width:100%">
+        <path d="M60 260 A200 200 0 0 1 460 260" fill="none" stroke="#E6ECF1" stroke-width="42"/>
+        <path d="M60 260 A200 200 0 0 1 225 64" fill="none" stroke="#F0B2AC" stroke-width="42"/>
+        <path d="M295 64 A200 200 0 0 1 460 260" fill="none" stroke="#AFC3E6" stroke-width="42"/>
+        <path d="M225 64 A200 200 0 0 1 295 64" fill="none" stroke="#2A8756" stroke-width="42"/>
+        <g font-family="IBM Plex Mono" font-size="18" fill="#4B6072" text-anchor="middle"><text x="50" y="290">6,9</text><text x="470" y="290">7,9</text></g>
+        <line id="hb-needle" x1="260" y1="260" x2="260" y2="80" stroke="#10283A" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="260" cy="260" r="16" fill="#10283A"/>
+      </svg>
+      <div class="mono big" id="hb-ph" style="margin-top:-.4em">7,40</div>
+      <div class="verdict" id="hb-v">Normal</div>
+    </div>
+  </div>
+  <aside class="notes">A fórmula é Henderson-Hasselbalch; o aluno não precisa usá-la, só entender que a razão manda.</aside>
+</section>
+
+<!-- A RAZÃO -->
+<section class="slide" data-title="Só a razão importa">
+  <div class="kick">conceitos básicos</div>
+  <h1>O pH depende da proporção, não dos números</h1>
+  <p>Três pacientes com números bem diferentes e o mesmo pH:</p>
+  <div class="row" style="gap:.8em;align-items:flex-start">
+    <div class="col"><div class="ticket"><div class="th"><span>A · NORMAL</span></div><div class="r"><span>HCO₃⁻</span><b>24</b></div><div class="r"><span>pCO₂</span><b>40</b></div><div class="r"><span>pH</span><b>7,40</b></div></div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>B</span></div><div class="r"><span>HCO₃⁻</span><b class="lo">12</b></div><div class="r"><span>pCO₂</span><b class="lo">20</b></div><div class="r"><span>pH</span><b>7,40</b></div></div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>C</span></div><div class="r"><span>HCO₃⁻</span><b class="hi">36</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>pH</span><b>7,40</b></div></div></div>
+  </div>
+  <div class="card step" style="margin-top:1em">Em B, os dois caíram pela metade; em C, os dois subiram 50%. A <b>proporção</b> ficou igual, então o pH não mudou.</div>
+  <div class="pega step"><b class="t">Por isso:</b> pH normal <b>não</b> quer dizer gasometria normal. B e C estão doentes.</div>
+  <p class="synth">Se os dois personagens mudam juntos, o pH engana.</p>
+  <aside class="notes">B e C serão distúrbios mistos ou compensações muito boas — assunto do passo 3.</aside>
+</section>
+
+<!-- VALORES -->
+<section class="slide" data-title="Valores de referência">
+  <div class="kick">conceitos básicos</div>
+  <h1>O endereço da normalidade</h1>
+  <div class="row" style="align-items:center;gap:1.6em">
+    <table class="t col" style="font-size:.85em">
+      <tr><th>Parâmetro</th><th>Normal</th><th>Número para as contas</th></tr>
+      <tr><td>pH</td><td class="mono">7,35–7,45</td><td class="mono"><b>7,40</b></td></tr>
+      <tr><td>pCO₂</td><td class="mono">35–45 mmHg</td><td class="mono"><b>40</b></td></tr>
+      <tr><td>HCO₃⁻</td><td class="mono">22–26 mEq/L</td><td class="mono"><b>24</b></td></tr>
+    </table>
+    <div class="card atlas" style="width:10em;text-align:center">
+      <div class="small sub">o número da casa</div>
+      <div class="mono" style="font-size:1.5em;font-weight:600;line-height:1.2">7,40<br>40<br>24</div>
+      <div class="small">"sete-quarenta, quarenta, vinte e quatro"</div>
+    </div>
+  </div>
+  <p class="step" style="margin-top:.5em">Decore a coluna da direita: toda conta das próximas aulas começa por ela.</p>
+  <p class="synth">Sete-quarenta, quarenta, vinte e quatro.</p>
+  <aside class="notes">Faixas variam entre laboratórios; os números de trabalho não.</aside>
+</section>
+
+<!-- TEMPO DAS DEFESAS -->
+<section class="slide" data-title="As três defesas e o tempo">
+  <div class="kick">conceitos básicos</div>
+  <h1>Três defesas, três velocidades</h1>
+  <svg viewBox="0 0 1400 120" style="width:100%">
+    <line x1="60" y1="60" x2="1340" y2="60" stroke="#D6E0E7" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="160" cy="60" r="26" fill="#2A8756"/><circle cx="700" cy="60" r="26" fill="#1282A2"/><circle cx="1240" cy="60" r="26" fill="#B97A0E"/>
+    <g font-family="IBM Plex Mono" font-size="24" text-anchor="middle" fill="#4B6072"><text x="160" y="116">segundos</text><text x="700" y="116">minutos a horas</text><text x="1240" y="116">3 a 5 dias</text></g>
+  </svg>
+  <div class="row" style="gap:.8em">
+    <div class="card col ok step"><h2 class="c-ok">Tampões</h2><p class="small">Bicarbonato, proteínas e hemoglobina absorvem o golpe. Não resolvem, só amortecem.</p></div>
+    <div class="card col atlas step"><h2 class="c-atlas">Pulmão</h2><p class="small">Muda a respiração e mexe na pCO₂. Rápido.</p></div>
+    <div class="card col warn step"><h2 class="c-warn">Rim</h2><p class="small">Guarda ou joga fora bicarbonato. Lento — leva dias.</p></div>
+  </div>
+  <p class="synth">Pulmão responde em minutos; rim precisa de dias.</p>
+  <aside class="notes">Essa diferença de tempo é o que vai criar "aguda" e "crônica" nos distúrbios respiratórios.</aside>
+</section>
+
+<!-- OS 4 DISTÚRBIOS -->
+<section class="slide" data-title="Os 4 distúrbios">
+  <div class="kick">conceitos básicos</div>
+  <h1>Só existem quatro distúrbios</h1>
+  <p class="small">Cada um nasce de <b>um</b> personagem saindo do lugar.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6em">
+    <div class="card acid step"><h2 class="c-acid">Acidose metabólica</h2><p class="small"><b>HCO₃⁻ cai.</b> Perdeu base ou ganhou ácido. <span class="sub">Diarreia, choque, cetoacidose.</span></p></div>
+    <div class="card alk step"><h2 class="c-alk">Alcalose metabólica</h2><p class="small"><b>HCO₃⁻ sobe.</b> Perdeu ácido ou ganhou base. <span class="sub">Vômitos, diurético.</span></p></div>
+    <div class="card acid step"><h2 class="c-acid">Acidose respiratória</h2><p class="small"><b>pCO₂ sobe.</b> Respira pouco. <span class="sub">DPOC grave, sedação, opioide.</span></p></div>
+    <div class="card alk step"><h2 class="c-alk">Alcalose respiratória</h2><p class="small"><b>pCO₂ cai.</b> Respira demais. <span class="sub">Ansiedade, dor, TEP, sepse.</span></p></div>
+  </div>
+  <p class="synth">Metabólico mexe no bicarbonato; respiratório mexe no CO₂.</p>
+  <aside class="notes">Peça exemplos à turma antes de revelar cada card.</aside>
+</section>
+
+<!-- MÉTODO -->
+<section class="slide" data-title="O método: 6 perguntas">
+  <div class="kick">o mapa das três aulas</div>
+  <h1>Seis perguntas, sempre nesta ordem</h1>
+  <div class="steps6">
+    <div class="s6 hot"><div class="n">1</div><div><b>Quem manda?</b><span>pH: acidemia ou alcalemia · aula 1</span></div></div>
+    <div class="s6 hot"><div class="n">2</div><div><b>Quem começou?</b><span>metabólico ou respiratório · aula 1</span></div></div>
+    <div class="s6 hot"><div class="n">3</div><div><b>Quem tentou salvar?</b><span>a compensação é a esperada? · aula 1</span></div></div>
+    <div class="s6"><div class="n">4</div><div><b>Tem ânion escondido?</b><span>ânion gap · aula 2</span></div></div>
+    <div class="s6"><div class="n">5</div><div><b>Tem mais alguém na cena?</b><span>delta/delta · aula 3</span></div></div>
+    <div class="s6"><div class="n">6</div><div><b>Quem é o culpado?</b><span>a causa · aulas 2 e 3</span></div></div>
+  </div>
+  <p class="synth">Manda, começou, salvou, escondeu, somou, culpado.</p>
+  <aside class="notes">Peça para a turma repetir a sequência em voz alta.</aside>
+</section>
+
+<!-- PASSO 1 -->
+<section class="slide" data-title="Passo 1 · Quem manda?">
+  <div class="trail"><i class="on">1 manda</i><i>2 começou</i><i>3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Passo 1 · Quem manda?</h1>
+  <p>Olhe <b>só o pH</b>. Nada mais.</p>
+  <div class="row">
+    <div class="card col acid"><h2 class="c-acid">pH &lt; 7,35</h2><p class="small">Acidemia: o ácido está ganhando.</p></div>
+    <div class="card col ok"><h2 class="c-ok">7,35–7,45</h2><p class="small">Normal… ou dois processos se anulando.</p></div>
+    <div class="card col alk"><h2 class="c-alk">pH &gt; 7,45</h2><p class="small">Alcalemia: a base está ganhando.</p></div>
+  </div>
+  <div class="row step" style="margin-top:.7em">
+    <div class="card col"><b>-emia</b> <span class="sub small">é o estado do sangue: o número do pH.</span></div>
+    <div class="card col"><b>-ose</b> <span class="sub small">é o processo que empurra. Pode haver mais de um.</span></div>
+  </div>
+  <p class="synth">O pH diz quem ganhou, não quantos estavam brigando.</p>
+  <aside class="notes">Se o pH for normal com pCO₂ ou HCO₃⁻ alterados, use 7,40 como fiel: abaixo, pense no lado ácido; acima, no lado básico.</aside>
+</section>
+
+<!-- PASSO 1 EXERCÍCIO -->
+<section class="slide" data-title="Treino: passo 1">
+  <span class="vote">treino · toque na tela para revelar</span>
+  <h1>Acidemia, alcalemia ou normal?</h1>
+  <div class="row" style="gap:.8em;text-align:center">
+    <div class="card col"><div class="mono big">pH 7,31</div><div class="ans step small">Acidemia</div></div>
+    <div class="card col"><div class="mono big">pH 7,44</div><div class="ans step small">Normal</div></div>
+    <div class="card col"><div class="mono big">pH 7,52</div><div class="ans step small">Alcalemia</div></div>
+    <div class="card col"><div class="mono big">pH 7,36</div><div class="ans step small">Normal, do lado ácido</div></div>
+  </div>
+  <p class="step" style="margin-top:.8em">Fácil? Ótimo. O passo 1 é fácil de propósito: ele só escolhe o lado da briga.</p>
+  <p class="synth">Passo 1 é um número só: o pH.</p>
+  <aside class="notes">Aquecimento rápido para dar confiança.</aside>
+</section>
+<!-- PASSO 2 LÓGICA -->
+<section class="slide" data-title="Passo 2 · Quem começou?">
+  <div class="trail"><i>1 manda</i><i class="on">2 começou</i><i>3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Passo 2 · Quem explica esse pH?</h1>
+  <p>Já sabemos o lado da briga. Agora pergunte: <b>qual personagem está empurrando para esse lado?</b></p>
+  <div class="row" style="margin-top:.3em">
+    <div class="card col acid">
+      <h2 class="c-acid">Se é acidemia, procure quem acidifica</h2>
+      <ul class="clean small"><li class="step"><b>pCO₂ alta</b> (&gt; 45)? → respiratória</li><li class="step"><b>HCO₃⁻ baixo</b> (&lt; 22)? → metabólica</li></ul>
+    </div>
+    <div class="card col alk">
+      <h2 class="c-alk">Se é alcalemia, procure quem alcaliniza</h2>
+      <ul class="clean small"><li class="step"><b>pCO₂ baixa</b> (&lt; 35)? → respiratória</li><li class="step"><b>HCO₃⁻ alto</b> (&gt; 26)? → metabólica</li></ul>
+    </div>
+  </div>
+  <div class="card step" style="margin-top:.6em">O outro personagem, que está do lado <b>oposto</b> ao pH, não causou o problema: ele está <b>tentando compensar</b>. Isso é o passo 3.</div>
+  <p class="synth">Culpado é quem empurra para o mesmo lado do pH.</p>
+  <aside class="notes">Esta é a forma "raciocinada". O atalho METABÓLICO MESMO vem no próximo slide, depois que a lógica fez sentido.</aside>
+</section>
+
+<!-- PASSO 2 EXEMPLO RESOLVIDO -->
+<section class="slide" data-title="Passo 2 · exemplo resolvido">
+  <div class="trail"><i>1 manda</i><i class="on">2 começou</i><i>3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Exemplo resolvido, passo a passo</h1>
+  <div class="row" style="gap:1.3em;align-items:flex-start">
+    <div class="ticket" style="font-size:.85em"><div class="th"><span>DIARREIA HÁ 4 DIAS</span></div><div class="r"><span>pH</span><b class="lo">7,28</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">15</b></div></div>
+    <div class="col">
+      <p class="step"><b>Passo 1.</b> pH 7,28 → <b class="c-acid">acidemia</b>. Procuro quem acidifica.</p>
+      <p class="step"><b>pCO₂ 30</b> está baixa. CO₂ baixo <b>alcaliniza</b>. Não é o culpado.</p>
+      <p class="step"><b>HCO₃⁻ 15</b> está baixo. Pouca base <b>acidifica</b>. Achei o culpado.</p>
+      <div class="ans step">Acidose metabólica. A pCO₂ baixa é o pulmão compensando.</div>
+    </div>
+  </div>
+  <p class="synth">Um personagem causa; o outro, do lado contrário, compensa.</p>
+  <aside class="notes">Faça a turma falar cada frase antes de revelar.</aside>
+</section>
+
+<!-- METABÓLICO MESMO -->
+<section class="slide" data-title="Atalho: METABÓLICO MESMO">
+  <div class="trail"><i>1 manda</i><i class="on">2 começou</i><i>3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Agora o atalho</h1>
+  <div class="row" style="gap:1.4em;align-items:center">
+    <div style="font-weight:900;font-size:1.25em;line-height:1.05;text-align:center;background:var(--ink);color:#fff;border-radius:18px;padding:.5em .7em">METABÓLICO<br><span style="color:#F2B84B">M<br>E<br>S<br>M<br>O</span></div>
+    <div class="col">
+      <p>Lembra que o bicarbonato anda <b>junto</b> com o pH? Então:</p>
+      <table class="t step" style="font-size:.8em">
+        <tr><th>Distúrbio</th><th>pH</th><th>Culpado</th><th>Leitura</th></tr>
+        <tr><td class="c-acid"><b>Acidose metabólica</b></td><td>↓</td><td>HCO₃⁻ ↓</td><td>mesmo sentido</td></tr>
+        <tr><td class="c-alk"><b>Alcalose metabólica</b></td><td>↑</td><td>HCO₃⁻ ↑</td><td>mesmo sentido</td></tr>
+        <tr><td class="c-acid"><b>Acidose respiratória</b></td><td>↓</td><td>pCO₂ ↑</td><td>sentido oposto</td></tr>
+        <tr><td class="c-alk"><b>Alcalose respiratória</b></td><td>↑</td><td>pCO₂ ↓</td><td>sentido oposto</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="synth">pH e bicarbonato de mãos dadas: metabólico mesmo.</p>
+  <aside class="notes">Gancho do material original, agora ancorado na lógica do slide dos dois personagens.</aside>
+</section>
+
+<!-- PASSO 2 TREINO -->
+<section class="slide" data-title="Treino: 4 gasometrias">
+  <span class="vote">treino · toque na tela para revelar</span>
+  <h1>Quem começou?</h1>
+  <div class="row" style="gap:.7em;align-items:flex-start">
+    <div class="col"><div class="ticket"><div class="th"><span>A</span></div><div class="r"><span>pH</span><b class="lo">7,32</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">15</b></div></div><div class="ans step small" style="margin-top:1em">Acidose metabólica: ácido com HCO₃⁻ baixo.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>B</span></div><div class="r"><span>pH</span><b class="hi">7,49</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b>22</b></div></div><div class="ans step small" style="margin-top:1em">Alcalose respiratória: básico com CO₂ baixo.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>C</span></div><div class="r"><span>pH</span><b class="lo">7,19</b></div><div class="r"><span>pCO₂</span><b class="hi">70</b></div><div class="r"><span>HCO₃⁻</span><b>26</b></div></div><div class="ans step small" style="margin-top:1em">Acidose respiratória: ácido com CO₂ alto.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>D</span></div><div class="r"><span>pH</span><b class="hi">7,48</b></div><div class="r"><span>pCO₂</span><b>44</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div></div><div class="ans step small" style="margin-top:1em">Alcalose metabólica: básico com HCO₃⁻ alto.</div></div>
+  </div>
+  <p class="synth">Primeiro o pH, depois quem empurra para o lado dele.</p>
+  <aside class="notes">Valores coerentes com Henderson-Hasselbalch (±0,01).</aside>
+</section>
+
+<!-- PASSO 2 MISTO -->
+<section class="slide" data-title="Quando os dois são culpados">
+  <div class="trail"><i>1 manda</i><i class="on">2 começou</i><i>3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>E se os dois empurrarem para o mesmo lado?</h1>
+  <div class="row" style="gap:1.3em;align-items:flex-start">
+    <div class="ticket" style="font-size:.85em"><div class="th"><span>PCR REVERTIDA</span></div><div class="r"><span>pH</span><b class="lo">7,10</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">18</b></div></div>
+    <div class="col">
+      <p class="step">pH 7,10 → acidemia.</p>
+      <p class="step">pCO₂ 60 alta → acidifica. <b>Culpado 1.</b></p>
+      <p class="step">HCO₃⁻ 18 baixo → acidifica. <b>Culpado 2.</b></p>
+      <div class="ans no step">Acidose <b>mista</b>: respiratória + metabólica. Ninguém está compensando — por isso o pH despencou.</div>
+    </div>
+  </div>
+  <div class="pega step"><b class="t">Regra:</b> se os dois personagens empurram para o mesmo lado, é distúrbio misto. Não existe compensação na mesma direção do pH.</div>
+  <p class="synth">Dois culpados do mesmo lado: misto, e o pH vai longe.</p>
+  <aside class="notes">Pós-PCR: hipoventilação (CO₂ alto) + acidose lática (HCO₃⁻ baixo).</aside>
+</section>
+
+<!-- PASSO 3 O QUE É -->
+<section class="slide" data-title="Passo 3 · O que é compensar">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Passo 3 · O que é compensar</h1>
+  <p>Lembre: o pH depende da <b>proporção</b> entre base e ácido. Quando um personagem cai, o outro tenta cair junto para manter a proporção.</p>
+  <div class="row step" style="margin-top:.4em;gap:.6em;align-items:center">
+    <div class="card col acid" style="text-align:center"><b>Rim perdeu base</b><br><span class="mono">HCO₃⁻ 24 → 12</span></div>
+    <div class="big c-atlas">→</div>
+    <div class="card col atlas" style="text-align:center"><b>Pulmão sopra CO₂</b><br><span class="mono">pCO₂ 40 → 26</span></div>
+    <div class="big c-atlas">→</div>
+    <div class="card col ok" style="text-align:center"><b>pH melhora</b><br><span class="mono">7,10 → 7,29</span></div>
+  </div>
+  <div class="card step" style="margin-top:.6em">Compensar é o outro personagem <b>andar no mesmo sentido</b> do culpado: HCO₃⁻ caiu, pCO₂ cai; pCO₂ subiu, HCO₃⁻ sobe.</div>
+  <p class="synth">Compensar é copiar o movimento do culpado para salvar a proporção.</p>
+  <aside class="notes">pH sem compensação (HCO₃⁻ 12, pCO₂ 40) ≈ 7,10; com pCO₂ 26 ≈ 7,29.</aside>
+</section>
+
+<!-- PASSO 3 REGRAS -->
+<section class="slide" data-title="Passo 3 · Três regras">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Três regras da compensação</h1>
+  <div class="steps6" style="grid-template-columns:1fr;font-size:.95em">
+    <div class="s6 step"><div class="n">1</div><div><b>Vai no mesmo sentido do culpado.</b><span>Bicarbonato caiu → CO₂ cai. CO₂ subiu → bicarbonato sobe.</span></div></div>
+    <div class="s6 step"><div class="n">2</div><div><b>Quase nunca deixa o pH normal.</b><span>Ela melhora o pH, mas não chega a 7,40. pH perfeito com valores alterados = desconfie de misto.</span></div></div>
+    <div class="s6 step"><div class="n">3</div><div><b>Tem velocidade.</b><span>Pulmão compensa em minutos. Rim compensa em 3 a 5 dias.</span></div></div>
+  </div>
+  <p class="synth">Mesmo sentido, pH incompleto, e o rim sempre atrasado.</p>
+  <aside class="notes">Exceção: a alcalose respiratória crônica pode normalizar o pH.</aside>
+</section>
+
+<!-- PASSO 3 POR QUE CALCULAR -->
+<section class="slide" data-title="Passo 3 · Por que calcular">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Por que fazer conta, se já sei o distúrbio?</h1>
+  <p>Porque a compensação tem um <b>tamanho esperado</b>. Comparar o real com o esperado revela um segundo problema.</p>
+  <div class="row" style="margin-top:.4em">
+    <div class="card col ok step" style="text-align:center"><b>Real = esperado</b><p class="small">Compensação adequada. Um distúrbio só.</p></div>
+    <div class="card col warn step" style="text-align:center"><b>Real ≠ esperado</b><p class="small">O compensador também está doente. <b>Dois distúrbios.</b></p></div>
+  </div>
+  <div class="card atlas step" style="margin-top:.6em">Exemplo da vida real: acidose metabólica grave com pCO₂ "normal" de 40. O pulmão deveria estar em 26. Ele <b>não está conseguindo</b> — o paciente está cansando e pode precisar de ventilação.</div>
+  <p class="synth">A conta não confirma o distúrbio: ela caça o segundo.</p>
+  <aside class="notes">Este é o slide mais importante da aula para prática clínica.</aside>
+</section>
+
+<!-- WINTER RESOLVIDO -->
+<section class="slide" data-title="Acidose metabólica: fórmula de Winter">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Acidose metabólica: a fórmula de Winter</h1>
+  <div class="formula">pCO₂ esperada = 1,5 × HCO₃⁻ + 8  (± 2)</div>
+  <p class="small" style="margin-top:.4em">Traduzindo: "uma vez e meia o bicarbonato, mais oito". O ± 2 cria uma faixa.</p>
+  <div class="row" style="gap:1.2em;align-items:flex-start;margin-top:.3em">
+    <div class="ticket" style="font-size:.8em"><div class="th"><span>EXEMPLO</span></div><div class="r"><span>HCO₃⁻</span><b class="lo">12</b></div></div>
+    <div class="col">
+      <p class="step"><b>1.</b> 1,5 × 12 = <b>18</b></p>
+      <p class="step"><b>2.</b> 18 + 8 = <b>26</b></p>
+      <p class="step"><b>3.</b> ± 2 → faixa esperada <b class="c-atlas">24 a 28</b></p>
+      <div class="ans step">Se a pCO₂ do paciente estiver entre 24 e 28, a compensação está adequada.</div>
+    </div>
+  </div>
+  <div class="card step small" style="margin-top:.5em">Atalho para conferir de cabeça: <b>pCO₂ ≈ HCO₃⁻ + 15</b> → 12 + 15 = 27. Bate com a faixa.</div>
+  <aside class="notes">O atalho +15 funciona bem para HCO₃⁻ entre ~10 e ~40.</aside>
+</section>
+
+<!-- WINTER TREINO -->
+<section class="slide" data-title="Treino: Winter">
+  <span class="vote">treino · mesmo HCO₃⁻ 12, esperado 24–28</span>
+  <h1>Três pacientes. O pulmão ajudou certo?</h1>
+  <div class="row" style="gap:.7em;align-items:flex-start">
+    <div class="col"><div class="ticket"><div class="th"><span>ANA</span></div><div class="r"><span>pH</span><b class="lo">7,29</b></div><div class="r"><span>pCO₂</span><b>26</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">12</b></div></div>
+      <div class="ans step small" style="margin-top:1em">26 está dentro de 24–28. <b>Compensação adequada.</b></div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>BRUNO</span></div><div class="r"><span>pH</span><b class="lo">7,12</b></div><div class="r"><span>pCO₂</span><b>38</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">12</b></div></div>
+      <div class="ans no step small" style="margin-top:1em">38 está <b>acima</b> do esperado: o CO₂ ficou retido. <b>+ acidose respiratória.</b></div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>CARLA</span></div><div class="r"><span>pH</span><b>7,40</b></div><div class="r"><span>pCO₂</span><b class="lo">20</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">12</b></div></div>
+      <div class="ans step small" style="margin-top:1em;background:var(--alk-s);border-color:var(--alk)">20 está <b>abaixo</b>: sopra CO₂ demais. <b>+ alcalose respiratória.</b> Por isso o pH ficou "normal".</div></div>
+  </div>
+  <p class="synth">Acima do esperado soma acidose respiratória; abaixo soma alcalose respiratória.</p>
+  <aside class="notes">Bruno: fadiga respiratória. Carla: pense em sepse ou intoxicação por salicilato (volta na aula 2).</aside>
+</section>
+
+<!-- ALCALOSE METABÓLICA -->
+<section class="slide" data-title="Alcalose metabólica: compensação">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Alcalose metabólica: o pulmão segura CO₂</h1>
+  <p class="small">Sobrou base → o pulmão respira menos para reter ácido (CO₂).</p>
+  <div class="formula">pCO₂ esperada = 0,7 × HCO₃⁻ + 21  (± 2)</div>
+  <div class="row" style="gap:1.2em;align-items:flex-start;margin-top:.5em">
+    <div class="ticket" style="font-size:.8em"><div class="th"><span>VÔMITOS</span></div><div class="r"><span>pH</span><b class="hi">7,50</b></div><div class="r"><span>pCO₂</span><b>45</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">34</b></div></div>
+    <div class="col">
+      <p class="step"><b>1.</b> 0,7 × 34 = <b>23,8</b></p>
+      <p class="step"><b>2.</b> 23,8 + 21 = <b>44,8</b></p>
+      <p class="step"><b>3.</b> ± 2 → faixa <b class="c-atlas">43 a 47</b></p>
+      <div class="ans step">pCO₂ 45 está dentro: <b>alcalose metabólica compensada</b>.</div>
+    </div>
+  </div>
+  <div class="pega step small"><b class="t">Limite:</b> o pulmão não segura CO₂ para sempre — hipoventilar causa hipóxia. Por isso a pCO₂ raramente passa de ~55 nessa compensação.</div>
+  <aside class="notes">O atalho "+15" também dá uma ideia: 34 + 15 = 49, um pouco acima; a fórmula 0,7 é mais precisa.</aside>
+</section>
+
+<!-- RESPIRATÓRIOS: AGUDO x CRÔNICO -->
+<section class="slide" data-title="Respiratórios: por que aguda × crônica">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Nos respiratórios, quem compensa é o rim</h1>
+  <p>E o rim é lento. Então o tamanho da compensação depende de <b>há quanto tempo</b> o CO₂ está alterado.</p>
+  <div class="row" style="margin-top:.4em">
+    <div class="card col acid step"><h2 class="c-acid">Aguda · horas</h2><p class="small">Overdose de opioide hoje. O rim ainda nem percebeu. O bicarbonato quase não mexe — só os tampões ajudam um pouco.</p></div>
+    <div class="card col ok step"><h2 class="c-ok">Crônica · 3–5 dias ou mais</h2><p class="small">DPOC há anos. O rim teve tempo de guardar bastante bicarbonato. A compensação é grande.</p></div>
+  </div>
+  <p class="step" style="margin-top:.5em">Por isso existem <b>duas contas</b> para cada distúrbio respiratório: uma aguda e uma crônica.</p>
+  <p class="synth">Rim com pressa compensa pouco; rim com tempo compensa muito.</p>
+  <aside class="notes">Este slide substitui a tabela solta do material anterior: primeiro o porquê, depois os números.</aside>
+</section>
+
+<!-- DEGRAUS -->
+<section class="slide" data-title="A ideia dos degraus de 10">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Conte os degraus de 10</h1>
+  <p>Toda conta respiratória começa igual: <b>quantas vezes 10 a pCO₂ andou a partir de 40?</b></p>
+  <div class="row" style="gap:.4em;margin-top:.4em;align-items:flex-end">
+    <div class="card col" style="text-align:center"><div class="mono big">40</div><div class="small sub">ponto de partida</div></div>
+    <div class="card col atlas step" style="text-align:center;padding-bottom:1.2em"><div class="mono big">50</div><div class="small">1 degrau</div></div>
+    <div class="card col atlas step" style="text-align:center;padding-bottom:2.2em"><div class="mono big">60</div><div class="small">2 degraus</div></div>
+    <div class="card col atlas step" style="text-align:center;padding-bottom:3.2em"><div class="mono big">70</div><div class="small">3 degraus</div></div>
+  </div>
+  <p class="step" style="margin-top:.6em">Para baixo é igual: pCO₂ 30 = 1 degrau; pCO₂ 20 = 2 degraus.</p>
+  <div class="card warn step">Depois é só multiplicar os degraus pelo quanto o HCO₃⁻ anda <b>por degrau</b>. É o próximo slide.</div>
+  <p class="synth">Degraus = (pCO₂ − 40) ÷ 10.</p>
+  <aside class="notes">Degraus quebrados são normais: pCO₂ 55 = 1,5 degrau.</aside>
+</section>
+
+<!-- ACIDOSE RESPIRATÓRIA RESOLVIDA -->
+<section class="slide" data-title="Acidose respiratória resolvida">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Acidose respiratória: o HCO₃⁻ sobe</h1>
+  <table class="t" style="font-size:.85em">
+    <tr><th>Por degrau de 10 que a pCO₂ sobe</th><th>Aguda</th><th>Crônica</th></tr>
+    <tr><td>O HCO₃⁻ sobe…</td><td class="mono big">1</td><td class="mono big">4</td></tr>
+  </table>
+  <div class="row" style="gap:1.2em;align-items:flex-start;margin-top:.5em">
+    <div class="ticket" style="font-size:.8em"><div class="th"><span>EXEMPLO</span></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div></div>
+    <div class="col">
+      <p class="step"><b>1.</b> 60 − 40 = 20 → <b>2 degraus</b></p>
+      <p class="step"><b>2. Se aguda:</b> 2 × 1 = +2 → HCO₃⁻ esperado <b class="c-atlas">26</b></p>
+      <p class="step"><b>3. Se crônica:</b> 2 × 4 = +8 → HCO₃⁻ esperado <b class="c-atlas">32</b></p>
+      <div class="ans step">Aceite ± 2 em cada resultado.</div>
+    </div>
+  </div>
+  <aside class="notes">Na crônica, algumas fontes usam 3,5 por degrau; 4 é suficiente para prova e prática.</aside>
+</section>
+
+<!-- ALCALOSE RESPIRATÓRIA RESOLVIDA -->
+<section class="slide" data-title="Alcalose respiratória resolvida">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Alcalose respiratória: o HCO₃⁻ cai</h1>
+  <table class="t" style="font-size:.85em">
+    <tr><th>Por degrau de 10 que a pCO₂ cai</th><th>Aguda</th><th>Crônica</th></tr>
+    <tr><td>O HCO₃⁻ cai…</td><td class="mono big">2</td><td class="mono big">5</td></tr>
+  </table>
+  <div class="row" style="gap:1.2em;align-items:flex-start;margin-top:.5em">
+    <div class="ticket" style="font-size:.8em"><div class="th"><span>EXEMPLO</span></div><div class="r"><span>pCO₂</span><b class="lo">20</b></div></div>
+    <div class="col">
+      <p class="step"><b>1.</b> 40 − 20 = 20 → <b>2 degraus</b></p>
+      <p class="step"><b>2. Se aguda:</b> 2 × 2 = −4 → HCO₃⁻ esperado <b class="c-atlas">20</b></p>
+      <p class="step"><b>3. Se crônica:</b> 2 × 5 = −10 → HCO₃⁻ esperado <b class="c-atlas">14</b></p>
+      <div class="ans step">Aceite ± 2 em cada resultado.</div>
+    </div>
+  </div>
+  <aside class="notes">Alcalose respiratória crônica: gestação, altitude, cirrose. É o único distúrbio que pode normalizar o pH.</aside>
+</section>
+
+<!-- MNEMÔNICO -->
+<section class="slide" data-title="Gancho: sobe 1 e 4, desce 2 e 5">
+  <div class="trail"><i>1 manda</i><i>2 começou</i><i class="on">3 salvou</i><i>4 escondeu</i><i>5 somou</i><i>6 culpado</i></div>
+  <h1>Agora sim, o gancho</h1>
+  <div class="card warn" style="text-align:center;padding:.8em"><span class="mnemo" style="font-size:1.6em">Sobe 1 e 4 · desce 2 e 5</span></div>
+  <div class="row" style="margin-top:.7em;gap:.8em">
+    <div class="card col acid step"><b>Sobe 1 e 4</b><p class="small">Acidose respiratória: pCO₂ subiu, HCO₃⁻ <b>sobe</b> 1 (aguda) ou 4 (crônica) por degrau.</p></div>
+    <div class="card col alk step"><b>Desce 2 e 5</b><p class="small">Alcalose respiratória: pCO₂ caiu, HCO₃⁻ <b>desce</b> 2 (aguda) ou 5 (crônica) por degrau.</p></div>
+  </div>
+  <div class="card step" style="margin-top:.6em">Em cada par, <b>o número menor é o agudo</b>: o rim ainda não teve tempo.</div>
+  <div class="fix step small"><b class="c-acid">Ajuste do material antigo:</b> a regra "10–4" é só a da acidose respiratória <b>crônica</b>.</div>
+  <p class="synth">Sobe 1 e 4, desce 2 e 5 — o menor é sempre o agudo.</p>
+  <aside class="notes">O gancho vem depois do raciocínio dos degraus, e não antes.</aside>
+</section>
+
+<!-- DPOC -->
+<section class="slide" data-title="Caso: três DPOCs">
+  <span class="vote">treino · pCO₂ 60 nos três = 2 degraus</span>
+  <h1>Mesma pCO₂, três histórias</h1>
+  <p class="small">Esperado: aguda <b>26</b> · crônica <b>32</b>.</p>
+  <div class="row" style="gap:.8em;align-items:flex-start">
+    <div class="col"><div class="ticket"><div class="th"><span>SR. JOÃO</span></div><div class="r"><span>pH</span><b>7,35</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div></div>
+      <div class="ans step small" style="margin-top:1em">Bate com 32. <b>Acidose respiratória crônica compensada.</b></div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>SR. PEDRO</span></div><div class="r"><span>pH</span><b class="lo">7,26</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>HCO₃⁻</span><b>26</b></div></div>
+      <div class="ans step small" style="margin-top:1em">Bate com 26. <b>Acidose respiratória aguda</b> — o rim ainda não chegou.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>SR. LUÍS</span></div><div class="r"><span>pH</span><b>7,42</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">38</b></div></div>
+      <div class="ans no step small" style="margin-top:1em">Nem o crônico chega a 38. Sobrou base: <b>+ alcalose metabólica</b> (diurético? vômitos?).</div></div>
+  </div>
+  <p class="synth">Mesma pCO₂: o bicarbonato conta há quanto tempo e o que mais aconteceu.</p>
+  <aside class="notes">Sr. Pedro é o ticket da capa.</aside>
+</section>
+<!-- CALCULADORA GUIADA -->
+<section class="slide" data-title="Calculadora guiada">
+  <div class="kick">interativo · digite uma gasometria</div>
+  <h1>A calculadora que faz os 3 passos com você</h1>
+  <div class="row" style="gap:1.3em">
+    <div style="width:12.5em">
+      <div class="ctl"><label>pH</label><input type="number" id="gd-ph" value="7.26" step="0.01" min="6.5" max="8"></div>
+      <div class="ctl"><label>pCO₂</label><input type="number" id="gd-c" value="60" min="8" max="150"></div>
+      <div class="ctl"><label>HCO₃⁻</label><input type="number" id="gd-h" value="26" min="2" max="70"></div>
+      <p class="tiny sub" style="margin:.4em 0 .2em">Se for respiratório, há quanto tempo?</p>
+      <div style="display:flex;gap:.35em" id="gd-time"><button class="btn sel" data-c="0">Aguda</button><button class="btn" data-c="1">Crônica</button></div>
+      <p class="tiny sub" style="margin-top:.6em">Exemplos rápidos:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.3em" id="gd-ex">
+        <button class="btn" data-v="7.26,60,26,0">Sr. Pedro</button>
+        <button class="btn" data-v="7.35,60,32,1">Sr. João</button>
+        <button class="btn" data-v="7.12,38,12,0">Bruno</button>
+        <button class="btn" data-v="7.10,60,18,0">PCR</button>
+      </div>
+    </div>
+    <div class="col" style="font-size:.95em">
+      <div class="card" style="margin-bottom:.4em"><b>1 · Quem manda?</b><div id="gd-s1" class="small">—</div></div>
+      <div class="card" style="margin-bottom:.4em"><b>2 · Quem começou?</b><div id="gd-s2" class="small">—</div></div>
+      <div class="card" style="margin-bottom:.4em"><b>3 · Quem tentou salvar?</b><div id="gd-s3" class="small">—</div></div>
+      <div class="verdict" id="gd-v">—</div>
+      <div class="tiny sub" id="gd-chk" style="margin-top:.3em"></div>
+    </div>
+  </div>
+  <aside class="notes">A calculadora identifica sozinha o distúrbio a partir dos valores — não dá mais para escolher um distúrbio incompatível com a gasometria. Se pH, pCO₂ e HCO₃⁻ não fecharem entre si, ela avisa que há erro de digitação.</aside>
+</section>
+
+<!-- QUESTÃO -->
+<section class="slide" data-title="Questão de prova">
+  <span class="vote">questão de prova</span>
+  <h1 style="font-size:1.4em">pH 7,21 · pCO₂ 36 · HCO₃⁻ 14</h1>
+  <p>Paciente com cetoacidose diabética, sonolento. O distúrbio ácido-base é:</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4em" class="small">
+    <div class="card">a) acidose metabólica compensada</div>
+    <div class="card">b) acidose metabólica + acidose respiratória</div>
+    <div class="card">c) acidose metabólica + alcalose respiratória</div>
+    <div class="card">d) acidose respiratória aguda</div>
+    <div class="card">e) acidose respiratória crônica</div>
+  </div>
+  <div class="card step small" style="margin-top:.5em"><b>Passo 1:</b> 7,21 → acidemia. <b>Passo 2:</b> HCO₃⁻ 14 baixo → metabólica (pCO₂ 36 não acidifica). <b>Passo 3:</b> 1,5 × 14 + 8 = 29 → faixa 27–31.</div>
+  <div class="ans step" style="margin-top:.4em">Resposta <b>b</b>. A pCO₂ de 36 está acima de 31: o pulmão não está compensando o suficiente. Sinal de alerta num paciente sonolento.</div>
+  <aside class="notes">Distrator clássico: "a" — porque 36 parece uma pCO₂ normal.</aside>
+</section>
+
+<!-- REVISÃO -->
+<section class="slide" data-title="Revisão em 60 segundos">
+  <div class="kick">revisão em 60 segundos</div>
+  <h1>Seis frases da Aula 1</h1>
+  <div class="steps6" style="grid-template-columns:1fr 1fr;font-size:.85em">
+    <div class="s6 step"><div class="n">1</div><div><b>CO₂ é o ácido do pulmão; bicarbonato é a base do rim.</b></div></div>
+    <div class="s6 step"><div class="n">2</div><div><b>O pH depende da proporção entre os dois.</b></div></div>
+    <div class="s6 step"><div class="n">3</div><div><b>Culpado é quem empurra para o lado do pH.</b></div></div>
+    <div class="s6 step"><div class="n">4</div><div><b>Compensar é copiar o movimento do culpado.</b></div></div>
+    <div class="s6 step"><div class="n">5</div><div><b>Winter: 1,5 × HCO₃⁻ + 8 ± 2.</b></div></div>
+    <div class="s6 step"><div class="n">6</div><div><b>Degraus de 10: sobe 1 e 4, desce 2 e 5.</b></div></div>
+  </div>
+  <aside class="notes">Revele uma por vez e peça que a turma complete.</aside>
+</section>
+
+<!-- EXERCÍCIOS -->
+<section class="slide" data-title="Exercícios para casa">
+  <span class="vote">para estudar em casa · toque na tela para revelar uma resposta por vez</span>
+  <h1>Cinco gasometrias para treinar</h1>
+  <div class="row" style="gap:.5em;align-items:flex-start;font-size:.9em">
+    <div class="col"><div class="ticket"><div class="th"><span>1 · ANSIEDADE</span></div><div class="r"><span>pH</span><b class="hi">7,49</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b>22</b></div></div>
+      <div class="ans step small" style="margin-top:1em;font-size:.66em">Alcalose respiratória. 1 degrau, aguda: 24 − 2 = 22. Aguda, compensada.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>2 · DIARREIA</span></div><div class="r"><span>pH</span><b class="lo">7,32</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">15</b></div></div>
+      <div class="ans step small" style="margin-top:1em;font-size:.66em">Acidose metabólica. Winter 30,5 (28–33). Compensada.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>3 · FUROSEMIDA</span></div><div class="r"><span>pH</span><b class="hi">7,48</b></div><div class="r"><span>pCO₂</span><b>44</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div></div>
+      <div class="ans step small" style="margin-top:1em;font-size:.66em">Alcalose metabólica. 0,7 × 32 + 21 = 43 (41–45). Compensada.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>4 · OPIOIDE</span></div><div class="r"><span>pH</span><b class="lo">7,19</b></div><div class="r"><span>pCO₂</span><b class="hi">70</b></div><div class="r"><span>HCO₃⁻</span><b>26</b></div></div>
+      <div class="ans step small" style="margin-top:1em;font-size:.66em">Acidose respiratória. 3 degraus, aguda: 24 + 3 = 27. Aguda.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>5 · VÔMITO + DOR</span></div><div class="r"><span>pH</span><b class="hi">7,62</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">30</b></div></div>
+      <div class="ans no step small" style="margin-top:1em;font-size:.66em">Os dois alcalinizam: <b>alcalose mista</b>, metabólica + respiratória.</div></div>
+  </div>
+  <p class="small sub" style="margin-top:.6em">Depois, confira cada uma na calculadora guiada (G → "Calculadora guiada").</p>
+  <aside class="notes">Todos os valores fecham com Henderson-Hasselbalch — a calculadora não vai acusar erro de digitação.</aside>
+</section>
+
+<!-- FIM -->
+<section class="slide dark" data-title="Fim da Aula 1">
+  <div style="margin:auto;text-align:center;max-width:27em">
+    <div class="kick">fim da aula 1</div>
+    <p style="font-size:1.5em;font-weight:800;line-height:1.3">Hoje você aprendeu a dizer quem manda, quem começou e quem tentou salvar.</p>
+    <p class="sub" style="font-size:1em">Na Aula 2: por que um pH ácido às vezes esconde um veneno — o ânion gap.</p>
+    <p style="font-family:'Dancing Script',cursive;font-size:1.7em;color:#6FC7DD;margin-top:.8em">— Dr. André Rossanno</p>
+  </div>
+  <aside class="notes">Peça os 5 exercícios para a próxima aula.</aside>
+</section>
+
+<div id="foot"><span class="sig">Dr. André Rossanno</span><span id="count" class="mono">1 / 39</span></div>
+<div id="bar"></div>
+</div>
+<div id="ui">
+  <button id="b-prev" aria-label="Anterior">◀</button>
+  <button id="b-next" aria-label="Próximo">▶</button>
+  <button id="b-grid">Índice</button>
+  <button id="b-notes">Notas</button>
+  <button id="b-fs">Tela cheia</button>
+  <button id="b-sm">A−</button>
+  <button id="b-lg">A+</button>
+  <button id="b-mov">Movimento</button>
+</div>
+<div id="notes"></div>
+<div id="grid"></div>
+<script>
+(function(){
+  var KEY='atlasGasometria_aula1_v1';
+  var stage=document.getElementById('stage');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var N=slides.length, cur=0;
+  var foot=document.getElementById('foot'), bar=document.getElementById('bar'), count=document.getElementById('count');
+  var notesEl=document.getElementById('notes'), grid=document.getElementById('grid'), ui=document.getElementById('ui');
+  function store(k,v){try{localStorage.setItem(KEY+'_'+k,v)}catch(e){}}
+  function read(k){try{return localStorage.getItem(KEY+'_'+k)}catch(e){return null}}
+
+  function fit(){
+    var s=Math.min(window.innerWidth/1600,window.innerHeight/900);
+    stage.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit();
+
+  function show(i,allSteps){
+    if(i<0||i>=N) return;
+    slides[cur].classList.remove('on');
+    cur=i;
+    var s=slides[cur];
+    s.classList.add('on');
+    [].forEach.call(s.querySelectorAll('.step'),function(e){e.classList.toggle('on',!!allSteps)});
+    s.scrollTop=0;
+    count.textContent=(cur+1)+' / '+N;
+    bar.style.width=((cur+1)/N*100)+'%';
+    foot.classList.toggle('dk',s.classList.contains('dark'));
+    var n=s.querySelector('aside.notes');
+    notesEl.innerHTML='<b>Slide '+(cur+1)+' · '+(s.dataset.title||'')+'</b><br>'+(n?n.innerHTML:'Sem notas.');
+    store('slide',cur);
+    if(location.hash!=='#'+(cur+1)) history.replaceState(null,'','#'+(cur+1));
+  }
+  function next(){
+    var h=slides[cur].querySelector('.step:not(.on)');
+    if(h){h.classList.add('on');return}
+    if(cur<N-1) show(cur+1,false);
+  }
+  function prev(){
+    var on=slides[cur].querySelectorAll('.step.on');
+    if(on.length){on[on.length-1].classList.remove('on');return}
+    if(cur>0) show(cur-1,true);
+  }
+  function toggleGrid(){
+    if(grid.classList.contains('open')){grid.classList.remove('open');return}
+    grid.innerHTML='';
+    slides.forEach(function(s,i){
+      var b=document.createElement('button');
+      b.innerHTML='<small>'+(i+1)+'</small>'+(s.dataset.title||'Slide');
+      if(i===cur) b.className='cur';
+      b.onclick=function(){show(i,false);grid.classList.remove('open')};
+      grid.appendChild(b);
+    });
+    grid.classList.add('open');
+  }
+  var fs=parseFloat(read('scale'))||1;
+  function setFs(v){fs=Math.max(.8,Math.min(1.3,Math.round(v*100)/100));document.documentElement.style.setProperty('--fs',fs);store('scale',fs)}
+  setFs(fs);
+  function fullscreen(){
+    if(!document.fullscreenElement){(document.documentElement.requestFullscreen||function(){}).call(document.documentElement)}
+    else if(document.exitFullscreen){document.exitFullscreen()}
+  }
+  if(read('reduce')==='1'||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) document.body.classList.add('reduce');
+
+  document.addEventListener('keydown',function(e){
+    var t=e.target.tagName;
+    if(t==='INPUT'||t==='TEXTAREA') return;
+    var k=e.key;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='Enter'){e.preventDefault();next()}
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+    else if(k==='Home') show(0,false);
+    else if(k==='End') show(N-1,true);
+    else if(k==='g'||k==='G') toggleGrid();
+    else if(k==='n'||k==='N') document.body.classList.toggle('show-notes');
+    else if(k==='f'||k==='F') fullscreen();
+    else if(k==='+'||k==='=') setFs(fs+.05);
+    else if(k==='-') setFs(fs-.05);
+    else if(k==='0') setFs(1);
+    else if(k==='m'||k==='M'){document.body.classList.toggle('reduce');store('reduce',document.body.classList.contains('reduce')?'1':'0')}
+    else if(k==='Escape') grid.classList.remove('open');
+  });
+  stage.addEventListener('click',function(e){
+    if(Date.now()-swiped<500) return;
+    if(e.target.closest('button,input,label,select,a,.ctl')) return;
+    var r=stage.getBoundingClientRect();
+    var x=(e.clientX-r.left)/r.width;
+    if(x<0.28) prev(); else next();
+  });
+  if('ontouchstart' in window||navigator.maxTouchPoints>0){document.body.classList.add('touch');ui.classList.add('show')}
+  var tx=null, swiped=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(tx===null) return;
+    var dx=e.changedTouches[0].clientX-tx; tx=null;
+    if(e.target.closest&&e.target.closest('input,button')) return;
+    if(dx<-50){next();swiped=Date.now()} else if(dx>50){prev();swiped=Date.now()}
+  });
+  var hideT;
+  document.addEventListener('mousemove',function(){if(document.body.classList.contains('touch'))return;ui.classList.add('show');clearTimeout(hideT);hideT=setTimeout(function(){ui.classList.remove('show')},2200)});
+  document.getElementById('b-prev').onclick=prev;
+  document.getElementById('b-next').onclick=next;
+  document.getElementById('b-grid').onclick=toggleGrid;
+  document.getElementById('b-notes').onclick=function(){document.body.classList.toggle('show-notes')};
+  document.getElementById('b-fs').onclick=fullscreen;
+  document.getElementById('b-sm').onclick=function(){setFs(fs-.05)};
+  document.getElementById('b-lg').onclick=function(){setFs(fs+.05)};
+  document.getElementById('b-mov').onclick=function(){document.body.classList.toggle('reduce');store('reduce',document.body.classList.contains('reduce')?'1':'0')};
+
+  function fmt(x,d){return x.toFixed(d).replace('.',',')}
+  function phOf(h,c){return 6.1+Math.log10(h/(0.03*c))}
+
+  /* balança */
+  var hh=document.getElementById('hb-h'), hc=document.getElementById('hb-c');
+  function balance(){
+    var h=+hh.value, c=+hc.value, ph=phOf(h,c);
+    document.getElementById('hb-ho').textContent=h;
+    document.getElementById('hb-co').textContent=c;
+    document.getElementById('hb-ph').textContent=fmt(ph,2);
+    var cl=Math.max(6.9,Math.min(7.9,ph));
+    var ang=(cl-6.9)/1.0*180-90;
+    var r=180, rad=ang*Math.PI/180;
+    var nd=document.getElementById('hb-needle');
+    nd.setAttribute('x2',(260+r*Math.sin(rad)).toFixed(1));
+    nd.setAttribute('y2',(260-r*Math.cos(rad)).toFixed(1));
+    var v, parts=[];
+    if(h<22) parts.push('HCO₃⁻ baixo'); if(h>26) parts.push('HCO₃⁻ alto');
+    if(c>45) parts.push('pCO₂ alta'); if(c<35) parts.push('pCO₂ baixa');
+    if(ph<7.35) v='Acidemia'; else if(ph>7.45) v='Alcalemia'; else v='pH normal';
+    var el=document.getElementById('hb-v');
+    el.textContent=v+(parts.length?' · '+parts.join(' · '):'');
+    el.style.background=ph<7.35?'var(--acid-s)':ph>7.45?'var(--alk-s)':'var(--ok-s)';
+  }
+  hh.addEventListener('input',balance); hc.addEventListener('input',balance); balance();
+
+  /* calculadora guiada */
+  var gdC=0;
+  function guide(){
+    var ph=parseFloat(document.getElementById('gd-ph').value), c=parseFloat(document.getElementById('gd-c').value), h=parseFloat(document.getElementById('gd-h').value);
+    var s1=document.getElementById('gd-s1'), s2=document.getElementById('gd-s2'), s3=document.getElementById('gd-s3'), v=document.getElementById('gd-v'), chk=document.getElementById('gd-chk');
+    if([ph,c,h].some(function(x){return isNaN(x)||x<=0})){s1.textContent=s2.textContent=s3.textContent='—';v.textContent='Preencha pH, pCO₂ e HCO₃⁻';v.style.background='#EAF0F4';return}
+    var calc=phOf(h,c), diff=Math.abs(calc-ph);
+    chk.textContent = diff>0.04 ? '⚠ Esses três valores não fecham entre si (o pH calculado seria '+fmt(calc,2)+'). Confira a digitação.' : 'Valores coerentes entre si (pH calculado '+fmt(calc,2)+').';
+    chk.style.color = diff>0.04 ? 'var(--acid)' : '';
+    var side, t1;
+    if(ph<7.35){side='acid';t1='pH '+fmt(ph,2)+' → acidemia. Procuro quem acidifica.'}
+    else if(ph>7.45){side='alk';t1='pH '+fmt(ph,2)+' → alcalemia. Procuro quem alcaliniza.'}
+    else {side= ph<7.40?'acid':'alk'; t1='pH '+fmt(ph,2)+' → normal, do lado '+(side==='acid'?'ácido':'básico')+' (abaixo/acima de 7,40).'}
+    s1.textContent=t1;
+    var resp, met;
+    if(side==='acid'){resp=c>45;met=h<22}else{resp=c<35;met=h>26}
+    var normalAll = c>=35&&c<=45&&h>=22&&h<=26;
+    if(normalAll){s2.textContent='pCO₂ e HCO₃⁻ normais.';s3.textContent='Nada a compensar.';v.textContent= (ph>=7.35&&ph<=7.45)?'Gasometria normal (ácido-base).':'pH alterado com pCO₂ e HCO₃⁻ normais: confira os valores.';v.style.background='var(--ok-s)';return}
+    var nome = side==='acid'?'acidose':'alcalose';
+    if(resp&&met){
+      s2.textContent='pCO₂ '+c+' e HCO₃⁻ '+h+' empurram os dois para o lado '+(side==='acid'?'ácido':'básico')+'.';
+      s3.textContent='Ninguém está compensando: não há conta a fazer.';
+      v.textContent=nome.charAt(0).toUpperCase()+nome.slice(1)+' mista: metabólica + respiratória.';v.style.background='var(--warn-s)';return;
+    }
+    if(!resp&&!met){
+      s2.textContent='Nenhum personagem empurra para o lado do pH — pCO₂ e HCO₃⁻ estão do lado oposto.';
+      s3.textContent='Provável distúrbio misto; confira os valores.';
+      v.textContent='Padrão incoerente: revise a gasometria.';v.style.background='var(--warn-s)';return;
+    }
+    var lo,hi,e,t3,res,bg='var(--ok-s)';
+    if(met){
+      s2.textContent='HCO₃⁻ '+h+' '+(side==='acid'?'baixo acidifica':'alto alcaliniza')+' → '+nome+' metabólica.';
+      e = side==='acid' ? 1.5*h+8 : 0.7*h+21; lo=e-2; hi=e+2;
+      t3=(side==='acid'?'Winter: 1,5 × '+fmt(h,0)+' + 8':'0,7 × '+fmt(h,0)+' + 21')+' = '+fmt(e,1)+' → pCO₂ esperada '+fmt(lo,0)+' a '+fmt(hi,0)+'. Real: '+c+'.';
+      if(c>hi){res=nome+' metabólica + acidose respiratória (pCO₂ acima do esperado)';bg='var(--acid-s)'}
+      else if(c<lo){res=nome+' metabólica + alcalose respiratória (pCO₂ abaixo do esperado)';bg='var(--alk-s)'}
+      else res=nome+' metabólica com compensação adequada';
+    } else {
+      var deg = side==='acid' ? (c-40)/10 : (40-c)/10;
+      var k = side==='acid' ? (gdC?4:1) : (gdC?5:2);
+      e = side==='acid' ? 24+deg*k : 24-deg*k; lo=e-2; hi=e+2;
+      s2.textContent='pCO₂ '+c+' '+(side==='acid'?'alta acidifica':'baixa alcaliniza')+' → '+nome+' respiratória.';
+      t3=fmt(deg,1)+' degrau(s) × '+k+' ('+(gdC?'crônica':'aguda')+') → HCO₃⁻ esperado '+fmt(lo,0)+' a '+fmt(hi,0)+'. Real: '+h+'.';
+      if(h>hi){res=nome+' respiratória '+(gdC?'crônica':'aguda')+' + alcalose metabólica (HCO₃⁻ acima do esperado)';bg='var(--alk-s)'}
+      else if(h<lo){res=nome+' respiratória '+(gdC?'crônica':'aguda')+' + acidose metabólica (HCO₃⁻ abaixo do esperado)';bg='var(--acid-s)'}
+      else res=nome+' respiratória '+(gdC?'crônica':'aguda')+' com compensação adequada';
+    }
+    s3.textContent=t3;
+    if(ph>=7.35&&ph<=7.45&&res.indexOf('+')>-1) res+='. Com pH normal, os dois se anulam: a história clínica diz qual veio primeiro';
+    v.textContent=res.charAt(0).toUpperCase()+res.slice(1)+'.';v.style.background=bg;
+  }
+  function setTime(cv){gdC=cv;[].forEach.call(document.querySelectorAll('#gd-time .btn'),function(x){x.classList.toggle('sel',+x.dataset.c===cv)})}
+  [].forEach.call(document.querySelectorAll('#gd-time .btn'),function(b){b.onclick=function(){setTime(+b.dataset.c);guide()}});
+  [].forEach.call(document.querySelectorAll('#gd-ex .btn'),function(b){b.onclick=function(){var p=b.dataset.v.split(',');document.getElementById('gd-ph').value=p[0];document.getElementById('gd-c').value=p[1];document.getElementById('gd-h').value=p[2];setTime(+p[3]);guide()}});
+  ['gd-ph','gd-c','gd-h'].forEach(function(id){document.getElementById(id).addEventListener('input',guide)});
+  guide();
+
+  window.addEventListener('hashchange',function(){var h=parseInt(location.hash.slice(1),10);if(h>=1&&h<=N&&h-1!==cur)show(h-1,false)});
+  var start=parseInt((location.hash||'').slice(1),10);
+  if(!(start>=1&&start<=N)){var saved=parseInt(read('slide'),10);start=isNaN(saved)?1:saved+1}
+  slides[0].classList.add('on');
+  show(Math.max(0,Math.min(N-1,start-1)),false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gasometria sem medo · Aula 1 · Casos clínicos — Dr. André Rossanno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10283A; --ink2:#4B6072; --paper:#F5F8FA; --card:#FFFFFF; --line:#D6E0E7;
+  --atlas:#1282A2; --atlas-s:#E3F3F7;
+  --acid:#C43E36; --acid-s:#FBE9E7;
+  --alk:#2C58A8; --alk-s:#E7EEF9;
+  --ok:#2A8756; --ok-s:#E5F4EC;
+  --warn:#B97A0E; --warn-s:#FDF3DF;
+  --night:#0C1E2C; --fs:1;
+  --sans:'Nunito','Trebuchet MS',Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--night);overflow:hidden;font-family:var(--sans);color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;margin:-450px 0 0 -800px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--paper);padding:62px 88px 84px;display:none;flex-direction:column;font-size:calc(31px * var(--fs));line-height:1.35;overflow:auto}
+.slide.on{display:flex}
+.slide.dark{background:radial-gradient(1200px 700px at 78% 30%,#163A52 0%,#0C1E2C 70%);color:#EAF2F7}
+.slide h1{font-size:1.85em;font-weight:900;line-height:1.08;margin:0 0 .45em;letter-spacing:-.01em}
+.slide h2{font-size:1.15em;font-weight:800;margin:0 0 .3em}
+.slide p{margin:.2em 0 .5em;max-width:34em}
+.kick{font-family:var(--mono);font-size:.55em;color:var(--atlas);margin-bottom:.5em;font-weight:600}
+.dark .kick{color:#6FC7DD}
+.sub{color:var(--ink2)}
+.dark .sub{color:#A9C0CF}
+.row{display:flex;gap:1em;align-items:stretch}
+.col{flex:1;min-width:0}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:.7em .9em}
+.card.acid{border-color:var(--acid);background:var(--acid-s)}
+.card.alk{border-color:var(--alk);background:var(--alk-s)}
+.card.ok{border-color:var(--ok);background:var(--ok-s)}
+.card.warn{border-color:var(--warn);background:var(--warn-s)}
+.card.atlas{border-color:var(--atlas);background:var(--atlas-s)}
+.card h2{margin-top:0}
+aside.notes{display:none}
+.small{font-size:.78em}
+.tiny{font-size:.62em}
+.mono{font-family:var(--mono)}
+.big{font-size:1.4em;font-weight:900}
+.formula{font-family:var(--mono);font-weight:600;font-size:1.05em;background:var(--card);border:2px dashed var(--atlas);border-radius:14px;padding:.35em .7em;display:inline-block}
+.c-acid{color:var(--acid)} .c-alk{color:var(--alk)} .c-ok{color:var(--ok)} .c-warn{color:var(--warn)} .c-atlas{color:var(--atlas)}
+ul.clean{list-style:none;padding:0;margin:.2em 0}
+ul.clean li{padding:.18em 0 .18em 1.1em;position:relative}
+ul.clean li:before{content:"";position:absolute;left:0;top:.72em;width:.45em;height:.45em;border-radius:50%;background:var(--atlas)}
+.acid ul.clean li:before{background:var(--acid)} .alk ul.clean li:before{background:var(--alk)} .warn ul.clean li:before{background:var(--warn)} .ok ul.clean li:before{background:var(--ok)}
+.pega{border-left:10px solid var(--warn);background:var(--warn-s);border-radius:0 14px 14px 0;padding:.45em .8em;margin-top:.5em}
+.pega b.t{color:var(--warn)}
+.fix{border-left:10px solid var(--acid);background:var(--acid-s);border-radius:0 14px 14px 0;padding:.45em .8em;margin-top:.5em}
+.synth{margin-top:auto;padding-top:.4em;font-weight:800;color:var(--atlas)}
+.synth:before{content:"Em uma linha: ";color:var(--ink2);font-weight:600}
+/* reveal */
+.step{opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s;pointer-events:none}
+.step.on{opacity:1;transform:none;pointer-events:auto}
+.reduce .step{transition:none}
+.ans{background:var(--ok-s);border:2px solid var(--ok);border-radius:14px;padding:.35em .7em;font-weight:700}
+.ans.no{background:var(--acid-s);border-color:var(--acid)}
+/* ticket: impressão de gasometria */
+.ticket{font-family:var(--mono);background:#FFFEFA;border:1px solid #CFCAB8;border-radius:6px;padding:.55em .75em .7em;box-shadow:0 10px 26px rgba(12,30,44,.18);font-size:.72em;min-width:11.5em;position:relative}
+.ticket:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;background:linear-gradient(-45deg,transparent 6px,#FFFEFA 0) 0 0/12px 12px repeat-x,linear-gradient(45deg,transparent 6px,#FFFEFA 0) 0 0/12px 12px repeat-x}
+.ticket .th{font-size:.78em;color:#6B6754;border-bottom:1px dashed #BDB7A2;padding-bottom:.25em;margin-bottom:.3em;display:flex;justify-content:space-between;gap:1em}
+.ticket .r{display:flex;justify-content:space-between;gap:.8em;padding:.06em 0}
+.ticket .r span{color:#5E5A48}
+.ticket .r b{font-weight:600;color:#1C1A12}
+.ticket .r b.lo{color:var(--acid)} .ticket .r b.hi{color:var(--alk)}
+.ticket .sep{border-top:1px dashed #BDB7A2;margin:.3em 0}
+/* seis passos */
+.steps6{display:grid;grid-template-columns:repeat(3,1fr);gap:.6em}
+.s6{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:.55em .75em;display:flex;gap:.55em;align-items:flex-start}
+.s6 .n{font-family:var(--mono);font-weight:600;background:var(--ink);color:#fff;border-radius:50%;width:1.6em;height:1.6em;flex:none;display:flex;align-items:center;justify-content:center;font-size:.8em;margin-top:.1em}
+.s6 b{display:block;font-size:1em}
+.s6 span{color:var(--ink2);font-size:.78em}
+.s6.hot{border-color:var(--atlas);background:var(--atlas-s)}
+.s6.hot .n{background:var(--atlas)}
+.trail{display:flex;gap:.3em;margin-bottom:.55em}
+.trail i{font-style:normal;font-family:var(--mono);font-size:.5em;padding:.2em .55em;border-radius:99px;background:#E6ECF1;color:var(--ink2)}
+.trail i.on{background:var(--atlas);color:#fff}
+/* tabelas */
+table.t{border-collapse:separate;border-spacing:0;width:100%;font-size:.74em;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden}
+table.t th,table.t td{padding:.4em .6em;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.t th{background:#EAF0F4;font-weight:800}
+table.t tr:last-child td{border-bottom:none}
+/* controles interativos */
+.ctl{display:flex;align-items:center;gap:.5em;margin:.25em 0;font-size:.8em}
+.ctl label{min-width:5.2em;font-weight:700}
+.ctl input[type=range]{flex:1;accent-color:var(--atlas);height:1.2em}
+.ctl input[type=number]{width:4.2em;font:inherit;font-family:var(--mono);padding:.12em .3em;border:2px solid var(--line);border-radius:10px}
+.ctl output{font-family:var(--mono);min-width:3em;text-align:right;font-weight:600}
+.btn{font:inherit;font-weight:800;font-size:.72em;border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:99px;padding:.3em .9em;cursor:pointer}
+.btn.sel{background:var(--ink);color:#fff}
+.btn:focus-visible,button:focus-visible,input:focus-visible{outline:4px solid #F2B84B;outline-offset:2px}
+.verdict{font-weight:800;border-radius:14px;padding:.45em .7em;background:#EAF0F4;margin-top:.4em}
+.gauge{position:relative;height:1.1em;border-radius:99px;background:linear-gradient(90deg,var(--ok) 0 33.3%,var(--atlas) 33.3% 66.6%,var(--alk) 66.6% 100%);margin:.9em 0 .3em}
+.gauge .mk{position:absolute;top:-.45em;width:.3em;height:2em;background:var(--ink);border-radius:4px;transform:translateX(-50%);transition:left .3s}
+.gauge-l{display:flex;justify-content:space-between;font-size:.6em;color:var(--ink2);font-family:var(--mono)}
+/* moldura */
+#foot{position:absolute;left:88px;right:88px;bottom:26px;display:flex;justify-content:space-between;align-items:center;font-size:18px;color:var(--ink2);pointer-events:none}
+#foot .sig{font-family:'Dancing Script',cursive;font-size:28px;color:var(--atlas)}
+#foot.dk{color:#9FB6C5}
+#bar{position:absolute;left:0;bottom:0;height:7px;background:var(--atlas);transition:width .3s}
+#ui{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:6px;background:rgba(12,30,44,.9);padding:6px 8px;border-radius:99px;opacity:0;transition:opacity .3s;z-index:20}
+#ui.show{opacity:1}
+#ui button{font:700 14px var(--sans);color:#EAF2F7;background:transparent;border:1px solid #3B566A;border-radius:99px;padding:6px 12px;cursor:pointer}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:34vh;overflow:auto;background:#FFF8E6;color:#2B2410;font:600 17px/1.45 var(--sans);padding:14px 22px 18px;border-top:4px solid var(--warn);display:none;z-index:15}
+body.show-notes #notes{display:block}
+#notes b{font-family:var(--mono);color:var(--warn)}
+#grid{position:fixed;inset:0;background:rgba(8,20,30,.96);z-index:30;display:none;overflow:auto;padding:30px}
+#grid.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;align-content:start}
+#grid button{text-align:left;font:700 15px var(--sans);color:#DDE9F0;background:#14304A;border:1px solid #28506E;border-radius:12px;padding:10px 12px;cursor:pointer}
+#grid button.cur{background:var(--atlas);color:#fff}
+#grid button small{display:block;font:400 12px var(--mono);color:#8FB3C8}
+body.touch #help{display:none}
+#help{position:fixed;right:14px;top:12px;font:600 13px var(--mono);color:#6F8CA0;z-index:5}
+.vote{align-self:flex-start;font-family:var(--mono);font-size:.5em;background:var(--ink);color:#fff;padding:.25em .7em;border-radius:99px;display:inline-block;margin-bottom:.5em}
+.letter{font-weight:900;font-size:1.6em;line-height:1;color:var(--acid);width:1.1em;flex:none}
+.ltr{display:flex;gap:.45em;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:.3em .6em}
+.mnemo{font-weight:900;font-size:1.25em;line-height:1.3}
+.mnemo span{display:inline-block;padding:0 .12em;border-radius:8px}
+.mnemo span.on{background:var(--warn-s);color:var(--warn);opacity:1}
+.case-grid{display:flex;gap:1em;align-items:flex-start}
+.case-side{width:9.2em;flex:none}
+.case-col{flex:1;min-width:0;font-size:.84em;display:flex;flex-direction:column;gap:.4em}
+.case-col .card{padding:.38em .7em}
+.case-col .lbl{font-family:var(--mono);font-size:.62em;color:var(--ink2);display:block;margin-bottom:.1em}
+.vitals{font-size:.6em;color:var(--ink2);margin-top:1.1em;line-height:1.5}
+.gopt{display:flex;flex-wrap:wrap;gap:.4em;margin-top:.6em}
+.gopt .btn{font-size:.95em}
+.gopt .btn.right{background:var(--ok);border-color:var(--ok);color:#fff}
+.gopt .btn.wrong{background:var(--acid);border-color:var(--acid);color:#fff}
+</style></head>
+<body>
+<div id="help">← → avançar · toque na direita/esquerda · G índice · N notas · F tela cheia · + − letra</div>
+<div id="stage">
+
+<section class="slide dark" data-title="Capa · Casos clínicos">
+  <div class="row" style="flex:1;align-items:center;gap:2em">
+    <div class="col">
+      <div class="kick">gasometria sem medo · complemento da aula 1</div>
+      <h1 style="font-size:2.6em">A história por trás da gasometria</h1>
+      <p class="sub" style="font-size:1.05em">Casos clínicos para ligar cada distúrbio a um paciente de verdade — vômito, diarreia, remédios, pulmão.</p>
+      <p style="font-family:'Dancing Script',cursive;font-size:1.6em;color:#6FC7DD;margin-top:.8em">Dr. André Rossanno</p>
+    </div>
+    <div style="transform:rotate(-3deg)">
+      <div class="ticket" style="font-size:.9em"><div class="th"><span>VÔMITOS HÁ 3 DIAS</span></div>
+      <div class="r"><span>pH</span><b class="hi">7,50</b></div><div class="r"><span>pCO₂</span><b>46</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">35</b></div><div class="sep"></div><div class="r"><span>K⁺</span><b class="lo">2,9</b></div><div class="r"><span>Por quê?</span><b>?</b></div></div>
+    </div>
+  </div>
+  <aside class="notes">Complemento da Aula 1. Usa só os passos 1, 2 e 3 — ânion gap fica para a Aula 2.</aside>
+</section>
+<section class="slide" data-title="Como estudar os casos">
+  <div class="kick">como usar</div>
+  <h1>Número sozinho não grava. História grava.</h1>
+  <p>Cada caso segue a mesma ordem. Tente responder cada parte antes de tocar para revelar.</p>
+  <div class="steps6" style="grid-template-columns:repeat(4,1fr)">
+    <div class="s6"><div class="n">1</div><div><b>A história</b><span>quem é o paciente</span></div></div>
+    <div class="s6"><div class="n">2</div><div><b>O corpo</b><span>o que ele perdeu ou ganhou</span></div></div>
+    <div class="s6"><div class="n">3</div><div><b>A leitura</b><span>passos 1, 2 e 3</span></div></div>
+    <div class="s6"><div class="n">4</div><div><b>A prática</b><span>o que fazer, a pegadinha</span></div></div>
+  </div>
+  <div class="card warn step" style="margin-top:.7em">Pergunta de ouro antes de olhar os números: <b>este paciente perdeu ácido, perdeu base, ganhou ácido, ganhou base, respira de menos ou respira demais?</b></div>
+  <p class="synth">Primeiro imagine o paciente; depois confirme na gasometria.</p>
+  <aside class="notes">A pergunta de ouro resolve quase todos os casos antes da conta.</aside>
+</section>
+<section class="slide" data-title="Onde mora o ácido e a base">
+  <div class="kick">o mapa do corpo</div>
+  <h1>Onde mora o ácido e onde mora a base</h1>
+  <div class="row" style="gap:1.2em;align-items:center">
+    <svg viewBox="0 0 520 600" style="width:13em;height:15em;flex:none">
+      <rect x="110" y="20" width="300" height="560" rx="130" fill="#EAF0F4" stroke="#D6E0E7" stroke-width="4"/>
+      <ellipse cx="200" cy="130" rx="62" ry="80" fill="#AFC3E6"/><ellipse cx="320" cy="130" rx="62" ry="80" fill="#AFC3E6"/>
+      <text x="260" y="60" font-family="Nunito" font-weight="900" font-size="24" text-anchor="middle" fill="#2C58A8">pulmão · CO₂</text>
+      <path d="M200 250 q60 -30 110 10 q20 60 -40 80 q-70 10 -70 -90z" fill="#F0B2AC"/>
+      <text x="255" y="300" font-family="Nunito" font-weight="900" font-size="22" text-anchor="middle" fill="#C43E36">estômago</text>
+      <text x="255" y="326" font-family="IBM Plex Mono" font-size="20" text-anchor="middle" fill="#C43E36">HCl = ácido</text>
+      <rect x="175" y="380" width="170" height="130" rx="40" fill="#CFE3D8"/>
+      <text x="260" y="432" font-family="Nunito" font-weight="900" font-size="21" text-anchor="middle" fill="#2A8756">intestino e</text>
+      <text x="260" y="456" font-family="Nunito" font-weight="900" font-size="21" text-anchor="middle" fill="#2A8756">pâncreas</text>
+      <text x="260" y="484" font-family="IBM Plex Mono" font-size="19" text-anchor="middle" fill="#2A8756">HCO₃⁻ = base</text>
+      <ellipse cx="140" cy="400" rx="26" ry="42" fill="#E4C48A"/><ellipse cx="380" cy="400" rx="26" ry="42" fill="#E4C48A"/>
+      <text x="440" y="470" font-family="Nunito" font-weight="900" font-size="20" fill="#B97A0E">rim</text>
+    </svg>
+    <div class="col" style="font-size:.9em">
+      <div class="card acid step"><b>Estômago fabrica ácido (HCl).</b> <span class="small">Quem vomita joga ácido fora → sobra base → <b>alcalose</b>.</span></div>
+      <div class="card ok step" style="margin-top:.45em"><b>Intestino e pâncreas são ricos em bicarbonato.</b> <span class="small">Quem tem diarreia joga base fora → sobra ácido → <b>acidose</b>.</span></div>
+      <div class="card alk step" style="margin-top:.45em"><b>Pulmão joga CO₂ fora.</b> <span class="small">Respira de menos → acidose; respira demais → alcalose.</span></div>
+      <div class="card warn step" style="margin-top:.45em"><b>Rim guarda base e joga ácido na urina.</b> <span class="small">Remédios que mexem no rim mexem no pH.</span></div>
+    </div>
+  </div>
+  <div class="card warn step" style="margin-top:.4em;text-align:center"><b style="font-size:1.1em">Vômito sai por cima: o pH sobe. Diarreia sai por baixo: o pH desce.</b></div>
+  <aside class="notes">Gancho espacial: a direção por onde o líquido sai é a direção do pH.</aside>
+</section>
+<section class="slide" data-title="Pistas no exame físico">
+  <div class="kick">antes da gasometria chegar</div>
+  <h1>O paciente mostra o distúrbio no leito</h1>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6em">
+    <div class="card acid step"><h2 class="c-acid">Respiração funda e rápida</h2><p class="small"><b>Kussmaul.</b> O pulmão tentando soprar CO₂ para compensar uma <b>acidose metabólica</b> (cetoacidose, choque, diarreia grave).</p></div>
+    <div class="card alk step"><h2 class="c-alk">Formigamento e mão em garra</h2><p class="small">Boca e dedos formigando, espasmo das mãos. <b>Alcalose</b> derrubando o cálcio ionizado.</p></div>
+    <div class="card acid step"><h2 class="c-acid">Sonolento, respiração lenta</h2><p class="small">CO₂ acumulando: <b>acidose respiratória</b>. Com pupila puntiforme, pense em opioide.</p></div>
+    <div class="card alk step"><h2 class="c-alk">Taquipneia com pulmão "limpo"</h2><p class="small">Ansiedade, dor, febre, sepse inicial, TEP: <b>alcalose respiratória</b>.</p></div>
+  </div>
+  <p class="synth">Kussmaul é pulmão compensando; formigamento é cálcio fugindo.</p>
+  <aside class="notes">Ponte semiologia → gasometria. Peça que a turma imite a respiração de Kussmaul.</aside>
+</section>
+<section class="slide" data-title="Caso 1 · Vômitos: o que se perde">
+  <div class="kick">caso 1 · perdeu ácido</div>
+  <h1 style="font-size:1.45em">Ana, 24 anos, vomita tudo há 3 dias</h1>
+  <div class="row" style="gap:1em;align-items:flex-start">
+    <div class="col">
+      <div class="card"><span class="small">Gastroenterite, não para nada no estômago. Tonta ao levantar, boca seca, cãibras nas pernas.</span></div>
+      <p class="step" style="margin-top:.5em"><b>Pergunta de ouro:</b> o que sai no vômito?</p>
+      <div class="card acid step"><b>Ácido clorídrico (HCl)</b> <span class="small">— o H⁺ vai embora pela boca e o bicarbonato que o estômago fabricou junto <b>fica no sangue</b>.</span></div>
+      <div class="card step" style="margin-top:.45em"><b>E água, sódio e potássio.</b> <span class="small">Ela está desidratada.</span></div>
+    </div>
+    <div class="col">
+      <div class="card atlas step"><b>Por que a alcalose não passa sozinha?</b>
+        <ol class="small" style="margin:.3em 0 0 1em;padding:0">
+          <li>Com pouco volume, o corpo libera <b>aldosterona</b>.</li>
+          <li>O rim guarda sódio e, em troca, joga <b>K⁺ e H⁺ na urina</b>.</li>
+          <li>Perde mais ácido e mais potássio: a alcalose e a hipocalemia se mantêm.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <p class="synth step">Vômito leva ácido, água e potássio — e a desidratação mantém a alcalose.</p>
+  <aside class="notes">A mesma coisa acontece com sonda nasogástrica em aspiração contínua no pós-operatório.</aside>
+</section>
+<section class="slide" data-title="Caso 1 · Ana, 24 anos: a gasometria dos vômitos">
+  <div class="kick">caso 1 · perdeu ácido</div>
+  <h1 style="font-size:1.4em">Ana, 24 anos: a gasometria dos vômitos</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>ANA · VÔMITOS</span></div><div class="r"><span>pH</span><b class="hi">7,50</b></div><div class="r"><span>pCO₂</span><b>46</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">35</b></div><div class="sep"></div><div class="r"><span>K⁺</span><b class="lo">2,9</b></div><div class="r"><span>Cl⁻</span><b class="lo">88</b></div></div><div class="vitals">PA 90×60 · FC 112</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>A gasometria da Ana chegou. Antes de ler: você espera acidose ou alcalose?</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Perdeu HCl → sobrou bicarbonato. Perdeu potássio no vômito e na urina. Cloro baixo porque o Cl⁻ saiu junto com o H⁺.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,50 → alcalemia. <b>2.</b> HCO₃⁻ 35 alto → <b>alcalose metabólica</b>. <b>3.</b> 0,7 × 35 + 21 ≈ 45 → pCO₂ 46 dentro: compensada (o pulmão segurou CO₂).</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Tratamento: <b>soro fisiológico + cloreto de potássio</b>. Devolver volume e cloro desliga a aldosterona e o rim solta o bicarbonato. Tratar o vômito.</div>
+    </div>
+  </div>
+  <p class="synth step">Vômito sobe, o pH sobe: alcalose com potássio baixo.</p>
+  <aside class="notes">Hipocalemia é a complicação que mata: arritmia. Repor K⁺ faz parte da correção da alcalose.</aside>
+</section>
+<section class="slide" data-title="Caso 2 · Diarreia: o que se perde">
+  <div class="kick">caso 2 · perdeu base</div>
+  <h1 style="font-size:1.45em">Seu José, 70 anos, 15 evacuações líquidas por dia</h1>
+  <div class="row" style="gap:1em;align-items:flex-start">
+    <div class="col">
+      <div class="card"><span class="small">Diarreia aquosa há 4 dias depois de comer em uma festa. Muito fraco, respirando fundo e rápido.</span></div>
+      <p class="step" style="margin-top:.5em"><b>Pergunta de ouro:</b> o que sai na diarreia?</p>
+      <div class="card ok step"><b>Líquido intestinal e pancreático, rico em bicarbonato</b> <span class="small">— a base vai embora pelas fezes. O ácido que sobra no sangue baixa o pH.</span></div>
+      <div class="card step" style="margin-top:.45em"><b>E água e muito potássio.</b></div>
+    </div>
+    <div class="col">
+      <div class="card atlas step"><b>E a respiração funda?</b>
+        <p class="small" style="margin:.3em 0 0">É o pulmão compensando: sopra CO₂ para acompanhar a queda do bicarbonato. É a respiração de <b>Kussmaul</b>.</p>
+      </div>
+      <div class="card warn step" style="margin-top:.45em"><b>Detalhe que confunde:</b>
+        <p class="small" style="margin:.3em 0 0">Na diarreia a acidose vem com <b>cloro alto</b>: o rim guarda Cl⁻ no lugar do bicarbonato perdido. Isso vira assunto da Aula 3.</p>
+      </div>
+    </div>
+  </div>
+  <p class="synth step">Diarreia desce, o pH desce: perde base pelo intestino.</p>
+  <aside class="notes">Criança com diarreia grave respirando "cansada" com pulmão limpo = Kussmaul, não pneumonia.</aside>
+</section>
+<section class="slide" data-title="Caso 2 · Seu José: a gasometria da diarreia">
+  <div class="kick">caso 2 · perdeu base</div>
+  <h1 style="font-size:1.4em">Seu José: a gasometria da diarreia</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>SR. JOSÉ · DIARREIA</span></div><div class="r"><span>pH</span><b class="lo">7,31</b></div><div class="r"><span>pCO₂</span><b class="lo">29</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">14</b></div><div class="sep"></div><div class="r"><span>K⁺</span><b class="lo">3,0</b></div><div class="r"><span>Cl⁻</span><b class="hi">114</b></div></div><div class="vitals">FR 28, respiração profunda</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Antes de ler: acidose ou alcalose? Qual personagem caiu?</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Perdeu bicarbonato nas fezes → acidose metabólica. O pulmão hiperventila (Kussmaul) e derruba a pCO₂ para compensar.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,31 → acidemia. <b>2.</b> HCO₃⁻ 14 baixo → <b>acidose metabólica</b>. <b>3.</b> Winter: 1,5 × 14 + 8 = 29 → pCO₂ 29: compensação perfeita.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Tratamento: <b>reidratar</b> (soro de reidratação oral ou Ringer) e <b>repor potássio</b>. Corrigido o volume, o rim refaz o bicarbonato.</div>
+    </div>
+  </div>
+  <p class="synth step">Diarreia leva base e potássio: acidose com respiração de Kussmaul.</p>
+  <aside class="notes">Diferença de ouro: vômito e diarreia os dois dão hipocalemia, mas pH em sentidos opostos.</aside>
+</section>
+<section class="slide" data-title="Vômito × diarreia">
+  <div class="kick">lado a lado</div>
+  <h1>Vômito × diarreia: as duas saídas do tubo</h1>
+  <table class="t" style="font-size:.8em">
+    <tr><th></th><th class="c-alk">Vômito · sonda gástrica</th><th class="c-acid">Diarreia · fístula intestinal</th></tr>
+    <tr><td><b>O que sai</b></td><td>HCl (ácido)</td><td>HCO₃⁻ (base)</td></tr>
+    <tr><td><b>Distúrbio</b></td><td class="c-alk"><b>alcalose metabólica</b></td><td class="c-acid"><b>acidose metabólica</b></td></tr>
+    <tr><td><b>pCO₂ compensando</b></td><td>sobe (respira menos)</td><td>cai (Kussmaul)</td></tr>
+    <tr><td><b>Potássio</b></td><td class="c-acid">baixo</td><td class="c-acid">baixo</td></tr>
+    <tr><td><b>Cloro</b></td><td>baixo</td><td>alto</td></tr>
+    <tr><td><b>Tratamento-chave</b></td><td>SF + KCl</td><td>reidratação + K⁺</td></tr>
+  </table>
+  <div class="pega step"><b class="t">Pegadinha de prova:</b> "hipocalemia" não diferencia os dois. Quem diferencia é o <b>pH</b> e o <b>cloro</b>.</div>
+  <p class="synth">Por cima sai ácido, por baixo sai base; o potássio vai embora nos dois.</p>
+  <aside class="notes">Intercalação (N5): os dois casos lado a lado fixam mais do que separados.</aside>
+</section>
+<section class="slide" data-title="Caso 3 · Dona Lúcia, 78 anos, insuficiência cardíaca">
+  <div class="kick">caso 3 · remédio que mexe no rim</div>
+  <h1 style="font-size:1.4em">Dona Lúcia, 78 anos, insuficiência cardíaca</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>D. LÚCIA · FUROSEMIDA</span></div><div class="r"><span>pH</span><b class="hi">7,48</b></div><div class="r"><span>pCO₂</span><b>44</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div><div class="sep"></div><div class="r"><span>K⁺</span><b class="lo">3,0</b></div><div class="r"><span>Cl⁻</span><b class="lo">92</b></div></div><div class="vitals">Furosemida 80 mg 2×/dia</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Estava inchada, dobraram a furosemida. Desinchou 6 kg em uma semana. Agora está fraca, com cãibras e palpitação.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>A furosemida faz o rim jogar fora <b>sódio, cloro, potássio e água</b> — mas não bicarbonato. O líquido encolhe e o bicarbonato fica mais concentrado ("alcalose de contração"). A aldosterona piora a perda de K⁺ e H⁺.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,48 → alcalemia. <b>2.</b> HCO₃⁻ 32 alto → <b>alcalose metabólica</b>. <b>3.</b> 0,7 × 32 + 21 ≈ 43 → pCO₂ 44: compensada.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Ajustar diurético, repor potássio. Tiazídicos (hidroclorotiazida, clortalidona) fazem o mesmo. Hipocalemia + digoxina = arritmia.</div>
+    </div>
+  </div>
+  <p class="synth step">Diurético que tira água tira cloro e potássio: alcalose de contração.</p>
+  <aside class="notes">Poupadores de potássio (espironolactona) fazem o contrário — acidose com K⁺ alto. Fica para a Aula 3.</aside>
+</section>
+<section class="slide" data-title="Caso 4 · Seu Paulo, 60 anos, glaucoma">
+  <div class="kick">caso 4 · remédio que mexe no rim</div>
+  <h1 style="font-size:1.4em">Seu Paulo, 60 anos, glaucoma</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>SR. PAULO · DIAMOX</span></div><div class="r"><span>pH</span><b class="lo">7,33</b></div><div class="r"><span>pCO₂</span><b class="lo">33</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">17</b></div><div class="sep"></div><div class="r"><span>Urina</span><b>pH 7,0</b></div></div><div class="vitals">Acetazolamida 250 mg 4×/dia</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Usa acetazolamida (Diamox) para glaucoma. Formigamento nas mãos e cansaço.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>A acetazolamida bloqueia a anidrase carbônica no rim, e o túbulo deixa de reabsorver bicarbonato. <b>A base sai pela urina</b> — é uma "diarreia de bicarbonato" pelo rim. Por isso a urina fica alcalina.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,33 → acidemia. <b>2.</b> HCO₃⁻ 17 baixo → <b>acidose metabólica</b>. <b>3.</b> Winter: 1,5 × 17 + 8 ≈ 33 → compensada.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Geralmente leve. Uso inteligente: corrigir de propósito a <b>alcalose metabólica</b> de quem não pode receber soro (IC, DPOC).</div>
+    </div>
+  </div>
+  <p class="synth step">Diamox faz o rim perder bicarbonato: acidose com urina alcalina.</p>
+  <aside class="notes">Formigamento aqui é efeito do próprio remédio, não da alcalose.</aside>
+</section>
+<section class="slide" data-title="Caso 5 · Dona Marta, 68 anos, &quot;come&quot; antiácido">
+  <div class="kick">caso 5 · ganhou base</div>
+  <h1 style="font-size:1.4em">Dona Marta, 68 anos, "come" antiácido</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>D. MARTA · ANTIÁCIDO</span></div><div class="r"><span>pH</span><b class="hi">7,52</b></div><div class="r"><span>pCO₂</span><b class="hi">48</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">38</b></div><div class="sep"></div><div class="r"><span>Cálcio</span><b class="hi">12,8</b></div><div class="r"><span>Creatinina</span><b class="hi">2,1</b></div></div><div class="vitals">Carbonato de cálcio várias vezes/dia</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Para a azia e para "os ossos", toma carbonato de cálcio e bicarbonato de sódio o dia todo. Chega confusa, com náuseas e fraqueza.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Ela está <b>engolindo base</b>. Excesso de carbonato e bicarbonato + cálcio alto que lesa o rim, e o rim lesado não consegue jogar o excesso de base fora: síndrome leite-álcali.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,52 → alcalemia. <b>2.</b> HCO₃⁻ 38 alto → <b>alcalose metabólica</b>. <b>3.</b> 0,7 × 38 + 21 ≈ 48 → pCO₂ 48: compensada.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Suspender o antiácido, hidratar. Pergunte sempre por remédios "naturais" e antiácidos — o paciente não acha que é remédio.</div>
+    </div>
+  </div>
+  <p class="synth step">Quem engole base demais faz alcalose: pergunte pelo antiácido.</p>
+  <aside class="notes">Também acontece com bicarbonato em excesso na UTI.</aside>
+</section>
+<section class="slide" data-title="Caso 6 · Gabriel, 17 anos, diabético tipo 1">
+  <div class="kick">caso 6 · ganhou ácido</div>
+  <h1 style="font-size:1.4em">Gabriel, 17 anos, diabético tipo 1</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>GABRIEL · DM1</span></div><div class="r"><span>pH</span><b class="lo">7,17</b></div><div class="r"><span>pCO₂</span><b class="lo">20</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">7</b></div><div class="sep"></div><div class="r"><span>Glicose</span><b class="hi">520</b></div><div class="r"><span>Cetonas</span><b class="hi">+++</b></div></div><div class="vitals">FR 32, hálito de fruta</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Parou a insulina há 2 dias. Vômitos, dor abdominal, respiração funda e rápida, hálito com cheiro de fruta.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Sem insulina, a célula não usa glicose e passa a queimar gordura. A gordura vira <b>cetoácidos</b>, que consomem o bicarbonato. O cheiro de fruta é a acetona saindo pelo pulmão.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,17 → acidemia. <b>2.</b> HCO₃⁻ 7 muito baixo → <b>acidose metabólica</b>. <b>3.</b> Winter: 1,5 × 7 + 8 ≈ 18,5 → faixa 16–21: pCO₂ 20 compensada — é o Kussmaul.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Hidratação, <b>insulina</b> e <b>potássio</b> (a insulina joga o K⁺ para dentro da célula e pode derrubá-lo). Tem vômito, mas a cetoacidose ganha.</div>
+    </div>
+  </div>
+  <p class="synth step">Sem insulina, gordura vira ácido: Kussmaul com hálito de fruta.</p>
+  <aside class="notes">Se a pCO₂ estivesse 30, o pulmão estaria cansando: alerta de intubação. O ânion gap desse caso fica para a Aula 2.</aside>
+</section>
+<section class="slide" data-title="Caso 7 · Seu Antônio, 72 anos, choque séptico">
+  <div class="kick">caso 7 · ganhou ácido</div>
+  <h1 style="font-size:1.4em">Seu Antônio, 72 anos, choque séptico</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>SR. ANTÔNIO · UTI</span></div><div class="r"><span>pH</span><b class="lo">7,23</b></div><div class="r"><span>pCO₂</span><b class="lo">22</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">9</b></div><div class="sep"></div><div class="r"><span>Lactato</span><b class="hi">7,5</b></div><div class="r"><span>PAM</span><b class="lo">55</b></div></div><div class="vitals">Pneumonia · noradrenalina</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Pneumonia grave, pressão baixa apesar do soro, extremidades frias e marmóreas, urina quase zero.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Com a circulação ruim, os tecidos ficam sem oxigênio e produzem energia do jeito "de emergência" — sem O₂. O resultado é <b>ácido lático</b>, que consome o bicarbonato.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,23 → acidemia. <b>2.</b> HCO₃⁻ 9 baixo → <b>acidose metabólica</b>. <b>3.</b> Winter: 1,5 × 9 + 8 ≈ 21,5 → pCO₂ 22: compensada.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>O tratamento é <b>devolver a perfusão</b>: antibiótico, volume, vasopressor. Bicarbonato não trata a causa. O lactato caindo mostra que está funcionando.</div>
+    </div>
+  </div>
+  <p class="synth step">Tecido sem oxigênio fabrica ácido lático: trate a perfusão, não o número.</p>
+  <aside class="notes">Detalhe das causas de lactato fica na Aula 2.</aside>
+</section>
+<section class="slide" data-title="Caso 8 · Dona Rosa, 65 anos, doença renal crônica">
+  <div class="kick">caso 8 · rim que não trabalha</div>
+  <h1 style="font-size:1.4em">Dona Rosa, 65 anos, doença renal crônica</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>D. ROSA · DRC 5</span></div><div class="r"><span>pH</span><b class="lo">7,34</b></div><div class="r"><span>pCO₂</span><b class="lo">31</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">16</b></div><div class="sep"></div><div class="r"><span>Creatinina</span><b class="hi">6,8</b></div><div class="r"><span>K⁺</span><b class="hi">5,6</b></div></div><div class="vitals">Diabética e hipertensa há 20 anos</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Doença renal avançada, ainda sem diálise. Cansaço, falta de apetite, perda de massa óssea.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>O corpo fabrica ácido todo dia e só o rim o elimina — o mesmo rim que fabrica bicarbonato novo. <b>Rim parado = ácido acumula e a base não é reposta.</b> O osso passa a ser usado como tampão e enfraquece.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,34 → acidemia. <b>2.</b> HCO₃⁻ 16 baixo → <b>acidose metabólica</b>. <b>3.</b> Winter: 1,5 × 16 + 8 = 32 → pCO₂ 31: compensada.</div>
+      <div class="card warn step"><span class="lbl">na prática</span><b>Bicarbonato de sódio oral</b> para manter HCO₃⁻ perto do normal (protege osso e músculo). Acidose grave com K⁺ alto pode indicar diálise.</div>
+    </div>
+  </div>
+  <p class="synth step">Rim que não trabalha não joga ácido fora nem repõe base.</p>
+  <aside class="notes">Acidose crônica "rouba" cálcio do osso.</aside>
+</section>
+<section class="slide" data-title="Caso 9 · Lucas, 19 anos, encontrado desacordado">
+  <div class="kick">caso 9 · respira de menos</div>
+  <h1 style="font-size:1.4em">Lucas, 19 anos, encontrado desacordado</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>LUCAS · PS</span></div><div class="r"><span>pH</span><b class="lo">7,19</b></div><div class="r"><span>pCO₂</span><b class="hi">70</b></div><div class="r"><span>HCO₃⁻</span><b>26</b></div><div class="sep"></div><div class="r"><span>pO₂</span><b class="lo">55</b></div></div><div class="vitals">FR 6 · pupilas puntiformes</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Encontrado em festa, sonolento, respirando 6 vezes por minuto, pupilas bem pequenas.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>O opioide deprime o centro respiratório: ele quase não respira e o <b>CO₂ acumula</b>. Aconteceu há poucas horas — o rim ainda não teve tempo de guardar bicarbonato.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,19 → acidemia. <b>2.</b> pCO₂ 70 alta → <b>acidose respiratória</b>. <b>3.</b> 3 degraus × 1 (aguda) → HCO₃⁻ esperado 27: bate com 26. <b>Aguda.</b></div>
+      <div class="card warn step"><span class="lbl">na prática</span><b>Naloxona</b> e ventilar com bolsa-válvula-máscara. Benzodiazepínico, álcool em excesso e sedação no hospital fazem o mesmo (flumazenil só em situações específicas).</div>
+    </div>
+  </div>
+  <p class="synth step">Opioide desliga a respiração: CO₂ sobe e o bicarbonato ainda não chegou.</p>
+  <aside class="notes">Doenças neuromusculares (Guillain-Barré, miastenia) também dão acidose respiratória por fraqueza do diafragma.</aside>
+</section>
+<section class="slide" data-title="Caso 10 · Seu Raimundo, 70 anos, DPOC, fumou 50 anos">
+  <div class="kick">caso 10 · respira de menos há anos</div>
+  <h1 style="font-size:1.4em">Seu Raimundo, 70 anos, DPOC, fumou 50 anos</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>SR. RAIMUNDO · AMBULATÓRIO</span></div><div class="r"><span>pH</span><b>7,35</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div></div><div class="vitals">Estável, consulta de rotina</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>DPOC grave, usa oxigênio em casa, anda devagar. Hoje está no seu "normal".</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Há anos o pulmão doente não consegue eliminar todo o CO₂. O rim teve <b>tempo</b> de guardar bicarbonato e trazer o pH quase ao normal.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,35 → limite, lado ácido. <b>2.</b> pCO₂ 60 alta → <b>acidose respiratória</b>. <b>3.</b> 2 degraus × 4 (crônica) → HCO₃⁻ 32: bate. <b>Crônica compensada.</b></div>
+      <div class="card warn step"><span class="lbl">na prática</span>Esses são os valores "de base" dele. Numa exacerbação, o que importa é o quanto piorou em relação a isso — não o quanto está longe de 40.</div>
+    </div>
+  </div>
+  <p class="synth step">DPOC retém CO₂ há anos; o rim guardou base e o pH quase normaliza.</p>
+  <aside class="notes">Conhecer a gasometria habitual do paciente muda a leitura da exacerbação.</aside>
+</section>
+<section class="slide" data-title="Caso 10 · A pegadinha do ventilador">
+  <div class="kick">caso 10 · continuação</div>
+  <h1 style="font-size:1.4em">Seu Raimundo foi intubado. Vamos "normalizar" o CO₂?</h1>
+  <div class="row" style="gap:1em;align-items:flex-start">
+    <div class="case-side"><div class="ticket"><div class="th"><span>ANTES</span></div><div class="r"><span>pH</span><b>7,35</b></div><div class="r"><span>pCO₂</span><b class="hi">60</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div></div><div style="height:1.2em"></div><div class="ticket"><div class="th"><span>2 H DE VENTILADOR</span></div><div class="r"><span>pH</span><b class="hi">7,53</b></div><div class="r"><span>pCO₂</span><b>40</b></div><div class="r"><span>HCO₃⁻</span><b class="hi">32</b></div></div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Na UTI, ajustaram o ventilador para deixar a pCO₂ em 40, "o valor normal".</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>O CO₂ caiu em horas, mas o bicarbonato que o rim guardou em anos <b>continua lá</b>. Tirou o ácido e deixou a base: alcalose.</div>
+      <div class="card step"><span class="lbl">leitura</span>pH 7,53 → alcalemia; HCO₃⁻ 32 alto com pCO₂ normal → <b>alcalose metabólica pós-hipercapnia</b>.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Risco de arritmia e convulsão. No DPOC retentor, o alvo é o <b>pH</b> e a pCO₂ <b>habitual</b> dele — baixar o CO₂ devagar.</div>
+    </div>
+  </div>
+  <p class="synth step">No retentor crônico, pCO₂ 40 não é normal: é alcalose.</p>
+  <aside class="notes">Excelente caso de beira-leito: o número "normal" causando doença. Acetazolamida pode ajudar a eliminar o bicarbonato excedente.</aside>
+</section>
+<section class="slide" data-title="Caso 11 · Camila, 22 anos, crise de pânico">
+  <div class="kick">caso 11 · respira demais</div>
+  <h1 style="font-size:1.4em">Camila, 22 anos, crise de pânico</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>CAMILA · PS</span></div><div class="r"><span>pH</span><b class="hi">7,55</b></div><div class="r"><span>pCO₂</span><b class="lo">25</b></div><div class="r"><span>HCO₃⁻</span><b>21</b></div><div class="sep"></div><div class="r"><span>pO₂</span><b>105</b></div></div><div class="vitals">FR 34 · SpO₂ 99%</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Chegou chorando, respirando muito rápido, com formigamento na boca e nas mãos, mãos "travadas" em garra. Aconteceu há 30 minutos.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Respirando demais, ela <b>joga CO₂ fora</b>: o ácido cai e o pH sobe. A alcalose faz o cálcio ionizado se ligar à albumina — daí o formigamento e a mão em garra.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,55 → alcalemia. <b>2.</b> pCO₂ 25 baixa → <b>alcalose respiratória</b>. <b>3.</b> 1,5 degrau × 2 (aguda) → HCO₃⁻ esperado 21: bate. <b>Aguda.</b></div>
+      <div class="card warn step"><span class="lbl">na prática</span>Acalmar e orientar respiração lenta. <b>Não</b> use saco de papel: pode causar hipóxia e mascarar doença grave. Antes de rotular como ansiedade, afaste TEP, asma e dor torácica.</div>
+    </div>
+  </div>
+  <p class="synth step">Respira demais, CO₂ cai, pH sobe, cálcio foge: formigamento.</p>
+  <aside class="notes">O pO₂ normal ajuda a pensar em ansiedade; o próximo caso mostra quando não é.</aside>
+</section>
+<section class="slide" data-title="Caso 12 · Dona Sônia, 55 anos, 5 dias após cirurgia de quadril">
+  <div class="kick">caso 12 · respira demais</div>
+  <h1 style="font-size:1.4em">Dona Sônia, 55 anos, 5 dias após cirurgia de quadril</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>D. SÔNIA · ENFERMARIA</span></div><div class="r"><span>pH</span><b class="hi">7,49</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b>22</b></div><div class="sep"></div><div class="r"><span>pO₂</span><b class="lo">58</b></div></div><div class="vitals">FR 30 · FC 118 · SpO₂ 89%</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Acamada desde a cirurgia. Falta de ar súbita, dor ao respirar, taquicardia. "Parece ansiosa."</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Um coágulo da perna foi para o pulmão (TEP). A <b>falta de oxigênio</b> e os receptores do pulmão fazem ela respirar demais → CO₂ cai → alcalose respiratória.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,49 → alcalemia. <b>2.</b> pCO₂ 30 baixa → <b>alcalose respiratória</b>. <b>3.</b> 1 degrau × 2 → HCO₃⁻ 22: aguda.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>A diferença para a Camila é o <b>pO₂ baixo</b>. Hiperventilação com hipoxemia no pós-operatório é TEP até prova em contrário.</div>
+    </div>
+  </div>
+  <p class="synth step">Alcalose respiratória com pO₂ baixo não é ansiedade: pense em TEP.</p>
+  <aside class="notes">Intercalação com o caso 11: mesma gasometria ácido-base, oxigenação oposta.</aside>
+</section>
+<section class="slide" data-title="Caso 13 · Asma em 3 tempos">
+  <div class="kick">caso 13 · o mesmo paciente em três horários</div>
+  <h1 style="font-size:1.4em">Rafael, 20 anos, crise de asma grave</h1>
+  <p class="small">Chiado, fala entrecortada, usando musculatura do pescoço. Três gasometrias ao longo da noite:</p>
+  <div class="row" style="gap:.8em;align-items:flex-start">
+    <div class="col"><div class="ticket"><div class="th"><span>21 H · CHEGADA</span></div><div class="r"><span>pH</span><b class="hi">7,51</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b>23</b></div></div><div class="ans step small" style="margin-top:1em;background:var(--alk-s);border-color:var(--alk)"><b>Alcalose respiratória.</b> Com falta de ar, ele respira rápido e joga CO₂ fora. Esperado na crise.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>23 H · "MELHOROU?"</span></div><div class="r"><span>pH</span><b>7,40</b></div><div class="r"><span>pCO₂</span><b>40</b></div><div class="r"><span>HCO₃⁻</span><b>24</b></div></div><div class="ans no step small" style="margin-top:1em"><b>Perigo!</b> Continua em crise e a pCO₂ voltou a 40: ele está <b>cansando</b>. Não é melhora.</div></div>
+    <div class="col"><div class="ticket"><div class="th"><span>01 H · SONOLENTO</span></div><div class="r"><span>pH</span><b class="lo">7,26</b></div><div class="r"><span>pCO₂</span><b class="hi">58</b></div><div class="r"><span>HCO₃⁻</span><b>25</b></div></div><div class="ans no step small" style="margin-top:1em"><b>Acidose respiratória aguda.</b> O músculo falhou, o CO₂ acumula. UTI e via aérea.</div></div>
+  </div>
+  <p class="synth step">Asmático em crise com pCO₂ normal está cansando, não melhorando.</p>
+  <aside class="notes">Um dos casos mais importantes para a prática: gasometria "normal" é sinal de falência na crise grave.</aside>
+</section>
+<section class="slide" data-title="Caso 14 · Juliana, 29 anos, 32 semanas de gestação">
+  <div class="kick">caso 14 · respira demais de propósito</div>
+  <h1 style="font-size:1.4em">Juliana, 29 anos, 32 semanas de gestação</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>JULIANA · PRÉ-NATAL</span></div><div class="r"><span>pH</span><b>7,42</b></div><div class="r"><span>pCO₂</span><b class="lo">30</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">19</b></div></div><div class="vitals">Assintomática</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Gasometria colhida por outro motivo. Nenhuma queixa. O residente se assusta com a pCO₂ baixa.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>A <b>progesterona</b> estimula o centro respiratório: a gestante respira mais durante meses. O rim teve tempo de eliminar bicarbonato — <b>alcalose respiratória crônica compensada</b>.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,42 → normal. <b>2.</b> pCO₂ 30 baixa (lado básico) → <b>alcalose respiratória</b>. <b>3.</b> 1 degrau × 5 (crônica) → HCO₃⁻ 19: bate.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>É <b>fisiológico</b>. Pegadinha: numa gestante com asma ou pneumonia, uma pCO₂ de 40 já significa retenção de CO₂.</div>
+    </div>
+  </div>
+  <p class="synth step">Na gestação, pCO₂ baixa é normal; pCO₂ "normal" é alerta.</p>
+  <aside class="notes">Alcalose respiratória crônica é o único distúrbio que pode normalizar o pH. Altitude e cirrose fazem o mesmo.</aside>
+</section>
+<section class="slide" data-title="Caso 15 · Seu Benedito, 81 anos, &quot;diferente&quot; desde ontem">
+  <div class="kick">caso 15 · respira demais</div>
+  <h1 style="font-size:1.4em">Seu Benedito, 81 anos, "diferente" desde ontem</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>SR. BENEDITO · PS</span></div><div class="r"><span>pH</span><b class="hi">7,50</b></div><div class="r"><span>pCO₂</span><b class="lo">28</b></div><div class="r"><span>HCO₃⁻</span><b>21</b></div><div class="sep"></div><div class="r"><span>Lactato</span><b>1,6</b></div></div><div class="vitals">T 38,6 °C · FR 26 · confuso</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>A filha diz que ele está confuso e "respirando rápido". Febre. Ardência ao urinar há 3 dias.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>Na <b>sepse inicial</b>, febre e substâncias inflamatórias estimulam a respiração antes mesmo de a pressão cair. O primeiro distúrbio costuma ser alcalose respiratória.</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,50 → alcalemia. <b>2.</b> pCO₂ 28 baixa → <b>alcalose respiratória</b>. <b>3.</b> 1,2 degrau × 2 → HCO₃⁻ ≈ 21,6: aguda.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Idoso confuso + taquipneia + foco infeccioso = <b>sepse até prova em contrário</b>. Se piorar, o lactato sobe e aparece a acidose metabólica.</div>
+    </div>
+  </div>
+  <p class="synth step">Taquipneia no idoso febril é sinal precoce de sepse.</p>
+  <aside class="notes">Frequência respiratória ≥ 22 faz parte do qSOFA.</aside>
+</section>
+<section class="slide" data-title="Caso 16 · Dona Célia, 45 anos, tomou uma caixa de AAS">
+  <div class="kick">caso 16 · dois distúrbios de uma vez</div>
+  <h1 style="font-size:1.4em">Dona Célia, 45 anos, tomou uma caixa de AAS</h1>
+  <div class="case-grid">
+    <div class="case-side"><div class="ticket"><div class="th"><span>D. CÉLIA · INTOXICAÇÃO</span></div><div class="r"><span>pH</span><b class="hi">7,46</b></div><div class="r"><span>pCO₂</span><b class="lo">22</b></div><div class="r"><span>HCO₃⁻</span><b class="lo">15</b></div></div><div class="vitals">Zumbido · vômitos · taquipneia</div></div>
+    <div class="case-col">
+      <div class="card"><span class="lbl">a história</span>Tentativa de autoextermínio com ácido acetilsalicílico há 4 horas. Zumbido nos ouvidos, vômitos, respirando rápido.</div>
+      <div class="card atlas step"><span class="lbl">o que aconteceu no corpo</span>O salicilato faz <b>duas coisas</b>: estimula direto o centro respiratório (CO₂ cai → alcalose respiratória) e atrapalha o metabolismo celular, acumulando ácido (HCO₃⁻ cai → acidose metabólica).</div>
+      <div class="card step"><span class="lbl">leitura em 3 passos</span><b>1.</b> 7,46 → alcalemia. <b>2.</b> pCO₂ 22 baixa → <b>alcalose respiratória</b>. <b>3.</b> Aguda esperaria HCO₃⁻ ≈ 20; está 15 — baixo demais → <b>+ acidose metabólica</b>.</div>
+      <div class="card warn step"><span class="lbl">na prática</span>Distúrbio misto clássico de prova. Tratamento em centro de toxicologia: alcalinizar a urina, hemodiálise nos graves. Sempre ofereça cuidado em saúde mental após estabilizar.</div>
+    </div>
+  </div>
+  <p class="synth step">AAS acelera a respiração e acumula ácido: dois distúrbios de uma vez.</p>
+  <aside class="notes">Volta com mais detalhe na Aula 2 (ânion gap).</aside>
+</section>
+<section class="slide" data-title="Mapa clínico dos 4 distúrbios">
+  <div class="kick">resumo para fotografar</div>
+  <h1>O mapa clínico dos quatro distúrbios</h1>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6em;font-size:.95em">
+    <div class="card acid"><h2 class="c-acid">Acidose metabólica</h2><p style="font-size:.78em;margin:.2em 0"><b>Perdeu base:</b> diarreia, acetazolamida.<br><b>Ganhou ácido:</b> cetoacidose, choque (lático), rim parado (DRC), AAS.<br><b>Pista:</b> Kussmaul.</p></div>
+    <div class="card alk"><h2 class="c-alk">Alcalose metabólica</h2><p style="font-size:.78em;margin:.2em 0"><b>Perdeu ácido:</b> vômito, sonda gástrica.<br><b>Perdeu água/Cl⁻/K⁺:</b> furosemida, tiazida.<br><b>Ganhou base:</b> antiácido, bicarbonato.<br><b>Pista:</b> K⁺ baixo.</p></div>
+    <div class="card acid"><h2 class="c-acid">Acidose respiratória</h2><p style="font-size:.78em;margin:.2em 0"><b>Aguda:</b> opioide, benzodiazepínico, asma cansando, fraqueza muscular.<br><b>Crônica:</b> DPOC retentor, obesidade grave.<br><b>Pista:</b> sonolência, respiração lenta.</p></div>
+    <div class="card alk"><h2 class="c-alk">Alcalose respiratória</h2><p style="font-size:.78em;margin:.2em 0"><b>Aguda:</b> ansiedade, dor, febre, sepse inicial, TEP, asma no início, AAS.<br><b>Crônica:</b> gestação, altitude, cirrose.<br><b>Pista:</b> formigamento, taquipneia.</p></div>
+  </div>
+  <aside class="notes">Deixe projetado para a turma fotografar.</aside>
+</section>
+<section class="slide" data-title="Jogo: quem é o culpado?">
+  <div class="kick">jogo · 20 pacientes</div>
+  <h1>Quem é o distúrbio?</h1>
+  <p class="small">Leia a história e escolha. Sem números — só a clínica.</p>
+  <div class="card" style="margin-top:.3em;min-height:3.2em;display:flex;align-items:center;justify-content:space-between;gap:1em">
+    <div class="big" id="gm-q" style="font-size:1.2em">—</div>
+    <div class="mono small sub" id="gm-n">1 / 20</div>
+  </div>
+  <div class="gopt" id="gm-opts">
+    <button class="btn" data-a="am">Acidose metabólica</button>
+    <button class="btn" data-a="lm">Alcalose metabólica</button>
+    <button class="btn" data-a="ar">Acidose respiratória</button>
+    <button class="btn" data-a="lr">Alcalose respiratória</button>
+    <button class="btn" data-a="mx">Distúrbio misto</button>
+  </div>
+  <div class="verdict" id="gm-fb" style="min-height:2.6em">Escolha uma opção.</div>
+  <div class="row" style="gap:.5em;margin-top:.5em;align-items:center">
+    <button class="btn" id="gm-next">Próximo paciente</button>
+    <button class="btn" id="gm-reset">Recomeçar embaralhado</button>
+    <div class="mono small" id="gm-score" style="margin-left:auto">Acertos: 0</div>
+  </div>
+  <aside class="notes">Os pacientes aparecem em ordem embaralhada. Bom para a turma responder em voz alta.</aside>
+</section>
+<section class="slide" data-title="Frases-gancho">
+  <div class="kick">revisão</div>
+  <h1>Oito frases para lembrar dos pacientes</h1>
+  <div class="steps6" style="grid-template-columns:1fr 1fr;font-size:.8em">
+    <div class="s6 step"><div class="n">1</div><div><b>Vômito sai por cima: o pH sobe.</b></div></div>
+    <div class="s6 step"><div class="n">2</div><div><b>Diarreia sai por baixo: o pH desce.</b></div></div>
+    <div class="s6 step"><div class="n">3</div><div><b>Diurético tira água, cloro e potássio: alcalose.</b></div></div>
+    <div class="s6 step"><div class="n">4</div><div><b>Diamox faz o rim perder base: acidose.</b></div></div>
+    <div class="s6 step"><div class="n">5</div><div><b>Kussmaul é o pulmão compensando ácido.</b></div></div>
+    <div class="s6 step"><div class="n">6</div><div><b>Opioide desliga a respiração: CO₂ sobe.</b></div></div>
+    <div class="s6 step"><div class="n">7</div><div><b>Asmático em crise com pCO₂ normal está cansando.</b></div></div>
+    <div class="s6 step"><div class="n">8</div><div><b>Formigamento é o cálcio fugindo na alcalose.</b></div></div>
+  </div>
+  <aside class="notes">Revele uma a uma; a turma diz qual paciente a frase lembra.</aside>
+</section>
+<section class="slide dark" data-title="Fim do complemento">
+  <div style="margin:auto;text-align:center;max-width:27em">
+    <div class="kick">fim do complemento da aula 1</div>
+    <p style="font-size:1.5em;font-weight:800;line-height:1.3">Atrás de cada gasometria existe alguém que vomitou, respirou demais ou deixou de respirar.</p>
+    <p class="sub">Na Aula 2: por que o Gabriel, o Seu Antônio e a Dona Célia escondem um "ânion" no sangue.</p>
+    <p style="font-family:'Dancing Script',cursive;font-size:1.7em;color:#6FC7DD;margin-top:.8em">— Dr. André Rossanno</p>
+  </div>
+  <aside class="notes">Ponte direta para a Aula 2: CAD, lática e salicilato têm ânion gap aumentado.</aside>
+</section>
+<div id="foot"><span class="sig">Dr. André Rossanno</span><span id="count" class="mono">1 / 28</span></div>
+<div id="bar"></div>
+</div>
+<div id="ui">
+  <button id="b-prev" aria-label="Anterior">◀</button>
+  <button id="b-next" aria-label="Próximo">▶</button>
+  <button id="b-grid">Índice</button>
+  <button id="b-notes">Notas</button>
+  <button id="b-fs">Tela cheia</button>
+  <button id="b-sm">A−</button>
+  <button id="b-lg">A+</button>
+  <button id="b-mov">Movimento</button>
+</div>
+<div id="notes"></div>
+<div id="grid"></div>
+<script>
+(function(){
+  var KEY='atlasGasometria_aula1_casos_v1';
+  var stage=document.getElementById('stage');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var N=slides.length, cur=0;
+  var foot=document.getElementById('foot'), bar=document.getElementById('bar'), count=document.getElementById('count');
+  var notesEl=document.getElementById('notes'), grid=document.getElementById('grid'), ui=document.getElementById('ui');
+  function store(k,v){try{localStorage.setItem(KEY+'_'+k,v)}catch(e){}}
+  function read(k){try{return localStorage.getItem(KEY+'_'+k)}catch(e){return null}}
+
+  function fit(){
+    var s=Math.min(window.innerWidth/1600,window.innerHeight/900);
+    stage.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit();
+
+  function show(i,allSteps){
+    if(i<0||i>=N) return;
+    slides[cur].classList.remove('on');
+    cur=i;
+    var s=slides[cur];
+    s.classList.add('on');
+    [].forEach.call(s.querySelectorAll('.step'),function(e){e.classList.toggle('on',!!allSteps)});
+    s.scrollTop=0;
+    count.textContent=(cur+1)+' / '+N;
+    bar.style.width=((cur+1)/N*100)+'%';
+    foot.classList.toggle('dk',s.classList.contains('dark'));
+    var n=s.querySelector('aside.notes');
+    notesEl.innerHTML='<b>Slide '+(cur+1)+' · '+(s.dataset.title||'')+'</b><br>'+(n?n.innerHTML:'Sem notas.');
+    store('slide',cur);
+    if(location.hash!=='#'+(cur+1)) history.replaceState(null,'','#'+(cur+1));
+  }
+  function next(){
+    var h=slides[cur].querySelector('.step:not(.on)');
+    if(h){h.classList.add('on');return}
+    if(cur<N-1) show(cur+1,false);
+  }
+  function prev(){
+    var on=slides[cur].querySelectorAll('.step.on');
+    if(on.length){on[on.length-1].classList.remove('on');return}
+    if(cur>0) show(cur-1,true);
+  }
+  function toggleGrid(){
+    if(grid.classList.contains('open')){grid.classList.remove('open');return}
+    grid.innerHTML='';
+    slides.forEach(function(s,i){
+      var b=document.createElement('button');
+      b.innerHTML='<small>'+(i+1)+'</small>'+(s.dataset.title||'Slide');
+      if(i===cur) b.className='cur';
+      b.onclick=function(){show(i,false);grid.classList.remove('open')};
+      grid.appendChild(b);
+    });
+    grid.classList.add('open');
+  }
+  var fs=parseFloat(read('scale'))||1;
+  function setFs(v){fs=Math.max(.8,Math.min(1.3,Math.round(v*100)/100));document.documentElement.style.setProperty('--fs',fs);store('scale',fs)}
+  setFs(fs);
+  function fullscreen(){
+    if(!document.fullscreenElement){(document.documentElement.requestFullscreen||function(){}).call(document.documentElement)}
+    else if(document.exitFullscreen){document.exitFullscreen()}
+  }
+  if(read('reduce')==='1'||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) document.body.classList.add('reduce');
+
+  document.addEventListener('keydown',function(e){
+    var t=e.target.tagName;
+    if(t==='INPUT'||t==='TEXTAREA') return;
+    var k=e.key;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'||k==='Enter'){e.preventDefault();next()}
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+    else if(k==='Home') show(0,false);
+    else if(k==='End') show(N-1,true);
+    else if(k==='g'||k==='G') toggleGrid();
+    else if(k==='n'||k==='N') document.body.classList.toggle('show-notes');
+    else if(k==='f'||k==='F') fullscreen();
+    else if(k==='+'||k==='=') setFs(fs+.05);
+    else if(k==='-') setFs(fs-.05);
+    else if(k==='0') setFs(1);
+    else if(k==='m'||k==='M'){document.body.classList.toggle('reduce');store('reduce',document.body.classList.contains('reduce')?'1':'0')}
+    else if(k==='Escape') grid.classList.remove('open');
+  });
+  stage.addEventListener('click',function(e){
+    if(Date.now()-swiped<500) return;
+    if(e.target.closest('button,input,label,select,a,.ctl')) return;
+    var r=stage.getBoundingClientRect();
+    var x=(e.clientX-r.left)/r.width;
+    if(x<0.28) prev(); else next();
+  });
+  if('ontouchstart' in window||navigator.maxTouchPoints>0){document.body.classList.add('touch');ui.classList.add('show')}
+  var tx=null, swiped=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(tx===null) return;
+    var dx=e.changedTouches[0].clientX-tx; tx=null;
+    if(e.target.closest&&e.target.closest('input,button')) return;
+    if(dx<-50){next();swiped=Date.now()} else if(dx>50){prev();swiped=Date.now()}
+  });
+  var hideT;
+  document.addEventListener('mousemove',function(){if(document.body.classList.contains('touch'))return;ui.classList.add('show');clearTimeout(hideT);hideT=setTimeout(function(){ui.classList.remove('show')},2200)});
+  document.getElementById('b-prev').onclick=prev;
+  document.getElementById('b-next').onclick=next;
+  document.getElementById('b-grid').onclick=toggleGrid;
+  document.getElementById('b-notes').onclick=function(){document.body.classList.toggle('show-notes')};
+  document.getElementById('b-fs').onclick=fullscreen;
+  document.getElementById('b-sm').onclick=function(){setFs(fs-.05)};
+  document.getElementById('b-lg').onclick=function(){setFs(fs+.05)};
+  document.getElementById('b-mov').onclick=function(){document.body.classList.toggle('reduce');store('reduce',document.body.classList.contains('reduce')?'1':'0')};
+
+  function fmt(x,d){return x.toFixed(d).replace('.',',')}
+  function phOf(h,c){return 6.1+Math.log10(h/(0.03*c))}
+
+
+  /* jogo */
+  var GAME=[["Vômitos incoercíveis há 3 dias", "lm", "Sai HCl pela boca: perde ácido."], ["Sonda nasogástrica aspirando no pós-operatório", "lm", "A sonda retira o suco gástrico, rico em HCl."], ["Diarreia aquosa grave por cólera", "am", "Fezes levam bicarbonato."], ["Furosemida em dose alta", "lm", "Perde água, Cl⁻ e K⁺: alcalose de contração."], ["Acetazolamida para glaucoma", "am", "O rim deixa escapar bicarbonato na urina."], ["Carbonato de cálcio várias vezes ao dia", "lm", "Engole base: síndrome leite-álcali."], ["DM1 sem insulina, hálito de fruta", "am", "Cetoácidos consomem bicarbonato."], ["Choque séptico com lactato 8", "am", "Tecido sem O₂ fabrica ácido lático."], ["Doença renal crônica avançada", "am", "Rim não elimina ácido nem repõe base."], ["Overdose de morfina, FR 6", "ar", "Centro respiratório deprimido: CO₂ acumula."], ["Overdose de benzodiazepínico com álcool", "ar", "Mesma lógica do opioide: respira de menos."], ["DPOC grave, retentor de CO₂", "ar", "Pulmão não elimina CO₂ há anos: crônica."], ["Guillain-Barré com fraqueza do diafragma", "ar", "Músculo fraco não ventila."], ["Crise de pânico com mãos em garra", "lr", "Hiperventila: CO₂ cai, cálcio ionizado cai."], ["TEP no pós-operatório, pO₂ 58", "lr", "Hipoxemia faz respirar demais."], ["Gestante de 32 semanas, assintomática", "lr", "Progesterona estimula a respiração: crônica."], ["Escalador a 4.000 metros de altitude", "lr", "Ar rarefeito, hipoxemia, hiperventilação."], ["Idoso febril, confuso e taquipneico", "lr", "Sepse inicial estimula a respiração."], ["Asma grave, agora sonolento, pCO₂ subindo", "ar", "O músculo cansou: acumula CO₂."], ["Intoxicação por AAS com zumbido", "mx", "Estimula a respiração e acumula ácido: misto."]], NAMES={am:'Acidose metabólica',lm:'Alcalose metabólica',ar:'Acidose respiratória',lr:'Alcalose respiratória',mx:'Distúrbio misto'};
+  var order=[],gi=0,score=0,answered=false;
+  function shuffle(){order=GAME.map(function(_,i){return i});for(var i=order.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=order[i];order[i]=order[j];order[j]=t}gi=0;score=0;draw()}
+  function draw(){
+    var it=GAME[order[gi]]; answered=false;
+    document.getElementById('gm-q').textContent=it[0];
+    document.getElementById('gm-n').textContent=(gi+1)+' / '+GAME.length;
+    document.getElementById('gm-score').textContent='Acertos: '+score;
+    var fb=document.getElementById('gm-fb'); fb.textContent='Escolha uma opção.'; fb.style.background='#EAF0F4';
+    [].forEach.call(document.querySelectorAll('#gm-opts .btn'),function(b){b.classList.remove('right','wrong')});
+  }
+  [].forEach.call(document.querySelectorAll('#gm-opts .btn'),function(b){
+    b.onclick=function(){
+      if(answered) return; answered=true;
+      var it=GAME[order[gi]], ok=b.dataset.a===it[1];
+      if(ok) score++;
+      b.classList.add(ok?'right':'wrong');
+      if(!ok) document.querySelector('#gm-opts .btn[data-a="'+it[1]+'"]').classList.add('right');
+      var fb=document.getElementById('gm-fb');
+      fb.textContent=(ok?'Certo! ':'Era '+NAMES[it[1]]+'. ')+it[2];
+      fb.style.background=ok?'var(--ok-s)':'var(--acid-s)';
+      document.getElementById('gm-score').textContent='Acertos: '+score+' de '+(gi+1);
+      store('game',score+'/'+(gi+1));
+    };
+  });
+  document.getElementById('gm-next').onclick=function(){ if(gi<GAME.length-1){gi++;draw()} else {var fb=document.getElementById('gm-fb');fb.textContent='Fim! '+score+' de '+GAME.length+'. Toque em "Recomeçar embaralhado" para jogar de novo.';fb.style.background='var(--atlas-s)'} };
+  document.getElementById('gm-reset').onclick=shuffle;
+  shuffle();
+
+  window.addEventListener('hashchange',function(){var h=parseInt(location.hash.slice(1),10);if(h>=1&&h<=N&&h-1!==cur)show(h-1,false)});
+  var start=parseInt((location.hash||'').slice(1),10);
+  if(!(start>=1&&start<=N)){var saved=parseInt(read('slide'),10);start=isNaN(saved)?1:saved+1}
+  slides[0].classList.add('on');
+  show(Math.max(0,Math.min(N-1,start-1)),false);
+})();
+</script>
+</body>
+</html>
