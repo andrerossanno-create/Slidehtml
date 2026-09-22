@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Questões · Rastreamento e Prevenção do Câncer de Mama | Dr. André Rossanno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#081627; --navy2:#0e2238;
+  --paper:#f6f9fc; --ink:#0d1b2a;
+  --rose:#ec6c99; --rose-deep:#b8336a; --rose-soft:rgba(236,108,153,.14);
+  --green:#2fa36b; --green-soft:rgba(47,163,107,.15);
+  --blue:#2aa3c7; --blue-soft:rgba(42,163,199,.15);
+  --red:#e0525f; --red-soft:rgba(224,82,95,.15);
+  --amber:#e8a33d; --amber-soft:rgba(232,163,61,.15);
+  --gold:#d9b26a;
+  --mute:rgba(255,255,255,.62); --mute2:rgba(255,255,255,.40);
+  --line:rgba(255,255,255,.14);
+  --sans:'Nunito','Trebuchet MS',Arial,sans-serif;
+  --mono:'IBM Plex Mono','Courier New',monospace;
+  --script:'Dancing Script','Brush Script MT',cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:#fff;line-height:1.55;
+  background:radial-gradient(1100px 620px at 82% -4%,#16314f 0%,var(--navy2) 44%,var(--navy) 100%);
+  background-attachment:fixed;min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{width:min(920px,92%);margin:0 auto}
+
+/* ---------- topo ---------- */
+header.hero{padding:64px 0 34px;text-align:center}
+.kick{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:16px}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:900;line-height:1.05;letter-spacing:-.02em}
+.sub{color:var(--mute);font-size:clamp(1rem,2.4vw,1.15rem);max-width:56ch;margin:18px auto 0}
+.sign{font-family:var(--script);font-size:1.6rem;color:var(--gold);margin-top:20px}
+
+/* ---------- barra de controle ---------- */
+.panel{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;
+  padding:20px 22px;margin:26px 0}
+.panel h3{font-size:.95rem;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mute2);font-weight:600;margin-bottom:14px}
+.filters{display:flex;gap:9px;flex-wrap:wrap}
+.f{font-family:var(--sans);font-weight:700;font-size:.9rem;padding:9px 15px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--mute);cursor:pointer;
+  transition:.16s;-webkit-tap-highlight-color:transparent}
+.f:hover{color:#fff;border-color:var(--rose)}
+.f.on{background:var(--rose-soft);border-color:var(--rose);color:#fff}
+.f.n1.on{background:var(--blue-soft);border-color:var(--blue)}
+.f.n2.on{background:var(--green-soft);border-color:var(--green)}
+.f.n3.on{background:var(--amber-soft);border-color:var(--amber)}
+
+/* ---------- placar ---------- */
+.score{display:flex;gap:26px;flex-wrap:wrap;align-items:center;margin-top:16px;
+  padding-top:16px;border-top:1px solid var(--line)}
+.sc{display:flex;flex-direction:column}
+.sc .v{font-size:1.7rem;font-weight:900;line-height:1;font-family:var(--mono)}
+.sc .l{font-size:.72rem;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mute2);margin-top:5px}
+.sc.ok .v{color:var(--green)} .sc.no .v{color:var(--red)} .sc.pc .v{color:var(--rose)}
+.acts{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-weight:800;font-size:.88rem;padding:10px 18px;border-radius:999px;
+  border:1.5px solid var(--rose);background:var(--rose-soft);color:#fff;cursor:pointer;transition:.18s;
+  -webkit-tap-highlight-color:transparent}
+.btn:hover{background:rgba(236,108,153,.3)}
+.btn.ghost{border-color:var(--line);background:rgba(255,255,255,.05);color:var(--mute)}
+.btn.ghost:hover{color:#fff;border-color:var(--mute)}
+
+/* ---------- questão ---------- */
+.q{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;
+  padding:24px 24px 20px;margin-bottom:18px;scroll-margin-top:18px}
+.q.done{border-color:rgba(255,255,255,.22)}
+.qh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.qn{font-family:var(--mono);font-size:.82rem;color:var(--mute2);letter-spacing:.1em}
+.tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mute)}
+.tag.n1{border-color:rgba(42,163,199,.55);color:#9adcef;background:var(--blue-soft)}
+.tag.n2{border-color:rgba(47,163,107,.55);color:#8fe0b8;background:var(--green-soft)}
+.tag.n3{border-color:rgba(232,163,61,.55);color:#f3cf94;background:var(--amber-soft)}
+.stem{font-size:1.06rem;line-height:1.6;margin-bottom:16px}
+.stem b{font-weight:800}
+.alts{display:flex;flex-direction:column;gap:9px}
+.alt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+  font-family:var(--sans);font-size:.98rem;line-height:1.5;color:rgba(255,255,255,.9);
+  padding:13px 16px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  cursor:pointer;transition:.16s;-webkit-tap-highlight-color:transparent}
+.alt:hover{background:rgba(255,255,255,.1)}
+.alt .k{font-family:var(--mono);font-weight:600;font-size:.86rem;color:var(--mute2);
+  flex:none;width:18px;padding-top:2px}
+.alt .tx{flex:1}
+.q.done .alt{cursor:default}
+.q.done .alt:hover{background:rgba(255,255,255,.04)}
+.alt.right{border-color:var(--green);background:var(--green-soft)}
+.alt.right .k{color:var(--green)}
+.alt.chosen-wrong{border-color:var(--red);background:var(--red-soft)}
+.alt.chosen-wrong .k{color:var(--red)}
+.q.done .alt.other{opacity:.72}
+.cmt{display:none;font-size:.9rem;line-height:1.55;color:var(--mute);margin-top:9px;
+  padding-left:30px;border-left:2px solid var(--line);margin-left:2px}
+.q.done .cmt{display:block;animation:fade .3s ease}
+.alt.right + .cmt{border-left-color:var(--green);color:rgba(255,255,255,.82)}
+.alt.chosen-wrong + .cmt{border-left-color:var(--red)}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.anchor{display:none;margin-top:16px;padding:14px 18px;border-radius:0 12px 12px 0;
+  border-left:3px solid var(--gold);background:rgba(217,178,106,.09);font-size:.95rem}
+.q.done .anchor{display:block}
+.anchor .lb{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px}
+.src{font-family:var(--mono);font-size:.7rem;color:var(--mute2);margin-top:12px;display:none;line-height:1.5}
+.q.done .src{display:block}
+
+/* ---------- misc ---------- */
+.sechead{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mute2);margin:40px 0 16px;display:flex;align-items:center;gap:12px}
+.sechead::after{content:'';flex:1;height:1px;background:var(--line)}
+.empty{text-align:center;color:var(--mute2);padding:40px 0;font-size:.95rem}
+footer{text-align:center;padding:54px 0 60px;color:var(--mute2);font-size:.85rem}
+footer .sign{font-size:1.4rem;margin-bottom:6px}
+.refs{font-size:.82rem;color:var(--mute);line-height:1.8}
+#top{position:fixed;right:16px;bottom:16px;width:48px;height:48px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(8,22,39,.9);color:#fff;font-size:20px;cursor:pointer;
+  display:none;place-items:center;z-index:50;-webkit-tap-highlight-color:transparent}
+#top.on{display:grid}
+@media(max-width:620px){
+  .q{padding:20px 17px 16px;border-radius:15px}
+  .stem{font-size:1rem}
+  .alt{font-size:.94rem;padding:12px 13px}
+  .cmt{padding-left:0;margin-left:0;padding-top:2px}
+  .acts{margin-left:0;width:100%}
+  .score{gap:18px}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="kick">Atlas Mental · banco de questões</div>
+  <h1>Rastreamento e Prevenção<br>do Câncer de Mama</h1>
+  <p class="sub">40 questões comentadas — <b>toda alternativa</b> tem explicação, não só a correta.
+     Companheiro da aula <i>As Três Portas da Mama</i>.</p>
+  <div class="sign">Dr. André Rossanno</div>
+</div></header>
+
+<main class="wrap">
+  <div class="panel">
+    <h3>Filtrar por nível</h3>
+    <div class="filters" id="fLevel">
+      <button class="f on" data-n="0">Todas</button>
+      <button class="f n1" data-n="1">N1 · Conceito</button>
+      <button class="f n2" data-n="2">N2 · Aplicação clínica</button>
+      <button class="f n3" data-n="3">N3 · Controvérsia e pegadinha</button>
+    </div>
+    <h3 style="margin-top:18px">Filtrar por tema</h3>
+    <div class="filters" id="fTema"></div>
+    <div class="score">
+      <div class="sc pc"><span class="v" id="sDone">0</span><span class="l">respondidas</span></div>
+      <div class="sc ok"><span class="v" id="sOk">0</span><span class="l">acertos</span></div>
+      <div class="sc no"><span class="v" id="sNo">0</span><span class="l">erros</span></div>
+      <div class="sc"><span class="v" id="sPct">—</span><span class="l">aproveitamento</span></div>
+      <div class="acts">
+        <button class="btn ghost" onclick="onlyWrong()" id="bWrong">Refazer só os erros</button>
+        <button class="btn ghost" onclick="resetAll()">Zerar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="list"></div>
+  <div class="empty" id="empty" style="display:none">Nenhuma questão com esse filtro.</div>
+
+  <div class="sechead">Referências</div>
+  <div class="panel refs">
+    <b>INCA.</b> Estimativa 2026–2028: incidência de câncer no Brasil. Rio de Janeiro, 2026.<br>
+    <b>BRASIL. Ministério da Saúde</b> — SAES/DECAN/CGCAN. Nota Técnica nº 626/2025, set/2025.<br>
+    <b>CBR · SBM · FEBRASGO.</b> Nota Técnica da Comissão Nacional de Mamografia, jan/2025.<br>
+    <b>URBAN, L. A. B. D. et al.</b> Recomendações para o rastreamento do câncer de mama, 2023.<br>
+    <b>USPSTF.</b> Screening for Breast Cancer: Recommendation Statement. JAMA, 2024.
+    <div style="height:12px"></div>
+    <span style="font-size:.78rem;color:var(--mute2)">Recomendações de instituições diferentes estão sempre identificadas e separadas.
+    Onde o dado quantitativo não estava documentado na fonte, foi usada explicação qualitativa —
+    nenhum risco relativo, NNT ou sensibilidade foi inventado.</span>
+  </div>
+</main>
+
+<footer>
+  <div class="sign">Dr. André Rossanno</div>
+  memoriapotencial.com.br
+</footer>
+<button id="top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">↑</button>
+
+<script>
+/* =========================================================
+   BANCO — 40 questões · 3 níveis · comentário em toda alternativa
+   n: nível (1 conceito · 2 aplicação · 3 controvérsia/pegadinha)
+   t: tema · s: enunciado · a: alternativas {t:texto, c:comentário}
+   ok: índice da correta · k: âncora · f: fonte
+   ========================================================= */
+var Q=[
+{n:1,t:'Epidemiologia',s:'Segundo a Estimativa do INCA para o triênio 2026–2028, o câncer de mama feminina no Brasil corresponde a aproximadamente quantos casos novos por ano?',
+ a:[{t:'Cerca de 30 mil',c:'Subestima bastante. Esse número não corresponde a nenhuma estimativa recente do INCA para a mama.'},
+    {t:'Cerca de 78,6 mil',c:'Correto. A Estimativa 2026–2028 aponta 78.610 casos novos por ano, com taxa bruta de 71,57 casos por 100 mil mulheres.'},
+    {t:'Cerca de 150 mil',c:'Superestima. Esse patamar se aproxima da soma de mama e próstata juntos, não da mama isoladamente.'},
+    {t:'Cerca de 780 mil',c:'Esse é o total estimado de casos novos de câncer de TODOS os tipos por ano no Brasil, não da mama.'}],
+ ok:1,f:'INCA, Estimativa 2026–2028.'},
+
+{n:1,t:'Epidemiologia',s:'Excluídos os tumores de pele não melanoma, o câncer de mama representa aproximadamente que fração dos casos novos de câncer em mulheres brasileiras?',
+ a:[{t:'Cerca de 10%',c:'Subestima. Nenhum tumor isolado responde por fração tão pequena na mulher quando se exclui pele não melanoma.'},
+    {t:'Cerca de 30%',c:'Correto. É a neoplasia maligna mais incidente entre mulheres brasileiras nessa condição — aproximadamente 3 em cada 10 casos novos.'},
+    {t:'Cerca de 55%',c:'Superestima. Se fosse metade, praticamente não haveria espaço para colo do útero, cólon, pulmão e tireoide nas estatísticas femininas.'},
+    {t:'Cerca de 70%',c:'Muito acima. Nenhum sítio tumoral isolado tem essa participação na incidência feminina.'}],
+ ok:1,f:'INCA, Estimativa 2026–2028.'},
+
+{n:1,t:'Conceitos',s:'Qual a diferença conceitual entre rastreamento e investigação diagnóstica?',
+ a:[{t:'Rastreamento busca doença em pessoa assintomática; investigação diagnóstica explica um sinal ou sintoma já presente',c:'Correto. É a distinção que organiza toda a conduta: rastreamento procura o invisível, diagnóstico explica o sinal.'},
+    {t:'Rastreamento usa mamografia e investigação diagnóstica usa ultrassom',c:'Errado. A distinção é pela situação clínica da paciente, não pelo método. A mesma mamografia pode ser de rastreamento ou diagnóstica.'},
+    {t:'Rastreamento é feito na atenção primária e investigação no nível secundário',c:'Errado. O nível de atenção é uma questão de organização do serviço, não a definição conceitual.'},
+    {t:'Rastreamento é anual e investigação diagnóstica é imediata',c:'Errado. Periodicidade é consequência da estratégia adotada, não o critério que separa os dois conceitos.'}],
+ ok:0,k:'RASTREAMENTO PROCURA O INVISÍVEL. DIAGNÓSTICO EXPLICA O SINAL.'},
+
+{n:1,t:'Conceitos',s:'Mamografia é corretamente classificada como qual tipo de ação?',
+ a:[{t:'Prevenção primária',c:'Errado. Prevenção primária atua ANTES de a doença existir. A mamografia não impede o câncer de surgir.'},
+    {t:'Detecção precoce (prevenção secundária)',c:'Correto. Ela procura doença que já existe, mas ainda não se manifestou clinicamente.'},
+    {t:'Prevenção terciária',c:'Errado. Prevenção terciária visa reduzir sequelas e complicações em quem já tem a doença estabelecida.'},
+    {t:'Prevenção quaternária',c:'Errado. Prevenção quaternária é evitar o excesso de intervenção médica — conceito relacionado ao sobrediagnóstico, mas não é a mamografia em si.'}],
+ ok:1,k:'MAMOGRAFIA NÃO EVITA O NASCIMENTO DO CÂNCER. ELA TENTA ENCONTRÁ-LO MAIS CEDO.'},
+
+{n:1,t:'Vieses',s:'O que é a janela pré-clínica detectável?',
+ a:[{t:'O intervalo entre dois exames de rastreamento consecutivos',c:'Errado. Esse é o intervalo de rastreamento, definido pela estratégia adotada — não uma propriedade biológica do tumor.'},
+    {t:'O período em que a doença já existe e já é detectável por imagem, mas ainda não produziu manifestação clínica',c:'Correto. É exatamente nessa janela — e só nela — que o rastreamento tem chance de agir.'},
+    {t:'O tempo entre o diagnóstico e o início do tratamento',c:'Errado. Esse é o intervalo terapêutico, indicador de qualidade assistencial.'},
+    {t:'O período em que a paciente apresenta sintomas mas ainda não procurou o serviço',c:'Errado. Nesse momento a doença já é clinicamente perceptível — a paciente já saiu do território do rastreamento.'}],
+ ok:1},
+
+{n:1,t:'Vieses',s:'Um programa de rastreamento mostra que a sobrevida em 5 anos subiu de 60% para 85%. Isso prova, por si só, que o programa salvou vidas?',
+ a:[{t:'Sim, sobrevida em 5 anos é o desfecho padrão para avaliar rastreamento',c:'Errado. Sobrevida é justamente o desfecho mais vulnerável aos vieses do rastreamento.'},
+    {t:'Não — pode ser lead-time bias; o desfecho que interessa é mortalidade',c:'Correto. Antecipar a data do diagnóstico alonga o "tempo desde o diagnóstico" mesmo que a data do óbito não mude.'},
+    {t:'Não — porque sobrevida só vale se ajustada para idade',c:'O ajuste por idade é importante, mas não é o problema central aqui. O problema é estrutural: o relógio começou a contar mais cedo.'},
+    {t:'Sim, desde que o estudo seja randomizado',c:'Mesmo em ensaio randomizado, comparar sobrevida a partir do diagnóstico entre rastreados e não rastreados permanece enviesado. Compara-se mortalidade.'}],
+ ok:1,k:'SOBREVIDA NÃO É DESFECHO CONFIÁVEL PARA JULGAR RASTREAMENTO. MORTALIDADE É.'},
+
+{n:1,t:'Vieses',s:'Qual a diferença entre falso-positivo e sobrediagnóstico?',
+ a:[{t:'São sinônimos; ambos significam exame alterado sem doença',c:'Errado, e é o erro conceitual mais comum do tema. No sobrediagnóstico existe câncer de verdade.'},
+    {t:'No falso-positivo não há câncer; no sobrediagnóstico há câncer, mas ele nunca teria se manifestado',c:'Correto. Um é erro do exame, reversível pela investigação. O outro é um câncer real que não precisaria ter sido encontrado — e leva a tratamento.'},
+    {t:'No falso-positivo há câncer indolente; no sobrediagnóstico não há lesão nenhuma',c:'Invertido. É exatamente o contrário.'},
+    {t:'Falso-positivo ocorre na mamografia e sobrediagnóstico na ressonância',c:'Errado. Ambos são propriedades do processo de rastrear, não de um método específico.'}],
+ ok:1,k:'SOBREDIAGNÓSTICO ≠ FALSO-POSITIVO. NO SOBREDIAGNÓSTICO, A LESÃO É REALMENTE CÂNCER.'},
+
+{n:1,t:'Vieses',s:'O que é câncer de intervalo?',
+ a:[{t:'Câncer detectado na primeira rodada de um programa de rastreamento',c:'Errado. Esse é o câncer prevalente, detectado na rodada inicial.'},
+    {t:'Câncer que surge clinicamente entre dois exames de rastreamento, após um exame negativo',c:'Correto. Costuma corresponder a tumores de crescimento mais rápido, que atravessam depressa a janela detectável.'},
+    {t:'Câncer diagnosticado em mulher fora da faixa etária de rastreamento',c:'Errado. Esse é apenas um caso fora do programa, não um câncer de intervalo.'},
+    {t:'Câncer bilateral diagnosticado simultaneamente',c:'Errado. Bilateralidade sincrônica é outra situação, relevante para suspeita de predisposição hereditária.'}],
+ ok:1},
+
+{n:1,t:'Risco',s:'Entre os fatores de risco para câncer de mama, qual é o maior determinante epidemiológico na população geral?',
+ a:[{t:'História familiar de primeiro grau',c:'É um fator importante e muda a estratégia, mas a maioria dos casos ocorre em mulheres sem história familiar conhecida.'},
+    {t:'Idade',c:'Correto. A idade é o grande determinante populacional — e é justamente por isso que as diretrizes organizam o rastreamento por faixa etária.'},
+    {t:'Uso de anticoncepcional oral na adolescência',c:'Exposições hormonais têm avaliação individualizada, mas não configuram o principal determinante epidemiológico.'},
+    {t:'Consumo de álcool',c:'É um fator de risco modificável relevante — e por isso vale a conversa no consultório —, mas não supera a idade como determinante populacional.'}],
+ ok:1},
+
+{n:1,t:'Risco',s:'Qual dos fatores abaixo é MODIFICÁVEL?',
+ a:[{t:'Densidade mamária',c:'A densidade pode variar ao longo da vida, mas não é um alvo de intervenção do qual se disponha no consultório. É tratada como fator pouco modificável.'},
+    {t:'Consumo de álcool',c:'Correto. Está entre os fatores modificáveis com associação reconhecida, e é um dos poucos pontos em que a consulta tem alavanca real.'},
+    {t:'História pessoal de câncer de mama',c:'Não modificável. Pelo contrário: é um marcador que retira a paciente do algoritmo de risco habitual.'},
+    {t:'Radioterapia torácica prévia em idade jovem',c:'Não modificável — já aconteceu. E é um dos critérios que definem alto risco.'}],
+ ok:1},
+
+{n:1,t:'Prevenção',s:'Qual condição está associada a REDUÇÃO do risco de câncer de mama?',
+ a:[{t:'Menarca precoce',c:'Fator reprodutivo associado a maior exposição hormonal ao longo da vida, não a proteção.'},
+    {t:'Amamentação',c:'Correto. É apresentada como fator associado a redução de risco, e entra na conversa de prevenção primária.'},
+    {t:'Menopausa tardia',c:'Também se relaciona a maior janela de exposição hormonal, não a proteção.'},
+    {t:'Ganho de peso após a menopausa',c:'Ao contrário: o excesso de peso, sobretudo após a menopausa, está entre os fatores de risco modificáveis.'}],
+ ok:1},
+
+{n:1,t:'Mama densa',s:'A mama densa cria dois problemas distintos para o rastreamento. Quais são?',
+ a:[{t:'Mascaramento da lesão e maior risco de câncer de mama',c:'Correto. Um é problema de detecção (a mamografia depende de contraste); o outro é biológico. Quem lembra só do primeiro entende metade.'},
+    {t:'Mascaramento da lesão e maior dose de radiação',c:'A dose não é o eixo do problema da densidade. O segundo problema é o risco aumentado.'},
+    {t:'Maior risco de câncer e maior taxa de falso-negativo por erro do radiologista',c:'A perda de conspicuidade é uma limitação física do método em tecido denso, não um erro de interpretação.'},
+    {t:'Maior dor ao exame e menor adesão',c:'Desconforto e adesão são questões reais de programa, mas não são os dois problemas atribuídos à densidade.'}],
+ ok:0,k:'MAMA DENSA = MASCARAMENTO + RISCO.'},
+
+{n:1,t:'BI-RADS',s:'O que significa um laudo com categoria BI-RADS 0?',
+ a:[{t:'Exame negativo',c:'Errado. Negativo é a categoria 1.'},
+    {t:'Achado benigno',c:'Errado. Achado benigno é a categoria 2.'},
+    {t:'Avaliação incompleta — é necessário complementar',c:'Correto. BI-RADS 0 não é "tudo bem": é um exame que ainda não permitiu conclusão e exige complementação.'},
+    {t:'Achado provavelmente benigno, com seguimento em 6 meses',c:'Errado. Essa descrição corresponde à categoria 3.'}],
+ ok:2,k:'BI-RADS 0 ABANDONADO NA GAVETA É FALHA DE PROGRAMA.'},
+
+{n:1,t:'BI-RADS',s:'Qual categoria BI-RADS corresponde a malignidade já comprovada por biópsia?',
+ a:[{t:'BI-RADS 4',c:'Categoria 4 é achado suspeito — indica investigação histológica, mas a malignidade ainda não está confirmada.'},
+    {t:'BI-RADS 5',c:'Categoria 5 é altamente sugestivo de malignidade, mas a comprovação ainda não ocorreu.'},
+    {t:'BI-RADS 6',c:'Correto. A categoria 6 designa malignidade já comprovada por biópsia, em geral no acompanhamento pré-tratamento.'},
+    {t:'BI-RADS 3',c:'Categoria 3 é provavelmente benigno — o oposto do que a pergunta descreve.'}],
+ ok:2},
+
+{n:2,t:'Sinais',s:'Mulher de 46 anos, assintomática até então, procura o serviço referindo nódulo endurecido na mama esquerda percebido há três semanas. Qual a conduta correta?',
+ a:[{t:'Solicitar mamografia de rastreamento conforme a faixa etária',c:'Errado, e é o erro mais comum do tema. Ela deixou de ser candidata a rastreamento no momento em que apareceu o sinal.'},
+    {t:'Iniciar investigação diagnóstica da lesão palpável',c:'Correto. A presença de sinal clínico transfere a paciente para a porta diagnóstica, independentemente da idade.'},
+    {t:'Orientar autoexame mensal e reavaliar em 6 meses',c:'Conduta insegura. Nódulo novo e endurecido exige explicação, não observação passiva.'},
+    {t:'Aguardar a idade de entrada no programa de rastreamento do SUS',c:'Grave. O acesso à investigação diagnóstica de paciente sintomática não depende de faixa etária de rastreamento.'}],
+ ok:1,k:'ELA NÃO ESTÁ MAIS SENDO RASTREADA. ELA ESTÁ SENDO INVESTIGADA.'},
+
+{n:2,t:'Diretrizes',s:'Segundo a política vigente do Ministério da Saúde, qual é a faixa etária e a periodicidade do rastreamento mamográfico POPULACIONAL organizado no SUS?',
+ a:[{t:'40 a 69 anos, anual',c:'Não corresponde à política do MS. Rastreamento anual a partir dos 40 é a recomendação das sociedades brasileiras, não do programa populacional.'},
+    {t:'50 a 74 anos, bienal',c:'Correto. É o rastreamento populacional organizado definido para o SUS.'},
+    {t:'40 a 74 anos, bienal',c:'Essa é a recomendação do USPSTF, não a faixa do programa populacional brasileiro.'},
+    {t:'45 a 75 anos, anual até 54 e depois bienal',c:'Esquema escalonado que não corresponde à política brasileira vigente.'}],
+ ok:1,f:'BRASIL. MS/SAES. Nota Técnica nº 626/2025.'},
+
+{n:2,t:'Diretrizes',s:'Uma mulher de 43 anos, assintomática e de risco habitual, procura a UBS pedindo mamografia. Pela política do Ministério da Saúde vigente, qual a conduta?',
+ a:[{t:'Negar o exame, pois está fora da faixa de 50 a 74 anos',c:'Errado. O SUS não restringe o acesso dessa faixa etária ao exame por demanda.'},
+    {t:'Realizar o exame após orientá-la sobre os riscos e benefícios do rastreamento nessa idade',c:'Correto. O acesso é garantido por demanda, condicionado à orientação por profissional de saúde sobre possíveis riscos e benefícios.'},
+    {t:'Convocá-la para o programa de rastreamento organizado e agendar retorno bienal',c:'Confunde acesso por demanda com inclusão no programa organizado. A faixa prioritária do rastreamento populacional continua sendo 50–74.'},
+    {t:'Encaminhar para avaliação genética antes de liberar o exame',c:'Avaliação genética tem critérios próprios. Nada no caso sugere predisposição hereditária.'}],
+ ok:1,k:'GARANTIR ACESSO ≠ DEFINIR FAIXA PRIORITÁRIA DE RASTREAMENTO ORGANIZADO.',f:'BRASIL. MS/SAES. Nota Técnica nº 626/2025.'},
+
+{n:2,t:'Diretrizes',s:'Qual é a recomendação da Comissão Nacional de Mamografia (CBR · SBM · FEBRASGO) para o rastreamento de mulheres de risco habitual?',
+ a:[{t:'Mamografia bienal dos 50 aos 74 anos',c:'Essa é a faixa do rastreamento populacional organizado no SUS, não a recomendação das sociedades.'},
+    {t:'Mamografia anual dos 40 aos 74 anos, preferencialmente digital',c:'Correto. E, a partir dos 75 anos, a orientação é individualizar.'},
+    {t:'Mamografia bienal dos 40 aos 74 anos',c:'A periodicidade bienal nessa faixa é a recomendação do USPSTF, não das sociedades brasileiras.'},
+    {t:'Mamografia anual a partir dos 35 anos para todas as mulheres',c:'Início aos 35 anos aparece no contexto de alto risco específico, não como recomendação populacional.'}],
+ ok:1,f:'CBR/SBM/FEBRASGO, Nota Técnica da Comissão Nacional de Mamografia, 2025.'},
+
+{n:2,t:'Diretrizes',s:'Qual é a recomendação do USPSTF (2024) para rastreamento mamográfico?',
+ a:[{t:'Bienal dos 40 aos 74 anos, grau B',c:'Correto. E para mulheres com 75 anos ou mais a conclusão é grau I — evidência insuficiente para avaliar o balanço entre benefícios e danos.'},
+    {t:'Anual dos 40 aos 74 anos, grau A',c:'A periodicidade recomendada é bienal, e a força atribuída é B.'},
+    {t:'Bienal dos 50 aos 74 anos, grau B',c:'Foi a orientação de versões anteriores. A recomendação de 2024 antecipou o início para os 40 anos.'},
+    {t:'Anual a partir dos 45 anos, com transição para bienal aos 55',c:'Esquema escalonado de outra instituição; não corresponde ao USPSTF.'}],
+ ok:0,f:'USPSTF, JAMA 2024.'},
+
+{n:2,t:'Alto risco',s:'Mulher de 30 anos com variante patogênica em BRCA1 confirmada. Segundo as recomendações brasileiras de rastreamento (CBR/SBM/FEBRASGO), qual a estratégia de imagem?',
+ a:[{t:'Mamografia anual desde já e ressonância apenas se a mamografia for inconclusiva',c:'Errado. A ressonância não é exame de resgate nesse cenário — ela integra a estratégia de vigilância.'},
+    {t:'Ressonância anual, iniciada a partir do diagnóstico da variante (não antes dos 25 anos), e mamografia anual a partir dos 35 anos',c:'Correto. A RM entra antes da mamografia nesse grupo, justamente por começar a vigilância mais cedo.'},
+    {t:'Apenas ultrassonografia anual até os 40 anos',c:'A ultrassonografia não substitui a estratégia de vigilância de alto risco.'},
+    {t:'Seguir o algoritmo populacional, iniciando aos 40 anos',c:'Errado. Mulheres de alto risco não devem seguir mecanicamente o algoritmo de risco habitual.'}],
+ ok:1,k:'RISCO HABITUAL = RELÓGIO DA IDADE. ALTO RISCO = RELÓGIO DO RISCO.',f:'CBR/SBM/FEBRASGO, Recomendações, 2023.'},
+
+{n:2,t:'Alto risco',s:'Mulher de 26 anos cuja mãe teve câncer de mama aos 34 anos; risco vitalício estimado em 24% por modelo validado. Quando iniciar o rastreamento, segundo as recomendações brasileiras?',
+ a:[{t:'Aos 40 anos, como na população geral',c:'Errado. Risco vitalício estimado ≥20% já a coloca fora do algoritmo de risco habitual.'},
+    {t:'Aos 24 anos, dez anos antes do diagnóstico da mãe',c:'A regra dos dez anos antes existe, mas há um piso: não se inicia antes dos 30 anos.'},
+    {t:'Aos 30 anos — dez anos antes do caso mais jovem, respeitado o mínimo de 30 anos',c:'Correto. Dez anos antes dos 34 seriam 24, mas o piso de 30 anos prevalece.'},
+    {t:'Imediatamente, com ressonância semestral',c:'Intensidade não recomendada e sem respaldo nas recomendações para esse cenário.'}],
+ ok:2,f:'CBR/SBM/FEBRASGO, Recomendações, 2023.'},
+
+{n:2,t:'Alto risco',s:'Mulher de 32 anos tratada com radioterapia torácica aos 19 anos por linfoma de Hodgkin. Qual a orientação de rastreamento?',
+ a:[{t:'Nenhuma vigilância especial; seguir o algoritmo populacional',c:'Errado. Irradiação torácica antes dos 30 anos é critério clássico de alto risco.'},
+    {t:'Iniciar mamografia e ressonância anuais a partir do 8º ano após a radioterapia, respeitadas as idades mínimas',c:'Correto. Para a mamografia, não antes dos 30 anos; para a ressonância, não antes dos 25.'},
+    {t:'Apenas ultrassonografia semestral por tempo indeterminado',c:'A ultrassonografia isolada não é a estratégia recomendada para esse grupo.'},
+    {t:'Mastectomia redutora de risco de imediato',c:'Cirurgia redutora de risco é decisão individual, em pacientes selecionadas e após aconselhamento — nunca conduta automática.'}],
+ ok:1,f:'CBR/SBM/FEBRASGO, Recomendações, 2023.'},
+
+{n:2,t:'Genética',s:'Qual achado no pedigree, ISOLADAMENTE, já justifica considerar avaliação genética?',
+ a:[{t:'Uma tia-avó com câncer de mama aos 78 anos',c:'Caso único em idade avançada, em parente distante, não configura por si só critério de suspeita.'},
+    {t:'Um familiar do sexo masculino com câncer de mama',c:'Correto. Câncer de mama masculina é um dos sinais de alerta clássicos para predisposição hereditária.'},
+    {t:'Dois familiares com câncer de próstata após os 75 anos',c:'Câncer de próstata pode compor síndromes hereditárias, mas nessa idade e isoladamente não é sinal de alerta.'},
+    {t:'Mãe com nódulo benigno de mama aos 40 anos',c:'Achado benigno não é câncer, e não entra na avaliação de agregação familiar de neoplasia.'}],
+ ok:1,k:'NÃO PEÇA BRCA POR ANSIEDADE. RECONHEÇA QUEM PRECISA DE AVALIAÇÃO GENÉTICA.'},
+
+{n:2,t:'Mama densa',s:'Mulher de 58 anos, assintomática, risco habitual, com mamografia de rastreamento mostrando mamas extremamente densas. Ela pergunta se pode fazer só ultrassom da próxima vez. O que responder?',
+ a:[{t:'Sim, o ultrassom é superior em mama densa e pode substituir a mamografia',c:'Errado. A ultrassonografia não é ensinada como substituição rotineira da mamografia no rastreamento de risco habitual.'},
+    {t:'Não — o ultrassom pode ter papel como método suplementar, mas não substitui a mamografia',c:'Correto. O papel de métodos suplementares depende do risco global, do grau de densidade, da disponibilidade e da diretriz adotada.'},
+    {t:'Não, e nenhum método suplementar tem qualquer papel em mama densa',c:'Excessivo. As recomendações brasileiras contemplam ultrassonografia adjunta; o que não existe é substituição.'},
+    {t:'Sim, desde que associada à ressonância anual',c:'Isso não resolve a questão colocada e propõe uma intensidade não indicada para risco habitual.'}],
+ ok:1},
+
+{n:2,t:'Métodos',s:'Sobre a tomossíntese digital da mama (DBT), é correto afirmar:',
+ a:[{t:'Substitui a mamografia digital em qualquer cenário, por ser tecnicamente superior',c:'Excede o que as fontes sustentam. Nenhuma diretriz a apresenta como solução perfeita ou substituta universal.'},
+    {t:'O USPSTF considera mamografia digital e DBT modalidades eficazes de rastreamento',c:'Correto. São tratadas como modalidades eficazes, sem que uma seja imposta sobre a outra.'},
+    {t:'É contraindicada em mamas densas',c:'Ao contrário: a redução do efeito de sobreposição tecidual é justamente onde se espera algum ganho.'},
+    {t:'Dispensa a incidência craniocaudal',c:'Afirmação técnica sem respaldo; o protocolo de aquisição não é simplificado dessa forma.'}],
+ ok:1,f:'USPSTF, JAMA 2024; CBR/SBM/FEBRASGO, 2023.'},
+
+{n:2,t:'Prevenção',s:'Mulher de 35 anos, assintomática, sem história familiar, pergunta o que pode fazer para reduzir o risco de câncer de mama. Qual orientação é adequada?',
+ a:[{t:'Iniciar mamografia anual imediatamente, pois detecção precoce é a melhor prevenção',c:'Confunde detecção precoce com prevenção primária — e propõe rastreamento fora de qualquer recomendação para essa idade e risco.'},
+    {t:'Atividade física regular, controle do peso, redução do álcool — apresentados como redução de risco, não como garantia',c:'Correto. E a linguagem importa: "reduz o risco", nunca "previne o câncer".'},
+    {t:'Suplementação vitamínica e dieta específica anticâncer',c:'Não há respaldo nas fontes utilizadas para prometer redução de risco por essa via.'},
+    {t:'Solicitar painel genético para tranquilizá-la',c:'Teste genético sem critério não tranquiliza — gera achados de significado incerto e ansiedade adicional.'}],
+ ok:1},
+
+{n:2,t:'Seguimento',s:'Um município antecipa a idade de entrada no rastreamento, mas não consegue garantir biópsia nem tratamento em tempo hábil para as alteradas. Qual a consequência esperada?',
+ a:[{t:'Ganho líquido, pois mais cânceres serão detectados precocemente',c:'Detectar não é resolver. Sem continuidade diagnóstica e terapêutica, a detecção não se converte em benefício.'},
+    {t:'Aumento do dano sem o benefício correspondente',c:'Correto. Um programa de rastreamento é tão forte quanto seu seguimento: elo rompido transforma o programa em exposição sem benefício.'},
+    {t:'Efeito neutro, pois o exame em si não causa dano',c:'O exame gera falso-positivo, ansiedade, investigação adicional e exposição — há dano, mesmo quando não há benefício.'},
+    {t:'Redução do sobrediagnóstico, por triagem mais precoce',c:'Antecipar a entrada tende a aumentar, não reduzir, a detecção de lesões que não se manifestariam.'}],
+ ok:1,k:'UM PROGRAMA DE RASTREAMENTO É TÃO FORTE QUANTO O SEU SEGUIMENTO.'},
+
+{n:3,t:'Diretrizes',s:'Em setembro de 2025 circulou a manchete "Ministério da Saúde amplia a mamografia para os 40 anos". Qual a leitura tecnicamente correta do que mudou?',
+ a:[{t:'O rastreamento populacional organizado do SUS passou a ser de 40 a 74 anos',c:'Errado — e é exatamente a leitura que a manchete induziu. A faixa prioritária do programa organizado permanece 50–74, bienal.'},
+    {t:'O SUS passou a garantir acesso por demanda às mulheres de 40 a 49 anos mediante orientação sobre riscos e benefícios, sem alterar a faixa do rastreamento organizado',c:'Correto. Garantir acesso e definir faixa prioritária de rastreamento organizado são coisas operacionalmente distintas — e podem coexistir.'},
+    {t:'O Ministério passou a adotar a recomendação do USPSTF',c:'Não. A recomendação do USPSTF é rastreamento bienal de 40 a 74, o que não corresponde ao que o MS estabeleceu.'},
+    {t:'O Ministério passou a adotar a recomendação de CBR/SBM/FEBRASGO',c:'Não. As sociedades recomendam rastreamento ANUAL dos 40 aos 74, o que também não é o que a nota técnica determina.'}],
+ ok:1,k:'ANTES DE RESPONDER, PERGUNTE: QUAL DIRETRIZ?',f:'BRASIL. MS/SAES. Nota Técnica nº 626/2025.'},
+
+{n:3,t:'Diretrizes',s:'MS, CBR/SBM/FEBRASGO e USPSTF chegam a idades e intervalos diferentes analisando essencialmente a mesma literatura. Qual a melhor explicação?',
+ a:[{t:'Uma das instituições está desatualizada em relação às outras',c:'Não é o caso. Os três documentos são recentes e conhecem os mesmos ensaios.'},
+    {t:'As diretrizes atribuem pesos diferentes a benefício individual, benefício populacional, falso-positivo, sobrediagnóstico, recursos e organização do sistema',c:'Correto. Diretriz não é número: é decisão sobre evidência + valores + recursos + balanço benefício/dano.'},
+    {t:'As populações brasileira e norte-americana têm biologia tumoral distinta, o que justifica integralmente a diferença',c:'Diferenças populacionais existem e importam, mas não explicam a divergência entre duas instituições brasileiras entre si.'},
+    {t:'Diferenças de financiamento e conflito de interesse explicam sozinhas a divergência',c:'Reduzir a discussão a isso é injusto e didaticamente pobre: a divergência persiste mesmo entre instituições sem conflito aparente.'}],
+ ok:1,k:'DIRETRIZ NÃO É NÚMERO.'},
+
+{n:3,t:'Mama densa',s:'O USPSTF classifica como grau I a evidência sobre rastreamento suplementar com ultrassonografia ou ressonância em mulheres com mamas densas e mamografia negativa. Como interpretar isso corretamente?',
+ a:[{t:'Significa que o método é ineficaz e está contraindicado',c:'Errado. Grau I não é recomendação contrária — é ausência de evidência suficiente para avaliar o balanço.'},
+    {t:'Significa que a evidência é insuficiente para avaliar o balanço entre benefícios e danos',c:'Correto. A decisão volta a ser individual, considerando risco global, grau de densidade, disponibilidade e a diretriz seguida.'},
+    {t:'Significa recomendação fraca a favor do exame',c:'Recomendação fraca a favor seria outra categoria. Grau I é literalmente "não sabemos".'},
+    {t:'Significa que o exame só pode ser feito em protocolo de pesquisa',c:'Grau I não restringe o uso a pesquisa; ele descreve o estado da evidência.'}],
+ ok:1,f:'USPSTF, JAMA 2024.'},
+
+{n:3,t:'Mama densa',s:'Sobre métodos suplementares em mama densa, as recomendações brasileiras e o USPSTF divergem. Qual afirmação descreve corretamente essa divergência?',
+ a:[{t:'As recomendações brasileiras contemplam ultrassonografia adjunta e a RM bienal nas mamas extremamente densas; o USPSTF conclui que a evidência é insuficiente',c:'Correto. São posições diferentes sobre o mesmo corpo de evidência — e é honesto mostrar isso ao aluno em vez de escolher uma e esconder a outra.'},
+    {t:'Ambas recomendam ultrassonografia anual adjunta',c:'Não. O USPSTF não emite recomendação favorável nesse cenário.'},
+    {t:'Ambas consideram a evidência insuficiente',c:'Não. As recomendações brasileiras vão além da abstenção nesse ponto.'},
+    {t:'As brasileiras contraindicam métodos suplementares e o USPSTF os recomenda',c:'Invertido em relação ao que os documentos dizem.'}],
+ ok:0,f:'CBR/SBM/FEBRASGO 2023; USPSTF, JAMA 2024.'},
+
+{n:3,t:'Diretrizes',s:'Mulher de 78 anos, hígida, ativa, sem comorbidades relevantes, pergunta se deve continuar fazendo mamografia. Qual a resposta mais correta?',
+ a:[{t:'Suspender definitivamente, pois acima de 75 anos o rastreamento é contraindicado',c:'Nenhuma das fontes contraindica. O que existe é ausência de recomendação universal.'},
+    {t:'Manter mamografia anual, pois está hígida',c:'Assume uma certeza que as diretrizes não oferecem para essa faixa etária.'},
+    {t:'Individualizar — as recomendações brasileiras orientam individualizar a partir dos 75 anos e o USPSTF classifica a evidência como insuficiente (grau I)',c:'Correto. A decisão passa por condições clínicas, expectativa de vida e preferência da paciente, em decisão compartilhada.'},
+    {t:'Substituir por ressonância anual, mais sensível',c:'Sem indicação. RM não é "mamografia melhor" e não tem papel de substituição por idade.'}],
+ ok:2,k:'40 ABRE · 50 CONSOLIDA · 74 FECHA · 75 INDIVIDUALIZA.'},
+
+{n:3,t:'Métodos',s:'Um colega afirma: "a ressonância é mais sensível, então idealmente todas as mulheres deveriam fazer RM em vez de mamografia". Qual a melhor crítica?',
+ a:[{t:'Ele está certo, o obstáculo é apenas o custo',c:'Reduzir a questão a custo ignora os danos próprios do método em população de baixo risco.'},
+    {t:'RM não é "mamografia melhor": tem indicações específicas e custos próprios — achados adicionais, investigações em cascata, disponibilidade, contraste',c:'Correto. Usar RM fora de indicação não é caprichar no cuidado; é transferir dano para a paciente.'},
+    {t:'Ele está errado porque a RM tem sensibilidade menor que a mamografia',c:'Errado no mérito técnico. O problema do argumento não é a sensibilidade.'},
+    {t:'Ele está errado porque a RM não detecta carcinoma ductal in situ',c:'Afirmação incorreta e que não sustenta a crítica.'}],
+ ok:1,k:'RM NÃO É "MAMOGRAFIA MELHOR".'},
+
+{n:3,t:'Autoexame',s:'Uma aluna pergunta se o autoexame das mamas salva vidas. Qual resposta é ao mesmo tempo honesta e não desvaloriza a paciente?',
+ a:[{t:'Sim, é a principal ferramenta de detecção precoce e deve ser ensinado como programa mensal',c:'Não se sustenta. O autoexame mensal formal não é recomendado como estratégia populacional de rastreamento para reduzir mortalidade.'},
+    {t:'Não serve para nada; oriente a paciente a parar',c:'Falso e desnecessariamente duro. Reconhecer alterações novas no próprio corpo continua trazendo muitas mulheres ao diagnóstico.'},
+    {t:'É preciso separar duas coisas: autoexame mensal formal como programa de rastreamento não é recomendado, mas o autoconhecimento das mamas — perceber uma mudança nova e procurar assistência — importa',c:'Correto. Conhecer o corpo não é programa de rastreamento, e nenhum dos dois substitui a mamografia.'},
+    {t:'Depende da densidade mamária da paciente',c:'A densidade não é o eixo dessa distinção.'}],
+ ok:2,k:'CONHECER O CORPO ≠ PROGRAMA DE RASTREAMENTO.'},
+
+{n:3,t:'Risco',s:'As taxas brutas estimadas de câncer de mama variam entre regiões (Sudeste 88,29 e Norte 31,28 por 100 mil mulheres). Qual a interpretação mais adequada?',
+ a:[{t:'Mulheres do Norte têm menor risco biológico de câncer de mama',c:'Leitura simplista. Taxa bruta não isola biologia.'},
+    {t:'A diferença reflete estrutura etária, exposição a fatores de risco, acesso ao diagnóstico e qualidade dos registros, além de eventuais diferenças populacionais',c:'Correto. Menos diagnóstico não é o mesmo que menos doença.'},
+    {t:'A diferença decorre exclusivamente de subnotificação',c:'A qualidade dos registros é um dos componentes, mas atribuir tudo a ela também é simplificação.'},
+    {t:'As taxas brutas já são ajustadas por idade, então a comparação é direta',c:'Incorreto por definição: taxa bruta é justamente a que não é ajustada.'}],
+ ok:1,f:'INCA, Estimativa 2026–2028.'},
+
+{n:3,t:'Genética',s:'Sobre as calculadoras de risco (Tyrer-Cuzick/IBIS, BOADICEA/CanRisk, Gail/BCRAT), qual afirmação é correta?',
+ a:[{t:'São intercambiáveis: qualquer uma responde à mesma pergunta',c:'Errado. Não são intercambiáveis — têm entradas diferentes e respondem perguntas diferentes.'},
+    {t:'Não são intercambiáveis, e todo resultado só significa algo se acompanhado do desfecho e do horizonte de tempo',c:'Correto. "Risco de 18%" isolado não quer dizer nada: risco de quê, em quanto tempo?'},
+    {t:'O Gail/BCRAT é o mais completo para avaliar história familiar extensa',c:'Ao contrário: é justamente nesse ponto que suas limitações são reconhecidas.'},
+    {t:'Substituem a avaliação genética formal quando o resultado é alto',c:'Não substituem. Estimativa de risco e aconselhamento genético são etapas distintas.'}],
+ ok:1},
+
+{n:3,t:'Redução de risco',s:'Sobre prevenção farmacológica do câncer de mama, qual afirmação é correta?',
+ a:[{t:'Tamoxifeno deve ser oferecido a toda mulher acima de 50 anos',c:'Errado. Quimioprevenção não é para toda mulher — é decisão individual de risco × benefício.'},
+    {t:'O raloxifeno, no contexto de redução de risco, é considerado apenas na pós-menopausa',c:'Correto. E cada agente tem seu perfil de eventos adversos a pesar contra o benefício esperado.'},
+    {t:'Os inibidores de aromatase não têm efeitos adversos relevantes nesse cenário',c:'Errado. Efeitos musculoesqueléticos e impacto sobre a saúde óssea são preocupações reconhecidas.'},
+    {t:'O tamoxifeno é isento de risco tromboembólico quando usado em prevenção',c:'Errado. A atenção a eventos tromboembólicos e a efeitos endometriais permanece.'}],
+ ok:1,k:'QUIMIOPREVENÇÃO NÃO É PARA TODA MULHER. É UMA DECISÃO DE RISCO × BENEFÍCIO.'},
+
+{n:3,t:'Redução de risco',s:'Paciente com variante patogênica de alto risco pergunta sobre mastectomia redutora de risco. Qual a abordagem correta?',
+ a:[{t:'Indicar a cirurgia, pois é a conduta padrão para portadoras',c:'Errado. Não é conduta universal nem automática.'},
+    {t:'Desaconselhar, pois a vigilância por imagem é sempre suficiente',c:'Também errado. Negar a opção é tão inadequado quanto impô-la.'},
+    {t:'Apresentar como uma das estratégias possíveis — vigilância, farmacológica, cirúrgica — em decisão compartilhada após aconselhamento, considerando impacto psicossocial, sexual e reprodutivo',c:'Correto. A decisão é da mulher; o papel do médico é que ela decida informada, não apavorada.'},
+    {t:'Encaminhar diretamente ao cirurgião sem discussão prévia',c:'Pula a etapa de aconselhamento, que é justamente onde a decisão se constrói.'}],
+ ok:2},
+
+{n:3,t:'Vieses',s:'Por que o sobrediagnóstico é tão difícil de aceitar na prática clínica?',
+ a:[{t:'Porque é raro demais para ter relevância populacional',c:'Não é essa a dificuldade — e sua magnitude é justamente um dos pontos que movem as diretrizes.'},
+    {t:'Porque não é possível identificar, no caso individual, quem foi sobrediagnosticado — ele só é mensurável em populações',c:'Correto. A mulher tratada acredita, com razão, que foi salva. E nós também não temos como saber o contrário.'},
+    {t:'Porque depende de confirmação histológica que raramente é feita',c:'Ao contrário: no sobrediagnóstico a confirmação histológica existe — a lesão é realmente câncer.'},
+    {t:'Porque só ocorre em programas mal conduzidos',c:'Errado. É uma consequência intrínseca de rastrear, não um defeito de execução.'}],
+ ok:1},
+
+{n:3,t:'Conceitos',s:'Qual afirmação sobre rastreamento do câncer de mama é VERDADEIRA?',
+ a:[{t:'Toda mamografia realizada é uma mamografia de rastreamento',c:'Falso. A mamografia pode ser diagnóstica — a classificação depende da situação clínica, não do exame.'},
+    {t:'Existe uma única idade universalmente aceita para iniciar o rastreamento',c:'Falso. É justamente a ausência dessa idade universal que obriga a pergunta "qual diretriz?".'},
+    {t:'A paciente sintomática deve ser investigada, não encaixada no rastreamento populacional',c:'Verdadeiro. É a única afirmação correta do conjunto, e talvez a mais importante da aula.'},
+    {t:'Feita a mamografia, o programa de rastreamento cumpriu sua função',c:'Falso. Sem comunicação do resultado, complementação, biópsia e tratamento, o programa não cumpriu nada.'}],
+ ok:2,k:'SINTOMA ABRE A PORTA DO DIAGNÓSTICO.'}
+];
+
+/* ===================== ESTADO ===================== */
+var KEY='atlasMama_questoes_v1';
+var st={ans:{}}, fLev=0, fTem='todos', wrongOnly=false;
+try{ var raw=localStorage.getItem(KEY); if(raw) st=JSON.parse(raw)||{ans:{}}; }catch(e){}
+if(!st.ans) st.ans={};
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+
+/* ===================== RENDER ===================== */
+var LET=['A','B','C','D','E'];
+function esc(x){ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function build(){
+  var temas=[]; Q.forEach(function(q){ if(temas.indexOf(q.t)<0) temas.push(q.t); });
+  var fh='<button class="f on" data-t="todos">Todos</button>';
+  temas.forEach(function(t){ fh+='<button class="f" data-t="'+esc(t)+'">'+esc(t)+'</button>'; });
+  document.getElementById('fTema').innerHTML=fh;
+
+  var h='';
+  Q.forEach(function(q,i){
+    h+='<article class="q" id="q'+i+'" data-n="'+q.n+'" data-t="'+esc(q.t)+'">';
+    h+='<div class="qh"><span class="qn">'+String(i+1).padStart(2,'0')+'/40</span>';
+    h+='<span class="tag n'+q.n+'">N'+q.n+' · '+(q.n===1?'Conceito':q.n===2?'Aplicação clínica':'Controvérsia')+'</span>';
+    h+='<span class="tag">'+esc(q.t)+'</span></div>';
+    h+='<div class="stem">'+q.s+'</div><div class="alts">';
+    q.a.forEach(function(al,j){
+      h+='<button class="alt" onclick="answer('+i+','+j+')"><span class="k">'+LET[j]+'</span><span class="tx">'+al.t+'</span></button>';
+      h+='<div class="cmt">'+al.c+'</div>';
+    });
+    h+='</div>';
+    if(q.k) h+='<div class="anchor"><div class="lb">Âncora</div>'+q.k+'</div>';
+    if(q.f) h+='<div class="src">Fonte: '+q.f+'</div>';
+    h+='</article>';
+  });
+  document.getElementById('list').innerHTML=h;
+
+  Object.keys(st.ans).forEach(function(i){ paint(+i, st.ans[i]); });
+  wire(); applyFilter(); score();
+}
+
+function paint(i,j){
+  var q=Q[i], el=document.getElementById('q'+i);
+  if(!el) return;
+  el.classList.add('done');
+  var alts=el.querySelectorAll('.alt');
+  alts.forEach(function(a,k){
+    a.classList.remove('right','chosen-wrong','other');
+    if(k===q.ok) a.classList.add('right');
+    else if(k===j) a.classList.add('chosen-wrong');
+    else a.classList.add('other');
+  });
+}
+
+function answer(i,j){
+  if(st.ans[i]!==undefined) return;
+  st.ans[i]=j; save(); paint(i,j); score();
+}
+
+/* ===================== PLACAR ===================== */
+function score(){
+  var d=0,o=0;
+  Object.keys(st.ans).forEach(function(i){ d++; if(st.ans[i]===Q[+i].ok) o++; });
+  document.getElementById('sDone').textContent=d;
+  document.getElementById('sOk').textContent=o;
+  document.getElementById('sNo').textContent=d-o;
+  document.getElementById('sPct').textContent = d? Math.round(o/d*100)+'%' : '—';
+  var bw=document.getElementById('bWrong');
+  bw.textContent = wrongOnly? 'Ver todas' : 'Refazer só os erros';
+  bw.disabled = (!wrongOnly && d-o===0);
+  bw.style.opacity = bw.disabled? .45 : 1;
+}
+
+/* ===================== FILTROS ===================== */
+function wire(){
+  document.getElementById('fLevel').addEventListener('click',function(e){
+    var b=e.target.closest('.f'); if(!b) return;
+    this.querySelectorAll('.f').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); fLev=+b.getAttribute('data-n'); applyFilter();
+  });
+  document.getElementById('fTema').addEventListener('click',function(e){
+    var b=e.target.closest('.f'); if(!b) return;
+    this.querySelectorAll('.f').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); fTem=b.getAttribute('data-t'); applyFilter();
+  });
+}
+function applyFilter(){
+  var n=0;
+  Q.forEach(function(q,i){
+    var el=document.getElementById('q'+i);
+    var ok = (fLev===0||q.n===fLev) && (fTem==='todos'||q.t===fTem);
+    if(ok && wrongOnly) ok = (st.ans[i]!==undefined && st.ans[i]!==q.ok);
+    el.style.display = ok? '' : 'none';
+    if(ok) n++;
+  });
+  document.getElementById('empty').style.display = n? 'none':'block';
+}
+function onlyWrong(){
+  if(wrongOnly){ wrongOnly=false; applyFilter(); score(); return; }
+  var alvo=[];
+  Object.keys(st.ans).forEach(function(i){ if(st.ans[i]!==Q[+i].ok) alvo.push(+i); });
+  if(!alvo.length) return;
+  alvo.forEach(function(i){
+    delete st.ans[i];
+    var el=document.getElementById('q'+i);
+    el.classList.remove('done');
+    el.querySelectorAll('.alt').forEach(function(a){ a.classList.remove('right','chosen-wrong','other'); });
+  });
+  save();
+  wrongOnly=false;
+  fLev=0; fTem='todos';
+  document.querySelectorAll('#fLevel .f').forEach(function(x,k){ x.classList.toggle('on',k===0); });
+  document.querySelectorAll('#fTema .f').forEach(function(x,k){ x.classList.toggle('on',k===0); });
+  // mostra apenas as reabertas
+  Q.forEach(function(q,i){ document.getElementById('q'+i).style.display = alvo.indexOf(i)>=0? '':'none'; });
+  document.getElementById('empty').style.display='none';
+  score();
+  document.getElementById('q'+alvo[0]).scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetAll(){
+  st={ans:{}}; save(); wrongOnly=false;
+  document.querySelectorAll('.q').forEach(function(el){
+    el.classList.remove('done');
+    el.querySelectorAll('.alt').forEach(function(a){ a.classList.remove('right','chosen-wrong','other'); });
+  });
+  applyFilter(); score();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ===================== TOPO ===================== */
+window.addEventListener('scroll',function(){
+  document.getElementById('top').classList.toggle('on', window.scrollY>600);
+});
+
+build();
+</script>
+</body>
+</html>
