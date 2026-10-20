@@ -1,0 +1,1842 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gravidez Ectópica · Aula Magna Interativa · Dr. André Rossanno</title>
+<meta name="description" content="Aula magna interativa de 120 minutos: gravidez ectópica, da fecundação ao choque hemorrágico. Dr. André Rossanno.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Dancing+Script:wght@600&display=swap">
+<style id="mainCSS">
+:root{
+  --bg:#08101f;--bg2:#0d182c;--card:#122039;--card2:#172947;--line:#24375b;
+  --tx:#eef3fb;--tx2:#c3cfe3;--mut:#8b9bb9;
+  --blue:#5aa9ff;--blue-s:rgba(90,169,255,.13);
+  --teal:#2dd4bf;--teal-s:rgba(45,212,191,.13);
+  --amber:#f6b73c;--amber-s:rgba(246,183,60,.13);
+  --red:#ff6161;--red-s:rgba(255,97,97,.14);
+  --green:#4ade80;--green-s:rgba(74,222,128,.12);
+  --gold:#e9c46a;
+  --bc:var(--blue);--bcs:var(--blue-s);
+  --fs:clamp(17px, .95vw + 9px, 29px);
+  --ff:'Nunito','Trebuchet MS',Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  --sig:'Dancing Script','Brush Script MT',cursive;
+  --top:58px;--bot:62px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:radial-gradient(1200px 700px at 85% -10%,#132a4d 0%,transparent 60%),radial-gradient(900px 600px at -10% 110%,#0f2a33 0%,transparent 55%),var(--bg);color:var(--tx);font-family:var(--ff);font-size:var(--fs);line-height:1.5;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- top bar ---------- */
+#top{position:fixed;inset:0 0 auto 0;height:var(--top);display:flex;align-items:center;gap:10px;padding:0 14px;background:rgba(8,16,31,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:30;font-size:15px}
+#brand{font-weight:900;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#brand small{font-family:var(--mono);font-weight:500;color:var(--mut);font-size:12px;margin-left:8px}
+#blockchip{font-family:var(--mono);font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--bc);color:var(--bc);background:var(--bcs);white-space:nowrap}
+.sp{flex:1}
+.tb{flex:none;background:transparent;border:1px solid var(--line);border-radius:10px;padding:7px 11px;font-size:14px;font-weight:700;color:var(--tx2);white-space:nowrap;min-height:38px}
+.tb:hover{border-color:var(--tx2);color:var(--tx)}
+.tb.on{background:var(--amber);border-color:var(--amber);color:#1a1200}
+#timer{font-family:var(--mono);font-size:14px;display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:4px 8px}
+#timer b{font-weight:600;min-width:58px;text-align:center}
+#timer .pace{font-size:11px;color:var(--mut)}
+#timer button{background:none;border:0;color:var(--tx2);padding:4px 6px;font-size:14px}
+#timer.off{display:none}
+
+/* ---------- stage ---------- */
+#wrap{position:fixed;top:var(--top);bottom:var(--bot);left:0;right:0;display:flex}
+#stage{flex:1;overflow-y:auto;overflow-x:hidden;padding:clamp(16px,3vw,48px) clamp(16px,4vw,72px) 60px;scroll-behavior:smooth}
+#slide{max-width:1280px;margin:0 auto;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.reduce *{animation:none!important;transition:none!important}
+.meta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-family:var(--mono);font-size:max(12px,.55em);color:var(--mut);margin-bottom:.4em}
+.meta .kick{color:var(--bc);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+h1.st{font-size:clamp(28px,2.4vw + 14px,66px);line-height:1.12;margin:.1em 0 .5em;font-weight:900;letter-spacing:-.5px}
+h1.st .acc{color:var(--bc)}
+h2{font-size:1.18em;margin:1em 0 .4em;font-weight:800}
+h3{font-size:1.02em;margin:.6em 0 .3em;font-weight:800}
+p{margin:.45em 0}
+.lead{font-size:1.15em;color:var(--tx2)}
+.big{font-size:1.45em;font-weight:800;line-height:1.25}
+.mut{color:var(--mut)}
+.mono{font-family:var(--mono)}
+b,strong{font-weight:800}
+.c-blue{color:var(--blue)}.c-teal{color:var(--teal)}.c-amber{color:var(--amber)}.c-red{color:var(--red)}.c-green{color:var(--green)}.c-gold{color:var(--gold)}
+
+/* film strip */
+.film{display:flex;gap:6px;margin:0 0 1em;flex-wrap:wrap}
+.film span{font-family:var(--mono);font-size:max(10px,.42em);letter-spacing:1px;padding:4px 8px;border-radius:6px;border:1px solid var(--line);color:var(--mut);background:rgba(255,255,255,.02)}
+.film span.on{color:#071019;background:var(--bc);border-color:var(--bc);font-weight:700}
+.film span i{font-style:normal;opacity:.6;margin-right:4px}
+
+/* cards & grids */
+.grid{display:grid;gap:clamp(10px,1.2vw,22px)}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:clamp(14px,1.3vw,26px);position:relative}
+.card.blue{border-color:rgba(90,169,255,.5)}.card.teal{border-color:rgba(45,212,191,.5)}.card.amber{border-color:rgba(246,183,60,.55)}.card.red{border-color:rgba(255,97,97,.55)}.card.green{border-color:rgba(74,222,128,.5)}
+.card h3{margin-top:0}
+.tag{display:inline-block;font-family:var(--mono);font-size:max(11px,.5em);letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid currentColor;margin-bottom:.5em}
+.callout{border-left:5px solid var(--bc);background:var(--bcs);padding:.7em 1em;border-radius:0 14px 14px 0;margin:.8em 0}
+.callout.red{border-color:var(--red);background:var(--red-s)}.callout.amber{border-color:var(--amber);background:var(--amber-s)}.callout.teal{border-color:var(--teal);background:var(--teal-s)}.callout.green{border-color:var(--green);background:var(--green-s)}.callout.blue{border-color:var(--blue);background:var(--blue-s)}
+blockquote{margin:.8em 0;padding:.6em 1em;border-left:4px solid var(--gold);font-size:1.12em;font-weight:700;color:var(--tx);background:rgba(233,196,106,.07);border-radius:0 12px 12px 0}
+ul.clean{list-style:none;padding:0;margin:.4em 0}
+ul.clean li{padding:.28em 0 .28em 1.3em;position:relative}
+ul.clean li::before{content:"";position:absolute;left:.15em;top:.85em;width:.45em;height:.45em;border-radius:50%;background:var(--bc)}
+table.tt{width:100%;border-collapse:collapse;font-size:.9em;margin:.6em 0}
+table.tt th,table.tt td{border-bottom:1px solid var(--line);padding:.5em .6em;text-align:left;vertical-align:top}
+table.tt th{font-family:var(--mono);font-size:.7em;letter-spacing:1px;text-transform:uppercase;color:var(--mut);font-weight:600}
+.tablewrap{overflow-x:auto}
+
+/* steps */
+.step:not(.on){display:none}
+.step.on{animation:fadeIn .35s ease}
+.hint-next{font-family:var(--mono);font-size:max(11px,.5em);color:var(--mut);margin-top:1.2em;text-align:center}
+
+/* question cards */
+.q{border:1px solid var(--line);border-radius:18px;padding:clamp(14px,1.2vw,24px);margin:.9em 0;background:rgba(255,255,255,.025)}
+.q .ql{font-family:var(--mono);font-size:max(11px,.52em);letter-spacing:1.4px;text-transform:uppercase;color:var(--amber);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.q .ql .new{color:var(--teal);border:1px solid var(--teal);padding:1px 6px;border-radius:6px}
+.q .qt{font-size:1.18em;font-weight:800;margin:.35em 0 .6em;line-height:1.3}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.bt{border:1.5px solid var(--line);background:var(--bg2);border-radius:12px;padding:.42em .95em;font-weight:800;font-size:.78em;min-height:44px;transition:border-color .15s,background .15s}
+.bt:hover{border-color:var(--tx2)}
+.bt.pri{border-color:var(--teal);color:var(--teal)}
+.bt.amb{border-color:var(--amber);color:var(--amber)}
+.bt.red{border-color:var(--red);color:var(--red)}
+.bt.blu{border-color:var(--blue);color:var(--blue)}
+.bt.done{opacity:.45}
+.ans{margin-top:.75em;padding:.75em 1em;border-radius:14px;background:var(--teal-s);border:1px solid rgba(45,212,191,.35);animation:fadeIn .3s ease}
+.ans.deep{background:var(--blue-s);border-color:rgba(90,169,255,.35)}
+.ans.trap{background:var(--amber-s);border-color:rgba(246,183,60,.45)}
+.ans.add{background:rgba(233,196,106,.06);border-color:rgba(233,196,106,.35);border-style:dashed}
+.ans .al{font-family:var(--mono);font-size:max(10px,.5em);letter-spacing:1.3px;text-transform:uppercase;opacity:.8;display:block;margin-bottom:.2em}
+
+/* technique */
+.tec{border-radius:20px;padding:clamp(14px,1.3vw,26px);margin:.9em 0;background:linear-gradient(135deg,rgba(233,196,106,.16),rgba(45,212,191,.08));border:1.5px solid rgba(233,196,106,.55);position:relative}
+.tec .tn{font-family:var(--mono);font-size:max(11px,.52em);letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+.tec .tp{font-size:1.32em;font-weight:900;line-height:1.25;margin:.25em 0}
+.tec .ts{color:var(--tx2);font-size:.88em}
+
+/* flows */
+.flow{display:flex;flex-direction:column;gap:0;margin:.6em 0}
+.flow.h{flex-direction:row;flex-wrap:wrap;align-items:stretch}
+.fn{border:1.5px solid var(--bc);background:var(--bcs);border-radius:14px;padding:.55em .9em;font-weight:700}
+.fn small{display:block;font-weight:500;color:var(--tx2);font-size:.82em;margin-top:.15em}
+.fa{color:var(--bc);text-align:center;font-size:1.1em;line-height:1;padding:.18em 0}
+.flow.h .fa{display:flex;align-items:center;padding:0 .3em}
+.fw:not(.on){display:none}
+.fw.on{animation:fadeIn .3s ease}
+.fn.red{border-color:var(--red);background:var(--red-s)}.fn.amber{border-color:var(--amber);background:var(--amber-s)}.fn.teal{border-color:var(--teal);background:var(--teal-s)}.fn.green{border-color:var(--green);background:var(--green-s)}.fn.blue{border-color:var(--blue);background:var(--blue-s)}
+.flowctl{margin-top:.6em}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:.5em 0}
+.chip{border:1.5px solid var(--line);border-radius:99px;padding:.3em .85em;font-size:.82em;font-weight:700;background:var(--bg2)}
+button.chip{min-height:44px}
+.chip.on{border-color:var(--bc);background:var(--bcs);color:var(--tx)}
+
+/* image placeholder */
+.imgph{border:2px dashed rgba(233,196,106,.6);border-radius:16px;padding:1em;margin:1em 0;color:var(--gold);font-size:.75em;background:rgba(233,196,106,.05)}
+.imgph b{display:block;font-family:var(--mono);letter-spacing:1px}
+body:not(.prof) .imgph{display:none}
+.imgreal{max-width:100%;border-radius:16px;margin:1em 0;display:block}
+
+/* SVG widgets */
+.svgbox{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:18px;padding:10px;margin:.6em 0}
+.svgbox svg{width:100%;height:auto;display:block}
+.tube-seg{cursor:pointer;transition:filter .2s,opacity .2s}
+.tube-seg:hover{filter:brightness(1.25)}
+.tube-seg.dim{opacity:.35}
+.tube-lbl{font-family:var(--ff);font-weight:800;fill:#eef3fb;font-size:15px;pointer-events:none}
+.tube-info{min-height:4.5em}
+
+/* timeline */
+.tl{position:relative;margin:.8em 0}
+.tl-track{height:8px;border-radius:8px;background:var(--line);position:relative;margin:28px 6px 16px}
+.tl-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:8px;width:0;transition:width .5s}
+.tl-dot{position:absolute;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(233,196,106,.25);left:0;transition:left .5s}
+.tl-zone{position:absolute;top:-24px;font-family:var(--mono);font-size:11px;color:var(--mut);transform:translateX(-50%);white-space:nowrap}
+.tl-list{display:grid;gap:8px}
+.tl-item{display:grid;grid-template-columns:minmax(90px,150px) 1fr;gap:12px;align-items:start;padding:.5em .8em;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.tl-item .d{font-family:var(--mono);color:var(--teal);font-weight:600;font-size:.85em}
+.tl-item:not(.on){display:none}
+.tl-item.cur{border-color:var(--teal);background:var(--teal-s)}
+
+/* lab */
+.lab{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.fld{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.fld label{font-family:var(--mono);font-size:max(11px,.55em);letter-spacing:.5px;color:var(--mut)}
+.fld input,.fld select{font:inherit;font-size:1em;font-weight:800;background:var(--bg);color:var(--tx);border:1.5px solid var(--line);border-radius:12px;padding:.35em .6em;min-height:46px;width:100%}
+.fld input:focus,.fld select:focus{border-color:var(--teal);outline:none}
+.res-big{font-size:2.2em;font-weight:900;line-height:1.05;font-family:var(--mono)}
+.verdict{padding:.6em .9em;border-radius:12px;margin:.5em 0;border:1px solid var(--line);font-size:.88em}
+.verdict.g{border-color:rgba(74,222,128,.5);background:var(--green-s)}
+.verdict.a{border-color:rgba(246,183,60,.55);background:var(--amber-s)}
+.verdict.r{border-color:rgba(255,97,97,.55);background:var(--red-s)}
+.verdict.b{border-color:rgba(90,169,255,.5);background:var(--blue-s)}
+.verdict h4{margin:0 0 .2em;font-size:.82em;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase}
+.toggle-row{display:flex;flex-wrap:wrap;gap:8px;margin:.3em 0 .8em}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{background:var(--bg2);border:0;padding:.35em .8em;font-weight:800;font-size:.78em;min-height:44px}
+.seg button.on{background:var(--teal);color:#05201c}
+
+/* shock meter */
+.meter{height:18px;border-radius:9px;background:var(--line);overflow:hidden;margin:.25em 0 .7em}
+.meter i{display:block;height:100%;border-radius:9px;transition:width .35s,background .35s}
+input[type=range]{width:100%;accent-color:var(--red);min-height:40px}
+
+/* order game */
+.order{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:10px;border:1.5px dashed var(--line);border-radius:14px;margin:.4em 0}
+.order .chip{cursor:pointer}
+.order .chip.ok{border-color:var(--green);background:var(--green-s)}
+.order .chip.bad{border-color:var(--red);background:var(--red-s)}
+
+/* flip cards */
+.flip{perspective:1200px;min-height:9em;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;min-height:9em;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .bk{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:1em;display:flex;align-items:center;justify-content:center;text-align:center;border:1.5px solid var(--line)}
+.flip .f{background:linear-gradient(160deg,var(--card2),var(--card));font-weight:900;font-size:1.25em;letter-spacing:1px;color:var(--gold)}
+.flip .bk{transform:rotateY(180deg);background:var(--teal-s);border-color:var(--teal);font-weight:700;font-size:.9em}
+
+/* cover */
+.cover{min-height:calc(100vh - var(--top) - var(--bot) - 80px);display:flex;flex-direction:column;justify-content:center}
+.cover .kk{font-family:var(--mono);letter-spacing:3px;text-transform:uppercase;color:var(--teal);font-size:.62em}
+.cover h1{font-size:clamp(40px,5.2vw,112px);line-height:1;margin:.2em 0 .15em;font-weight:900;letter-spacing:-1.5px}
+.cover h1 span{background:linear-gradient(90deg,var(--blue),var(--teal) 55%,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .sub{font-size:1.35em;color:var(--tx2);font-weight:700;max-width:30em}
+.sigline{font-family:var(--sig);font-size:2em;color:var(--gold);margin-top:.6em}
+.cover .info{font-family:var(--mono);font-size:.6em;color:var(--mut);margin-top:.8em;letter-spacing:1px}
+
+/* bottom nav */
+#bot{position:fixed;inset:auto 0 0 0;height:var(--bot);display:flex;align-items:center;gap:10px;padding:0 14px;background:rgba(8,16,31,.94);border-top:1px solid var(--line);z-index:30;font-size:14px}
+#bot .nb{border:1.5px solid var(--line);background:var(--bg2);border-radius:12px;min-width:52px;min-height:44px;font-size:20px;font-weight:900}
+#bot .nb:hover{border-color:var(--teal)}
+#prog{flex:1;height:8px;border-radius:8px;background:var(--line);position:relative;overflow:hidden;cursor:pointer}
+#prog i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--blue),var(--teal),var(--amber),var(--red));border-radius:8px;transition:width .3s}
+#prog .bm{position:absolute;top:0;bottom:0;width:2px;background:var(--bg)}
+#count{font-family:var(--mono);font-size:12px;color:var(--mut);white-space:nowrap}
+
+/* professor panel */
+#prof{width:min(44vw,640px);border-left:1px solid var(--line);background:#0b1426;overflow-y:auto;padding:16px 18px 40px;font-size:15px;line-height:1.55;display:none}
+body.prof #prof{display:block}
+#prof h4{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin:0 0 6px}
+#prof .ph{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+#prof details{border:1px solid var(--line);border-radius:12px;margin:8px 0;background:rgba(255,255,255,.02)}
+#prof summary{cursor:pointer;padding:9px 12px;font-weight:800;list-style:none;display:flex;gap:8px;align-items:center}
+#prof summary::-webkit-details-marker{display:none}
+#prof summary .L{font-family:var(--mono);font-size:12px;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:var(--line);flex:none}
+#prof details[open] summary .L{background:var(--amber);color:#1a1200}
+#prof .pb{padding:0 12px 12px;color:var(--tx2)}
+#prof .pb p{margin:.4em 0}
+#prof .pq{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
+#prof .pq b{color:var(--tx)}
+#prof .pqbtn{font-size:12px;padding:4px 8px;border-radius:8px;border:1px solid var(--teal);background:none;color:var(--teal);margin-top:4px;min-height:32px}
+#prof .pqbtn.done{opacity:.4}
+.d-A .L{}
+#prof .tfold{font-size:12px;color:var(--mut);font-family:var(--mono)}
+
+/* overlays */
+.ov{position:fixed;inset:0;background:rgba(3,7,15,.82);backdrop-filter:blur(6px);z-index:60;display:none;padding:clamp(10px,3vw,40px)}
+.ov.on{display:flex;justify-content:center}
+.ovb{background:var(--bg2);border:1px solid var(--line);border-radius:20px;width:min(1100px,100%);max-height:100%;overflow-y:auto;padding:clamp(16px,2.5vw,36px);font-size:16px;position:relative}
+.ovb h2{margin-top:0;font-size:1.6em}
+.ovx{position:sticky;top:0;float:right;border:1px solid var(--line);background:var(--bg);border-radius:10px;min-width:44px;min-height:44px;font-size:20px;z-index:2}
+.toc-b{margin:14px 0}
+.toc-b h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.toc-b h3 small{font-family:var(--mono);color:var(--mut);font-weight:500;font-size:12px}
+.toc-b ol{margin:4px 0;padding-left:1.4em}
+.toc-b li{padding:2px 0}
+.toc-b a{color:var(--tx2);text-decoration:none;cursor:pointer}
+.toc-b a:hover,.toc-b a.cur{color:var(--teal)}
+.rt-s{border-top:1px solid var(--line);padding:14px 0}
+.rt-s h3{margin:0 0 6px}
+.rt-s .rq{border-left:3px solid var(--amber);padding-left:10px;margin:8px 0}
+.rt-s .lbl{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--amber)}
+.rep h3{color:var(--teal)}
+.rep table{font-size:14px}
+.ok{color:var(--green);font-weight:800}
+.warn{color:var(--amber);font-weight:800}
+
+#toast{position:fixed;left:50%;bottom:calc(var(--bot) + 14px);transform:translateX(-50%);background:var(--card2);border:1px solid var(--amber);padding:10px 16px;border-radius:12px;font-size:14px;z-index:80;display:none;max-width:90vw}
+#toast.on{display:block;animation:fadeIn .3s}
+
+footer.sig{margin-top:2em;text-align:right;font-family:var(--sig);color:var(--gold);font-size:1.4em}
+
+@media (max-width:1000px){
+  #wrap{flex-direction:column}
+  #prof{width:100%;max-height:45vh;border-left:0;border-top:2px solid var(--amber)}
+}
+@media (max-width:760px){
+  :root{--top:56px}
+  #top{overflow-x:auto;padding:0 10px;gap:6px;scrollbar-width:none}
+  #top::-webkit-scrollbar{display:none}
+  #brand,#blockchip,.sp{display:none}
+  .tb{padding:6px 9px;font-size:13px}
+  #stage{padding:16px 16px 50px}
+  .tl-item{grid-template-columns:1fr}
+}
+@media print{#top,#bot,#prof{display:none}#wrap{position:static}body{overflow:visible}}
+
+.nt{text-transform:none!important}
+
+</style>
+</head>
+<body>
+<header id="top">
+  <div id="brand">Gravidez Ectópica<small>Dr. André Rossanno</small></div>
+  <span id="blockchip"></span>
+  <div class="sp"></div>
+  <div id="timer" class="off" aria-label="Cronômetro"><b id="tval">00:00</b><button id="tplay" aria-label="Iniciar ou pausar">▶</button><button id="treset" aria-label="Zerar">↺</button><span class="pace" id="tpace"></span></div>
+  <button class="tb" id="btnToc" title="Sumário (M)">☰ Sumário</button>
+  <button class="tb" id="btnProf" aria-pressed="false" title="Modo professor (P)">Professor</button>
+  <button class="tb" id="btnWin" title="Abrir janela separada de notas">Janela do professor</button>
+  <button class="tb" id="btnScript" title="Roteiro integral (S)">Roteiro</button>
+  <button class="tb" id="btnResetRev" title="Ocultar novamente todas as respostas">Ocultar respostas</button>
+  <button class="tb" id="btnTimer" title="Cronômetro (T)">⏱</button>
+  <button class="tb" id="btnReduce" title="Reduzir movimento">◐</button>
+  <button class="tb" id="btnRep" title="Guia de uso e relatórios">Guia</button>
+  <button class="tb" id="btnFs" title="Tela cheia (F)">⛶</button>
+</header>
+<div id="wrap">
+  <main id="stage" tabindex="-1"><div id="slide" aria-live="polite"></div></main>
+  <aside id="prof" aria-label="Notas do professor"></aside>
+</div>
+<nav id="bot" aria-label="Navegação">
+  <button class="nb" id="btnPrev" aria-label="Voltar">◀</button>
+  <div id="prog" role="progressbar" aria-label="Progresso da aula"><i></i></div>
+  <span id="count"></span>
+  <button class="nb" id="btnNext" aria-label="Avançar">▶</button>
+</nav>
+<div class="ov" id="ovToc" role="dialog" aria-label="Sumário"><div class="ovb"><button class="ovx" aria-label="Fechar">✕</button><div id="tocBody"></div></div></div>
+<div class="ov" id="ovScript" role="dialog" aria-label="Roteiro integral"><div class="ovb"><button class="ovx" aria-label="Fechar">✕</button><div id="scriptBody"></div></div></div>
+<div class="ov" id="ovRep" role="dialog" aria-label="Guia e relatórios"><div class="ovb rep"><button class="ovx" aria-label="Fechar">✕</button><div id="repBody"></div></div></div>
+<div id="toast" role="status"></div>
+<script>
+/* =====================================================================
+   AULA MAGNA · GRAVIDEZ ECTÓPICA — Dr. André Rossanno
+   DADOS (parte 1): blocos, cenas, técnicas, perguntas, helpers
+   Para editar textos, altere os objetos abaixo. Nada depende de internet.
+   ===================================================================== */
+'use strict';
+
+const SCENES = ['AMPOLA','TRANSPORTE','IMPLANTAÇÃO','INVASÃO','SANGRAMENTO','DIAGNÓSTICO','CONDUTA'];
+
+const BLOCKS = {
+  1:{n:1,name:'Anatomia funcional da tuba uterina',short:'Anatomia da tuba',from:0,to:15,color:'blue',sc:[0,1]},
+  2:{n:2,name:'Embriologia, nidação e trofoblasto',short:'Embriologia',from:15,to:30,color:'teal',sc:[2]},
+  3:{n:3,name:'Etiologia e fatores de risco',short:'Etiologia',from:30,to:45,color:'blue',sc:[1,2]},
+  4:{n:4,name:'Fisiopatologia da dor, sangramento e choque',short:'Fisiopatologia',from:45,to:65,color:'red',sc:[3,4]},
+  5:{n:5,name:'Diagnóstico clínico e complementar',short:'Diagnóstico',from:65,to:90,color:'amber',sc:[5]},
+  6:{n:6,name:'Fundamentos do tratamento',short:'Tratamento',from:90,to:110,color:'green',sc:[6]},
+  7:{n:7,name:'Recuperação ativa',short:'Recuperação ativa',from:110,to:120,color:'teal',sc:[0,1,2,3,4,5,6]}
+};
+
+/* ---------- As 10 técnicas aprovadas (texto aprovado — não alterar) ---------- */
+const TEC = {
+ 1:{nome:'A-T-U',frase:'“AMPOLA fecunda, TUBA transporta, ÚTERO implanta.”',uso:'Anatomia tubária, fecundação e implantação.',
+    ciencia:'Cada estrutura tem uma função na sequência: a ampola oferece o ambiente do encontro dos gametas; a tuba (cílios, secreção e musculatura) desloca o embrião enquanto ele se divide; o endométrio decidualizado recebe o blastocisto e regula a invasão.'},
+ 2:{nome:'O EMBRIÃO PERDEU O UBER',frase:'“O embrião tinha destino: ÚTERO. O transporte falhou e ele ficou na TUBA.”',uso:'Transporte embrionário, motilidade tubária, cílios e alterações funcionais.',
+    ciencia:'Explicação científica: o transporte tubário resulta de mecanismos integrados — batimento ciliar, secreção e contração da musculatura lisa — coordenados com o desenvolvimento embrionário. Se inflamação, cirurgia ou tabagismo retardam esse transporte, o embrião atinge a fase de implantação (blastocisto, dias 6–7) ainda dentro da tuba.'},
+ 3:{nome:'O TROFOBLASTO É UM PEDREIRO NO ENDEREÇO ERRADO',frase:'“No útero, constrói a placenta. Na tuba, pode destruir vasos.”',uso:'Invasão trofoblástica, decidualização, lesão vascular e hemorragia.',
+    ciencia:'No endométrio decidualizado a invasão é regulada e estabelece a interface materno-embrionária. A tuba não possui decidualização fisiológica equivalente e tem parede delgada: a mesma atividade invasiva pode erodir vasos e causar sangramento.'},
+ 4:{nome:'O GPS DO β-hCG ESTÁ DESLIGADO',frase:'“β-hCG POSITIVO? Existe sinal trofoblástico. Mas CADÊ a gestação?”',uso:'Produção hormonal e diagnóstico.',
+    ciencia:'O β-hCG isoladamente não determina a localização gestacional. Ele informa presença e evolução da atividade trofoblástica; o “endereço” vem da ultrassonografia integrada à clínica.'},
+ 5:{nome:'A CASA VAZIA',frase:'“CASA VAZIA não prova morador no vizinho.”',uso:'Ultrassonografia transvaginal.',
+    ciencia:'Útero vazio, isoladamente, não confirma gestação ectópica: pode ser gestação intrauterina muito inicial, gestação em regressão ou ectópica. É preciso procurar o “vizinho” (massa anexial separada do ovário) e integrar clínica e β-hCG.'},
+ 6:{nome:'O OMBRO DENUNCIA O DIAFRAGMA',frase:'“C3, C4, C5: sangue irrita o diafragma, dor aparece no ombro.”',uso:'Hemoperitônio, nervo frênico e dor referida.',
+    ciencia:'Mecanismo neuroanatômico: o sangue intraperitoneal irrita o peritônio diafragmático; as aferências seguem pelo nervo frênico, cujas raízes vêm principalmente de C3–C5. Esses segmentos medulares também recebem a sensibilidade cutânea da região do ombro — o cérebro “projeta” a dor no ombro (dor referida).'},
+ 7:{nome:'A PRESSÃO É A ÚLTIMA A CONFESSAR',frase:'“O pulso GRITA antes de a pressão CAIR.”',uso:'Compensação simpática e choque hemorrágico.',
+    ciencia:'Ressalvas obrigatórias: nem toda hemorragia produz taquicardia, e pressão normal não exclui hipoperfusão. Avalie perfusão, estado mental, tendência da FC, dor e sinais peritoneais.'},
+ 8:{nome:'PUL',frase:'“Positivo, Ultrassom não Localizou.”',uso:'Pregnancy of Unknown Location (gestação de localização desconhecida).',
+    ciencia:'PUL é uma classificação temporária, não a confirmação de ectópica. Pode evoluir para gestação intrauterina, gravidez ectópica ou gestação em regressão.'},
+ 9:{nome:'OS TRÊS CAMINHOS',frase:'“OBSERVAR se elegível, MEDICAR se elegível, OPERAR se necessário. Instabilidade não espera.”',uso:'Modalidades terapêuticas e seleção clínica.',
+    ciencia:'O macete organiza o raciocínio; não é um protocolo terapêutico absoluto. Os critérios de elegibilidade dependem de diretriz, protocolo institucional, possibilidade de seguimento e preferência da paciente.'},
+ 10:{nome:'O FILME EM SETE CENAS',frase:'“AMPOLA → TRANSPORTE → IMPLANTAÇÃO → INVASÃO → SANGRAMENTO → DIAGNÓSTICO → CONDUTA.”',uso:'Palácio da Memória integrador (abertura e encerramento).',
+    ciencia:'Na abertura, as sete cenas aparecem sem explicação. Cada bloco “acende” a sua cena. No encerramento, os alunos reconstroem o filme inteiro sem consultar.'}
+};
+
+/* ---------- Perguntas: 1–40 (numeração original), 3b (aprofundamento do roteiro), R1–R7 (revisão final)
+   q = enunciado · a = resposta · deep = aprofundamento · trap = pegadinha · add = acréscimo (identificado) ---------- */
+const QS = {
+ 1:{q:'Onde ocorre normalmente a fecundação?',a:'Na ampola da tuba uterina.',
+    deep:'A ampola oferece um ambiente adequado ao encontro dos gametas. Isso envolve o transporte espermático, a capacitação dos espermatozoides, o movimento ciliar, a composição do fluido tubário e o tempo de permanência dos gametas.'},
+ 2:{q:'Se a fecundação ocorre na ampola, por que a gestação normalmente não se implanta ali?',a:'Porque o embrião precisa percorrer a tuba até a cavidade uterina enquanto passa pelas primeiras divisões celulares. O transporte tubário e o desenvolvimento embrionário precisam estar temporalmente coordenados.',
+    deep:'Esse é um dos conceitos centrais da aula: não basta o embrião estar vivo; ele precisa chegar ao local apropriado no momento adequado.'},
+ 3:{q:'Uma mulher que teve salpingite pode continuar ovulando normalmente e, mesmo assim, apresentar infertilidade ou gravidez ectópica?',a:'Sim. A salpingite pode comprometer a arquitetura mucosa, a atividade ciliar, a permeabilidade tubária e a motilidade. Assim, o ovário pode continuar funcionando, mas o transporte do embrião torna-se inadequado.'},
+ '3b':{label:'Pergunta 3 · aprofundamento',q:'Por que a mesma doença pode provocar infertilidade em uma paciente e gravidez ectópica em outra?',a:'Porque o dano tubário pode ter diferentes graus. Uma obstrução completa pode impedir o encontro dos gametas ou a passagem embrionária. Uma lesão parcial pode permitir a fecundação, mas retardar o transporte, favorecendo a implantação ectópica.'},
+ 4:{q:'O trofoblasto é uma estrutura agressiva?',a:'Ele possui capacidade fisiológica de adesão, invasão e remodelamento tecidual. Essa capacidade é regulada por mecanismos moleculares e pela interação com os tecidos maternos.',
+    deep:'Analogia: “O trofoblasto é uma equipe de construção especializada em estabelecer a interface materno-embrionária. No endométrio, encontra um ambiente biologicamente preparado. Na tuba, a mesma atividade invasiva pode lesar estruturas que não oferecem condições equivalentes de acomodação.”'},
+ 5:{q:'A gravidez ectópica ocorre porque o embrião está defeituoso?',a:'Não necessariamente. Uma gravidez ectópica pode resultar de alterações no transporte embrionário, nas condições tubárias e nas interações locais entre embrião e tecido materno. Alterações embrionárias podem coexistir, mas não explicam isoladamente a maioria dos casos.'},
+ 6:{q:'Se o embrião está na tuba, por que o teste de gravidez fica positivo?',a:'Porque o teste identifica hCG, e não a localização anatômica do embrião.',
+    deep:'Frase para fixação: “O β-hCG informa que existe atividade trofoblástica, mas não revela o endereço da gestação.” Essa distinção será fundamental no bloco diagnóstico.'},
+ 7:{q:'Se a paciente tratou a infecção, por que o risco de ectópica pode continuar aumentado?',a:'Porque eliminar o agente infeccioso não significa necessariamente recuperar integralmente a anatomia e a função tubárias.'},
+ 8:{q:'Uma tuba anatomicamente pérvia é necessariamente uma tuba funcional?',a:'Não. A permeabilidade não garante integridade ciliar, secreção normal ou transporte embrionário adequado.'},
+ 9:{q:'Se a ultrassonografia mostra uma gestação intrauterina, podemos excluir totalmente gravidez ectópica?',a:'Não em todas as circunstâncias. A gestação heterotópica é rara na concepção espontânea, mas ocorre com maior frequência após técnicas de reprodução assistida. Por isso, sintomas e achados anexiais suspeitos não devem ser ignorados apenas porque existe uma gestação intrauterina.',
+    add:'NICE NG126 (rec. 1.4.21): ao realizar a ultrassonografia no início da gestação, examinar útero e anexos para verificar a possibilidade de gestação heterotópica.'},
+ 10:{q:'Então o DIU provoca gravidez ectópica?',a:'Essa conclusão é incorreta. O dispositivo reduz a ocorrência total de gestações. O ponto clínico é que uma gravidez diagnosticada durante seu uso exige avaliação cuidadosa da localização.',
+    trap:'Risco ABSOLUTO cai (menos gestações no total, inclusive ectópicas); a PROPORÇÃO de ectópicas entre as poucas falhas é maior. Confundir proporção com risco é o erro.'},
+ 11:{q:'Uma paciente pode apresentar hemoperitônio por gravidez ectópica sem ruptura tubária completa?',a:'Sim. O aborto tubário e outras formas de sangramento tubário podem provocar hemoperitônio.'},
+ 12:{q:'Por que algumas pacientes apresentam dor no ombro?',a:'O sangue intraperitoneal pode irritar o diafragma, produzindo dor referida por aferências associadas ao nervo frênico, cujas raízes se originam principalmente de C3 a C5.',
+    deep:'Macete do roteiro: “C3, C4, C5: o diafragma avisa no ombro.” A dor no ombro não é específica, mas, no contexto de gestação inicial com dor abdominal e suspeita de hemorragia, deve aumentar a preocupação clínica.'},
+ 13:{q:'Se o sangue está saindo pela vagina, isso significa que a gestação estava dentro do útero?',a:'Não. O sangramento vaginal pode ter origem na descamação endometrial associada à gestação ectópica.'},
+ 14:{q:'Por que a taquicardia pode surgir antes da hipotensão?',a:'Porque a ativação simpática é um mecanismo compensatório inicial para tentar preservar o débito cardíaco e a perfusão dos órgãos vitais.'},
+ 15:{q:'Uma paciente jovem, com frequência cardíaca de 118 bpm e pressão de 110 × 70 mmHg, está necessariamente estável?',a:'Não. A pressão arterial isolada não define estabilidade. É preciso avaliar perfusão periférica, estado mental, evolução da frequência cardíaca, dor, sangramento, sinais de irritação peritoneal e outros indicadores clínicos.',
+    add:'NICE NG126 (rec. 1.3.4) lista entre os sinais possíveis de ectópica: taquicardia (> 100 bpm) ou hipotensão (< 100/60 mmHg), choque/colapso e hipotensão ortostática.'},
+ 16:{q:'Uma hemoglobina de 12 g/dL exclui hemoperitônio importante?',a:'Não. O contexto clínico e hemodinâmico é mais importante do que uma hemoglobina isolada na avaliação inicial da hemorragia aguda.',
+    deep:'Mensagem para o quadro: “Na hemorragia aguda, a clínica pode se deteriorar antes de o hemograma revelar toda a gravidade.”'},
+ 17:{q:'Qual é a primeira pergunta diante de uma paciente com dor abdominal e gravidez confirmada?',a:'A paciente está hemodinamicamente estável? A resposta determina a urgência da investigação e da intervenção.'},
+ 18:{q:'A ausência de sangramento vaginal exclui gravidez ectópica?',a:'Não. A paciente pode apresentar sangramento intraperitoneal sem exteriorização vaginal significativa.'},
+ 19:{q:'A ausência de fatores de risco exclui gravidez ectópica?',a:'Não. Uma proporção relevante de pacientes não apresenta fatores de risco identificáveis.',
+    add:'NICE NG126 (rec. 1.3.8): cerca de um terço das mulheres com gravidez ectópica não tem fator de risco conhecido.'},
+ 20:{q:'Uma paciente tem β-hCG de 2.400 mUI/mL. Isso prova que a gravidez está dentro do útero?',a:'Não.',
+    deep:'O valor absoluto mede quantidade de atividade trofoblástica, não o endereço (Técnica 04). Lembrete de unidades: 1 mUI/mL = 1 UI/L.'},
+ 21:{q:'E se o β-hCG for de 500 mUI/mL? Podemos excluir gravidez ectópica?',a:'Também não. Uma gravidez ectópica pode existir com concentrações baixas de β-hCG, e a ruptura pode ocorrer mesmo com valores relativamente baixos ou em declínio.'},
+ 22:{q:'O β-hCG está caindo. A paciente está automaticamente fora de perigo?',a:'Não. O declínio hormonal não exclui imediatamente a possibilidade de ruptura de uma gravidez ectópica ainda presente.'},
+ 23:{q:'O ultrassom mostrou útero vazio. Qual é o diagnóstico?',a:'Ainda não é possível determinar apenas com esse achado. Pode se tratar de gestação intrauterina muito inicial, gestação em regressão ou gravidez ectópica.'},
+ 24:{q:'O que é o anel tubário?',a:'É uma imagem anexial sugestiva de saco gestacional ectópico, frequentemente caracterizada por uma estrutura anelar ecogênica fora da cavidade uterina.',
+    trap:'Não deve ser confundido automaticamente com o corpo lúteo ovariano.',
+    add:'NICE NG126 (rec. 1.4.18): massa anexial que se move separadamente do ovário (“sliding sign”) com saco gestacional vazio (“anel tubário”/“bagel sign”) indica alta probabilidade de ectópica tubária — integrar com clínica e hCG antes de fechar o diagnóstico.'},
+ 25:{q:'β-hCG de 2.500 e útero vazio: posso administrar metotrexato imediatamente?',a:'Não com base apenas nesses dois dados. É necessário confirmar adequadamente o diagnóstico, excluir uma gestação intrauterina viável e avaliar critérios clínicos, ultrassonográficos e laboratoriais.',
+    deep:'A NICE recomenda que o metotrexato não seja oferecido na primeira avaliação sem diagnóstico definitivo de ectópica e exclusão de gestação intrauterina viável.'},
+ 26:{q:'Uma paciente com PUL deve receber metotrexato automaticamente?',a:'Não. É necessário acompanhamento estruturado, geralmente com avaliação clínica, β-hCG seriado e nova ultrassonografia conforme a evolução.',
+    deep:'A intensidade dos sintomas e a estabilidade hemodinâmica têm prioridade sobre interpretações isoladas do β-hCG.'},
+ 27:{q:'Qual é a classificação inicial?',a:'Gestação de localização desconhecida.'},
+ 28:{q:'É correto afirmar que ela tem gravidez ectópica?',a:'Não. A localização ainda não foi determinada.'},
+ 29:{q:'Qual é a lógica do acompanhamento?',a:'Avaliar a evolução clínica e trofoblástica, repetir o β-hCG no intervalo apropriado e realizar nova ultrassonografia conforme a evolução, mantendo orientações claras para retorno imediato se surgirem sintomas de alarme.',
+    add:'NICE NG126 (rec. 1.4.27–1.4.31): duas dosagens o mais próximo possível de 48 h (nunca antes); aumento > 63% → provável GIU em desenvolvimento (sem excluir ectópica), USTV em 7–14 dias; queda > 50% → provável regressão, teste urinário em 14 dias; padrões intermediários → revisão clínica em 24 h.'},
+ 30:{q:'Por que uma gravidez ectópica pode regredir espontaneamente?',a:'Porque o tecido trofoblástico pode perder sua capacidade de proliferação, levando à involução gestacional e à redução progressiva da produção de hCG.'},
+ 31:{q:'Se o β-hCG está caindo, por que ainda precisamos acompanhar?',a:'Porque o risco de sangramento e ruptura não desaparece imediatamente. É necessário confirmar a resolução e acompanhar os sintomas.',
+    add:'NICE NG126 (rec. 1.6.5), conduta expectante: repetir hCG nos dias 2, 4 e 7; se cair ≥ 15% a cada medida, seguir semanalmente até negativar (< 20 UI/L); se não cair 15%, estabilizar ou subir, reavaliar com equipe sênior.'},
+ 32:{q:'Por que o metotrexato não é a escolha para uma paciente com choque hemorrágico?',a:'Porque ele não controla imediatamente uma hemorragia ativa. A paciente necessita de ressuscitação e controle urgente da fonte do sangramento.'},
+ 33:{q:'O metotrexato faz o β-hCG cair obrigatoriamente no dia seguinte?',a:'Não. No protocolo de dose única, a avaliação da resposta utiliza habitualmente dosagens nos dias 4 e 7. Pode haver elevação inicial do β-hCG.',
+    deep:'Uma queda de pelo menos 15% entre os dias 4 e 7 é um parâmetro frequentemente utilizado para avaliar resposta. Depois, mantém-se acompanhamento semanal até a resolução.'},
+ 34:{q:'Por que uma paciente tratada com metotrexato ainda pode apresentar ruptura tubária?',a:'Porque a regressão do tecido gestacional não ocorre instantaneamente. A lesão tubária e o risco hemorrágico podem persistir durante o tratamento.'},
+ 35:{q:'Qual é a principal preocupação após uma salpingostomia?',a:'A persistência de tecido trofoblástico, que pode exigir acompanhamento do β-hCG e, em alguns casos, tratamento adicional.',
+    add:'NICE NG126 (rec. 1.6.17–1.6.18): até 1 em cada 5 mulheres pode precisar de tratamento adicional (metotrexato e/ou salpingectomia); hCG 7 dias após a cirurgia e depois semanal até negativar.'},
+ 36:{q:'Uma paciente submetida à salpingectomia unilateral pode engravidar naturalmente?',a:'Sim, desde que existam condições reprodutivas favoráveis, especialmente função adequada da tuba contralateral.'},
+ 37:{q:'Qual é a síndrome hemodinâmica mais provável?',a:'Choque hemorrágico por provável sangramento intra-abdominal.'},
+ 38:{q:'Qual mecanismo explica a taquicardia?',a:'Ativação simpática compensatória diante da redução do volume circulante e do retorno venoso.'},
+ 39:{q:'Devemos aguardar o β-hCG quantitativo para decidir se a paciente precisa de intervenção?',a:'Não. A paciente apresenta sinais de instabilidade e suspeita de hemorragia intra-abdominal. A ressuscitação, a avaliação ginecológica/cirúrgica imediata e o controle da fonte hemorrágica não devem ser atrasados por exames complementares.'},
+ 40:{q:'Qual é o princípio terapêutico central?',a:'Controle urgente da hemorragia, acompanhado de ressuscitação hemodinâmica e suporte apropriado.',
+    deep:'A ACOG considera a gravidez ectópica tubária com instabilidade hemodinâmica uma emergência que exige intervenção cirúrgica imediata.'},
+
+ /* Revisão final — enunciados do roteiro; respostas-modelo construídas a partir do próprio roteiro (identificadas) */
+ R1:{label:'Revisão · R1',q:'Por que a fecundação ocorre habitualmente na ampola, mas a implantação deve acontecer no útero?',model:true,
+    a:'A ampola oferece o ambiente do encontro dos gametas (transporte espermático, capacitação, fluido tubário, tempo de permanência). Mas o embrião ainda não está pronto para implantar: ele se divide enquanto é transportado, e só como blastocisto (por volta dos dias 6–7) encontra o endométrio decidualizado, preparado para receber e regular a invasão trofoblástica. A tuba não tem decidualização equivalente nem parede capaz de acomodar a gestação. A-T-U: ampola fecunda, tuba transporta, útero implanta.'},
+ R2:{label:'Revisão · R2',q:'Por que uma salpingite antiga pode aumentar o risco de gravidez ectópica?',model:true,
+    a:'A infecção pode deixar lesão epitelial, perda de células ciliadas, fibrose e aderências que persistem após a resolução microbiológica. Uma lesão parcial permite a fecundação, mas retarda o transporte — o embrião “perde o Uber” e atinge a fase de implantação ainda na tuba. Tratar a infecção não devolve necessariamente a função tubária.'},
+ R3:{label:'Revisão · R3',q:'Por que a gravidez ectópica produz β-hCG?',model:true,
+    a:'Porque possui tecido trofoblástico funcional: o sinciciotrofoblasto produz hCG independentemente do local de implantação. O teste detecta o hormônio, não o endereço da gestação — o GPS está desligado.'},
+ R4:{label:'Revisão · R4',q:'Por que a paciente pode apresentar dor no ombro?',model:true,
+    a:'O sangue intraperitoneal irrita o peritônio diafragmático. As aferências seguem pelo nervo frênico (raízes C3–C5), segmentos que também recebem a sensibilidade da região do ombro; o cérebro projeta a dor no ombro — dor referida. Não é específica, mas no contexto certo eleva a suspeita de hemoperitônio.'},
+ R5:{label:'Revisão · R5',q:'Por que a pressão arterial pode estar normal no início da hemorragia?',model:true,
+    a:'A ativação simpática eleva a frequência cardíaca e a resistência vascular sistêmica, compensando a queda do volume sistólico (DC = FC × VS) e sustentando temporariamente a pressão. O pulso grita antes de a pressão cair; pressão normal não exclui perda sanguínea importante nem hipoperfusão.'},
+ R6:{label:'Revisão · R6',q:'Por que o útero vazio no ultrassom não confirma gravidez ectópica?',model:true,
+    a:'Porque útero vazio é compatível com gestação intrauterina muito inicial, gestação em regressão ou ectópica. Casa vazia não prova morador no vizinho: é preciso procurar a imagem anexial, integrar a clínica e a evolução do β-hCG — e, sem localização, classificar como PUL.'},
+ R7:{label:'Revisão · R7',q:'Por que metotrexato não substitui cirurgia em uma paciente instável?',model:true,
+    a:'Porque o metotrexato inibe a diidrofolato redutase e a proliferação trofoblástica — um efeito que se instala ao longo de dias e não fecha o vaso que está sangrando. A paciente instável precisa de ressuscitação e controle cirúrgico imediato da fonte hemorrágica. Instabilidade não espera.'}
+};
+
+/* ---------- perguntas complementares NOVAS (evocação) ---------- */
+Object.assign(QS,{
+ E2a:{label:'Evocação · Bloco 2',nova:true,q:'Qual camada do trofoblasto produz hCG e invade?',a:'O sinciciotrofoblasto.'},
+ E2b:{label:'Evocação · Bloco 2',nova:true,q:'Que hormônio comanda principalmente a decidualização — e para que ela serve?',a:'A progesterona. A decidualização contribui para a receptividade uterina e para o controle da invasão trofoblástica.'},
+ E2c:{label:'Evocação · Bloco 2',nova:true,q:'Em que dias, aproximadamente, começa a implantação?',a:'Por volta dos dias 6–7 após a fecundação (tempos aproximados, podem variar).'},
+ E4a:{label:'Evocação · Bloco 4',nova:true,q:'Cite duas formas de hemorragia na ectópica que NÃO exigem ruptura completa da tuba.',a:'Aborto tubário (eliminação do conteúdo pela extremidade fimbrial) e separação parcial do tecido gestacional/erosão vascular com sangramento intratubário.'},
+ E4b:{label:'Evocação · Bloco 4',nova:true,q:'Complete: DC = ____ × ____. Qual dos dois o simpático eleva primeiro?',a:'DC = FC × VS. Na hemorragia o VS cai (menor pré-carga); a ativação simpática eleva a FC (e a resistência vascular sistêmica) para sustentar temporariamente a pressão.'},
+ E4c:{label:'Evocação · Bloco 4',nova:true,q:'Por que a hemoglobina pode estar “normal” na primeira hora de uma hemorragia aguda?',a:'Porque a perda inicial envolve plasma e hemácias juntos; a concentração só cai depois, com a redistribuição de fluidos e a reposição volêmica.'},
+ E5a:{label:'Evocação · Bloco 5',nova:true,q:'Os três conceitos do β-hCG: quais ele ajuda a avaliar e qual ele NÃO determina sozinho?',a:'Ajuda: presença de atividade trofoblástica e evolução da gestação. Não determina sozinho: a localização.'},
+ E5b:{label:'Evocação · Bloco 5',nova:true,q:'Qual achado ultrassonográfico oferece evidência direta de ectópica tubária?',a:'Massa anexial separada do ovário contendo saco gestacional com vesícula vitelínica ou embrião.'},
+ E5c:{label:'Evocação · Bloco 5',nova:true,q:'PUL é diagnóstico definitivo? Para onde pode evoluir?',a:'Não — é classificação temporária. Pode evoluir para gestação intrauterina, gravidez ectópica ou gestação em regressão.'},
+ E6a:{label:'Evocação · Bloco 6',nova:true,q:'Qual enzima o metotrexato inibe e qual a consequência?',a:'A diidrofolato redutase (DHFR): compromete a regeneração do tetraidrofolato e a síntese de nucleotídeos necessários à replicação celular — o trofoblasto, tecido proliferativo, é o alvo.'},
+ E6b:{label:'Evocação · Bloco 6',nova:true,q:'Salpingectomia × salpingostomia: o que cada uma faz?',a:'Salpingectomia retira a tuba comprometida. Salpingostomia abre a tuba para remover o tecido gestacional, preservando a estrutura tubária (com risco de persistência trofoblástica).'}
+});
+
+/* ---------- helpers de marcação (usados nos slides) ---------- */
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function Q(id, opt){
+  opt = opt||{};
+  const o = QS[id];
+  const label = o.label || ('Pergunta ' + id);
+  return `<div class="q${opt.step?' step':''}" data-qid="${id}">
+    <div class="ql">${esc(label)}${(opt.nova||o.nova)?'<span class="new">nova · complementar</span>':''}</div>
+    <div class="qt">${o.q}</div>
+    <div class="btns">
+      <button class="bt pri" data-act="ans" data-q="${id}">Revelar resposta</button>
+      ${o.deep?`<button class="bt blu" data-act="deep" data-q="${id}" hidden>Aprofundamento</button>`:''}
+      ${o.trap?`<button class="bt amb" data-act="trap" data-q="${id}" hidden>Pegadinha</button>`:''}
+      ${o.add?`<button class="bt" data-act="add" data-q="${id}" hidden>Diretriz</button>`:''}
+    </div>
+    <div class="ans" data-slot="ans" hidden><span class="al">Resposta${o.model?' · resposta-modelo construída a partir do roteiro':''}</span>${o.a}</div>
+    ${o.deep?`<div class="ans deep" data-slot="deep" hidden><span class="al">Aprofundamento</span>${o.deep}</div>`:''}
+    ${o.trap?`<div class="ans trap" data-slot="trap" hidden><span class="al">Pegadinha</span>${o.trap}</div>`:''}
+    ${o.add?`<div class="ans add" data-slot="add" hidden><span class="al">Acréscimo · referência de diretriz</span>${o.add}</div>`:''}
+  </div>`;
+}
+function T(n, opt){
+  opt = opt||{};
+  const t = TEC[n];
+  return `<div class="tec${opt.step?' step':''}" data-tec="${n}">
+    <div class="tn">Técnica ${String(n).padStart(2,'0')} · ${t.nome.replace(/β-hCG/g,'<span class="nt">β-hCG</span>')}</div>
+    <div class="tp">${t.frase}</div>
+    ${opt.sci===false?'':`<div class="ts">${t.ciencia}</div>`}
+  </div>`;
+}
+/* fluxograma progressivo: items = [texto | {t, s, c}] */
+let _fid = 0;
+function FLOW(items, opt){
+  opt = opt||{};
+  const id = 'f' + (++_fid);
+  const nodes = items.map((it,i)=>{
+    const o = typeof it==='string'?{t:it}:it;
+    return `${i?`<div class="fa fw" data-i="${i}">${opt.h?'→':'↓'}</div>`:''}<div class="fn fw ${o.c||''}" data-i="${i}">${o.t}${o.s?`<small>${o.s}</small>`:''}</div>`;
+  }).join('');
+  return `<div class="flowbox${opt.step?' step':''}" data-flow="${id}">
+    ${opt.title?`<h3>${opt.title}</h3>`:''}
+    <div class="flow${opt.h?' h':''}">${nodes}</div>
+    <div class="btns flowctl"><button class="bt pri" data-act="fnext" data-f="${id}">Revelar próxima etapa</button><button class="bt" data-act="fall" data-f="${id}">Mostrar todas</button><button class="bt" data-act="freset" data-f="${id}">Recomeçar</button></div>
+  </div>`;
+}
+const S = (html, cls) => `<div class="step ${cls||''}">${html}</div>`;
+const CARD = (cls, title, html) => `<div class="card ${cls||''}">${title?`<h3>${title}</h3>`:''}${html}</div>`;
+
+/* =====================================================================
+   DADOS (parte 2): SLIDES — Blocos 1 a 3
+   Campos: b=bloco · k=kicker · t=título · body=HTML projetado
+   prof: show(A) explain(B, texto integral do roteiro) ask(C) answer(D) deep(E) trap(F) tip(G)
+   img: {tema, pos, conceito, src:''} → preencha src com o caminho da figura para exibi-la
+   ===================================================================== */
+const SLIDES = [];
+const add = s => SLIDES.push(s);
+
+/* ======================= ABERTURA ======================= */
+add({b:1,k:'Abertura',t:'Capa',cover:true,
+ body:`<div class="cover">
+  <div class="kk">Saúde da Mulher · Laboratório Morfofuncional · Semana 4 · 120 minutos</div>
+  <h1><span>Gravidez Ectópica</span></h1>
+  <div class="sub">Da fecundação ao choque hemorrágico: a jornada do embrião fora do útero</div>
+  <div class="sigline">Dr. André Rossanno</div>
+  <div class="info">Aula Magna Interativa · Morfofisiologia e Fisiopatologia</div>
+ </div>`,
+ prof:{show:'Título, subtítulo, disciplina e assinatura.',
+  explain:`<p><b>Título da aula:</b> GRAVIDEZ ECTÓPICA — Da fecundação ao choque hemorrágico: a jornada do embrião fora do útero. Saúde da Mulher | Laboratório Morfofuncional | Semana 4 | 120 minutos.</p>
+  <p><b>Objetivo central:</b> fazer o aluno compreender por que uma gestação se implanta fora da cavidade endometrial, quais são as consequências anatômicas e fisiopatológicas e como esses mecanismos orientam a investigação e a conduta clínica.</p>
+  <p>O material foi pensado para você ensinar, não apenas ler slides. Tem explicações de anatomia, embriologia, histologia, fisiologia, fisiopatologia, diagnóstico e fundamentos terapêuticos, com perguntas intercaladas e respostas comentadas.</p>`,
+  tip:'Atalhos: → avança/revela etapa · ← volta · P modo professor · M sumário · S roteiro integral · F tela cheia · T cronômetro · A revela a próxima resposta oculta do slide.'}
+});
+
+add({b:1,k:'Abertura',t:'A pergunta condutora',
+ body:`<p class="lead">Ela conecta a primeira explicação da aula à última.</p>
+ <blockquote class="big">Por que o trofoblasto, essencial para formar a placenta, pode se transformar em uma ameaça à vida materna quando se implanta no lugar errado?</blockquote>
+ ${S(`<h2>O filme que vamos assistir hoje</h2><p class="mut">Sete cenas. Por enquanto, sem explicação — só os títulos. Ao final, vocês vão reconstruir o filme inteiro de memória.</p>${T(10,{sci:false})}`)}
+ ${S(`<div class="tablewrap"><table class="tt"><thead><tr><th>Bloco</th><th>Conteúdo</th><th>Tempo</th></tr></thead><tbody>
+ <tr><td>1</td><td>Anatomia da tuba e fecundação</td><td>15 min</td></tr>
+ <tr><td>2</td><td>Embriologia, nidação e trofoblasto</td><td>15 min</td></tr>
+ <tr><td>3</td><td>Etiologia, fatores de risco e implantação ectópica</td><td>15 min</td></tr>
+ <tr><td>4</td><td>Fisiopatologia da dor, sangramento e choque</td><td>20 min</td></tr>
+ <tr><td>5</td><td>Diagnóstico clínico, β-hCG e ultrassonografia</td><td>25 min</td></tr>
+ <tr><td>6</td><td>Tratamento e raciocínio clínico</td><td>20 min</td></tr>
+ <tr><td>7</td><td>Revisão ativa e perguntas integradoras</td><td>10 min</td></tr>
+ <tr><td><b>Total</b></td><td></td><td><b>120 min</b></td></tr></tbody></table></div>`)}`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'Pergunta condutora; as sete cenas (sem explicação); plano de 120 minutos.',
+  explain:`<p>A aula seguirá uma pergunta condutora: <i>“Por que o trofoblasto, essencial para formar a placenta, pode se transformar em uma ameaça à vida materna quando se implanta no lugar errado?”</i> Essa pergunta conecta a primeira explicação da aula à última.</p>
+  <p>O documento institucional estabelece os assuntos, mas não desenvolve as explicações científicas. A ampliação utiliza conhecimentos de anatomia, embriologia e fisiopatologia, além de recomendações clínicas da NICE (NG126, atualizada em junho de 2026) e do ACOG.</p>
+  <p><b>Palácio da Memória (Técnica 10):</b> o aluno começa a aula vendo as sete etapas sem explicação, percorre cada etapa durante a exposição e, ao final, reconstrói toda a fisiopatologia sem consultar as respostas. A faixa de cenas no topo de cada slide mostra qual cena está “acesa”.</p>`,
+  tip:'Técnica 10 — O Filme em Sete Cenas: “AMPOLA → TRANSPORTE → IMPLANTAÇÃO → INVASÃO → SANGRAMENTO → DIAGNÓSTICO → CONDUTA.” Peça que leiam em voz alta, sem explicar.'}
+});
+
+/* ======================= BLOCO 1 ======================= */
+add({b:1,k:'1.1 · Abertura do bloco',t:'O caminho normal do embrião',
+ body:`<p class="lead">Não vamos começar pela doença. Vamos começar pela normalidade.</p>
+ <div class="callout blue"><p class="big">Ocorreu a ovulação. O ovócito foi liberado pelo ovário.</p><p class="big">Onde ele está agora? Já está dentro da tuba?</p><p>E como ele vai parar lá?</p></div>
+ ${S(`<div class="grid g2">${CARD('blue','Não há “tubo” contínuo','<p>O ovário <b>não possui conexão tubular contínua</b> com a extremidade da tuba.</p><p>O complexo cúmulo-ovócito é <b>captado</b> pelas <b>fímbrias</b> e pelas <b>correntes de fluido</b> junto ao infundíbulo.</p>')}
+ ${CARD('teal','A tuba não é um cano','<p>É um <b>órgão muscular</b>, revestido por <b>epitélio especializado</b>, com <b>secreção</b> e <b>motilidade</b> próprias.</p>')}</div>`)}`,
+ img:{tema:'Ovário, fímbrias e captação do complexo cúmulo-ovócito',pos:'Abaixo dos dois cartões',conceito:'Ausência de continuidade entre ovário e tuba; captação ativa pelas fímbrias.',src:''},
+ prof:{show:'Pergunta de abertura; depois, dois cartões: captação pelas fímbrias e “a tuba não é um cano”.',
+  explain:`<p><b>Fala sugerida:</b> “Hoje nós vamos estudar uma doença potencialmente fatal, mas não vamos começar pela doença. Vamos começar pela normalidade. Porque, para compreender a gravidez ectópica, primeiro precisamos entender como o embrião chega ao útero.</p>
+  <p>Imaginem que ocorreu a ovulação. O ovócito foi liberado pelo ovário. A partir desse momento, onde ele está? Já está dentro da tuba? Não necessariamente. E como ele vai parar lá?”</p>
+  <p><i>Espere os alunos responderem.</i></p>
+  <p>Explique que o ovário não possui uma conexão tubular contínua com a extremidade da tuba uterina. Após a ovulação, o complexo cúmulo-ovócito é captado pela ação das fímbrias e pelas correntes de fluido próximas ao infundíbulo.</p>
+  <p>A tuba uterina não é simplesmente um cano por onde o embrião escorrega. Ela é um órgão muscular, revestido por epitélio especializado, com secreção e motilidade próprias.</p>`,
+  ask:'“Onde está o ovócito logo após a ovulação? Já está dentro da tuba?”',
+  answer:'Não necessariamente. Não há conexão tubular contínua; o complexo cúmulo-ovócito é captado pelas fímbrias e pelas correntes de fluido próximas ao infundíbulo.',
+  trap:'Imaginar a tuba como um “cano” passivo conectado ao ovário.'}
+});
+
+add({b:1,k:'1.2 · Anatomia funcional',t:'As quatro regiões da tuba',
+ body:`<p class="mut">Toque em cada região. Sentido do transporte: em direção à cavidade uterina →</p>
+ <div class="svgbox" data-widget="tube"></div>
+ <div class="card tube-info" id="tubeInfo"><p class="mut">Selecione uma região do desenho.</p></div>
+ ${S(T(1))}`,
+ sc:[0],
+ img:{tema:'Anatomia da tuba uterina (corte longitudinal)',pos:'Ao lado do esquema interativo',conceito:'Infundíbulo, ampola, istmo e porção intramural, com o sentido do transporte.',src:''},
+ prof:{show:'Esquema clicável das quatro regiões; depois, Técnica 01 (A-T-U).',
+  explain:`<p><b>As quatro regiões:</b> Infundíbulo · Ampola · Istmo · Porção intramural. Sentido do transporte em direção à cavidade uterina.</p>
+  <p><b>Infundíbulo:</b> região distal, próxima ao ovário, com fímbrias responsáveis por facilitar a captação do complexo cúmulo-ovócito.</p>
+  <p><b>Ampola:</b> segmento mais longo e geralmente mais dilatado, com pregas mucosas complexas. É o local habitual da fecundação e também a localização mais frequente da gravidez ectópica tubária.</p>
+  <p><b>Istmo:</b> segmento mais estreito e de parede muscular relativamente espessa, importante para o transporte em direção ao útero.</p>
+  <p><b>Porção intramural ou intersticial:</b> atravessa a parede muscular uterina e desemboca na cavidade uterina.</p>`,
+  tip:'Técnica 01 — A-T-U: “AMPOLA fecunda, TUBA transporta, ÚTERO implanta.” Peça aos alunos que repitam a sequência e expliquem a função de cada estrutura.'}
+});
+
+add({b:1,k:'1.2 · Pegadinha anatômica',t:'Intersticial <span class="acc">≠</span> angular',
+ body:`<div class="grid g2">
+ ${CARD('red','Gravidez intersticial','<p>Implantação no <b>segmento tubário que atravessa o miométrio</b> (porção intramural).</p><p class="mut">Fora da cavidade endometrial.</p>')}
+ ${CARD('teal','Gestação angular','<p>Localizada <b>dentro da cavidade endometrial</b>, próxima ao ângulo uterino.</p>')}
+ </div>
+ ${S('<div class="callout amber"><b>Pegadinha:</b> são nomes vizinhos para lugares diferentes. Uma está no músculo uterino, dentro da tuba; a outra está dentro da cavidade.</div>')}`,
+ img:{tema:'Comparação intersticial × angular',pos:'Abaixo dos cartões',conceito:'Relação de cada implantação com o miométrio e a cavidade endometrial.',src:''},
+ prof:{show:'Dois cartões contrastando intersticial e angular.',
+  explain:`<p>Explique uma distinção importante: gravidez intersticial não é sinônimo de gravidez angular. A implantação intersticial ocorre no segmento tubário que atravessa o miométrio, enquanto a gestação angular se localiza dentro da cavidade endometrial, próxima ao ângulo uterino.</p>`,
+  deep:'As localizações não tubárias e a intersticial podem apresentar comportamento hemorrágico e estratégias terapêuticas diferentes das da ectópica ampular (ver Bloco 3 e relatório científico).',
+  trap:'Tratar “intersticial”, “cornual” e “angular” como sinônimos.'}
+});
+
+add({b:1,k:'1.2 · Perguntas',t:'Onde o encontro acontece?',
+ body:`${Q(1)}${Q(2,{step:true})}
+ ${S('<div class="callout teal big">Não basta o embrião estar vivo; ele precisa chegar ao local apropriado no momento adequado.</div>')}`,
+ sc:[0,1],
+ prof:{show:'Perguntas 1 e 2, reveladas sob comando; frase-conceito central.',
+  explain:`<p>Pergunta 1 e Pergunta 2 conforme o roteiro. Após a Pergunta 2, destaque: “Esse é um dos conceitos centrais da aula: não basta o embrião estar vivo; ele precisa chegar ao local apropriado no momento adequado.”</p>`}
+});
+
+add({b:1,k:'1.3 · Histologia tubária',t:'Três camadas, um transporte integrado',
+ body:`<div class="grid g3">
+ ${CARD('blue','Mucosa','<p>Epitélio <b>colunar simples</b> com:</p><ul class="clean"><li><b>células ciliadas</b> — deslocam o conteúdo em direção ao útero</li><li><b>células secretoras</b> — mantêm o microambiente dos gametas e do embrião inicial</li></ul>')}
+ ${CARD('teal','Camada muscular lisa','<p>Contrações que <b>também</b> participam do transporte.</p><p class="mut">Moduladas por hormônios, mediadores locais e mecanismos neuromusculares.</p>')}
+ ${CARD('','Serosa','<p>Reveste externamente a tuba; relação com a <b>mesossalpinge</b> e seus vasos.</p>')}
+ </div>
+ ${S('<div class="callout teal big">O transporte não depende só dos cílios, nem só da contração muscular.</div>')}`,
+ sc:[1],
+ img:{tema:'Histologia da tuba uterina (HE)',pos:'Abaixo dos três cartões',conceito:'Pregas mucosas, células ciliadas e secretoras, camada muscular e serosa.',src:''},
+ prof:{show:'Três camadas; mensagem do transporte integrado.',
+  explain:`<p>A parede da tuba apresenta três componentes fundamentais: mucosa, camada muscular e serosa.</p>
+  <p>A mucosa possui epitélio colunar simples com células ciliadas e células secretoras.</p>
+  <p>As células ciliadas contribuem para o deslocamento do conteúdo tubário em direção ao útero. As células secretoras produzem substâncias que ajudam a manter o microambiente necessário à sobrevivência dos gametas e ao desenvolvimento embrionário inicial.</p>
+  <p>A camada muscular lisa apresenta contrações que também participam do transporte. Esse processo é modulado por hormônios, mediadores locais e mecanismos neuromusculares.</p>
+  <p>A serosa reveste externamente a tuba, que mantém relação anatômica com o mesossalpinge e seus vasos.</p>
+  <p>É importante explicar que o transporte tubário resulta de mecanismos integrados. Não depende exclusivamente dos cílios, nem exclusivamente da contração muscular.</p>`,
+  trap:'Atribuir o transporte apenas aos cílios.'}
+});
+
+add({b:1,k:'1.3 · Raciocínio clínico',t:'O ovário funciona… e mesmo assim',
+ body:`${Q(3)}${Q('3b',{step:true})}${S(T(2))}`,
+ sc:[1],
+ prof:{show:'Pergunta 3, pergunta de aprofundamento e Técnica 02.',
+  explain:`<p>Pergunta 3 e a pergunta de aprofundamento (“Por que a mesma doença pode provocar infertilidade em uma paciente e gravidez ectópica em outra?”) conforme o roteiro.</p>`,
+  tip:'Técnica 02 — O embrião perdeu o Uber: “O embrião tinha destino: ÚTERO. O transporte falhou e ele ficou na TUBA.” Sempre acompanhar da explicação científica (cílios + secreção + músculo, coordenados com o tempo do embrião).'}
+});
+
+add({b:1,k:'Recuperação ativa · Bloco 1',t:'Sem consultar: o que cada estrutura faz?',
+ body:`${T(1,{sci:false})}
+ <p class="lead">Peça que repitam a sequência e expliquem a função de cada estrutura.</p>
+ <div class="grid g3">
+  <div class="flip" data-act="flip"><div class="in"><div class="f">AMPOLA</div><div class="bk">Local habitual da fecundação (e localização mais frequente da ectópica tubária).</div></div></div>
+  <div class="flip" data-act="flip"><div class="in"><div class="f">TUBA</div><div class="bk">Transporta: cílios, secreção e musculatura lisa, de forma integrada.</div></div></div>
+  <div class="flip" data-act="flip"><div class="in"><div class="f">ÚTERO</div><div class="bk">Implanta: endométrio decidualizado, preparado para receber e regular o trofoblasto.</div></div></div>
+ </div>
+ <p class="mut">Toque nos cartões para virar.</p>`,
+ sc:[0,1],
+ prof:{show:'A-T-U em cartões que viram.',
+  explain:`<p><b>Técnica de memorização do roteiro:</b> “AMPOLA FECUNDA, TUBA TRANSPORTA, ÚTERO IMPLANTA.” Peça aos alunos que repitam a sequência e expliquem a função de cada estrutura.</p>`,
+  tip:'Faça a turma falar ANTES de virar o cartão (efeito de testagem).'}
+});
+
+/* ======================= BLOCO 2 ======================= */
+add({b:2,k:'2.1 · Cronologia',t:'Os primeiros dias: da fecundação à invasão',
+ body:`<p class="mut">Avance etapa por etapa. Tempos aproximados após a fecundação — podem variar.</p>
+ <div data-widget="timeline"></div>`,
+ sc:[1,2],
+ img:{tema:'Linha do tempo embrionária ao longo da tuba',pos:'Acima da lista de eventos',conceito:'Zigoto na ampola → clivagens → mórula chegando ao útero → blastocisto → eclosão → implantação.',src:''},
+ prof:{show:'Linha do tempo progressiva com marcador percorrendo a tuba até o útero.',
+  explain:`<p><b>Escreva no quadro:</b></p>
+  <table class="tt"><tr><th>Tempo aproximado após a fecundação</th><th>Evento</th></tr>
+  <tr><td>Dia 0</td><td>Formação do zigoto</td></tr><tr><td>Dias 1–3</td><td>Clivagens embrionárias</td></tr>
+  <tr><td>Dias 3–4</td><td>Formação da mórula e chegada à cavidade uterina</td></tr><tr><td>Dias 4–5</td><td>Formação do blastocisto</td></tr>
+  <tr><td>Dias 5–6</td><td>Eclosão da zona pelúcida</td></tr><tr><td>Dias 6–7</td><td>Início habitual da implantação</td></tr>
+  <tr><td>Dias 8–12</td><td>Progressão da invasão trofoblástica</td></tr></table>
+  <p>Esses tempos são aproximados e podem variar.</p>`}
+});
+
+add({b:2,k:'2.1 · Sincronização',t:'O embrião não chega pronto',
+ body:`<div class="callout teal"><p class="big">Existe uma programação biológica que <b>sincroniza</b> o desenvolvimento embrionário com a <b>receptividade do endométrio</b>.</p></div>
+ ${S(FLOW([{t:'Sincronização falha',c:'amber'},{t:'Embrião permanece na tuba',c:'amber'},{t:'Implantação em tecido que não foi preparado para sustentar a gestação',c:'red'}]))}`,
+ sc:[1,2],
+ prof:{show:'Mensagem da sincronização; fluxo da falha.',
+  explain:`<p><b>Fala do professor:</b> “Percebam uma coisa interessante: o embrião não chega ao útero completamente pronto para formar uma placenta. Existe uma programação biológica que sincroniza o desenvolvimento embrionário com a receptividade do endométrio.</p>
+  <p>Se essa sincronização falhar e o embrião permanecer na tuba, pode ocorrer uma implantação em um tecido que não foi preparado para sustentar adequadamente aquela gestação.”</p>`}
+});
+
+add({b:2,k:'2.2 · O blastocisto',t:'Massa celular interna × trofectoderma',
+ body:`<div class="grid g2">
+ ${CARD('blue','Massa celular interna','<p>Dará origem ao <b>embrião propriamente dito</b>.</p>')}
+ ${CARD('teal','Trofectoderma (camada externa)','<p>Participa da formação do <b>trofoblasto</b> e de estruturas placentárias.</p>')}
+ </div>
+ ${S(`<h2>Na implantação, o trofoblasto se diferencia</h2><div class="grid g2">
+ ${CARD('teal','Citotrofoblasto','<p>Mantém <b>atividade proliferativa</b> e fornece células para diferentes linhagens trofoblásticas.</p>')}
+ ${CARD('amber','Sinciciotrofoblasto','<p>Atividade <b>invasiva</b>, participa da implantação e <b>produz hCG</b>.</p>')}</div>`)}
+ ${S('<div class="callout green big">A invasão trofoblástica não é, por si só, patológica. Ela é indispensável para a placenta. O problema é o <u>lugar</u>.</div>')}`,
+ sc:[2,3],
+ img:{tema:'Blastocisto e diferenciação trofoblástica',pos:'Entre os dois pares de cartões',conceito:'Massa celular interna, trofectoderma, citotrofoblasto e sinciciotrofoblasto.',src:''},
+ prof:{show:'Estruturas do blastocisto; cito × sinciciotrofoblasto; invasão é fisiológica.',
+  explain:`<p>O blastocisto apresenta uma massa celular interna, que dará origem ao embrião propriamente dito, e uma camada externa, o trofectoderma, que participa da formação do trofoblasto e de estruturas placentárias.</p>
+  <p>Durante a implantação, o trofoblasto diferencia-se em citotrofoblasto e sinciciotrofoblasto.</p>
+  <p>O citotrofoblasto mantém atividade proliferativa e fornece células para diferentes linhagens trofoblásticas.</p>
+  <p>O sinciciotrofoblasto apresenta atividade invasiva, participa da implantação e produz hCG.</p>
+  <p>Explique que a invasão trofoblástica não é, por si só, patológica. Ela é indispensável para o desenvolvimento da placenta.</p>
+  <p>O problema surge quando esse processo acontece em um local anatomicamente inadequado.</p>`}
+});
+
+add({b:2,k:'2.2 · Pergunta',t:'O trofoblasto é agressivo?',
+ body:`${Q(4)}${S(T(3))}`,
+ sc:[2,3],
+ prof:{show:'Pergunta 4 com a analogia; Técnica 03.',
+  explain:`<p><b>Resposta comentada:</b> Ele possui capacidade fisiológica de adesão, invasão e remodelamento tecidual. Essa capacidade é regulada por mecanismos moleculares e pela interação com os tecidos maternos.</p>
+  <p>É possível utilizar uma analogia: “O trofoblasto é uma equipe de construção especializada em estabelecer a interface materno-embrionária. No endométrio, encontra um ambiente biologicamente preparado. Na tuba, a mesma atividade invasiva pode lesar estruturas que não oferecem condições equivalentes de acomodação.”</p>`,
+  tip:'Técnica 03 — O trofoblasto é um pedreiro no endereço errado: “No útero, constrói a placenta. Na tuba, pode destruir vasos.”'}
+});
+
+add({b:2,k:'2.3 · Decidualização',t:'O útero prepara o canteiro de obras',
+ body:`<div class="callout teal"><p>Transformação funcional das <b>células estromais endometriais</b>, sob influência principalmente da <b>progesterona</b>, com participação de mediadores locais.</p></div>
+ ${S(`<div class="grid g4">${CARD('','Matriz extracelular','<p>alterada</p>')}${CARD('','Vascularização','<p>alterada</p>')}${CARD('','Atividade imunológica','<p>alterada</p>')}${CARD('','Secreção','<p>alterada</p>')}</div>
+ <div class="callout green"><b>Resultado:</b> receptividade uterina + <b>controle</b> da invasão trofoblástica.</div>`)}
+ ${S('<div class="callout red"><b>A tuba não possui decidualização fisiológica equivalente.</b> Arquitetura diferente, menor capacidade de acomodar a expansão gestacional e a invasão placentária.</div>')}`,
+ sc:[2],
+ prof:{show:'Definição, quatro alterações, resultado e contraste com a tuba.',
+  explain:`<p>A decidualização corresponde à transformação funcional das células estromais endometriais, sob influência principalmente da progesterona, com participação de mediadores locais.</p>
+  <p>Esse processo altera a matriz extracelular, a vascularização, a atividade imunológica e as características secretoras do endométrio.</p>
+  <p>A decidualização contribui para a receptividade uterina e para o controle da invasão trofoblástica.</p>
+  <p>A tuba não possui uma decidualização fisiológica equivalente à do endométrio uterino. Sua parede apresenta arquitetura diferente, com menor capacidade de acomodar a expansão gestacional e a invasão placentária.</p>`}
+});
+
+add({b:2,k:'2.3 · Pergunta',t:'Culpa do embrião?',
+ body:`${Q(5)}`,
+ sc:[1,2],
+ prof:{show:'Pergunta 5.',explain:'<p>Pergunta 5 conforme o roteiro.</p>',
+  trap:'Supor que a ectópica é, em regra, um “embrião defeituoso”.'}
+});
+
+add({b:2,k:'2.4 · Endocrinologia',t:'Por que o hCG aumenta?',
+ body:`${FLOW([{t:'Sinciciotrofoblasto',s:'produz hCG',c:'amber'},{t:'hCG mantém o corpo lúteo',s:'função inicial mais conhecida',c:'blue'},{t:'Corpo lúteo continua produzindo progesterona',s:'nas primeiras semanas',c:'blue'},{t:'Progesterona',s:'mantém o endométrio e reduz a contratilidade uterina',c:'teal'}])}
+ ${S('<div class="callout amber big">Uma gravidez ectópica pode produzir hCG porque possui tecido trofoblástico funcional — apesar da implantação inadequada.</div>')}`,
+ sc:[2,5],
+ prof:{show:'Cascata hCG → corpo lúteo → progesterona; conclusão.',
+  explain:`<p>O hCG é produzido principalmente pelo sinciciotrofoblasto.</p>
+  <p>Sua função inicial mais conhecida é manter o corpo lúteo, que continua produzindo progesterona durante as primeiras semanas de gestação.</p>
+  <p>A progesterona mantém o endométrio em condições adequadas e reduz a contratilidade uterina.</p>
+  <p>Portanto, uma gravidez ectópica pode produzir hCG porque possui tecido trofoblástico funcional, apesar da implantação inadequada.</p>`}
+});
+
+add({b:2,k:'2.4 · Pergunta',t:'O teste não sabe o endereço',
+ body:`${Q(6)}${S('<blockquote>“O β-hCG informa que existe atividade trofoblástica, mas não revela o endereço da gestação.”</blockquote>')}${S(T(4))}`,
+ sc:[2,5],
+ prof:{show:'Pergunta 6; frase de fixação; Técnica 04.',
+  explain:`<p>Pergunta 6 conforme o roteiro. Frase para fixação: “O β-hCG informa que existe atividade trofoblástica, mas não revela o endereço da gestação.” Essa distinção será fundamental no bloco diagnóstico.</p>`,
+  tip:'Técnica 04 — O GPS do β-hCG está desligado: “β-hCG POSITIVO? Existe sinal trofoblástico. Mas CADÊ a gestação?”'}
+});
+
+add({b:2,k:'Recuperação ativa · Bloco 2',t:'Evocação rápida — sem consultar',
+ body:`<p class="lead">Respostas em voz alta. Revele só depois.</p>
+ ${Q('E2a')}${Q('E2b')}${Q('E2c')}`,
+ sc:[2],
+ prof:{show:'Três perguntas novas de evocação (identificadas como novas).',
+  explain:'<p>Perguntas complementares <b>novas</b> (não fazem parte das 40 do roteiro), construídas apenas com o conteúdo dos Blocos 1–2.</p>'}
+});
+
+/* ======================= BLOCO 3 ======================= */
+add({b:3,k:'3.1 · Definição',t:'Implantação fora do endométrio da cavidade',
+ body:`<div class="callout blue"><p class="big">A gravidez ectópica ocorre quando a implantação gestacional se estabelece <b>fora da localização endometrial normal</b> da cavidade uterina.</p></div>
+ ${S(`<h2>Onde pode acontecer?</h2><div class="chips"><span class="chip on">Tuba (predominante)</span><span class="chip">Ovário</span><span class="chip">Colo (cervical)</span><span class="chip">Abdome</span><span class="chip">Intersticial</span><span class="chip">Cicatriz de cesariana</span><span class="chip">…entre outras</span></div>`)}
+ ${S('<div class="callout amber">As localizações <b>não tubárias</b> merecem atenção: podem ter comportamento hemorrágico e estratégias terapêuticas diferentes.</div>')}`,
+ sc:[2],
+ img:{tema:'Mapa das localizações de gravidez ectópica',pos:'Ao lado dos chips',conceito:'Tubária (ampola, istmo, fímbria, intersticial), ovariana, cervical, abdominal, cicatriz de cesárea.',src:''},
+ prof:{show:'Definição, localizações, alerta sobre não tubárias.',
+  explain:`<p>A gravidez ectópica ocorre quando a implantação gestacional se estabelece fora da localização endometrial normal da cavidade uterina.</p>
+  <p>A tuba é o local predominante, mas existem implantações ovarianas, cervicais, abdominais, intersticiais e em cicatriz de cesariana, entre outras.</p>
+  <p>As localizações não tubárias merecem atenção porque podem apresentar comportamento hemorrágico e estratégias terapêuticas diferentes.</p>`}
+});
+
+add({b:3,k:'3.2 · Mecanismos',t:'Os três mecanismos que o aluno deve compreender',
+ body:`<div class="grid g3">
+ ${S(CARD('blue','1 · Transporte inadequado','<p>O embrião não chega a tempo.</p>'))}
+ ${S(CARD('teal','2 · Ambiente tubário alterado','<p>Mucosa, cílios, secreção, musculatura.</p>'))}
+ ${S(CARD('red','3 · Interação anormal trofoblasto × tecido','<p>Invasão num tecido sem decídua equivalente.</p>'))}
+ </div>
+ ${S('<div class="callout amber"><b>Não são independentes.</b> Uma infecção pode alterar <i>ao mesmo tempo</i> a arquitetura tubária, a motilidade ciliar e a expressão de mediadores inflamatórios locais.</div>')}`,
+ sc:[1,2],
+ prof:{show:'Três mecanismos revelados um a um; interdependência.',
+  explain:`<p>O primeiro é o transporte embrionário inadequado. O segundo é a alteração do ambiente tubário. O terceiro é a interação anormal entre o trofoblasto e o tecido onde ele se implanta.</p>
+  <p>Esses mecanismos não são necessariamente independentes.</p>
+  <p>Uma infecção pode, por exemplo, alterar simultaneamente a arquitetura tubária, a motilidade ciliar e a expressão de mediadores inflamatórios locais.</p>`}
+});
+
+add({b:3,k:'3.2.1 · Doença inflamatória pélvica',t:'A cicatriz que fica depois da cura',
+ body:`${FLOW([{t:'Infecção ascendente',c:'red'},{t:'Salpingite',c:'red'},{t:'Lesão epitelial · perda de células ciliadas',c:'amber'},{t:'Fibrose e aderências',c:'amber'},{t:'Alterações estruturais podem persistir após a resolução microbiológica',c:'blue'}])}
+ ${S(Q(7))}`,
+ sc:[1],
+ prof:{show:'Fluxo da DIP; Pergunta 7.',
+  explain:`<p>A infecção ascendente pode provocar salpingite, lesão epitelial, perda de células ciliadas, fibrose e aderências.</p>
+  <p>Mesmo após a resolução microbiológica, algumas alterações estruturais podem persistir.</p>`}
+});
+
+add({b:3,k:'3.2.2 · Cirurgia tubária',t:'Pérvia não é sinônimo de funcional',
+ body:`<div class="grid g2">${CARD('amber','Cirurgias prévias','<p>Cicatrizes, aderências, alterações de <b>permeabilidade</b> ou <b>motilidade</b>.</p>')}${CARD('red','Ectópica anterior','<p>Aumenta o risco de <b>recorrência</b>.</p>')}</div>
+ ${S(Q(8))}`,
+ sc:[1],
+ prof:{show:'Cirurgia e ectópica prévia; Pergunta 8.',
+  explain:`<p>Cirurgias prévias podem produzir cicatrizes, aderências e modificações na permeabilidade ou motilidade.</p>
+  <p>A própria história de gravidez ectópica anterior também aumenta o risco de recorrência.</p>`,
+  trap:'Considerar a histerossalpingografia “pérvia” como prova de função normal.'}
+});
+
+add({b:3,k:'3.2.3 · Tabagismo',t:'Plausibilidade biológica — sem exagero',
+ body:`<div class="callout blue"><p>O tabagismo está associado ao <b>aumento do risco</b> de gravidez ectópica.</p></div>
+ ${S(`<h2>Mecanismos propostos</h2><div class="chips"><span class="chip on">Atividade ciliar</span><span class="chip on">Motilidade tubária</span><span class="chip on">Microambiente epitelial</span></div>`)}
+ ${S('<div class="callout amber">São vias <b>biologicamente plausíveis</b> — nenhuma alteração isolada explica todos os casos.</div>')}`,
+ sc:[1],
+ prof:{show:'Associação, mecanismos propostos, ressalva.',
+  explain:`<p>O tabagismo está associado ao aumento do risco de gravidez ectópica.</p>
+  <p>Entre os mecanismos propostos estão alterações da atividade ciliar, da motilidade tubária e do microambiente epitelial.</p>
+  <p>É importante apresentar essas vias como mecanismos biologicamente plausíveis, sem afirmar que uma única alteração explica todos os casos.</p>`}
+});
+
+add({b:3,k:'3.2.4 · Reprodução assistida',t:'Transferir para o útero não garante ficar no útero',
+ body:`<div class="grid g2">${CARD('blue','Associação','<p>Reprodução assistida → <b>ectópica</b> e <b>heterotópica</b>.</p>')}${CARD('amber','Heterotópica','<p>Coexistência de uma gestação <b>intrauterina</b> e outra <b>ectópica</b>.</p>')}</div>
+ ${S('<div class="callout teal">A transferência embrionária para o útero não elimina completamente a possibilidade de migração e implantação extrauterina.</div>')}
+ ${S(Q(9))}`,
+ sc:[1,2,5],
+ prof:{show:'Reprodução assistida, heterotópica; Pergunta 9.',
+  explain:`<p>A reprodução assistida pode estar associada à gravidez ectópica e à gravidez heterotópica, em que coexistem uma gestação intrauterina e outra ectópica.</p>
+  <p>A transferência embrionária para o útero não elimina completamente a possibilidade de migração e implantação extrauterina.</p>`,
+  trap:'“Vi o saco intrauterino, então não é ectópica” — falso em reprodução assistida e diante de sintomas/achados anexiais.'}
+});
+
+add({b:3,k:'3.3 · Dispositivo intrauterino',t:'A pegadinha epidemiológica do DIU',
+ body:`<div class="grid g2">
+ ${CARD('green','Risco absoluto','<p class="big">↓↓</p><p>O DIU <b>reduz significativamente</b> o risco absoluto de gravidez, <b>inclusive ectópica</b>.</p>')}
+ ${S(CARD('amber','Entre as falhas','<p class="big">↑ proporção</p><p>Quando ocorre gravidez com o DIU em uso, a <b>proporção</b> de ectópicas entre essas falhas é relativamente maior.</p>'))}
+ </div>${S(Q(10))}`,
+ sc:[2,5],
+ prof:{show:'Risco absoluto × proporção; Pergunta 10.',
+  explain:`<p>Aqui existe uma pegadinha epidemiológica importante.</p>
+  <p>O DIU reduz significativamente o risco absoluto de gravidez, inclusive ectópica. Entretanto, quando ocorre gravidez com o dispositivo em uso, a proporção de gestações ectópicas entre essas falhas é relativamente maior.</p>`,
+  trap:'Concluir que o DIU “causa” ectópica.'}
+});
+
+add({b:3,k:'Síntese do bloco 3',t:'Diga em voz alta a sequência',
+ body:`${FLOW([{t:'Inflamação tubária',c:'red'},{t:'Lesão funcional',c:'amber'},{t:'Transporte inadequado',c:'amber'},{t:'Implantação ectópica',c:'red'}],{h:true})}
+ ${S(`<div class="callout teal"><b>Agora, um segundo exemplo</b> — usando <b>cirurgia tubária</b> ou <b>tabagismo</b> no lugar da inflamação.</div>${FLOW([{t:'Cirurgia tubária / tabagismo',c:'amber'},{t:'Cicatriz, aderência / alteração ciliar e motora',c:'amber'},{t:'Transporte inadequado',c:'amber'},{t:'Implantação ectópica',c:'red'}],{h:true})}`)}
+ ${S(T(2,{sci:false}))}`,
+ sc:[1,2],
+ prof:{show:'Fluxograma-síntese e segundo exemplo construído pelos alunos.',
+  explain:`<p>Peça aos alunos que expliquem, em voz alta, esta sequência: Inflamação tubária → lesão funcional → transporte inadequado → implantação ectópica.</p>
+  <p>Em seguida, peça um segundo exemplo, agora utilizando cirurgia tubária ou tabagismo.</p>`,
+  tip:'Retome a Técnica 02 (Uber): a causa muda, o “carro” que falha é sempre o transporte.'}
+});
+
+/* =====================================================================
+   DADOS (parte 3): perguntas complementares NOVAS + SLIDES — Blocos 4 a 7
+   ===================================================================== */
+
+
+/* ======================= BLOCO 4 ======================= */
+add({b:4,k:'4.1 · Fisiopatologia',t:'Por que a tuba não consegue sustentar a gestação?',
+ body:`<div class="grid g3">${CARD('blue','Parede delgada','')}${CARD('blue','Mucosa complexa','')}${CARD('blue','Capacidade limitada de crescer','')}</div>
+ ${S(FLOW([{t:'Invasão trofoblástica',s:'compromete vasos e estruturas da parede',c:'amber'},{t:'Distensão',c:'amber'},{t:'Sangramento intratubário',c:'red'},{t:'Aborto tubário ou ruptura',c:'red'}],{title:'À medida que a gestação evolui'}))}
+ ${S('<div class="callout red big">Nem toda hemorragia de ectópica exige ruptura completa da tuba.</div><p>O sangramento também pode ocorrer por <b>separação parcial</b> do tecido gestacional, <b>erosão vascular</b> e <b>eliminação do conteúdo pela extremidade fimbrial</b>.</p>')}
+ ${S(T(3,{sci:false}))}`,
+ sc:[3,4],
+ img:{tema:'Ectópica ampular: distensão, aborto tubário e ruptura',pos:'Ao lado do fluxograma',conceito:'Mecanismos de hemorragia com e sem ruptura completa.',src:''},
+ prof:{show:'Limitações da tuba; fluxo da evolução; hemorragia sem ruptura; Técnica 03.',
+  explain:`<p>A tuba possui parede relativamente delgada, arquitetura mucosa complexa e capacidade limitada de acomodar o crescimento gestacional.</p>
+  <p>A invasão trofoblástica pode comprometer vasos e estruturas da parede tubária.</p>
+  <p>À medida que a gestação evolui, podem ocorrer distensão, sangramento intratubário, aborto tubário e ruptura.</p>
+  <p>É fundamental esclarecer que nem toda hemorragia de gravidez ectópica exige uma ruptura completa da tuba.</p>
+  <p>O sangramento também pode ocorrer por separação parcial do tecido gestacional, erosão vascular e eliminação do conteúdo pela extremidade fimbrial.</p>`,
+  tip:'Técnica 03 retorna: o pedreiro no endereço errado “destrói vasos”.'}
+});
+
+add({b:4,k:'4.1 · Pergunta',t:'Hemoperitônio sem ruptura?',
+ body:`${Q(11)}`,sc:[4],
+ prof:{show:'Pergunta 11.',explain:'<p>Pergunta 11 conforme o roteiro.</p>',trap:'Equiparar “hemoperitônio” a “tuba rota”.'}
+});
+
+add({b:4,k:'4.2 · Dor',t:'De onde vem a dor?',
+ body:`<div class="chips"><span class="chip on">Distensão tubária</span><span class="chip on">Irritação peritoneal</span><span class="chip on">Inflamação local</span><span class="chip on">Sangue na cavidade</span></div>
+ ${S(FLOW([{t:'Dor inicialmente localizada',s:'em uma das fossas ilíacas',c:'amber'},{t:'Hemoperitônio significativo',c:'red'},{t:'Dor mais difusa · defesa abdominal · sinais de comprometimento hemodinâmico',c:'red'}]))}`,
+ sc:[3,4],
+ prof:{show:'Fontes da dor; evolução de localizada para difusa.',
+  explain:`<p>A dor pode decorrer de distensão tubária, irritação peritoneal, inflamação local e presença de sangue na cavidade abdominal.</p>
+  <p>Inicialmente, a dor pode ser localizada em uma das fossas ilíacas.</p>
+  <p>Quando ocorre hemoperitônio significativo, a irritação peritoneal pode produzir dor mais difusa, defesa abdominal e sinais de comprometimento hemodinâmico.</p>`}
+});
+
+add({b:4,k:'4.2 · Dor referida',t:'O ombro denuncia o diafragma',
+ body:`${Q(12)}
+ ${S(FLOW([{t:'Sangue intraperitoneal',c:'red'},{t:'Irrita o peritônio do diafragma',c:'red'},{t:'Aferências pelo nervo frênico',s:'raízes principalmente C3–C5',c:'blue'},{t:'Mesmos segmentos medulares recebem a sensibilidade do ombro',c:'blue'},{t:'Dor percebida no ombro (dor referida)',c:'amber'}]))}
+ ${S(T(6))}
+ ${S('<div class="callout amber"><b>Não é específica.</b> Mas, em gestação inicial com dor abdominal e suspeita de hemorragia, deve <b>aumentar</b> a preocupação clínica.</div>')}`,
+ sc:[4],
+ img:{tema:'Nervo frênico e dermátomos C3–C5',pos:'Ao lado do fluxograma',conceito:'Trajeto do frênico até o diafragma; projeção referida no ombro.',src:''},
+ prof:{show:'Pergunta 12; fluxograma neuroanatômico; Técnica 06; ressalva de especificidade.',
+  explain:`<p>Pergunta 12 conforme o roteiro.</p>
+  <p><b>Macete do roteiro original:</b> “C3, C4, C5: o diafragma avisa no ombro.” (A versão aprovada como Técnica 06 está no slide.)</p>
+  <p>Explique que a dor no ombro não é específica, mas, no contexto de gestação inicial com dor abdominal e suspeita de hemorragia, deve aumentar a preocupação clínica.</p>`,
+  tip:'Técnica 06 — “C3, C4, C5: sangue irrita o diafragma, dor aparece no ombro.” Explique o mecanismo neuroanatômico (convergência de aferências nos mesmos segmentos).'}
+});
+
+add({b:4,k:'4.3 · Sangramento vaginal',t:'Sangue pela vagina não prova endereço uterino',
+ body:`${FLOW([{t:'Ectópica produz hCG',s:'mantém temporariamente corpo lúteo e progesterona',c:'blue'},{t:'Alterações na evolução gestacional e na sustentação hormonal',c:'amber'},{t:'Instabilidade e descamação decidual do endométrio uterino',c:'amber'},{t:'Sangramento vaginal — sem embrião na cavidade',c:'red'}])}
+ ${S(Q(13))}`,
+ sc:[4],
+ prof:{show:'Mecanismo do sangramento vaginal; Pergunta 13.',
+  explain:`<p>A gestação ectópica pode produzir hCG e manter temporariamente o corpo lúteo e a produção de progesterona.</p>
+  <p>Entretanto, alterações na evolução gestacional e na sustentação hormonal podem levar à instabilidade e descamação decidual do endométrio uterino.</p>
+  <p>Assim, pode ocorrer sangramento vaginal mesmo sem implantação do embrião na cavidade uterina.</p>`,
+  trap:'Interpretar sangramento vaginal como sinal de gestação intrauterina (ou de “abortamento”) sem localizar a gestação.'}
+});
+
+add({b:4,k:'4.4 · Choque hemorrágico',t:'Construindo a sequência fisiológica',
+ body:`${FLOW([{t:'Lesão vascular → sangramento intraperitoneal',c:'red'},{t:'↓ volume circulante efetivo',c:'red'},{t:'↓ retorno venoso',c:'amber'},{t:'↓ pré-carga ventricular',c:'amber'},{t:'↓ volume sistólico',c:'amber'},{t:'Débito cardíaco insuficiente',c:'amber'},{t:'↓ oferta de O₂ aos tecidos',c:'red'},{t:'Hipoperfusão · acidose metabólica · disfunção orgânica',s:'conforme intensidade e duração da hemorragia',c:'red'}])}
+ ${S('<div class="card amber"><p class="big mono" style="text-align:center">DC = FC × VS</p><p class="mut" style="text-align:center">débito cardíaco = frequência cardíaca × volume sistólico</p></div>')}
+ ${S('<div class="callout amber">No início, a <b>ativação simpática</b> eleva a FC e a resistência vascular sistêmica, mantendo temporariamente a pressão. <b>Pressão aparentemente normal não exclui perda sanguínea importante.</b></div>')}`,
+ sc:[4],
+ prof:{show:'Cascata progressiva; DC = FC × VS; compensação simpática.',
+  explain:`<p>Construa a sequência fisiológica:</p>
+  <ul><li>A lesão vascular produz sangramento intraperitoneal.</li><li>A perda de sangue reduz o volume circulante efetivo.</li><li>O retorno venoso diminui.</li><li>A pré-carga ventricular pode cair.</li><li>O volume sistólico diminui.</li><li>O débito cardíaco torna-se insuficiente.</li><li>A oferta de oxigênio aos tecidos diminui.</li><li>Surgem hipoperfusão, acidose metabólica e disfunção orgânica, dependendo da intensidade e duração da hemorragia.</li></ul>
+  <p>Apresente a relação DC = FC × VS, em que DC é o débito cardíaco, FC é a frequência cardíaca e VS é o volume sistólico.</p>
+  <p>No início da hemorragia, a ativação simpática pode elevar a frequência cardíaca e a resistência vascular sistêmica, mantendo temporariamente a pressão arterial.</p>
+  <p>Portanto, uma pressão arterial aparentemente normal não exclui perda sanguínea importante.</p>`}
+});
+
+add({b:4,k:'4.4 · Perguntas',t:'O pulso grita antes de a pressão cair',
+ body:`${Q(14)}${Q(15,{step:true})}${S(T(7))}
+ ${S(`<div class="card red" data-widget="shock"></div>`)}`,
+ sc:[4],
+ prof:{show:'Perguntas 14 e 15; Técnica 07; simulador qualitativo de compensação.',
+  explain:'<p>Perguntas 14 e 15 conforme o roteiro.</p>',
+  deep:'<b>Simulador (acréscimo didático, identificado):</b> ilustra qualitativamente a sequência das classes de choque hemorrágico do ATLS — a FC sobe antes de a PA cair. Os percentuais de perda por classe são referência clássica do ATLS; conferir a edição vigente. Não use o simulador para estimar perda real.',
+  trap:'“PA normal = paciente estável.” Também: nem toda hemorragia produz taquicardia (p. ex., betabloqueio; bradicardia relativa por reflexo vagal no hemoperitônio é descrita).',
+  tip:'Técnica 07 — “O pulso GRITA antes de a pressão CAIR.” Ressalte: nem toda hemorragia produz taquicardia e pressão normal não exclui hipoperfusão.'}
+});
+
+add({b:4,k:'4.5 · Laboratório',t:'Hemoglobina inicial normal exclui hemorragia?',
+ body:`<p class="big c-red">Não.</p>
+ ${S(FLOW([{t:'Perda inicial = plasma + hemácias juntos',c:'amber'},{t:'Concentração de Hb pode não refletir a magnitude da perda',c:'amber'},{t:'Com redistribuição de fluidos e reposição volêmica, a concentração cai',c:'red'}]))}
+ ${S(Q(16))}
+ ${S('<blockquote>“Na hemorragia aguda, a clínica pode se deteriorar antes de o hemograma revelar toda a gravidade.”</blockquote>')}`,
+ sc:[4],
+ prof:{show:'Mecanismo da Hb “normal”; Pergunta 16; mensagem para o quadro.',
+  explain:`<p>Na hemorragia aguda, a perda inicial envolve plasma e hemácias. A concentração de hemoglobina pode não refletir imediatamente a magnitude da perda sanguínea.</p>
+  <p>Com a redistribuição de fluidos e a reposição volêmica, a concentração pode diminuir.</p>
+  <p><b>Mensagem para o quadro:</b> “Na hemorragia aguda, a clínica pode se deteriorar antes de o hemograma revelar toda a gravidade.”</p>`}
+});
+
+add({b:4,k:'Recuperação ativa · Bloco 4',t:'Evocação rápida — sem consultar',
+ body:`${Q('E4a')}${Q('E4b')}${Q('E4c')}`,sc:[3,4],
+ prof:{show:'Três perguntas novas de evocação.',explain:'<p>Perguntas complementares <b>novas</b>, construídas apenas com o conteúdo do Bloco 4.</p>'}
+});
+
+/* ======================= BLOCO 5 ======================= */
+add({b:5,k:'5.1 · Caso de abertura',t:'O primeiro passo não é o ultrassom',
+ body:`<div data-widget="case" data-case="c1"></div>
+ ${S(`<h2>Qual é o primeiro diagnóstico que vocês precisam considerar?</h2><div class="chips"><span class="chip">Apendicite</span><span class="chip">Cisto ovariano</span><span class="chip">Abortamento</span><span class="chip on">Gravidez ectópica</span><span class="chip">Infecção urinária</span></div>
+ <div class="callout amber">Todas são possíveis — mas <b>dor abdominal em mulher com possibilidade de gravidez exige investigação gestacional</b>.</div>`)}
+ ${S('<div class="callout red big">Antes de discutir β-hCG: a paciente está estável?</div><p>Síncope, hipotensão, sinais de hipoperfusão ou irritação peritoneal importante podem exigir abordagem <b>emergencial</b>.</p>')}`,
+ sc:[5],
+ prof:{show:'Caso revelado dado a dado; hipóteses; estabilidade primeiro.',
+  explain:`<p>Este é o bloco em que mais se deve estimular a participação dos alunos. A ideia é fazer com que cada exame tenha uma justificativa fisiológica e uma limitação claramente compreendida.</p>
+  <p><b>Fala sugerida:</b> “Uma paciente de 27 anos chega à emergência com dor em fossa ilíaca direita, atraso menstrual de seis semanas e pequeno sangramento vaginal. Qual é o primeiro diagnóstico que vocês precisam considerar?”</p>
+  <p>Permita que respondam: apendicite, cisto ovariano, abortamento, gravidez ectópica, infecção urinária.</p>
+  <p>Todas são hipóteses possíveis, mas a presença de dor abdominal em uma mulher com possibilidade de gravidez exige investigação gestacional.</p>
+  <p>Antes de discutir valores de β-hCG, deve-se avaliar a estabilidade hemodinâmica.</p>
+  <p>Uma paciente com síncope, hipotensão, sinais de hipoperfusão ou irritação peritoneal importante pode necessitar de abordagem emergencial.</p>`}
+});
+
+add({b:5,k:'5.1 · Pergunta',t:'A pergunta que vem antes de todas',
+ body:`${Q(17)}`,sc:[5,6],
+ prof:{show:'Pergunta 17.',explain:'<p>Pergunta 17 conforme o roteiro.</p>',
+  deep:'NICE NG126 (rec. 1.3.1): encaminhar diretamente à emergência mulheres hemodinamicamente instáveis ou com preocupação significativa quanto ao grau de dor ou sangramento.'}
+});
+
+add({b:5,k:'5.2 · Apresentação clínica',t:'A tríade clássica é referência, não exigência',
+ body:`<div class="grid g3">${CARD('blue','Amenorreia','')}${CARD('amber','Dor abdominal ou pélvica','')}${CARD('red','Sangramento vaginal','')}</div>
+ ${S('<div class="callout amber">Nem todas têm os três. Algumas têm dor discreta. Outras, apenas sangramento. Algumas chegam com <b>síncope ou choque</b>.</div>')}
+ ${S(Q(18))}${S(Q(19))}`,
+ sc:[5],
+ prof:{show:'Tríade; variabilidade; Perguntas 18 e 19.',
+  explain:`<p>A apresentação tradicional envolve amenorreia, dor abdominal ou pélvica e sangramento vaginal.</p>
+  <p>Entretanto, nem todas as pacientes apresentam os três elementos.</p>
+  <p>Algumas podem ter dor discreta. Outras apresentam apenas sangramento. Algumas chegam com síncope ou sinais de choque.</p>
+  <p>Portanto, a tríade é uma referência didática, não uma exigência diagnóstica.</p>`,
+  deep:'NICE NG126 (rec. 1.3.2): a apresentação atípica de ectópica é comum. Outros sintomas relatados: sensibilidade mamária, sintomas gastrointestinais, tontura/síncope, dor no ombro, sintomas urinários, eliminação de tecido, pressão retal ou dor à evacuação.'}
+});
+
+add({b:5,k:'5.3 · β-hCG',t:'O que o β-hCG realmente informa?',
+ body:`<div class="grid g2">${CARD('teal','Glicoproteína','<p>Produzida predominantemente pelo <b>sinciciotrofoblasto</b>.</p>')}${CARD('blue','Duas subunidades','<p><b>α</b>: compartilhada com outros hormônios glicoproteicos.<br><b>β</b>: maior especificidade analítica.</p>')}</div>
+ ${S('<p>O β-hCG sérico <b>quantitativo</b> permite avaliar a <b>evolução</b> da atividade trofoblástica.</p>')}
+ ${S(`<h2>Separe três conceitos</h2><div class="grid g3">${CARD('green','1 · Presença','<p>de atividade trofoblástica</p><p class="c-green"><b>β-hCG ajuda</b></p>')}${CARD('green','2 · Evolução','<p>da gestação</p><p class="c-green"><b>β-hCG ajuda</b></p>')}${CARD('red','3 · Localização','<p>da gestação</p><p class="c-red"><b>β-hCG não determina sozinho</b></p>')}</div>`)}
+ ${S(T(4))}`,
+ sc:[5],
+ prof:{show:'Bioquímica do hCG; três conceitos; Técnica 04.',
+  explain:`<p>A gonadotrofina coriônica humana é uma glicoproteína produzida predominantemente pelo sinciciotrofoblasto.</p>
+  <p>Possui duas subunidades, alfa e beta. A subunidade alfa compartilha características com outros hormônios glicoproteicos, enquanto a beta oferece maior especificidade analítica.</p>
+  <p>O β-hCG sérico quantitativo permite avaliar a evolução da atividade trofoblástica.</p>
+  <p>Mas precisamos separar três conceitos: presença de atividade trofoblástica; evolução da gestação; localização da gestação.</p>
+  <p>O β-hCG auxilia principalmente nos dois primeiros. Não determina sozinho o terceiro.</p>`,
+  deep:'NICE NG126 (rec. 1.4.24 e 1.4.26): não usar hCG sérico para determinar a localização; usá-lo apenas para avaliar a proliferação trofoblástica e orientar a conduta.',
+  tip:'Técnica 04 — “β-hCG POSITIVO? Existe sinal trofoblástico. Mas CADÊ a gestação?”'}
+});
+
+add({b:5,k:'5.3 · Perguntas',t:'Valor alto prova útero? Valor baixo exclui ectópica?',
+ body:`${Q(20)}${Q(21,{step:true})}`,sc:[5],
+ prof:{show:'Perguntas 20 e 21.',explain:'<p>Perguntas 20 e 21 conforme o roteiro.</p>',
+  trap:'Usar o valor absoluto do β-hCG para “localizar” a gestação ou para tranquilizar.'}
+});
+
+add({b:5,k:'5.4 · Cinética',t:'“Dobrar em 48 horas” é uma simplificação inadequada',
+ body:`<div class="callout amber"><p>Historicamente: o β-hCG “deveria dobrar a cada 48 h” numa gestação intrauterina viável. <b>Essa simplificação não é adequada.</b></p></div>
+ ${S('<p>O aumento mínimo esperado <b>depende da concentração inicial</b>, e uma GIU viável pode crescer <b>menos de 100%</b> em 48 h.</p>')}
+ ${S(`<div class="grid g2">${CARD('blue','Estudos de GIU viáveis','<p>Aumentos mínimos aproximados de <b>49%, 40% e 33%</b> em 48 h para faixas iniciais <b>crescentes</b> de β-hCG.</p><p class="mut">Referências estatísticas — não testes isolados de viabilidade ou localização.</p>')}
+ ${CARD('teal','NICE · PUL','<p><b>Aumento &gt; 63%</b> em 48 h: sugestivo de GIU em desenvolvimento — <b>sem excluir</b> ectópica.</p><p><b>Queda &gt; 50%</b>: sugere gestação em regressão — exige acompanhamento.</p>')}</div>`)}
+ ${S('<div class="callout red">Esses valores vêm de abordagens diferentes e <b>não são limiares intercambiáveis</b>.</div>')}`,
+ sc:[5],
+ prof:{show:'Mito do “dobrar”; dois referenciais distintos; aviso de não intercambialidade.',
+  explain:`<p>Historicamente, ensinava-se que o β-hCG deveria dobrar a cada 48 horas em uma gestação intrauterina viável.</p>
+  <p>Essa simplificação não é adequada.</p>
+  <p>O aumento mínimo esperado depende, entre outros fatores, da concentração inicial, e uma gestação intrauterina viável pode apresentar crescimento inferior a 100% em 48 horas.</p>
+  <p>Em estudos de gestações intrauterinas viáveis, foram descritos aumentos mínimos aproximados de 49%, 40% e 33% em 48 horas para faixas iniciais crescentes de β-hCG. Esses números são referências estatísticas, não testes isolados de viabilidade ou localização.</p>
+  <p>A NICE utiliza, para o acompanhamento de gestação de localização desconhecida, um aumento superior a 63% em 48 horas como padrão sugestivo de gestação intrauterina em desenvolvimento, sem excluir completamente gravidez ectópica. Uma queda superior a 50% sugere gestação em regressão, mas exige acompanhamento apropriado.</p>
+  <p>É essencial explicar que esses valores vêm de abordagens diferentes e não devem ser tratados como limiares intercambiáveis.</p>`,
+  deep:'As faixas iniciais usualmente associadas a 49% / 40% / 33% são < 1.500, 1.500–3.000 e > 3.000 mUI/mL (Barnhart e cols., Obstet Gynecol 2016, citado pela ACOG) — <b>conferir a fonte primária</b> antes de projetar os números de faixa.'}
+});
+
+add({b:5,k:'5.4 · Laboratório de β-hCG',t:'Calcule — e depois desconfie do cálculo',
+ body:`<div data-widget="hcg"></div>`,
+ sc:[5],
+ prof:{show:'Calculadora com o exercício do quadro (1.000 → 1.600 em 48 h).',
+  explain:`<p><b>Exercício no quadro:</b> Uma paciente apresenta β-hCG inicial de 1.000 mUI/mL e, 48 horas depois, 1.600 mUI/mL.</p>
+  <p>Pergunte: “Qual foi o aumento percentual?” (1600 − 1000) / 1000 × 100 = 60%. <b>Resposta: aumento de 60%.</b></p>
+  <p>Professor: “Esse crescimento confirma gestação intrauterina?” Resposta: Não.</p>
+  <p>“Confirma gravidez ectópica?” Resposta: Também não.</p>
+  <p>Ele demonstra crescimento da concentração hormonal, que precisa ser interpretado com os sintomas e os achados ultrassonográficos.</p>`,
+  ask:'“Qual foi o aumento percentual?” → “Confirma GIU?” → “Confirma ectópica?”',
+  answer:'60%. Não confirma GIU. Também não confirma ectópica.',
+  trap:'Note que 60% fica ACIMA do mínimo de ~49% descrito para essa faixa, mas ABAIXO dos 63% da NICE: dois referenciais diferentes, conclusões diferentes — exatamente por isso não são intercambiáveis.'}
+});
+
+add({b:5,k:'5.4 · Pergunta',t:'Caindo = seguro?',
+ body:`${Q(22)}`,sc:[4,5],
+ prof:{show:'Pergunta 22.',explain:'<p>Pergunta 22 conforme o roteiro.</p>',trap:'β-hCG em queda como “alta automática”.'}
+});
+
+add({b:5,k:'5.5 · Ultrassonografia transvaginal',t:'Achado diagnóstico × achado sugestivo',
+ body:`<p>O examinador procura: <b>sinais de gestação intrauterina</b> · <b>anexos</b> · <b>líquido livre</b>.</p>
+ ${S(`<div class="grid g3">
+ ${CARD('green','Evidência direta','<p>Massa anexial <b>separada do ovário</b> contendo saco gestacional com <b>vesícula vitelínica ou embrião</b>.</p>')}
+ ${CARD('amber','Aumenta a suspeita','<p>Massa anexial complexa · <b>anel tubário</b> — exigem interpretação integrada.</p>')}
+ ${CARD('red','Isoladamente não confirma','<p><b>Útero vazio.</b></p>')}</div>`)}
+ ${S(T(5))}`,
+ sc:[5],
+ img:{tema:'USTV: saco gestacional anexial com vesícula vitelínica; anel tubário; útero vazio',pos:'Abaixo dos três cartões',conceito:'Gradação da força do achado ultrassonográfico.',src:''},
+ prof:{show:'Gradação dos achados; Técnica 05.',
+  explain:`<p>A ultrassonografia transvaginal é fundamental para investigar a localização da gestação.</p>
+  <p>O examinador deve procurar sinais de gestação intrauterina, avaliar os anexos e verificar a presença de líquido livre.</p>
+  <p>É importante distinguir achados diagnósticos de achados apenas sugestivos.</p>
+  <p>A visualização de uma massa anexial separada do ovário, contendo saco gestacional com vesícula vitelínica ou embrião, oferece evidência direta de gravidez ectópica tubária.</p>
+  <p>Uma massa anexial complexa ou o chamado anel tubário aumentam a suspeita, mas exigem interpretação integrada.</p>
+  <p>O útero vazio, isoladamente, não confirma ectópica.</p>`,
+  deep:'NICE NG126 (rec. 1.4.19–1.4.20): coleção líquida intracavitária (“pseudossaco”) deve ser diferenciada do saco intrauterino inicial (sinal do duplo anel decidual); líquido livre moderado a grande no fundo de saco pode representar hemoperitônio — integrar com clínica e hCG.',
+  tip:'Técnica 05 — “CASA VAZIA não prova morador no vizinho.”'}
+});
+
+add({b:5,k:'5.5 · Perguntas',t:'Útero vazio e anel tubário',
+ body:`${Q(23)}${Q(24,{step:true})}`,sc:[5],
+ prof:{show:'Perguntas 23 e 24.',explain:'<p>Perguntas 23 e 24 conforme o roteiro.</p>'}
+});
+
+add({b:5,k:'5.6 · Zona discriminatória',t:'Uma faixa, não uma linha de corte universal',
+ body:`<div class="callout blue"><p>Faixa de β-hCG <b>acima da qual se espera visualizar</b> sinais de gestação intrauterina pela USTV, em condições técnicas e clínicas adequadas.</p></div>
+ ${S('<p class="big">≈ 1.500 a 3.500 mUI/mL <span class="mut" style="font-size:.6em">em diferentes abordagens</span></p><p><b>Não existe limite universal absolutamente seguro.</b></p>')}
+ ${S('<div class="chips"><span class="chip on">Equipamento</span><span class="chip on">Experiência do examinador</span><span class="chip on">Idade gestacional real</span><span class="chip on">Outras circunstâncias</span></div>')}
+ ${S('<div class="callout red big">Em gestação desejada, decisões irreversíveis não devem se basear só na ausência de saco intrauterino acima de um valor arbitrário.</div>')}
+ ${S(Q(25))}`,
+ sc:[5],
+ prof:{show:'Definição, faixa, fatores, alerta; Pergunta 25.',
+  explain:`<p>A zona discriminatória corresponde a uma faixa de β-hCG acima da qual se espera visualizar determinados sinais de gestação intrauterina pela ultrassonografia transvaginal, considerando condições técnicas e clínicas adequadas.</p>
+  <p>Valores entre aproximadamente 1.500 e 3.500 mUI/mL aparecem em diferentes abordagens, mas não existe um limite universal absolutamente seguro.</p>
+  <p>A interpretação depende do equipamento, da experiência do examinador, da idade gestacional real e de outras circunstâncias.</p>
+  <p>Em uma gestação desejada, decisões irreversíveis não devem se basear exclusivamente na ausência de saco intrauterino acima de um valor arbitrário de β-hCG.</p>`,
+  deep:'ACOG PB 193: se a zona discriminatória for usada como auxílio diagnóstico, o valor deve ser conservadoramente alto (p. ex., até 3.500 mUI/mL) para evitar interromper uma gestação intrauterina desejada.'}
+});
+
+add({b:5,k:'5.7 · Gestação de localização desconhecida',t:'PUL: uma classificação temporária',
+ body:`${T(8)}
+ ${S('<p>Teste gestacional <b>positivo</b>, mas a USTV ainda <b>não identifica</b> gestação intrauterina nem extrauterina.</p>')}
+ ${S(FLOW([{t:'PUL',c:'amber'},{t:'Gestação intrauterina confirmada',c:'green'},{t:'Gravidez ectópica diagnosticada',c:'red'},{t:'Gestação em regressão identificada',c:'blue'}],{title:'Para onde a PUL pode evoluir'}))}
+ ${S(Q(26))}`,
+ sc:[5],
+ prof:{show:'Técnica 08; definição; desfechos possíveis; Pergunta 26.',
+  explain:`<p>A expressão pregnancy of unknown location, ou PUL, descreve uma situação em que existe teste gestacional positivo, mas a ultrassonografia ainda não identifica uma gestação intrauterina ou extrauterina.</p>
+  <p>PUL não é um diagnóstico anatômico definitivo. É uma classificação temporária.</p>
+  <p>Ela pode evoluir para confirmação de gestação intrauterina, diagnóstico de ectópica ou identificação de gestação em regressão.</p>`,
+  trap:'Tratar PUL como sinônimo de ectópica.',
+  tip:'Técnica 08 — PUL: “Positivo, Ultrassom não Localizou.”'}
+});
+
+add({b:5,k:'5.7 · Caso para discussão',t:'Paciente de 24 anos',
+ body:`<div data-widget="case" data-case="c2"></div>
+ ${S(Q(27))}${S(Q(28))}${S(Q(29))}`,
+ sc:[5],
+ prof:{show:'Caso revelado dado a dado; Perguntas 27–29.',
+  explain:`<p>Paciente de 24 anos, seis semanas de amenorreia, teste positivo, sem dor importante e sem sangramento ativo.</p>
+  <p>Ultrassonografia transvaginal: sem saco gestacional intrauterino, sem massa anexial identificável e sem líquido livre significativo.</p>
+  <p>β-hCG: 680 mUI/mL.</p>`}
+});
+
+add({b:5,k:'Recuperação ativa · Bloco 5',t:'Evocação rápida — sem consultar',
+ body:`${Q('E5a')}${Q('E5b')}${Q('E5c')}`,sc:[5],
+ prof:{show:'Três perguntas novas de evocação.',explain:'<p>Perguntas complementares <b>novas</b>, construídas apenas com o conteúdo do Bloco 5.</p>'}
+});
+
+/* ======================= BLOCO 6 ======================= */
+add({b:6,k:'6.1 · Tratamento',t:'Por que pacientes diferentes recebem tratamentos diferentes?',
+ body:`<p class="lead">O objetivo não é um curso de cirurgia ginecológica. É mostrar que a escolha <b>deriva da fisiopatologia</b>, da <b>estabilidade hemodinâmica</b> e da <b>evolução gestacional</b>.</p>
+ ${S(`<div class="grid g3">${CARD('blue','Conduta expectante','<p>observar</p>')}${CARD('teal','Tratamento medicamentoso','<p>metotrexato</p>')}${CARD('red','Cirurgia','<p>operar</p>')}</div>`)}
+ ${S('<p>A seleção depende de características <b>clínicas, laboratoriais, ultrassonográficas</b>, da <b>possibilidade de seguimento</b> e das <b>preferências da paciente</b>.</p>')}
+ ${S(T(9))}`,
+ sc:[6],
+ prof:{show:'Objetivo do bloco; três caminhos; critérios gerais; Técnica 09.',
+  explain:`<p>Neste bloco, o objetivo não é transformar a aula de Morfofuncional em um curso de cirurgia ginecológica.</p>
+  <p>O objetivo é demonstrar que a escolha terapêutica deriva da fisiopatologia, da estabilidade hemodinâmica e da evolução gestacional.</p>
+  <p>Existem três estratégias gerais para a gravidez ectópica tubária: conduta expectante, tratamento medicamentoso e cirurgia.</p>
+  <p>A seleção depende de características clínicas, laboratoriais, ultrassonográficas, da possibilidade de seguimento e das preferências da paciente.</p>`,
+  tip:'Técnica 09 — “OBSERVAR se elegível, MEDICAR se elegível, OPERAR se necessário. Instabilidade não espera.” Não é protocolo absoluto.'}
+});
+
+add({b:6,k:'6.1 · Conduta expectante',t:'Observar não é mandar para casa e esperar',
+ body:`<div class="callout blue"><p>Pacientes <b>criteriosamente selecionadas</b>: estáveis, sem dor significativa, gestação tubária pequena, sem atividade cardíaca embrionária, β-hCG baixo.</p></div>
+ ${S('<div class="chips"><span class="chip on">Vigilância clínica</span><span class="chip on">Monitorização hormonal</span><span class="chip on">Acesso rápido à emergência</span></div>')}
+ ${S(`<div class="card teal"><h3>Critérios NICE NG126</h3><ul class="clean"><li>Estável e <b>sem dor</b></li><li>Ectópica tubária <b>&lt; 35 mm</b>, sem batimentos cardíacos visíveis</li><li>β-hCG <b>≤ 1.000 UI/L</b> → pode ser <b>oferecida</b></li><li>β-hCG <b>1.000–1.500 UI/L</b> → pode ser <b>considerada</b> (demais condições iguais)</li><li>Possibilidade de <b>acompanhamento</b></li></ul></div>`)}
+ ${S(Q(30))}${S(Q(31))}`,
+ sc:[6],
+ prof:{show:'Seleção, vigilância, critérios NICE; Perguntas 30 e 31.',
+  explain:`<p>Pode ser considerada em pacientes criteriosamente selecionadas, clinicamente estáveis, sem dor significativa, com gestação tubária pequena, sem atividade cardíaca embrionária e com β-hCG baixo.</p>
+  <p>Não significa simplesmente mandar a paciente para casa e esperar.</p>
+  <p>Exige vigilância clínica, monitorização hormonal e acesso rápido ao atendimento de emergência.</p>
+  <p>Pelos critérios da NICE, a conduta expectante pode ser oferecida a pacientes estáveis e sem dor, com ectópica tubária menor que 35 mm, sem batimentos cardíacos visíveis, β-hCG até 1.000 UI/L e possibilidade de acompanhamento. Pode ser considerada entre 1.000 e 1.500 UI/L nas demais condições especificadas.</p>`}
+});
+
+add({b:6,k:'6.2 · Metotrexato',t:'Atacar a proliferação, não o “endereço”',
+ body:`${FLOW([{t:'Metotrexato',s:'antagonista do metabolismo do folato',c:'teal'},{t:'Inibe a diidrofolato redutase (DHFR)',c:'red'},{t:'Compromete a regeneração do tetraidrofolato',c:'amber'},{t:'↓ síntese de nucleotídeos para a replicação celular',c:'amber'},{t:'Trofoblasto proliferativo vira alvo terapêutico',c:'teal'}])}
+ ${S('<blockquote>“Não estamos usando o metotrexato porque a gravidez está na tuba. Estamos usando um medicamento que interfere na proliferação de um tecido biologicamente ativo.”</blockquote>')}`,
+ sc:[6],
+ prof:{show:'Mecanismo em fluxograma; fala do professor.',
+  explain:`<p>O metotrexato é um antagonista do metabolismo do folato.</p>
+  <p>Seu mecanismo envolve a inibição da diidrofolato redutase, comprometendo a regeneração do tetraidrofolato e, consequentemente, a síntese de nucleotídeos necessários à replicação celular.</p>
+  <p>Como o trofoblasto apresenta atividade proliferativa, torna-se um alvo terapêutico.</p>
+  <p><b>Fala sugerida:</b> “Observem que não estamos utilizando o metotrexato porque a gravidez está na tuba especificamente. Estamos utilizando um medicamento que interfere na proliferação de um tecido biologicamente ativo. A localização e a condição clínica é que determinam se essa estratégia é apropriada.”</p>`}
+});
+
+add({b:6,k:'6.2 · Metotrexato',t:'Quem pode receber — e quem não pode',
+ body:`<div class="grid g2">
+ ${CARD('green','Pacientes selecionadas','<ul class="clean"><li>Diagnóstico <b>confirmado</b></li><li><b>Estabilidade</b> hemodinâmica</li><li>Ausência de contraindicações</li><li>Possibilidade de <b>acompanhamento</b></li></ul>')}
+ ${S(CARD('red','Contraindicações relevantes','<ul class="clean"><li>Disfunção hepática, renal ou hematológica importante</li><li>Certas condições de imunossupressão</li><li>Amamentação</li><li>Impossibilidade de seguimento</li></ul>'))}
+ </div>
+ ${S('<div class="callout amber">Antes: <b>hemograma, função renal e hepática</b>; revisar medicamentos e condições que aumentem a toxicidade.</div>')}
+ ${S(Q(32))}${S(Q(33))}${S(Q(34))}`,
+ sc:[6],
+ prof:{show:'Seleção, contraindicações, exames; Perguntas 32–34.',
+  explain:`<p>O metotrexato sistêmico pode ser utilizado em pacientes selecionadas, com diagnóstico confirmado, estabilidade hemodinâmica, ausência de contraindicações e possibilidade de acompanhamento.</p>
+  <p>Entre as contraindicações relevantes estão disfunções hepáticas, renais ou hematológicas importantes, determinadas condições de imunossupressão, amamentação e impossibilidade de seguimento.</p>
+  <p>É necessário verificar hemograma e funções renal e hepática, além de revisar medicamentos e condições clínicas que possam aumentar sua toxicidade.</p>`,
+  deep:'NICE NG126 (rec. 1.6.8–1.6.11): oferecer MTX se sem dor significativa, ectópica não rota &lt; 35 mm sem BCF, hCG &lt; 1.500 UI/L, GIU excluída e seguimento possível; entre 1.500 e &lt; 5.000 UI/L, escolha entre MTX e cirurgia (maior chance de nova intervenção com MTX); hCG nos dias 4 e 7 e depois semanal até negativar.'}
+});
+
+add({b:6,k:'6.3 · Tratamento cirúrgico',t:'Quando operar — e como',
+ body:`<div class="chips"><span class="chip on">Instabilidade hemodinâmica</span><span class="chip on">Suspeita de ruptura com hemorragia importante</span><span class="chip on">Dor significativa</span><span class="chip on">Tratamento não cirúrgico inadequado</span></div>
+ ${S('<p><b>Laparoscopia</b> quando possível — mas a via depende das condições clínicas e da capacidade de controlar a hemorragia com segurança e rapidez.</p>')}
+ ${S(`<div class="grid g2">${CARD('red','Salpingectomia','<p>Retirada da tuba comprometida.</p>')}${CARD('teal','Salpingostomia','<p>Abertura da tuba para remover o tecido gestacional, <b>preservando</b> a estrutura tubária.</p>')}</div>`)}
+ ${S('<p class="mut">A decisão envolve: extensão do dano · tuba contralateral · desejo reprodutivo · risco de persistência trofoblástica · condições intraoperatórias.</p>')}
+ ${S(Q(35))}${S(Q(36))}`,
+ sc:[6],
+ img:{tema:'Salpingectomia × salpingostomia (esquema)',pos:'Abaixo dos dois cartões',conceito:'Retirada da tuba × abertura e remoção do tecido gestacional.',src:''},
+ prof:{show:'Indicações, via, duas técnicas, fatores; Perguntas 35 e 36.',
+  explain:`<p>A cirurgia é indicada em situações como instabilidade hemodinâmica, suspeita de ruptura com hemorragia importante, dor significativa ou características que tornam o tratamento não cirúrgico inadequado.</p>
+  <p>Quando possível, utiliza-se abordagem laparoscópica. Entretanto, a escolha da via depende das condições clínicas e da capacidade de realizar controle seguro e rápido da hemorragia.</p>
+  <p>Existem duas técnicas fundamentais que os alunos devem conhecer.</p>
+  <p><b>Salpingectomia:</b> retirada da tuba comprometida.</p>
+  <p><b>Salpingostomia:</b> abertura da tuba para remoção do tecido gestacional, preservando a estrutura tubária.</p>
+  <p>A decisão envolve extensão do dano, condição da tuba contralateral, desejo reprodutivo, risco de persistência trofoblástica e condições intraoperatórias.</p>`,
+  deep:'NICE NG126 (rec. 1.6.15–1.6.16): oferecer salpingectomia, salvo fatores de risco para infertilidade; considerar salpingotomia (termo da NICE) se houver, p. ex., dano na tuba contralateral.'}
+});
+
+add({b:6,k:'6.3 · Laboratório de decisão',t:'Os três caminhos — explorador',
+ body:`<div data-widget="paths"></div>`,
+ sc:[6],
+ prof:{show:'Explorador interativo baseado na NICE NG126.',
+  explain:'<p>Ferramenta <b>acrescentada</b> (não faz parte do roteiro original) para aplicar a Técnica 09 em sala. Monte cenários com a turma: altere um critério de cada vez e peça que prevejam o caminho antes de ver o resultado.</p>',
+  trap:'O explorador ilustra a NICE NG126; protocolos da FEBRASGO e institucionais podem usar outros limiares. Não é ferramenta de prescrição.',
+  tip:'Técnica 09 — “Instabilidade não espera.”'}
+});
+
+add({b:6,k:'6.4 · Caso integrador',t:'Da fisiopatologia à decisão',
+ body:`<div data-widget="case" data-case="c3"></div>
+ ${S(Q(37))}${S(Q(38))}${S(Q(39))}${S(Q(40))}
+ ${S(T(9,{sci:false}))}`,
+ sc:[4,6],
+ prof:{show:'Caso revelado dado a dado; Perguntas 37–40.',
+  explain:`<p><b>Paciente:</b> 29 anos, sete semanas de amenorreia, dor abdominal súbita, tontura e episódio de síncope.</p>
+  <p><b>Ao exame:</b> PA 82 × 48 mmHg · FC 132 bpm · FR 26 irpm · perfusão periférica reduzida · abdome doloroso, com sinais de irritação peritoneal · teste gestacional positivo.</p>
+  <p>A ultrassonografia à beira do leito identifica líquido livre abdominal em quantidade importante, no contexto de forte suspeita de gravidez ectópica rota.</p>
+  <p>A ACOG considera a gravidez ectópica tubária com instabilidade hemodinâmica uma emergência que exige intervenção cirúrgica imediata.</p>`}
+});
+
+add({b:6,k:'Recuperação ativa · Bloco 6',t:'Evocação rápida — sem consultar',
+ body:`${Q('E6a')}${Q('E6b')}`,sc:[6],
+ prof:{show:'Duas perguntas novas de evocação.',explain:'<p>Perguntas complementares <b>novas</b>, construídas apenas com o conteúdo do Bloco 6.</p>'}
+});
+
+/* ======================= BLOCO 7 ======================= */
+add({b:7,k:'7 · O desafio dos sete porquês',t:'Sem consultar. Depois de cada resposta: o mecanismo.',
+ body:`<div class="btns" style="margin-bottom:.6em"><button class="bt amb" data-act="revall">Revelar todas</button></div>
+ ${Q('R1')}${Q('R2')}${Q('R3')}${Q('R4')}${Q('R5')}${Q('R6')}${Q('R7')}`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'As sete perguntas de revisão, com revelação individual.',
+  explain:`<p>Neste momento, o roteiro sugere fechar os slides e utilizar apenas o quadro — ou projetar as perguntas.</p>
+  <p>Peça que os alunos respondam sem consultar o material. Após cada resposta, solicite a justificativa fisiopatológica.</p>
+  <p><b>Nota de fidelidade:</b> o roteiro traz os sete enunciados sem respostas escritas. As respostas exibidas são <b>respostas-modelo construídas exclusivamente a partir do conteúdo do roteiro</b>.</p>`}
+});
+
+add({b:7,k:'7 · Palácio da Memória',t:'Reconstrua o filme em sete cenas',
+ body:`<div data-widget="film"></div>`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'Jogo de ordenação das sete cenas + mecanismo de cada cena.',
+  explain:'<p>Fechamento da Técnica 10. Peça que a turma dite a ordem; toque nas cenas na ordem ditada. Depois, revele o mecanismo de cada cena e peça a justificativa antes.</p>',
+  tip:'Técnica 10 — “AMPOLA → TRANSPORTE → IMPLANTAÇÃO → INVASÃO → SANGRAMENTO → DIAGNÓSTICO → CONDUTA.”'}
+});
+
+add({b:7,k:'7 · Encerramento',t:'A mensagem que precisa permanecer',
+ body:`<p class="lead">Começamos com uma pergunta: por que um embrião, que deveria representar o início de uma nova vida, pode desencadear uma emergência hemorrágica?</p>
+ ${S('<p>A resposta não está apenas no embrião. Está na relação entre <b>anatomia, transporte tubário, desenvolvimento embrionário, implantação, invasão trofoblástica</b> e a <b>capacidade do tecido materno</b> de sustentar a gestação.</p>')}
+ ${S('<div class="callout teal big">A tuba pode permitir a fecundação, mas não oferece as mesmas condições do útero para sustentar a implantação.</div>')}
+ ${S('<blockquote class="big">A gravidez ectópica não é apenas uma gravidez no lugar errado. É uma alteração da interação entre o tecido gestacional e o organismo materno.</blockquote>')}
+ ${S('<div class="callout red">Compreender esses mecanismos permite reconhecer a doença <b>antes</b> que a paciente desenvolva uma complicação potencialmente fatal.</div>')}`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'Fala de encerramento revelada em etapas.',
+  explain:`<p><b>Fala sugerida:</b> “Começamos nossa aula com uma pergunta: por que um embrião, que deveria representar o início de uma nova vida, pode desencadear uma emergência hemorrágica?</p>
+  <p>Agora vocês sabem que a resposta não está apenas no embrião. Está na relação entre anatomia, transporte tubário, desenvolvimento embrionário, implantação, invasão trofoblástica e capacidade do tecido materno de sustentar a gestação.</p>
+  <p>A tuba pode permitir a fecundação, mas não oferece as mesmas condições do útero para sustentar a implantação e o crescimento gestacional.</p>
+  <p>Por isso, a gravidez ectópica não é apenas uma gravidez no lugar errado. É uma alteração da interação entre o tecido gestacional e o organismo materno.</p>
+  <p>E o mais importante: compreender esses mecanismos permite reconhecer a doença antes que a paciente desenvolva uma complicação potencialmente fatal.”</p>`}
+});
+
+add({b:7,k:'7 · Para levar para casa',t:'Oito conceitos',
+ body:`<p class="mut">Toque para virar. Peça a definição antes.</p><div class="grid g4">
+ ${[['AMPOLA','Local habitual da fecundação e localização frequente da ectópica tubária.'],['TRANSPORTE','Cílios, secreções e musculatura tubária participam do deslocamento embrionário.'],['TROFOBLASTO','A invasão fisiológica pode causar lesão vascular em localização inadequada.'],['β-hCG','Demonstra atividade trofoblástica, mas não determina sozinho a localização.'],['DOR','Pode resultar de distensão tubária e irritação peritoneal.'],['SANGRAMENTO','Pode ser intraperitoneal mesmo com pouca exteriorização vaginal.'],['DIAGNÓSTICO','Depende da integração entre clínica, ultrassonografia e exames laboratoriais.'],['CONDUTA','A estabilidade hemodinâmica é decisiva para a urgência terapêutica.']].map(c=>`<div class="flip" data-act="flip"><div class="in"><div class="f">${c[0]}</div><div class="bk">${c[1]}</div></div></div>`).join('')}
+ </div>`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'Oito cartões que viram.',
+  explain:`<p><b>Oito conceitos que os alunos devem levar para casa:</b> AMPOLA — local habitual da fecundação e localização frequente da ectópica tubária. TRANSPORTE — cílios, secreções e musculatura tubária participam do deslocamento embrionário. TROFOBLASTO — a invasão fisiológica pode causar lesão vascular em localização inadequada. β-hCG — demonstra atividade trofoblástica, mas não determina sozinho a localização. DOR — pode resultar de distensão tubária e irritação peritoneal. SANGRAMENTO — pode ser intraperitoneal mesmo com pouca exteriorização vaginal. DIAGNÓSTICO — depende da integração entre clínica, ultrassonografia e exames laboratoriais. CONDUTA — a estabilidade hemodinâmica é decisiva para a urgência terapêutica.</p>`}
+});
+
+add({b:7,k:'7 · Arsenal de memória',t:'As dez técnicas da aula',
+ body:`<div class="grid g2">${Object.keys(TEC).map(n=>T(+n,{sci:false})).join('')}</div>`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'Galeria das dez técnicas aprovadas.',explain:'<p>Revisão relâmpago: leia a primeira palavra de cada técnica e deixe a turma completar.</p>'}
+});
+
+add({b:7,k:'Referências',t:'Fontes e assinatura',
+ body:`<div class="card"><ul class="clean">
+ <li><b>NICE NG126</b> — Ectopic pregnancy and miscarriage: diagnosis and initial management. Publicada em 2019; última atualização em 17/06/2026. nice.org.uk/guidance/ng126</li>
+ <li><b>ACOG Practice Bulletin nº 193</b> — Tubal Ectopic Pregnancy. Obstet Gynecol 2018;131:e91–103 (reafirmação: conferir data vigente no site da ACOG).</li>
+ <li><b>FEBRASGO</b> — Protocolo FEBRASGO-Obstetrícia “Gravidez ectópica” (2021): conferir critérios terapêuticos com a versão vigente e com o protocolo institucional.</li>
+ </ul></div>
+ <p class="mut">Os critérios terapêuticos apresentados devem ser conferidos com o protocolo institucional e a FEBRASGO antes da aplicação clínica.</p>
+ <footer class="sig">Dr. André Rossanno</footer>`,
+ sc:[0,1,2,3,4,5,6],
+ prof:{show:'Referências e assinatura.',
+  explain:'<p>As referências clínicas principais desta versão foram a NICE NG126 (atualizada em junho de 2026) e o ACOG Practice Bulletin nº 193. Para a versão definitiva destinada aos alunos brasileiros, conferir também os critérios terapêuticos com o protocolo institucional e a FEBRASGO.</p><p>Para uma versão ainda mais extensa, o aprofundamento prioritário seria em histologia tubária, regulação molecular da implantação, mecanismos de invasão trofoblástica e interpretação de curvas seriadas de β-hCG, sem perder o foco morfofuncional da Semana 4.</p>'}
+});
+
+/* ---------- casos clínicos (dados revelados um a um) ---------- */
+const CASES = {
+ c1:{title:'Emergência · 27 anos',items:[['Idade','27 anos'],['Queixa','Dor em fossa ilíaca direita'],['História','Atraso menstrual de seis semanas'],['Sangramento','Pequeno sangramento vaginal']]},
+ c2:{title:'Ambulatório · 24 anos',items:[['Idade','24 anos'],['Amenorreia','Seis semanas'],['Teste','Positivo'],['Sintomas','Sem dor importante e sem sangramento ativo'],['USTV','Sem saco gestacional intrauterino'],['Anexos','Sem massa anexial identificável'],['Líquido livre','Sem líquido livre significativo'],['β-hCG','680 mUI/mL']]},
+ c3:{title:'Sala de emergência · 29 anos',items:[['Idade','29 anos'],['Amenorreia','Sete semanas'],['Queixa','Dor abdominal súbita, tontura e episódio de síncope'],['Pressão arterial','82 × 48 mmHg'],['Frequência cardíaca','132 bpm'],['Frequência respiratória','26 irpm'],['Perfusão periférica','Reduzida'],['Abdome','Doloroso, com sinais de irritação peritoneal'],['Teste gestacional','Positivo'],['USG à beira do leito','Líquido livre abdominal em quantidade importante — forte suspeita de ectópica rota']],red:true}
+};
+
+/* =====================================================================
+   WIDGETS INTERATIVOS
+   ===================================================================== */
+const WIDGETS = {};
+(function(){
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const fmt = (n,d=1) => Number(n).toLocaleString('pt-BR',{maximumFractionDigits:d,minimumFractionDigits:0});
+
+/* ---------- 1. Tuba uterina clicável ---------- */
+const SEG = {
+ inf:{n:'Infundíbulo',c:'#5aa9ff',t:'Região distal, próxima ao ovário, com <b>fímbrias</b> responsáveis por facilitar a captação do complexo cúmulo-ovócito.'},
+ amp:{n:'Ampola',c:'#2dd4bf',t:'Segmento <b>mais longo</b> e geralmente mais dilatado, com pregas mucosas complexas. <b>Local habitual da fecundação</b> e também a <b>localização mais frequente da gravidez ectópica tubária</b>.'},
+ ist:{n:'Istmo',c:'#e9c46a',t:'Segmento <b>mais estreito</b>, de parede muscular relativamente espessa, importante para o transporte em direção ao útero.'},
+ int:{n:'Porção intramural (intersticial)',c:'#ff6161',t:'<b>Atravessa a parede muscular uterina</b> e desemboca na cavidade uterina. Implantação aqui = gravidez intersticial (≠ angular).'}
+};
+WIDGETS.tube = function(w){
+  w.innerHTML = `<svg viewBox="0 0 900 250" role="img" aria-label="Esquema da tuba uterina com quatro regiões">
+   <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b9bb9"/></marker></defs>
+   <ellipse cx="78" cy="178" rx="52" ry="34" fill="#24375b" stroke="#8b9bb9"/><text x="78" y="183" text-anchor="middle" class="tube-lbl" style="font-size:13px">ovário</text>
+   <path d="M700,20 h170 a20,20 0 0 1 20,20 v170 a20,20 0 0 1 -20,20 h-170 z" fill="#3a2433" stroke="#c98aa0"/>
+   <path d="M760,70 h130 v110 h-130 q-20,-55 0,-110z" fill="#5a2a3d" stroke="#c98aa0" stroke-dasharray="4 4"/>
+   <text x="828" y="132" text-anchor="middle" class="tube-lbl" style="font-size:13px">cavidade</text><text x="728" y="215" text-anchor="middle" class="tube-lbl" style="font-size:12px;fill:#c98aa0">miométrio</text>
+   <g class="tube-seg" data-seg="inf" tabindex="0"><path d="M120,85 Q150,70 230,98 L230,152 Q150,175 120,165 Q105,150 112,140 Q100,125 112,112 Q100,98 120,85z" fill="#5aa9ff" opacity=".85"/><path d="M118,90 l-24,-10 M112,112 l-28,-2 M112,140 l-28,6 M120,163 l-22,14" stroke="#5aa9ff" stroke-width="5" stroke-linecap="round"/></g>
+   <g class="tube-seg" data-seg="amp" tabindex="0"><path d="M230,98 Q380,82 520,112 L520,138 Q380,168 230,152z" fill="#2dd4bf" opacity=".85"/></g>
+   <g class="tube-seg" data-seg="ist" tabindex="0"><path d="M520,112 L700,118 L700,132 L520,138z" fill="#e9c46a" opacity=".9"/></g>
+   <g class="tube-seg" data-seg="int" tabindex="0"><path d="M700,118 L762,121 L762,129 L700,132z" fill="#ff6161"/><rect x="694" y="110" width="74" height="30" fill="none" stroke="#ff6161" stroke-dasharray="3 3"/></g>
+   <text x="170" y="60" text-anchor="middle" class="tube-lbl">Infundíbulo</text>
+   <text x="375" y="70" text-anchor="middle" class="tube-lbl">Ampola</text>
+   <text x="610" y="96" text-anchor="middle" class="tube-lbl">Istmo</text>
+   <text x="731" y="100" text-anchor="middle" class="tube-lbl" style="font-size:13px">Intramural</text>
+   <line x1="250" y1="210" x2="660" y2="210" stroke="#8b9bb9" stroke-width="2" marker-end="url(#arr)"/><text x="455" y="236" text-anchor="middle" class="tube-lbl" style="font-size:13px;fill:#8b9bb9">sentido do transporte → cavidade uterina</text>
+  </svg>`;
+  const info = document.getElementById('tubeInfo');
+  const pick = k => { $$('.tube-seg',w).forEach(g=>g.classList.toggle('dim', g.dataset.seg!==k)); const s=SEG[k]; info.innerHTML=`<h3 style="color:${s.c}">${s.n}</h3><p>${s.t}</p>`; };
+  $$('.tube-seg',w).forEach(g=>{ g.addEventListener('click',()=>pick(g.dataset.seg)); g.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); pick(g.dataset.seg);} }); });
+};
+
+/* ---------- 2. Linha do tempo embrionária ---------- */
+const TL = [
+ ['Dia 0','Formação do zigoto','Na ampola, local habitual da fecundação.',10],
+ ['Dias 1–3','Clivagens embrionárias','O embrião se divide enquanto é transportado pela tuba (cílios, secreção, músculo).',32],
+ ['Dias 3–4','Formação da mórula e chegada à cavidade uterina','Se o transporte atrasar, a próxima etapa pode acontecer ainda na tuba.',58],
+ ['Dias 4–5','Formação do blastocisto','Massa celular interna + trofectoderma.',68],
+ ['Dias 5–6','Eclosão da zona pelúcida','O trofoblasto fica exposto e pronto para aderir.',77],
+ ['Dias 6–7','Início habitual da implantação','No útero: endométrio decidualizado, receptivo. Na tuba: tecido não preparado.',86],
+ ['Dias 8–12','Progressão da invasão trofoblástica','Sinciciotrofoblasto invade e produz hCG.',95]
+];
+WIDGETS.timeline = function(w){
+  w.innerHTML = `<div class="tl"><div class="tl-track"><div class="tl-fill"></div><div class="tl-dot"></div>
+   <span class="tl-zone" style="left:12%">ampola</span><span class="tl-zone" style="left:42%">istmo · intramural</span><span class="tl-zone" style="left:82%">cavidade uterina</span></div>
+   <div class="btns" style="margin-bottom:10px"><button class="bt pri" data-k="n">Próximo evento</button><button class="bt" data-k="p">Voltar evento</button><button class="bt" data-k="a">Mostrar todos</button></div>
+   <div class="tl-list">${TL.map((e,i)=>`<div class="tl-item" data-i="${i}"><div class="d">${e[0]}</div><div><b>${e[1]}</b><br><span class="mut">${e[2]}</span></div></div>`).join('')}</div>
+   <p class="mut" style="font-size:.75em">Tempos aproximados após a fecundação; podem variar.</p></div>`;
+  let k = 1;
+  const set = n => { k=Math.max(1,Math.min(TL.length,n)); $$('.tl-item',w).forEach((it,i)=>{ it.classList.toggle('on',i<k); it.classList.toggle('cur',i===k-1); }); const pos=TL[k-1][3]; $('.tl-dot',w).style.left=pos+'%'; $('.tl-fill',w).style.width=pos+'%'; };
+  $('[data-k="n"]',w).onclick=()=>set(k+1); $('[data-k="p"]',w).onclick=()=>set(k-1); $('[data-k="a"]',w).onclick=()=>set(TL.length);
+  set(1);
+};
+
+/* ---------- 3. Laboratório de β-hCG ---------- */
+WIDGETS.hcg = function(w){
+  w.innerHTML = `<div class="lab">
+   <div class="card teal">
+    <h3>Dados</h3>
+    <div class="fld"><label for="h1">β-hCG inicial (mUI/mL)</label><input id="h1" type="number" inputmode="decimal" min="1" value="1000"></div>
+    <div class="fld"><label for="h2">β-hCG seguinte (mUI/mL)</label><input id="h2" type="number" inputmode="decimal" min="1" value="1600"></div>
+    <div class="fld"><label for="hh">Intervalo entre as coletas (horas)</label><input id="hh" type="number" inputmode="decimal" min="1" value="48"></div>
+    <p class="mut" style="font-size:.72em">Exemplos rápidos:</p>
+    <div class="chips">
+     <button class="chip" data-p="1000,1600,48">Quadro: 1.000 → 1.600</button>
+     <button class="chip" data-p="1200,2100,48">1.200 → 2.100</button>
+     <button class="chip" data-p="2400,2700,48">2.400 → 2.700</button>
+     <button class="chip" data-p="900,800,48">900 → 800</button>
+     <button class="chip" data-p="2000,800,48">2.000 → 800</button>
+     <button class="chip" data-p="1000,1300,24">1.000 → 1.300 em 24 h</button>
+    </div>
+   </div>
+   <div class="card">
+    <h3>Cálculo</h3>
+    <div class="mut mono" style="font-size:.7em" id="hform"></div>
+    <div class="res-big" id="hres">—</div>
+    <div class="mut" id="hsub"></div>
+    <div id="hverd"></div>
+   </div></div>
+   <div class="callout red" style="margin-top:12px"><b>O cálculo, isoladamente, não confirma localização nem viabilidade.</b> Sintomas e estabilidade hemodinâmica têm prioridade sobre qualquer interpretação isolada do β-hCG.</div>`;
+  const calc = () => {
+    const a=+$('#h1',w).value, b=+$('#h2',w).value, h=+$('#hh',w).value;
+    const out=$('#hverd',w);
+    if(!(a>0&&b>0&&h>0)){ $('#hres',w).textContent='—'; $('#hsub',w).textContent='Preencha valores positivos.'; out.innerHTML=''; $('#hform',w).textContent=''; return; }
+    const pct=(b-a)/a*100;
+    const eq48=(Math.pow(b/a,48/h)-1)*100;
+    $('#hform',w).textContent=`(${fmt(b,0)} − ${fmt(a,0)}) ÷ ${fmt(a,0)} × 100`;
+    $('#hres',w).textContent=(pct>0?'+':'')+fmt(pct)+'%';
+    $('#hres',w).style.color = pct>0?'var(--teal)':'var(--amber)';
+    let sub=`variação em ${fmt(h,0)} h`;
+    if(Math.abs(h-48)>0.5) sub+=` · equivalente aproximado em 48 h (supondo cinética exponencial): ${(eq48>0?'+':'')+fmt(eq48)}%`;
+    if(b>a) sub+=` · tempo de duplicação ≈ ${fmt(h*Math.LN2/Math.log(b/a))} h`;
+    $('#hsub',w).textContent=sub;
+    const v=[];
+    if(h<48) v.push(['a','Intervalo','A NICE pede duas dosagens o mais próximo possível de 48 h — <b>nunca antes</b>. Use a conversão com cautela.']);
+    const x = Math.abs(h-48)<=0.5 ? pct : eq48;
+    // NICE PUL
+    if(x>63) v.push(['g','NICE · PUL (aumento > 63%)','Padrão sugestivo de <b>gestação intrauterina em desenvolvimento</b> — <b>não exclui</b> ectópica. USTV em 7–14 dias (considerar mais cedo se hCG ≥ 1.500 UI/L).']);
+    else if(x<-50) v.push(['b','NICE · PUL (queda > 50%)','Sugere gestação <b>em regressão</b>, não confirmada. Teste urinário em 14 dias; retorno se positivo ou se sintomas.']);
+    else v.push(['a','NICE · PUL (padrão intermediário)','Aumento &lt; 63% ou queda &lt; 50%: <b>revisão clínica em até 24 h</b> no serviço de gestação inicial.']);
+    // aumento mínimo por faixa
+    if(x>0){
+      const m = a<1500?49:(a<=3000?40:33);
+      const faixa = a<1500?'< 1.500':(a<=3000?'1.500–3.000':'> 3.000');
+      v.push([x>=m?'b':'r',`Aumento mínimo descrito para GIU viável (faixa inicial ${faixa}: ≈ ${m}%)`, x>=m?'Acima do mínimo estatístico da faixa — compatível com GIU viável, mas <b>ectópicas também podem subir assim</b>.':'Abaixo do mínimo estatístico da faixa — sugere gestação anormal (ectópica <b>ou</b> perda intrauterina). <b>Não localiza.</b>']);
+    }
+    if(x<=0) v.push(['r','Queda','Declínio hormonal <b>não exclui</b> ruptura de uma ectópica ainda presente.']);
+    out.innerHTML = v.map(z=>`<div class="verdict ${z[0]}"><h4>${z[1]}</h4>${z[2]}</div>`).join('') + `<p class="mut" style="font-size:.7em">Os limiares da NICE (63% / 50%) e os aumentos mínimos por faixa (49% / 40% / 33%) vêm de abordagens diferentes e <b>não são intercambiáveis</b>. Faixas de 49/40/33%: conferir fonte primária (ver relatório científico).</p>`;
+  };
+  $$('input',w).forEach(i=>i.addEventListener('input',calc));
+  $$('[data-p]',w).forEach(c=>c.addEventListener('click',()=>{ const p=c.dataset.p.split(','); $('#h1',w).value=p[0]; $('#h2',w).value=p[1]; $('#hh',w).value=p[2]; calc(); }));
+  calc();
+};
+
+/* ---------- 4. Compensação hemodinâmica (qualitativo) ---------- */
+WIDGETS.shock = function(w){
+  w.innerHTML = `<h3>Simulador qualitativo · a pressão é a última a confessar</h3>
+   <div class="fld"><label for="sl">Perda volêmica estimada (% do volume circulante)</label><input id="sl" type="range" min="0" max="45" step="1" value="5"></div>
+   <div class="mono" id="sc" style="font-weight:700"></div>
+   <div>Frequência cardíaca <span id="sf" class="mut"></span></div><div class="meter"><i id="mf"></i></div>
+   <div>Pressão arterial sistólica <span id="sp" class="mut"></span></div><div class="meter"><i id="mp"></i></div>
+   <div>Perfusão / estado mental <span id="sm" class="mut"></span></div><div class="meter"><i id="mm"></i></div>
+   <p class="mut" style="font-size:.7em">Acréscimo didático, baseado na sequência das classes de choque hemorrágico do ATLS (conferir a edição vigente). Barras <b>qualitativas</b>: não estimam perda real. Nem toda hemorragia produz taquicardia; pressão normal não exclui hipoperfusão.</p>`;
+  const L=[
+   {max:15,c:'Classe I (até ~15%)',f:['normal ou discretamente ↑',30,'var(--green)'],p:['normal',90,'var(--green)'],m:['preservados',90,'var(--green)']},
+   {max:30,c:'Classe II (~15–30%)',f:['↑',55,'var(--amber)'],p:['ainda normal (pressão de pulso pode ↓)',85,'var(--green)'],m:['ansiedade leve',72,'var(--amber)']},
+   {max:40,c:'Classe III (~30–40%)',f:['↑↑',78,'var(--red)'],p:['↓',50,'var(--red)'],m:['confusão, extremidades frias',45,'var(--red)']},
+   {max:99,c:'Classe IV (> 40%)',f:['↑↑↑ (pode haver bradicardia pré-terminal)',95,'var(--red)'],p:['↓↓',22,'var(--red)'],m:['letargia',18,'var(--red)']}
+  ];
+  const upd=()=>{ const v=+$('#sl',w).value; const o=L.find(x=>v<=x.max); $('#sc',w).textContent=`${v}% · ${o.c}`;
+    [['f','mf'],['p','mp'],['m','mm']].forEach(([k,id])=>{ $('#s'+k,w).textContent='— '+o[k][0]; const m=$('#'+id,w); m.style.width=o[k][1]+'%'; m.style.background=o[k][2]; }); };
+  $('#sl',w).addEventListener('input',upd); upd();
+};
+
+/* ---------- 5. Caso clínico progressivo ---------- */
+WIDGETS.case = function(w){
+  const c = CASES[w.dataset.case]; const key='case:'+w.dataset.case;
+  w.innerHTML = `<div class="card ${c.red?'red':'amber'}"><span class="tag ${c.red?'c-red':'c-amber'}">Caso clínico</span><h3>${c.title}</h3>
+   <div class="tablewrap"><table class="tt"><tbody>${c.items.map((it,i)=>`<tr data-i="${i}"><th style="width:36%">${it[0]}</th><td>${it[1]}</td></tr>`).join('')}</tbody></table></div>
+   <div class="btns"><button class="bt pri" data-k="n">Revelar próximo dado</button><button class="bt" data-k="a">Mostrar todos</button><button class="bt" data-k="r">Ocultar</button></div></div>`;
+  let k = APP.st.flows[key] || 1;
+  const set=n=>{ k=Math.max(1,Math.min(c.items.length,n)); APP.st.flows[key]=k; $$('tr[data-i]',w).forEach((tr,i)=>tr.style.display=i<k?'':'none'); const b=$('[data-k="n"]',w); b.disabled=k>=c.items.length; b.classList.toggle('done',k>=c.items.length); };
+  $('[data-k="n"]',w).onclick=()=>set(k+1); $('[data-k="a"]',w).onclick=()=>set(99); $('[data-k="r"]',w).onclick=()=>set(1);
+  w._next=()=>set(k+1); w._done=()=>k>=c.items.length;
+  set(k);
+};
+
+/* ---------- 6. Explorador dos três caminhos (NICE NG126) ---------- */
+WIDGETS.paths = function(w){
+  const S0={hemo:'estavel',rot:'nao',dx:'sim',dor:'nenhuma',massa:25,bcf:'nao',hcg:900,seg:'sim',ci:'nao'};
+  const s=Object.assign({},S0);
+  const seg=(k,opts)=>`<div class="fld"><label>${opts.l}</label><div class="seg" data-k="${k}">${opts.o.map(o=>`<button data-v="${o[0]}">${o[1]}</button>`).join('')}</div></div>`;
+  w.innerHTML=`<div class="lab"><div class="card">
+   ${seg('hemo',{l:'Estado hemodinâmico',o:[['estavel','Estável'],['instavel','Instável']]})}
+   ${seg('rot',{l:'Suspeita de ruptura / hemoperitônio importante',o:[['nao','Não'],['sim','Sim']]})}
+   ${seg('dx',{l:'Diagnóstico definitivo de ectópica tubária e GIU viável excluída',o:[['sim','Sim'],['nao','Não (PUL / incerto)']]})}
+   ${seg('dor',{l:'Dor',o:[['nenhuma','Sem dor'],['leve','Leve'],['sig','Significativa']]})}
+   <div class="fld"><label for="pm">Massa anexial (mm)</label><input id="pm" type="number" min="0" value="25"></div>
+   ${seg('bcf',{l:'Batimento cardíaco embrionário visível',o:[['nao','Não'],['sim','Sim']]})}
+   <div class="fld"><label for="ph">β-hCG sérico (UI/L)</label><input id="ph" type="number" min="0" value="900"></div>
+   ${seg('seg',{l:'Pode retornar para seguimento',o:[['sim','Sim'],['nao','Não']]})}
+   ${seg('ci',{l:'Contraindicação ao metotrexato',o:[['nao','Não'],['sim','Sim']]})}
+  </div><div class="card"><h3>Caminho sugerido pela NICE NG126</h3><div id="pout"></div></div></div>
+  <p class="mut" style="font-size:.7em">Ilustra a NICE NG126 (recs. 1.6.3–1.6.10). Não é protocolo nem ferramenta de prescrição: FEBRASGO e protocolos institucionais podem usar outros limiares; desejo reprodutivo, tuba contralateral e preferência da paciente entram na decisão.</p>`;
+  const paint=()=>{ $$('.seg',w).forEach(g=>$$('button',g).forEach(b=>b.classList.toggle('on',s[g.dataset.k]===b.dataset.v))); };
+  const out=()=>{
+    s.massa=+$('#pm',w).value||0; s.hcg=+$('#ph',w).value||0;
+    const R=[]; const V=(c,t,h)=>R.push(`<div class="verdict ${c}"><h4>${t}</h4>${h}</div>`);
+    if(s.hemo==='instavel'||s.rot==='sim'){ V('r','OPERAR · emergência','Ressuscitação hemodinâmica e <b>controle urgente da hemorragia</b>. Não aguardar β-hCG quantitativo. <b>Instabilidade não espera.</b>'); }
+    else if(s.dx==='nao'){ V('a','Ainda não é hora de tratar ectópica','Sem diagnóstico definitivo: conduzir como <b>PUL</b> — avaliação clínica, β-hCG seriado (~48 h) e nova USTV. <b>Metotrexato não deve ser oferecido</b> sem diagnóstico definitivo e exclusão de GIU viável.'); }
+    else {
+      const surg=[]; if(s.dor==='sig') surg.push('dor significativa'); if(s.massa>=35) surg.push('massa ≥ 35 mm'); if(s.bcf==='sim') surg.push('BCF visível'); if(s.hcg>=5000) surg.push('hCG ≥ 5.000 UI/L'); if(s.seg==='nao') surg.push('impossibilidade de seguimento');
+      if(surg.length){ V('r','OPERAR · cirurgia como 1ª linha', 'Motivo(s): '+surg.join(' · ')+'. Laparoscopia quando possível; salpingectomia salvo fatores de risco para infertilidade.'); }
+      else {
+        const mtxOk = s.ci==='nao';
+        if(s.dor==='nenhuma' && s.hcg<=1000) V('g','OBSERVAR · oferecer conduta expectante','Estável, sem dor, &lt; 35 mm, sem BCF, hCG ≤ 1.000 UI/L e seguimento possível. hCG nos dias 2, 4 e 7; queda ≥ 15% → semanal até &lt; 20 UI/L.');
+        else if(s.dor==='nenhuma' && s.hcg<1500) V('g','OBSERVAR · pode ser considerada','hCG entre 1.000 e 1.500 UI/L com as demais condições: conduta expectante pode ser considerada.');
+        if(s.hcg<1500){ mtxOk ? V('b','MEDICAR · oferecer metotrexato','Sem dor significativa, ectópica não rota &lt; 35 mm sem BCF, hCG &lt; 1.500, GIU excluída, seguimento possível. hCG dias 4 e 7, depois semanal.') : V('a','MEDICAR · contraindicado','Contraindicação ao metotrexato: considerar cirurgia (ou conduta expectante, se elegível).'); }
+        else if(s.hcg<5000){ mtxOk ? V('b','MEDICAR ou OPERAR · escolha compartilhada','hCG 1.500 a &lt; 5.000 UI/L: oferecer escolha entre metotrexato e cirurgia. Com metotrexato, maior chance de nova intervenção e de internação urgente se piorar.') : V('r','OPERAR','hCG 1.500–5.000 com contraindicação ao metotrexato.'); }
+      }
+    }
+    $('#pout',w).innerHTML=R.join('');
+  };
+  $$('.seg',w).forEach(g=>g.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; s[g.dataset.k]=b.dataset.v; paint(); out(); }));
+  $$('input',w).forEach(i=>i.addEventListener('input',out));
+  paint(); out();
+};
+
+/* ---------- 7. Reconstrua o filme ---------- */
+const MECH = [
+ 'Local habitual da fecundação — e localização mais frequente da ectópica tubária.',
+ 'Cílios, secreção e músculo, integrados e sincronizados com o tempo do embrião. Lesão tubária (DIP, cirurgia, tabagismo) atrasa a viagem: o embrião perde o Uber.',
+ 'O blastocisto inicia a implantação por volta dos dias 6–7. No útero, há decídua; na tuba, não há decidualização equivalente.',
+ 'O trofoblasto invade — é fisiológico. No endereço errado, o pedreiro destrói vasos da parede tubária.',
+ 'Sangramento intratubário, aborto tubário ou ruptura → hemoperitônio → dor, dor no ombro (C3–C5), taquicardia antes da hipotensão.',
+ 'Estabilidade primeiro. β-hCG = atividade, não endereço. USTV procura o vizinho; casa vazia não prova nada. PUL é temporária.',
+ 'Instável → operar. Estável e elegível → observar ou medicar, com seguimento até negativar. Instabilidade não espera.'
+];
+WIDGETS.film = function(w){
+  const order=[...SCENES.keys()]; let pool=order.slice(); for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  if(pool.every((v,i)=>v===i)) pool.reverse();
+  let k=0;
+  w.innerHTML=`<p class="lead">Toque nas cenas <b>na ordem certa</b>. A turma dita; você toca.</p>
+   <div class="order" id="fpool">${pool.map(i=>`<button class="chip" data-s="${i}">${SCENES[i]}</button>`).join('')}</div>
+   <div class="order" id="fdone" aria-live="polite"></div>
+   <div class="btns"><button class="bt" id="frst">Embaralhar e recomeçar</button><button class="bt amb" id="fsol">Mostrar ordem</button></div>
+   <div id="fmech" style="margin-top:1em"></div>`;
+  const done=$('#fdone',w), mech=$('#fmech',w);
+  const finish=()=>{ mech.innerHTML=`${T(10,{sci:false})}<div class="grid g2">${SCENES.map((n,i)=>`<div class="q" data-local="1"><div class="ql">Cena ${i+1}</div><div class="qt">${n} — por quê?</div><div class="btns"><button class="bt pri" data-m="${i}">Revelar mecanismo</button></div><div class="ans" hidden>${MECH[i]}</div></div>`).join('')}</div>`;
+    $$('[data-m]',mech).forEach(b=>b.onclick=()=>{ b.closest('.q').querySelector('.ans').hidden=false; b.classList.add('done'); }); };
+  $$('#fpool .chip',w).forEach(c=>c.addEventListener('click',()=>{
+    if(+c.dataset.s===k){ c.classList.add('ok'); done.appendChild(c); k++; if(k===SCENES.length) finish(); }
+    else { c.classList.add('bad'); setTimeout(()=>c.classList.remove('bad'),600); }
+  }));
+  $('#frst',w).onclick=()=>WIDGETS.film(w);
+  $('#fsol',w).onclick=()=>{ SCENES.forEach((n,i)=>{ const c=$(`#fpool [data-s="${i}"]`,w); if(c){ c.classList.add('ok'); done.appendChild(c);} }); const sorted=$$('.chip',done).sort((a,b)=>a.dataset.s-b.dataset.s); sorted.forEach(c=>done.appendChild(c)); k=SCENES.length; finish(); };
+};
+})();
+
+/* =====================================================================
+   GUIA DE USO · RELATÓRIO DE FIDELIDADE (calculado) · RELATÓRIO CIENTÍFICO
+   ===================================================================== */
+function REPORTS(){
+  const qi = APP.qIdsIn, ti = APP.tecIdsIn;
+  const where = id => SLIDES.map((s,i)=>qi(s.body).includes(String(id))?i+1:0).filter(Boolean);
+  const tecWhere = n => SLIDES.map((s,i)=>ti(s.body).includes(n)?i+1:0).filter(Boolean);
+  const num = []; for(let n=1;n<=40;n++) num.push({id:n, at:where(n)});
+  const rev = ['R1','R2','R3','R4','R5','R6','R7'].map(id=>({id, at:where(id)}));
+  const novas = Object.keys(QS).filter(k=>QS[k].nova);
+  const okN = num.filter(x=>x.at.length).length, okR = rev.filter(x=>x.at.length).length;
+  const tecs = Object.keys(TEC).map(n=>({n:+n, at:tecWhere(+n)}));
+  const okT = tecs.filter(t=>t.at.length).length;
+  const blocks = Object.values(BLOCKS).map(B=>({B, c:SLIDES.filter(s=>s.b===B.n).length}));
+  const widgets = SLIDES.reduce((a,s)=>a+((s.body.match(/data-widget=/g)||[]).length),0);
+  const flows = SLIDES.reduce((a,s)=>a+((s.body.match(/data-flow=/g)||[]).length),0);
+  const mark = b => b?'<span class="ok">✓</span>':'<span class="warn">✗</span>';
+
+  const guia = `<h3>B · Guia de utilização</h3>
+  <table class="tt"><tr><th>Ação</th><th>Teclado</th><th>Toque / mouse</th></tr>
+  <tr><td>Avançar (revela a próxima etapa; depois muda de tela)</td><td>→ · Espaço · PageDown</td><td>▶ ou deslizar para a esquerda</td></tr>
+  <tr><td>Voltar</td><td>← · PageUp</td><td>◀ ou deslizar para a direita</td></tr>
+  <tr><td>Revelar a próxima resposta oculta da tela</td><td>A</td><td>botão “Revelar resposta” de cada pergunta</td></tr>
+  <tr><td>Modo professor (painel A–G ao lado)</td><td>P</td><td>botão “Professor”</td></tr>
+  <tr><td>Sumário dos sete blocos</td><td>M</td><td>botão “Sumário”</td></tr>
+  <tr><td>Roteiro integral (leitura contínua)</td><td>S</td><td>botão “Roteiro”</td></tr>
+  <tr><td>Tela cheia</td><td>F</td><td>botão ⛶</td></tr>
+  <tr><td>Cronômetro (iniciar/pausar)</td><td>T</td><td>botão ⏱ e depois ▶</td></tr>
+  <tr><td>Primeira / última tela</td><td>Home / End</td><td>barra de progresso (clicável)</td></tr></table>
+  <ul class="clean">
+  <li><b>Projetor + notebook:</b> deixe a tela projetada no <b>modo apresentação</b> e abra a <b>“Janela do professor”</b> no notebook (estenda a área de trabalho). A janela mostra os campos A–G da tela atual e tem botões para avançar e revelar respostas na tela projetada. Se o navegador bloquear a janela, use o modo professor (P) — mas lembre que, projetado, os alunos verão o painel.</li>
+  <li><b>Respostas</b> nunca aparecem sozinhas: só com clique em “Revelar resposta”, tecla A ou botão na janela do professor. A tecla → revela conteúdo (etapas e fluxogramas), não respostas. O botão “Ocultar respostas” recoloca tudo como no início. O arquivo não guarda respostas reveladas entre sessões; guarda apenas a última tela visitada.</li>
+  <li><b>Fluxogramas</b>: cada etapa é revelada por → ou por “Revelar próxima etapa”. <b>Casos clínicos</b>: “Revelar próximo dado”.</li>
+  <li><b>Imagens</b>: os espaços tracejados dourados aparecem <b>só no modo professor</b>. Para inserir uma figura, abra o HTML num editor de texto, procure o slide (busque o texto do título) e preencha <code>src:''</code> dentro de <code>img:{…}</code> com o caminho do arquivo (ex.: <code>src:'img/tuba.jpg'</code>, na mesma pasta do HTML) ou com uma imagem em base64. A figura passa a aparecer também no modo apresentação.</li>
+  <li><b>Sem internet</b>: tudo funciona offline. As fontes Nunito/IBM Plex Mono/Dancing Script carregam do Google quando há conexão; sem conexão, entram fontes do sistema.</li>
+  <li><b>Reduzir movimento</b> (botão ◐) desliga as animações.</li></ul>`;
+
+  const fid = `<h3>C · Relatório de fidelidade <span class="mut" style="font-size:13px">(calculado automaticamente a partir dos dados do arquivo)</span></h3>
+  <table class="tt"><tr><th>Verificação</th><th>Resultado</th></tr>
+  <tr><td>Sete blocos presentes</td><td>${mark(blocks.every(b=>b.c>0))} ${blocks.map(b=>`B${b.B.n}: ${b.c} telas`).join(' · ')}</td></tr>
+  <tr><td>Roteiro de 120 minutos</td><td>${mark(BLOCKS[7].to===120)} ${Object.values(BLOCKS).map(B=>`${B.from}–${B.to}`).join(' · ')}</td></tr>
+  <tr><td>40 perguntas numeradas (numeração original)</td><td>${mark(okN===40)} ${okN}/40 presentes</td></tr>
+  <tr><td>Pergunta de aprofundamento do Bloco 1 (3b)</td><td>${mark(where('3b').length)} tela ${where('3b').join(', ')}</td></tr>
+  <tr><td>7 questões de revisão (R1–R7)</td><td>${mark(okR===7)} ${okR}/7 · enunciados do roteiro; respostas-modelo construídas a partir do roteiro (o original não trazia respostas)</td></tr>
+  <tr><td>10 técnicas aprovadas incorporadas</td><td>${mark(okT===10)} ${okT}/10 (texto aprovado sem alteração)</td></tr>
+  <tr><td>Perguntas complementares novas (identificadas como “nova”)</td><td>${novas.length}: ${novas.join(', ')}</td></tr>
+  <tr><td>Casos clínicos do roteiro</td><td>${mark(Object.keys(CASES).length===3)} 3 casos (27 a, 24 a, 29 a) com revelação progressiva</td></tr>
+  <tr><td>Exercício do quadro (1.000 → 1.600)</td><td>${mark(true)} pré-carregado no Laboratório de β-hCG</td></tr>
+  <tr><td>Recursos interativos</td><td>${widgets} widgets · ${flows} fluxogramas progressivos</td></tr>
+  <tr><td>Texto integral acessível</td><td>${mark(true)} campo B de cada tela + “Roteiro integral” (leitura contínua)</td></tr></table>
+  <details><summary style="cursor:pointer;font-weight:800;padding:6px 0">Localização de cada pergunta e técnica</summary>
+  <p class="mono" style="font-size:12px">${num.map(x=>`P${x.id}→tela ${x.at.join('/')||'—'}`).join(' · ')}</p>
+  <p class="mono" style="font-size:12px">${rev.map(x=>`${x.id}→tela ${x.at.join('/')||'—'}`).join(' · ')}</p>
+  <p class="mono" style="font-size:12px">${tecs.map(t=>`T${String(t.n).padStart(2,'0')}→telas ${t.at.join(', ')}`).join(' · ')}</p></details>
+  <p><b>Alterações de forma (sem mudança de sentido):</b> texto distribuído em telas e campos A–G; “Revelar todas” (artefato de interface no texto-fonte) virou botão real; o macete do roteiro “C3, C4, C5: o diafragma avisa no ombro” foi mantido nas notas, e a versão aprovada da Técnica 06 é a projetada; a frase da reprodução assistida e a do DIU foram mantidas literalmente nas notas.</p>
+  <p><b>Acréscimos identificados:</b> blocos “Diretriz (acréscimo)” em perguntas (NICE NG126), simulador qualitativo de choque (ATLS), explorador dos três caminhos (NICE), cálculo do equivalente em 48 h e do tempo de duplicação, perguntas de evocação “nova”.</p>`;
+
+  const sci = `<h3>D · Relatório científico</h3>
+  <p class="mut">Verificado em outubro/2026 contra o texto da NICE NG126 (página de recomendações, atualização de 17/06/2026). ACOG e FEBRASGO: itens não verificáveis na íntegra estão marcados “conferir”. Nenhuma alteração silenciosa foi feita no roteiro.</p>
+  <table class="tt"><tr><th>Tema</th><th>Roteiro</th><th>Verificação / proposta</th><th>Status</th></tr>
+  <tr><td>NICE NG126 — data</td><td>“atualizada em junho de 2026”</td><td>Confirmado: última atualização 17/06/2026. A atualização de 2026 trouxe novas recomendações sobre <b>imunoglobulina anti-D</b>, tema ausente no roteiro. Propõe-se acrescentar uma linha sobre anti-D no Bloco 6 após conferir o texto vigente da NICE e a conduta FEBRASGO para Rh negativo.</td><td class="warn">propor acréscimo · conferir</td></tr>
+  <tr><td>Conduta expectante (NICE)</td><td>&lt; 35 mm, sem BCF, hCG ≤ 1.000 (oferecer) e 1.000–1.500 (considerar), estável, sem dor, seguimento</td><td>Confirmado (rec. 1.6.3–1.6.4). Acrescentado como “diretriz”: hCG nos dias 2, 4 e 7, queda ≥ 15% e seguimento semanal até &lt; 20 UI/L (rec. 1.6.5).</td><td class="ok">correto</td></tr>
+  <tr><td>Limiares de PUL 63% / 50%</td><td>conforme NICE</td><td>Confirmado (rec. 1.4.29–1.4.31). Padrão intermediário → revisão clínica em 24 h; não usar progesterona como adjuvante (1.4.32).</td><td class="ok">correto</td></tr>
+  <tr><td>Aumentos mínimos 49/40/33%</td><td>“faixas iniciais crescentes”</td><td>As faixas usualmente citadas (&lt; 1.500; 1.500–3.000; &gt; 3.000 mUI/mL) vêm de Barnhart e cols. (Obstet Gynecol 2016), citado pela ACOG. Usadas na calculadora; <b>conferir a fonte primária</b>.</td><td class="warn">conferir</td></tr>
+  <tr><td>Metotrexato na 1ª visita</td><td>não sem diagnóstico definitivo</td><td>Confirmado (rec. 1.6.8). Critérios NICE de MTX: sem dor significativa, &lt; 35 mm, sem BCF, hCG &lt; 1.500 (oferecer); 1.500–&lt; 5.000 (escolha MTX × cirurgia); cirurgia 1ª linha se dor significativa, ≥ 35 mm, BCF, hCG ≥ 5.000 ou sem seguimento (1.6.9–1.6.10). O roteiro não traz esses limiares numéricos; foram acrescentados como “diretriz”/explorador.</td><td class="ok">correto · acréscimo identificado</td></tr>
+  <tr><td>Queda ≥ 15% entre D4 e D7 após MTX</td><td>“parâmetro frequentemente utilizado”</td><td>É o critério do protocolo de dose única descrito pela ACOG. A NICE (1.6.11) pede hCG nos dias 4 e 7 e reavaliação se platô ou ascensão, sem citar 15% explicitamente. Formulação do roteiro adequada.</td><td class="ok">adequado</td></tr>
+  <tr><td>Salpingostomia × salpingectomia</td><td>“salpingostomia”</td><td>NICE usa “salpingotomy”; os termos são usados como equivalentes na prática. NICE: oferecer salpingectomia salvo fatores de risco para infertilidade; até 1 em 5 precisa de tratamento adicional após salpingotomia; hCG no 7º dia e depois semanal; teste urinário 3 semanas após salpingectomia (1.6.15–1.6.19).</td><td class="ok">correto · nota terminológica</td></tr>
+  <tr><td>Contraindicações ao MTX</td><td>hepática, renal, hematológica, imunossupressão, amamentação, sem seguimento</td><td>Coerente com a ACOG. A ACOG lista também: GIU, sensibilidade ao MTX, doença pulmonar ativa, úlcera péptica ativa, ectópica rota/instabilidade; relativas: BCF, hCG alto, massa grande, recusa de transfusão. Propõe-se citar ao menos GIU e instabilidade. Orientações durante MTX (evitar AINE, ácido fólico, álcool; intervalo antes de nova gestação) — conferir na ACOG/FEBRASGO antes de ensinar números.</td><td class="warn">propor complemento · conferir</td></tr>
+  <tr><td>Zona discriminatória 1.500–3.500</td><td>sem limite universal</td><td>Coerente com a ACOG (se usada, valor conservadoramente alto, até 3.500 mUI/mL). Unidades: 1 mUI/mL = 1 UI/L.</td><td class="ok">correto</td></tr>
+  <tr><td>Achados de USTV</td><td>evidência direta × sugestivo</td><td>Coerente com NICE 1.4.17–1.4.20 (“sliding sign”, anel tubário/“bagel sign”, pseudossaco × duplo anel decidual, líquido livre moderado/grande).</td><td class="ok">correto</td></tr>
+  <tr><td>Heterotópica</td><td>rara espontânea, mais frequente em reprodução assistida</td><td>Correto. Frequências numéricas não foram incluídas (variam muito entre séries).</td><td class="ok">correto</td></tr>
+  <tr><td>Fatores de risco</td><td>proporção relevante sem fator</td><td>NICE: cerca de um terço sem fator de risco conhecido (1.3.8).</td><td class="ok">correto</td></tr>
+  <tr><td>Instabilidade</td><td>ACOG: emergência cirúrgica</td><td>Confirmado no resumo do PB 193 (“unstable patient… prompt surgical intervention”). A data de reafirmação (2022 ou 2025) aparece de forma divergente em fontes secundárias — <b>conferir no site da ACOG</b>.</td><td class="warn">conferir data</td></tr>
+  <tr><td>Intersticial</td><td>≠ angular</td><td>Correto. Propõe-se uma frase: a intersticial tende a sangrar mais tarde e com maior volume pela vascularização miometrial e tem manejo diferente da ampular — conferir na referência ginecológica antes de projetar.</td><td class="warn">propor · conferir</td></tr>
+  <tr><td>Simulador de choque</td><td>—</td><td>Acréscimo baseado nas classes do ATLS (percentuais clássicos). A 10ª edição usa descrição mais qualitativa; o simulador é rotulado como qualitativo.</td><td class="warn">acréscimo · conferir edição</td></tr>
+  <tr><td>FEBRASGO</td><td>“conferir”</td><td>Existe Protocolo FEBRASGO-Obstetrícia “Gravidez ectópica” (2021) citado por fluxos estaduais; não foi possível ler a íntegra. Critérios FEBRASGO para expectante/MTX <b>não foram inseridos</b> para não inventar números — conferir e, se diferirem da NICE, mostrar lado a lado.</td><td class="warn">pendente</td></tr>
+  </table>
+  <p><b>Fontes consultadas:</b> NICE NG126 — nice.org.uk/guidance/ng126 (Recommendations, acesso 20/10/2026); ACOG Practice Bulletin 193 (resumo e literatura secundária); FEBRASGO (referência ao protocolo 2021).</p>`;
+
+  return `<h2>Guia e relatórios</h2>${guia}<hr style="border-color:var(--line)">${fid}<hr style="border-color:var(--line)">${sci}`;
+}
+
+/* =====================================================================
+   MOTOR DA APRESENTAÇÃO — navegação, revelação, modo professor, widgets
+   ===================================================================== */
+const APP = (function(){
+  const $ = (s,r=document)=>r.querySelector(s);
+  const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+  const LS = 'aulaGE_rossanno_v1';
+  const st = {i:0, prof:false, reduce:false, rev:{}, flows:{}, timer:{on:false, t0:0, acc:0, run:false}};
+  let profWin = null;
+
+  /* ---------- armazenamento leve (só posição e preferências; nunca respostas reveladas) ---------- */
+  function save(){ try{ localStorage.setItem(LS, JSON.stringify({i:st.i, reduce:st.reduce})); }catch(e){} }
+  function load(){ try{ const o = JSON.parse(localStorage.getItem(LS)||'{}'); if(typeof o.i==='number' && o.i<SLIDES.length) st.i=o.i; st.reduce=!!o.reduce; }catch(e){} }
+
+  /* ---------- utilidades ---------- */
+  function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toast._h); toast._h=setTimeout(()=>t.classList.remove('on'),3200); }
+  const qIdsIn = html => { const out=[]; const re=/data-qid="([^"]+)"/g; let m; while((m=re.exec(html))) out.push(m[1]); return out; };
+  const tecIdsIn = html => { const out=[]; const re=/data-tec="(\d+)"/g; let m; while((m=re.exec(html))) out.push(+m[1]); return out; };
+  const blockOf = s => BLOCKS[s.b];
+  const fmt = n => n.toLocaleString('pt-BR',{maximumFractionDigits:1});
+
+  /* ---------- render principal ---------- */
+  function render(dir){
+    const s = SLIDES[st.i], B = blockOf(s);
+    document.documentElement.style.setProperty('--bc', `var(--${B.color})`);
+    document.documentElement.style.setProperty('--bcs', `var(--${B.color}-s)`);
+    $('#blockchip').textContent = `Bloco ${B.n} · ${B.short} · ${B.from}–${B.to} min`;
+    const sc = s.sc || B.sc;
+    const film = s.cover ? '' : `<div class="film" aria-label="Filme em sete cenas">${SCENES.map((n,i)=>`<span class="${sc.includes(i)?'on':''}"><i>${i+1}</i>${n}</span>`).join('')}</div>`;
+    const meta = s.cover ? '' : `<div class="meta"><span class="kick">${(s.k||'').replace(/β-hCG/g,'<span class="nt">β-hCG</span>')}</span><span>Bloco ${B.n} · ${B.name}</span><span>⏱ ${B.from}–${B.to} min</span></div>`;
+    const title = s.cover ? '' : `<h1 class="st">${s.t}</h1>`;
+    let img = '';
+    if(s.img){
+      img = s.img.src ? `<img class="imgreal" src="${s.img.src}" alt="${s.img.tema}">`
+        : `<div class="imgph"><b>[ESPAÇO OPCIONAL PARA IMAGEM: ${s.img.tema.toUpperCase()}]</b>Posição recomendada: ${s.img.pos}<br>Conceito a ilustrar: ${s.img.conceito}<br><span class="mut">Visível só no modo professor. Para inserir a figura, preencha <code>src</code> deste slide no bloco de dados.</span></div>`;
+    }
+    const el = $('#slide');
+    el.innerHTML = meta + title + film + s.body + img + `<div class="hint-next" id="hintNext"></div>`;
+    el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+    // passos
+    const steps = $$('.step', el);
+    if(dir<0) steps.forEach(x=>x.classList.add('on'));
+    // estado de revelação
+    $$('.q[data-qid]', el).forEach(applyQ);
+    // fluxos
+    $$('[data-flow]', el).forEach(fb=>{
+      const id=fb.dataset.flow, nodes=$$('.fn',fb).length;
+      const k = st.flows[st.i+':'+id];
+      setFlow(fb, k!==undefined?k:(dir<0?nodes:1));
+    });
+    // widgets
+    $$('[data-widget]', el).forEach(w=>{ const f=WIDGETS[w.dataset.widget]; if(f) try{ f(w); }catch(e){ console.error(e); w.innerHTML='<p class="c-red">Erro ao carregar este recurso.</p>'; } });
+    $('#stage').scrollTop = 0;
+    updateHint(); updateBottom(); renderProf(); save();
+  }
+  function updateHint(){
+    const h=$('#hintNext'); if(!h) return;
+    const left = $$('#slide .step:not(.on)').length;
+    h.textContent = left ? `▸ ${left} etapa(s) a revelar — tecla → ou toque em ▶` : (st.i<SLIDES.length-1?'▸ próxima tela: →':'▸ fim da aula');
+  }
+  function updateBottom(){
+    $('#count').textContent = `${st.i+1} / ${SLIDES.length}`;
+    $('#prog i').style.width = ((st.i+1)/SLIDES.length*100)+'%';
+  }
+
+  /* ---------- perguntas ---------- */
+  function applyQ(qel){
+    const id = qel.dataset.qid, r = st.rev[id]||{};
+    const has = slot => !!$(`[data-slot="${slot}"]`, qel);
+    ['ans','deep','trap','add'].forEach(slot=>{ const e=$(`[data-slot="${slot}"]`, qel); if(e) e.hidden = !r[slot]; });
+    const ba=$('[data-act="ans"]',qel); if(ba){ ba.classList.toggle('done',!!r.ans); ba.textContent = r.ans?'Resposta revelada':'Revelar resposta'; }
+    ['deep','trap','add'].forEach(slot=>{ const b=$(`[data-act="${slot}"]`,qel); if(b){ b.hidden = !r.ans; b.classList.toggle('done',!!r[slot]); } });
+  }
+  function reveal(id, slot){
+    st.rev[id] = st.rev[id]||{}; st.rev[id][slot] = true;
+    const q = $(`#slide .q[data-qid="${id}"]`); if(q){ applyQ(q); if(slot==='ans'){ const st_=q.closest('.step'); if(st_) st_.classList.add('on'); } }
+    renderProf();
+  }
+  function revealNextAnswer(){
+    const qs = $$('#slide .q[data-qid]').filter(q=>!q.closest('.step:not(.on)'));
+    for(const q of qs){ const id=q.dataset.qid; if(!(st.rev[id]&&st.rev[id].ans)){ reveal(id,'ans'); q.scrollIntoView({block:'center',behavior:st.reduce?'auto':'smooth'}); return; } }
+    toast('Todas as respostas visíveis deste slide já foram reveladas.');
+  }
+
+  /* ---------- fluxos ---------- */
+  function setFlow(fb, k){
+    const nodes = $$('.fn', fb), n=nodes.length; k=Math.max(1,Math.min(n,k));
+    $$('.fw', fb).forEach(e=>e.classList.toggle('on', +e.dataset.i < k));
+    st.flows[st.i+':'+fb.dataset.flow]=k;
+    const b=$('[data-act="fnext"]',fb); if(b){ b.disabled = k>=n; b.classList.toggle('done',k>=n); }
+  }
+  function flowStep(fb){ const k=st.flows[st.i+':'+fb.dataset.flow]||1; setFlow(fb,k+1); }
+
+  /* ---------- navegação ---------- */
+  function next(){
+    // 0) caso clínico visível com dados ocultos? revela o próximo dado
+    const cw = $$('#slide [data-widget="case"]').find(c=>!c.closest('.step:not(.on)') && c._next && !c._done());
+    if(cw){ cw._next(); updateHint(); return; }
+    // 1) fluxo visível incompleto? avança o fluxo
+    const fb = $$('#slide [data-flow]').find(f=>!f.closest('.step:not(.on)') && (st.flows[st.i+':'+f.dataset.flow]||1) < $$('.fn',f).length);
+    const nextStep = $('#slide .step:not(.on)');
+    if(fb && (!nextStep || fb.compareDocumentPosition(nextStep) & Node.DOCUMENT_POSITION_FOLLOWING)){ flowStep(fb); fb.scrollIntoView({block:'nearest',behavior:st.reduce?'auto':'smooth'}); updateHint(); renderProf(); return; }
+    if(nextStep){ nextStep.classList.add('on'); $$('[data-flow]',nextStep).forEach(f=>setFlow(f,st.flows[st.i+':'+f.dataset.flow]||1)); nextStep.scrollIntoView({block:'nearest',behavior:st.reduce?'auto':'smooth'}); updateHint(); renderProf(); return; }
+    go(st.i+1, 1);
+  }
+  function prev(){ go(st.i-1, -1); }
+  function go(i, dir){ if(i<0||i>=SLIDES.length) return; st.i=i; render(dir===undefined?1:dir); closeOv(); }
+
+  /* ---------- modo professor ---------- */
+  function setProf(on){ st.prof=on; document.body.classList.toggle('prof',on); $('#btnProf').classList.toggle('on',on); $('#btnProf').setAttribute('aria-pressed',on); renderProf(); }
+  function profHTML(forWin){
+    const s=SLIDES[st.i], B=blockOf(s), p=s.prof||{};
+    const ids = qIdsIn(s.body);
+    const qlist = ids.map(id=>{ const o=QS[id], r=st.rev[id]||{}; return `<div class="pq"><b>${o.label||('Pergunta '+id)}${o.nova?' (nova)':''}:</b> ${o.q}<br><button class="pqbtn${r.ans?' done':''}" data-act="ans" data-q="${id}">${r.ans?'✓ revelada na tela':'Revelar na tela'}</button></div>`; }).join('');
+    const ans = ids.map(id=>{ const o=QS[id]; return `<div class="pq"><b>${o.label||('P'+id)}:</b> ${o.a}${o.model?' <i>(resposta-modelo)</i>':''}</div>`; }).join('');
+    const deep = ids.filter(id=>QS[id].deep||QS[id].add).map(id=>`<div class="pq"><b>${QS[id].label||('P'+id)}:</b> ${QS[id].deep||''} ${QS[id].add?`<br><i>Diretriz (acréscimo):</i> ${QS[id].add}`:''}</div>`).join('');
+    const traps = ids.filter(id=>QS[id].trap).map(id=>`<div class="pq"><b>${QS[id].label||('P'+id)}:</b> ${QS[id].trap}</div>`).join('');
+    const tecs = [...new Set(tecIdsIn(s.body))].map(n=>`<div class="pq"><b>Técnica ${String(n).padStart(2,'0')} · ${TEC[n].nome}:</b> ${TEC[n].frase}<br>${TEC[n].ciencia}</div>`).join('');
+    const sec = (L,title,html,open)=> html ? `<details ${open?'open':''}><summary><span class="L">${L}</span>${title}</summary><div class="pb">${html}</div></details>` : '';
+    const left = $$('#slide .step:not(.on)').length;
+    return `<div class="ph"><h4>Tela ${st.i+1}/${SLIDES.length} · Bloco ${B.n} · ${B.from}–${B.to} min</h4><span class="tfold">${left?left+' etapa(s) ocultas':'tudo visível'}</span></div>
+      <div style="font-weight:900;font-size:1.1em;margin-bottom:6px">${s.cover?'Capa':s.t.replace(/<[^>]+>/g,'')}</div>
+      ${forWin?`<div class="btns" style="margin:8px 0"><button class="bt" data-act="prev">◀ Voltar</button><button class="bt pri" data-act="next">Avançar ▶</button><button class="bt amb" data-act="nextans">Revelar próxima resposta</button></div>`:''}
+      ${sec('A','O que mostrar',p.show?`<p>${p.show}</p>`:'',true)}
+      ${sec('B','O que explicar',p.explain||'',true)}
+      ${sec('C','O que perguntar',(p.ask?`<p>${p.ask}</p>`:'')+qlist,true)}
+      ${sec('D','Resposta esperada',(p.answer?`<p>${p.answer}</p>`:'')+ans,false)}
+      ${sec('E','Aprofundamento',(p.deep?`<p>${p.deep}</p>`:'')+deep,false)}
+      ${sec('F','Pegadinha',(p.trap?`<p>${p.trap}</p>`:'')+traps,false)}
+      ${sec('G','Macete',(p.tip?`<p>${p.tip}</p>`:'')+tecs,false)}`;
+  }
+  function renderProf(){
+    if(st.prof){ const pp=$('#prof'); const open=$$('details',pp).map(d=>d.open); pp.innerHTML=profHTML(false); if(open.length) $$('details',pp).forEach((d,i)=>{ if(open[i]!==undefined) d.open=open[i]; }); }
+    if(profWin && !profWin.closed){ try{ const c=profWin.document.getElementById('c'); if(c){ const open=$$('details',c).map(d=>d.open); c.innerHTML=profHTML(true); if(open.length) $$('details',c).forEach((d,i)=>{ if(open[i]!==undefined) d.open=open[i]; }); } }catch(e){} }
+  }
+  function openProfWin(){
+    try{
+      profWin = window.open('', 'aulaGE_prof', 'width=760,height=900');
+      if(!profWin){ toast('O navegador bloqueou a janela. Use o modo professor (tecla P) nesta mesma tela.'); return; }
+      const css = document.getElementById('mainCSS').textContent;
+      profWin.document.open();
+      profWin.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Notas do professor · Gravidez Ectópica</title><style>${css} body{overflow:auto} #prof{display:block!important;width:100%;max-height:none;border:0}</style></head><body class="prof"><div id="prof"><div id="c"></div></div></body></html>`);
+      profWin.document.close();
+      profWin.document.addEventListener('click', e=>{ const b=e.target.closest('[data-act]'); if(b) act(b); });
+      profWin.document.addEventListener('keydown', onKey);
+      renderProf(); toast('Janela do professor aberta. Mantenha esta tela no modo apresentação para os alunos.');
+    }catch(e){ toast('Não foi possível abrir a segunda janela. Use o modo professor (P).'); }
+  }
+
+  /* ---------- ações (delegação) ---------- */
+  function act(b){
+    const a=b.dataset.act;
+    if(a==='ans'||a==='deep'||a==='trap'||a==='add') return reveal(b.dataset.q, a);
+    if(a==='next') return next();
+    if(a==='prev') return prev();
+    if(a==='nextans') return revealNextAnswer();
+    if(a==='fnext'){ const fb=b.closest('[data-flow]')||$(`#slide [data-flow="${b.dataset.f}"]`); flowStep(fb); updateHint(); return; }
+    if(a==='fall'){ const fb=b.closest('[data-flow]'); setFlow(fb,99); return; }
+    if(a==='freset'){ const fb=b.closest('[data-flow]'); setFlow(fb,1); return; }
+    if(a==='flip'){ b.classList.toggle('on'); return; }
+    if(a==='revall'){ $$('#slide .q[data-qid]').forEach(q=>reveal(q.dataset.qid,'ans')); return; }
+    if(a==='goto'){ go(+b.dataset.i,1); return; }
+  }
+
+  /* ---------- overlays ---------- */
+  function openOv(id){ closeOv(); const o=$('#'+id); o.classList.add('on'); const f=$('.ovx',o); if(f) f.focus(); }
+  function closeOv(){ $$('.ov.on').forEach(o=>o.classList.remove('on')); }
+  function buildTOC(){
+    let h='<h2>Sumário da aula</h2>';
+    Object.values(BLOCKS).forEach(B=>{
+      const items = SLIDES.map((s,i)=>({s,i})).filter(x=>x.s.b===B.n);
+      h+=`<div class="toc-b"><h3 style="color:var(--${B.color})">Bloco ${B.n} · ${B.name}<small>${B.from}–${B.to} min · ${B.to-B.from} min</small></h3><ol>${items.map(x=>`<li><a data-act="goto" data-i="${x.i}" class="${x.i===st.i?'cur':''}">${x.s.cover?'Capa':x.s.t.replace(/<[^>]+>/g,'')}</a> <span class="mut mono" style="font-size:12px">${qIdsIn(x.s.body).filter(id=>/^\d+$/.test(id)).map(id=>'P'+id).join(' ')}</span></li>`).join('')}</ol></div>`;
+    });
+    $('#tocBody').innerHTML=h;
+  }
+  function buildScript(){
+    let h='<h2>Roteiro integral do professor</h2><p class="mut">Leitura contínua de todas as notas, perguntas e respostas, na ordem da aula. Clique em um título para ir à tela.</p>';
+    let lastB=0;
+    SLIDES.forEach((s,i)=>{
+      const B=blockOf(s), p=s.prof||{};
+      if(B.n!==lastB){ h+=`<h2 style="color:var(--${B.color});margin-top:1.4em">Bloco ${B.n} · ${B.name} <span class="mut mono" style="font-size:13px">${B.from}–${B.to} min</span></h2>`; lastB=B.n; }
+      const ids=qIdsIn(s.body);
+      h+=`<div class="rt-s"><h3><a data-act="goto" data-i="${i}" style="color:var(--tx);cursor:pointer">${i+1}. ${s.cover?'Capa':s.t.replace(/<[^>]+>/g,'')}</a> <span class="mut mono" style="font-size:12px">${s.k||''}</span></h3>
+      ${p.explain||''}
+      ${ids.map(id=>{const o=QS[id];return `<div class="rq"><span class="lbl">${o.label||('Pergunta '+id)}${o.nova?' · nova':''}</span><p><b>${o.q}</b></p><p><b>Resposta${o.model?' (modelo)':''}:</b> ${o.a}</p>${o.deep?`<p><b>Aprofundamento:</b> ${o.deep}</p>`:''}${o.trap?`<p><b>Pegadinha:</b> ${o.trap}</p>`:''}${o.add?`<p><b>Diretriz (acréscimo):</b> ${o.add}</p>`:''}</div>`}).join('')}
+      ${p.deep?`<p><span class="lbl">Aprofundamento</span><br>${p.deep}</p>`:''}
+      ${p.trap?`<p><span class="lbl">Pegadinha</span><br>${p.trap}</p>`:''}
+      ${p.tip?`<p><span class="lbl">Macete</span><br>${p.tip}</p>`:''}</div>`;
+    });
+    $('#scriptBody').innerHTML=h;
+  }
+  function buildReports(){ $('#repBody').innerHTML = REPORTS(); }
+
+  /* ---------- cronômetro ---------- */
+  function tElapsed(){ return st.timer.acc + (st.timer.run? (Date.now()-st.timer.t0):0); }
+  function tick(){
+    const ms=tElapsed(), m=Math.floor(ms/60000), s=Math.floor(ms/1000)%60;
+    $('#tval').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    const B=blockOf(SLIDES[st.i]); let pace='';
+    if(ms>0){ if(m<B.from) pace=`adiantado (bloco ${B.n} começa ${B.from}′)`; else if(m>B.to) pace=`${m-B.to}′ além do bloco ${B.n}`; else pace=`no tempo do bloco ${B.n}`; }
+    $('#tpace').textContent=pace;
+  }
+  function tToggle(){ if(st.timer.run){ st.timer.acc=tElapsed(); st.timer.run=false; $('#tplay').textContent='▶'; } else { st.timer.t0=Date.now(); st.timer.run=true; $('#tplay').textContent='❚❚'; } }
+  function tReset(){ st.timer={on:st.timer.on,t0:0,acc:0,run:false}; $('#tplay').textContent='▶'; tick(); }
+
+  /* ---------- teclado e toque ---------- */
+  function onKey(e){
+    const tag=(e.target.tagName||'').toLowerCase(); if(tag==='input'||tag==='select'||tag==='textarea') return; if((e.key===' '||e.key==='Enter') && (tag==='button'||tag==='summary'||e.target.getAttribute&&e.target.getAttribute('tabindex')==='0')) return;
+    if(e.key==='Escape'){ closeOv(); return; }
+    if($('.ov.on') && !['Escape'].includes(e.key)) return;
+    const k=e.key;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '){ e.preventDefault(); next(); }
+    else if(k==='ArrowLeft'||k==='PageUp'){ e.preventDefault(); prev(); }
+    else if(k==='Home'){ go(0,1); } else if(k==='End'){ go(SLIDES.length-1,1); }
+    else if(k==='p'||k==='P'){ setProf(!st.prof); }
+    else if(k==='m'||k==='M'){ buildTOC(); openOv('ovToc'); }
+    else if(k==='s'||k==='S'){ buildScript(); openOv('ovScript'); }
+    else if(k==='f'||k==='F'){ fullscreen(); }
+    else if(k==='t'||k==='T'){ tToggle(); }
+    else if(k==='a'||k==='A'){ revealNextAnswer(); }
+  }
+  function fullscreen(){ try{ if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }catch(e){ toast('Tela cheia indisponível neste navegador.'); } }
+  function swipe(){
+    let x0=null,y0=null,t0=0; const el=$('#stage');
+    el.addEventListener('touchstart',e=>{ if(e.target.closest('input,select,.svgbox,.order')) {x0=null;return;} x0=e.touches[0].clientX; y0=e.touches[0].clientY; t0=Date.now(); },{passive:true});
+    el.addEventListener('touchend',e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0; if(Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)*1.6 && Date.now()-t0<700){ dx<0?next():prev(); } x0=null; },{passive:true});
+  }
+
+  /* ---------- init ---------- */
+  function init(){
+    load();
+    document.body.classList.toggle('reduce',st.reduce); $('#btnReduce').classList.toggle('on',st.reduce);
+    document.addEventListener('click', e=>{ const b=e.target.closest('[data-act]'); if(b) act(b); });
+    document.addEventListener('keydown', onKey);
+    $('#btnNext').onclick=next; $('#btnPrev').onclick=prev;
+    $('#btnProf').onclick=()=>setProf(!st.prof);
+    $('#btnToc').onclick=()=>{ buildTOC(); openOv('ovToc'); };
+    $('#btnScript').onclick=()=>{ buildScript(); openOv('ovScript'); };
+    $('#btnRep').onclick=()=>{ buildReports(); openOv('ovRep'); };
+    $('#btnWin').onclick=openProfWin;
+    $('#btnFs').onclick=fullscreen;
+    $('#btnTimer').onclick=()=>{ st.timer.on=!st.timer.on; $('#timer').classList.toggle('off',!st.timer.on); $('#btnTimer').classList.toggle('on',st.timer.on); };
+    $('#btnReduce').onclick=()=>{ st.reduce=!st.reduce; document.body.classList.toggle('reduce',st.reduce); $('#btnReduce').classList.toggle('on',st.reduce); save(); };
+    $('#btnResetRev').onclick=()=>{ st.rev={}; st.flows={}; render(1); toast('Respostas e fluxos ocultados novamente.'); };
+    $('#tplay').onclick=tToggle; $('#treset').onclick=tReset;
+    $$('.ovx').forEach(b=>b.onclick=closeOv);
+    $$('.ov').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) closeOv(); }));
+    $('#prog').addEventListener('click',e=>{ const r=e.currentTarget.getBoundingClientRect(); go(Math.min(SLIDES.length-1,Math.floor((e.clientX-r.left)/r.width*SLIDES.length)),1); });
+    // marcadores de bloco na barra
+    const pg=$('#prog'); Object.values(BLOCKS).forEach(B=>{ const i=SLIDES.findIndex(s=>s.b===B.n); if(i>0){ const m=document.createElement('span'); m.className='bm'; m.style.left=(i/SLIDES.length*100)+'%'; pg.appendChild(m);} });
+    swipe(); setInterval(tick,500); tick();
+    render(1);
+  }
+  return {init, go, next, prev, reveal, st, setFlow, qIdsIn, tecIdsIn, toast, render};
+})();
+
+APP.init();
+</script>
+</body>
+</html>
