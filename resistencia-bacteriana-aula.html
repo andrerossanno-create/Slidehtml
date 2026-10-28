@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resistência Bacteriana: a bactéria quebra, muda, barra, bombeia ou contorna</title>
+<style>
+/* ==========================================================
+   TOKENS — palco 16:9 (1280×720) escalado por JS para o projetor
+   cores fixas: vermelho=perigo · verde=proteção · amarelo=pegadinha · azul=fisiologia
+   ========================================================== */
+:root{
+  --bg:#08111f; --panel:#0f1d33; --panel2:#152743; --line:#27405f; --tx:#f1f5fb; --mut:#aebfd6;
+  --red:#ff6b6b; --grn:#3ddc97; --yel:#ffd166; --blu:#5aa9ff;
+  --q:#ff6b6b; --m:#5aa9ff; --b:#b794ff; --bo:#2ee6c5; --c:#ffb347; --g:#aebfd6;
+  --fs:1;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;color:var(--tx);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;overflow:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yel);outline-offset:2px;border-radius:6px}
+#viewport{position:fixed;left:0;right:0;top:0;bottom:46px;overflow:hidden}
+body.proj #viewport{bottom:0}
+#stage{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;background:radial-gradient(1200px 700px at 80% -10%,#16315a 0%,var(--bg) 60%);overflow:hidden;border-radius:6px}
+#prog{position:absolute;left:0;top:0;height:6px;width:0;background:linear-gradient(90deg,var(--blu),var(--bo),var(--grn));z-index:20}
+
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:30px 48px 22px;font-size:calc(22px*var(--fs));line-height:1.38}
+.slide.active{display:flex;animation:in .35s ease}
+body.rm .slide.active{animation:none}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.slide header{margin-bottom:12px}
+.slide h2{margin:6px 0 0;font-size:1.75em;line-height:1.15;letter-spacing:-.01em}
+.slide h3{margin:0 0 6px;font-size:1.12em}
+.body{flex:1;min-height:0;overflow:auto;padding-right:6px}
+.slide p{margin:0 0 .55em}
+.mut{color:var(--mut)} .sm{font-size:.82em} .xs{font-size:.72em}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.pv{display:inline-block;font-size:.62em;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1.5px solid}
+.pv-g{color:var(--grn);border-color:var(--grn);background:rgba(61,220,151,.1)}
+.pv-b{color:var(--blu);border-color:var(--blu);background:rgba(90,169,255,.1)}
+.pv-y{color:var(--yel);border-color:var(--yel);background:rgba(255,209,102,.1)}
+.pv-r{color:var(--red);border-color:var(--red);background:rgba(255,107,107,.1)}
+.pv-n1{color:#fff;border-color:#fff}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.c3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.c5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.c4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.box{background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:14px 18px}
+.box.red{border-color:var(--red)} .box.grn{border-color:var(--grn)} .box.yel{border-color:var(--yel)} .box.blu{border-color:var(--blu)}
+.syn{margin-top:12px;border-left:6px solid var(--grn);background:rgba(61,220,151,.1);padding:10px 16px;border-radius:10px;font-weight:700}
+.syn::before{content:"FRASE-SÍNTESE · ";color:var(--grn);font-size:.62em;letter-spacing:.06em}
+.peg{margin-top:10px;border-left:6px solid var(--yel);background:rgba(255,209,102,.1);padding:10px 16px;border-radius:10px}
+.peg::before{content:"PEGADINHA · ";color:var(--yel);font-size:.62em;font-weight:800;letter-spacing:.06em}
+.dan{margin-top:10px;border-left:6px solid var(--red);background:rgba(255,107,107,.1);padding:10px 16px;border-radius:10px}
+ul,ol{margin:0 0 .5em;padding-left:1.2em} li{margin:.2em 0}
+.btn,.rv-btn{cursor:pointer;background:var(--blu);color:#06101f;border:0;border-radius:10px;padding:8px 16px;font-weight:800}
+.btn.gh{background:transparent;color:var(--tx);border:1.5px solid var(--line)}
+.btn.sm{padding:5px 12px;font-size:.85em}
+.rv-body{margin-top:10px;background:var(--panel2);border:1.5px dashed var(--grn);border-radius:12px;padding:10px 16px}
+.rv-body[hidden]{display:none}
+
+/* telas de abertura/divisão */
+.cover,.divider{justify-content:center;align-items:flex-start;padding:60px 90px}
+.cover h1{font-size:2.9em;line-height:1.05;margin:10px 0;letter-spacing:-.02em}
+.cover .sub{font-size:1.25em;color:var(--mut);max-width:900px}
+.grad{background:linear-gradient(90deg,var(--q),var(--m),var(--b),var(--bo),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.divider .num{font-size:7em;font-weight:900;line-height:1;color:var(--blu);opacity:.9}
+.divider h2{font-size:2.6em;margin:0}
+.sig{position:absolute;right:48px;bottom:22px;color:var(--mut);font-size:.7em}
+
+/* mecanismos */
+.mc-q{--mc:var(--q)} .mc-m{--mc:var(--m)} .mc-b{--mc:var(--b)} .mc-bo{--mc:var(--bo)} .mc-c{--mc:var(--c)} .mc-g{--mc:var(--g)}
+.chip{display:inline-block;padding:2px 12px;border-radius:999px;font-weight:800;font-size:.7em;color:var(--mc);border:1.5px solid var(--mc);background:rgba(255,255,255,.04)}
+.verb{border:2px solid var(--mc);border-radius:16px;padding:12px;background:rgba(255,255,255,.03)}
+.verb b{color:var(--mc);font-size:1.25em;display:block}
+.tile{cursor:pointer;background:var(--panel);border:2px solid var(--mc,var(--line));border-radius:16px;padding:12px 14px;position:relative}
+.tile:hover{background:var(--panel2)}
+.tile .more{display:none;margin-top:8px;font-size:.88em;color:var(--tx)}
+.tile.open .more{display:block}
+.tile .hint{position:absolute;right:12px;top:8px;font-size:.6em;color:var(--mut)}
+.tile.open .hint{display:none}
+.tile h3{color:var(--mc,var(--tx))}
+
+/* tabelas */
+table{width:100%;border-collapse:collapse;font-size:.8em}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2)}
+.cat{font-weight:800;padding:1px 9px;border-radius:6px;font-size:.85em;display:inline-block}
+.cS{background:rgba(61,220,151,.18);color:var(--grn)} .cI{background:rgba(255,209,102,.18);color:var(--yel)} .cR{background:rgba(255,107,107,.18);color:var(--red)} .cN{background:rgba(174,191,214,.18);color:var(--mut)}
+
+/* petri */
+.petri{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;max-width:520px;margin:8px 0}
+.dot{aspect-ratio:1;border-radius:50%;background:#3ddc97}.dot.r{background:#ff6b6b}
+
+/* fluxo e rota */
+.steps{display:grid;gap:10px}
+.steps.s7{grid-template-columns:repeat(7,1fr)}.steps.s8{grid-template-columns:repeat(4,1fr)}
+.step{cursor:pointer;text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:10px 12px}
+.step b{display:block}
+.step.on{border-color:var(--yel);background:var(--panel2)}
+.step .n{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--blu);color:#06101f;align-items:center;justify-content:center;font-weight:900;font-size:.8em;margin-bottom:4px}
+.step.seen .n{background:var(--grn)}
+
+/* quiz */
+.qq{font-size:1.1em;font-weight:700;margin:6px 0 10px}
+.qo{display:grid;gap:8px}
+.qo button{text-align:left;cursor:pointer;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:9px 14px}
+.qo button:hover:not(:disabled){border-color:var(--blu)}
+.qo button.ok{border-color:var(--grn);background:rgba(61,220,151,.15)}
+.qo button.bad{border-color:var(--yel);background:rgba(255,209,102,.13)}
+.qfb{margin-top:10px}
+.qnav{display:flex;gap:10px;align-items:center;margin-top:10px}
+.qh{color:var(--mut);font-size:.8em}
+
+/* flashcards */
+.fc{cursor:pointer;min-height:230px;display:flex;flex-direction:column;justify-content:center;text-align:center;background:var(--panel);border:3px solid var(--mc,var(--blu));border-radius:22px;padding:24px 34px;font-size:1.25em}
+.fc.back{background:var(--panel2);border-style:dashed}
+.fc small{color:var(--mut);font-size:.55em;display:block;margin-bottom:8px}
+
+/* palco: mic */
+input[type=range]{width:100%;accent-color:var(--blu);height:30px}
+.big{font-size:2em;font-weight:900}
+.svgbox svg{width:100%;height:auto}
+
+/* barra de controles (fora do palco) */
+#bar{position:fixed;left:0;right:0;bottom:0;height:46px;background:#0a1626;border-top:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 12px;z-index:50;font-size:14px;color:var(--mut)}
+#bar button{background:#14263f;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--tx);cursor:pointer;font-size:13px}
+#bar button:hover{border-color:var(--blu)}
+#bar .sp{flex:1}
+body.proj #bar{opacity:0;transition:opacity .2s}
+body.proj #bar:hover,body.proj #bar:focus-within{opacity:1}
+.ov{position:fixed;inset:0;background:rgba(3,8,16,.94);z-index:100;overflow:auto;padding:30px 40px;color:var(--tx)}
+.ov[hidden]{display:none}
+.ov h2{margin-top:0}
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.idx button{text-align:left;background:#12233b;border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;color:var(--tx)}
+.idx button.cur{border-color:var(--yel)}
+#notebody{font-size:22px;max-width:900px;line-height:1.5}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+<div id="prog"></div>
+
+<!-- 1 CAPA -->
+<section class="slide cover" data-title="Capa" data-note="Abertura. Pergunta oral: quem aqui já viu um antibiograma e não soube o que fazer com ele? Erro provável: achar que a aula é lista de antibióticos. Ela é sobre raciocínio.">
+  <div class="chips"><span class="pv pv-b">Microbiologia clínica</span><span class="pv pv-g">Medicina · Aula</span></div>
+  <h1>Resistência bacteriana</h1>
+  <h1 class="grad" style="margin-top:0">A bactéria quebra, muda, barra, bombeia ou contorna.</h1>
+  <p class="sub">Do mecanismo à beira do leito: básico, intermediário e avançado, com antibiograma e raciocínio clínico.</p>
+  <div class="sig">Dr. André Rossanno · material educacional</div>
+</section>
+
+<!-- 2 COMO USAR -->
+<section class="slide" data-title="Como esta aula funciona" data-note="Explique as cores (vermelho perigo, verde proteção, amarelo pegadinha, azul fisiologia) e as teclas. Pergunta oral: por que respondemos ANTES de revelar? Efeito do teste: lembrar ativamente fixa mais.">
+  <header><div class="chips"><span class="pv pv-b">Regras do jogo</span></div><h2>Como esta aula funciona</h2></header>
+  <div class="body cols">
+    <div class="box"><h3>Cores fixas</h3>
+      <p><span class="pv pv-r">Perigo</span> o que machuca o paciente</p>
+      <p><span class="pv pv-g">Proteção · fonte</span> o que protege / diretriz</p>
+      <p><span class="pv pv-y">Pegadinha</span> a resposta óbvia costuma estar errada</p>
+      <p><span class="pv pv-b">Fisiologia</span> o mecanismo por trás</p>
+      <div class="dan"><b>Aviso educacional:</b> material de estudo; não substitui avaliação clínica, supervisão docente, protocolo institucional ou fontes atualizadas. Casos fictícios; sem posologias.</div>
+    </div>
+    <div class="box"><h3>Teclas</h3>
+      <p><b>← →</b> navegar · <b>G</b> índice · <b>N</b> notas do professor</p>
+      <p><b>R</b> revelar cortinas do slide · <b>P</b> projetar · <b>F</b> tela cheia</p>
+      <p><b>+ −</b> tamanho da letra · <b>0</b> restaurar · <b>M</b> reduzir movimento</p>
+      <p class="mut">Clique nos cartões, nas cortinas e nos simuladores. <b>Responda antes de revelar.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 CASO DRAMÁTICO -->
+<section class="slide" data-title="Caso de abertura: Dia 3" data-note="Caso dramático (N6). Deixe a turma responder. Pergunta oral: o que você faz? Erro provável: trocar o antibiótico na hora. Este caso volta no fim da aula.">
+  <header><div class="chips"><span class="pv pv-r">Caso de abertura</span></div><h2>Dia 3. A febre voltou.</h2></header>
+  <div class="body cols">
+    <div>
+      <div class="box red"><p><b>Seu Antônio, 58 anos</b>, UTI, pós-operatório de cirurgia abdominal. Hemocultura da admissão: <i>Enterobacter cloacae</i> complex, laudo "sensível" à cefalosporina que ele usa.</p>
+      <p>No 4º dia de tratamento, <b>febre outra vez</b>. Nova hemocultura: a mesma espécie.</p></div>
+      <p style="margin-top:14px" class="mut"><span class="pv pv-r">Vilão</span> a bactéria que escapa &nbsp; <span class="pv pv-g">Herói</span> o raciocínio</p>
+    </div>
+    <div>
+      <h3>Pare e responda</h3>
+      <p>"Sensível" ontem, febre hoje. O que você pergunta antes de qualquer troca?</p>
+      <div class="rv"><button class="rv-btn" type="button">Revelar</button>
+        <div class="rv-body" hidden>
+          <p><b>Perguntas antes de trocar:</b> o foco foi controlado? a amostra é do foco? a exposição ao fármaco é adequada? e a espécie tem AmpC induzível?</p>
+          <p class="mut sm">Voltamos ao seu Antônio no fim da aula.</p>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 MAPA -->
+<section class="slide" data-title="Mapa da aula" data-note="Mostre os três níveis. Clique nos cartões para saltar. Pergunta oral: em que nível você acha que está hoje?">
+  <header><div class="chips"><span class="pv pv-b">Mapa</span></div><h2>Três níveis, uma rota</h2></header>
+  <div class="body">
+    <div class="c3">
+      <div class="verb mc-g" style="--mc:var(--grn)"><b>1 · Básico</b>O que é resistência · intrínseca × adquirida · seleção e THG · tolerância e persistência · colonização × infecção<br><button class="btn sm" data-go="Nível 1">Ir</button></div>
+      <div class="verb" style="--mc:var(--yel)"><b>2 · Intermediário</b>Os 5 mecanismos · ESBL, AmpC, carbapenemases, PBP2a, porinas, efluxo, antifolatos · coexistência<br><button class="btn sm" data-go="Nível 2">Ir</button></div>
+      <div class="verb" style="--mc:var(--red)"><b>3 · Avançado</b>CIM e antibiograma · S, I, R · fenótipo × genótipo · não extrapolar<br><button class="btn sm" data-go="Nível 3">Ir</button></div>
+    </div>
+    <div class="box" style="margin-top:16px"><b>Depois:</b> sem melhora em 48–72 h · 5 casos · baralho · arena · revisão espaçada. <span class="mut">Fio condutor: o seu Antônio.</span></div>
+  </div>
+</section>
+
+<!-- 5 DIVISOR 1 -->
+<section class="slide divider" data-title="Nível 1 · Básico" data-note="Respire. Aqui estão os conceitos que sustentam tudo.">
+  <div class="num">1</div><h2>Básico</h2><p class="sub mut">Antes das enzimas: o que é resistência e de onde ela vem.</p>
+</section>
+
+<!-- 6 RAM -->
+<section class="slide" data-title="O que é resistência antimicrobiana" data-note="Pergunta oral: resistência é propriedade do paciente ou da bactéria? Da bactéria (e do fármaco testado). Erro provável: dizer que o paciente é resistente.">
+  <header><div class="chips"><span class="pv pv-b">Conceito</span><span class="pv pv-g">OMS · BPPL 2024</span></div><h2>Resistência: a bactéria cresce onde deveria parar</h2></header>
+  <div class="body cols">
+    <div>
+      <div class="box blu"><p>Capacidade de um micro-organismo de crescer ou sobreviver diante de um antimicrobiano que normalmente o inibiria.</p><p class="mut sm">Propriedade <b>do micro-organismo</b> (e do fármaco testado), não do paciente.</p></div>
+      <div class="peg">Não é "o antibiótico parou de funcionar no corpo". É: a concentração necessária para inibir <i>aquele isolado</i> passou do que se atinge com segurança no foco.</div>
+    </div>
+    <div class="box red"><h3>Grupo crítico (OMS 2024)</h3>
+      <ul><li><i>A. baumannii</i> resistente a carbapenêmicos</li><li>Enterobacterales resistentes a cefalosporinas de 3ª geração</li><li>Enterobacterales resistentes a carbapenêmicos</li><li>M. tuberculosis resistente à rifampicina</li></ul>
+      <p class="xs mut">Lista de prioridade para pesquisa e saúde pública; confira a publicação original.</p></div>
+  </div>
+</section>
+
+<!-- 7 INTRINSECA -->
+<section class="slide" data-title="Intrínseca × adquirida" data-note="Clique nos cartões. Pergunta oral: Klebsiella e ampicilina isolada, intrínseca ou adquirida? Intrínseca (β-lactamase cromossômica). Erro provável: confundir com ESBL, que é adquirida.">
+  <header><div class="chips"><span class="pv pv-b">Fisiologia</span><span class="pv pv-y">Pegadinha</span></div><h2>Intrínseca × adquirida</h2></header>
+  <div class="body cols">
+    <div class="tile" tabindex="0" role="button" style="--mc:var(--blu)"><span class="hint">clique</span><h3>Intrínseca: "de fábrica"</h3><p>Própria da espécie. <b>Previsível.</b></p>
+      <div class="more"><ul><li>Klebsiella pneumoniae e aminopenicilinas isoladas</li><li>Gram-negativos e glicopeptídeos (a membrana externa barra)</li><li>Enterococcus e cefalosporinas</li></ul></div></div>
+    <div class="tile" tabindex="0" role="button" style="--mc:var(--red)"><span class="hint">clique</span><h3>Adquirida: "comprada ou mutada"</h3><p>Surge em cepas antes sensíveis: <b>mutação</b> ou <b>gene recebido</b>. Varia entre isolados.</p>
+      <div class="more"><ul><li>E. coli com ESBL (CTX-M)</li><li>S. aureus com mecA (MRSA)</li><li>Mutações em gyrA/parC</li></ul></div></div>
+  </div>
+  <div class="peg">Intrínseca = previsível pela espécie (por isso existem regras de fenótipo esperado). Adquirida = precisa ser <b>detectada isolado a isolado</b>.</div>
+</section>
+
+<!-- 8 SELEÇÃO -->
+<section class="slide" data-title="Mutação, seleção, THG, pressão seletiva" data-note="Rode o simulador com a turma. Pergunta oral: o antibiótico cria o mutante? Não: seleciona quem já existia ou foi adquirido. Erro provável: dizer que o antibiótico induz a mutação.">
+  <header><div class="chips"><span class="pv pv-b">Fisiologia</span></div><h2>Pressão seletiva: quem sobra, manda</h2></header>
+  <div class="body cols">
+    <div>
+      <ul><li><b>Mutação:</b> erro espontâneo no DNA</li><li><b>Seleção:</b> o antibiótico mata os sensíveis; os resistentes se multiplicam</li><li><b>THG:</b> plasmídeos (conjugação), DNA livre (transformação), fagos (transdução)</li><li><b>Pressão seletiva:</b> inclui a flora comensal, não só o agente da infecção</li></ul>
+      <div class="syn">O antibiótico não cria resistentes: ele seleciona quem já existia.</div>
+    </div>
+    <div class="box"><h3>Simulador</h3>
+      <div class="qnav"><button class="btn sm" id="simAb" type="button">Aplicar antibiótico</button><button class="btn sm gh" id="simHgt" type="button">THG (+3)</button><button class="btn sm gh" id="simReset" type="button">Reiniciar</button></div>
+      <div class="petri" id="petri" aria-hidden="true"></div>
+      <p class="xs mut"><span style="color:var(--grn)">●</span> sensível &nbsp; <span style="color:var(--red)">●</span> resistente</p>
+      <p id="simStatus" class="sm" role="status" aria-live="polite"></p></div>
+  </div>
+</section>
+
+<!-- 9 RES TOL PERS -->
+<section class="slide" data-title="Resistência × tolerância × persistência" data-note="Imagens absurdas ajudam. Pergunta oral: recidiva com bactéria sensível no antibiograma é sempre resistência? Não: pense persistência, biofilme, foco.">
+  <header><div class="chips"><span class="pv pv-b">Fisiologia</span><span class="pv pv-y">Pegadinha</span></div><h2>Três palavras que não são sinônimos</h2></header>
+  <div class="body">
+  <div class="c3">
+    <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>Resistência</h3><p>Todos de colete à prova de bala.</p><div class="more">Alteração <b>hereditária</b>. <b>CIM sobe.</b></div></div>
+    <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>Tolerância</h3><p>Todos dormem no bunker.</p><div class="more">A população inteira morre mais devagar. <b>CIM igual.</b></div></div>
+    <div class="tile mc-b" tabindex="0" role="button"><span class="hint">clique</span><h3>Persistência</h3><p>Poucos se escondem no porão e voltam.</p><div class="more">Subpopulação <b>transitória</b> tolerante (biofilme). <b>CIM igual</b>; descendentes voltam sensíveis.</div></div>
+  </div>
+  <div class="peg">Recidiva com bactéria "sensível" no antibiograma: pense em persistência, biofilme (cateter, prótese) e foco não controlado antes de pensar em resistência.</div></div>
+</section>
+
+<!-- 10 COLONIZACAO -->
+<section class="slide" data-title="Colonização × contaminação × infecção" data-note="Pergunta oral: urocultura com ESBL em paciente com sonda, assintomático. Trata? Não pelo rótulo: a síndrome decide. Erro provável: tratar o laudo.">
+  <header><div class="chips"><span class="pv pv-b">Conceito</span><span class="pv pv-y">Pegadinha</span></div><h2>A cultura está positiva. E agora?</h2></header>
+  <div class="body">
+  <div class="c3">
+    <div class="tile mc-g" tabindex="0" role="button"><span class="hint">clique</span><h3>Colonização</h3><p>Presente, sem lesão nem resposta relevante.</p><div class="more">Ex.: bacteriúria de sonda, sem sintomas.</div></div>
+    <div class="tile mc-g" tabindex="0" role="button"><span class="hint">clique</span><h3>Contaminação</h3><p>Entrou na amostra, não está no foco.</p><div class="more">Ex.: coagulase-negativo em 1 frasco de hemocultura.</div></div>
+    <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>Infecção</h3><p>Lesão + resposta + agente plausível no foco.</p><div class="more">Sintomas, sinais, exames e imagem compatíveis.</div></div>
+  </div>
+  <div class="box yel" style="margin-top:12px"><b>3 perguntas-sentinela:</b> há síndrome infecciosa? a amostra veio do foco? o agente é plausível para essa síndrome?</div>
+  <div class="syn">Cultura positiva não define infecção; resistência não cria indicação de tratar.</div></div>
+</section>
+
+<!-- 11 CHECKPOINT 1 -->
+<section class="slide" data-title="Checkpoint 1 · Quiz" data-note="Teste progressivo (N4). Sem nota: o feedback ensina. Deixe a turma votar antes de clicar.">
+  <header><div class="chips"><span class="pv pv-y">Checkpoint</span></div><h2>Checkpoint 1: o que ficou?</h2></header>
+  <div class="body"><div data-quiz="0,1,2,3" data-bank="Q"></div></div>
+</section>
+
+<!-- 12 DIVISOR 2 -->
+<section class="slide divider" data-title="Nível 2 · Intermediário" data-note="Agora entram os verbos.">
+  <div class="num" style="color:var(--yel)">2</div><h2>Intermediário</h2><p class="sub mut">Os cinco mecanismos, com exemplos.</p>
+</section>
+
+<!-- 13 PALÁCIO -->
+<section class="slide" data-title="Mnemônica e Palácio da UTI" data-note="Método de loci (N3): cinco leitos imaginários. Clique em cada leito. Pergunta oral: o que a bactéria faz? Todos repetem a frase. Imagem absurda fixa melhor.">
+  <header><div class="chips"><span class="pv pv-b">Memória</span><span class="pv pv-g">N3 · Loci clínico</span></div><h2>A bactéria <span style="color:var(--q)">quebra</span>, <span style="color:var(--m)">muda</span>, <span style="color:var(--b)">barra</span>, <span style="color:var(--bo)">bombeia</span> ou <span style="color:var(--c)">contorna</span></h2></header>
+  <div class="body">
+    <p class="mut sm">Entre na UTI imaginária do Dr. André. Cada leito é um mecanismo. Clique para ver a cena.</p>
+    <div class="c5">
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">leito 1</span><h3>Quebra</h3><div class="more">Um martelo gigante quebra a seringa do Dr. André. <b>Enzimas destroem o fármaco.</b></div></div>
+      <div class="tile mc-m" tabindex="0" role="button"><span class="hint">leito 2</span><h3>Muda</h3><div class="more">A fechadura troca de formato: a chave não entra. <b>O alvo mudou.</b></div></div>
+      <div class="tile mc-b" tabindex="0" role="button"><span class="hint">leito 3</span><h3>Barra</h3><div class="more">Um segurança de cassetete barra a porta. <b>Porinas fecham a entrada.</b></div></div>
+      <div class="tile mc-bo" tabindex="0" role="button"><span class="hint">leito 4</span><h3>Bombeia</h3><div class="more">Uma bomba d'água joga o antibiótico pela janela. <b>Efluxo.</b></div></div>
+      <div class="tile mc-c" tabindex="0" role="button"><span class="hint">leito 5</span><h3>Contorna</h3><div class="more">Uma moto faz o desvio pela calçada. <b>Via metabólica alternativa.</b></div></div>
+    </div>
+    <div class="syn">Diante de um antibiograma: "qual verbo explica este padrão? e qual verbo pode estar junto?"</div>
+  </div>
+</section>
+
+<!-- 14 AMBLER -->
+<section class="slide" data-title="Quebra · classes de β-lactamases" data-note="Mnemônica A-B-C-D. Pergunta oral: ESBL é de qual classe? A. AmpC? C. Erro provável: dizer que ESBL é classe B.">
+  <header><div class="chips"><span class="pv pv-b">Quebra</span><span class="pv pv-g">Classificação de Ambler</span></div><h2>Quebra: as quatro classes, A-B-C-D</h2></header>
+  <div class="body">
+    <div class="c4">
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>A</h3><p>ESBL (CTX-M, TEM, SHV) · KPC</p><div class="more">Serina-β-lactamases. KPC hidrolisa carbapenêmicos.</div></div>
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>B</h3><p>NDM · VIM · IMP</p><div class="more"><b>Metalo</b>-β-lactamases, dependem de <b>zinco</b>. Inibidores clássicos não as inibem.</div></div>
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>C</h3><p>AmpC</p><div class="more">Cefalosporinase cromossômica (induzível/desreprimida) ou plasmidial.</div></div>
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>D</h3><p>OXA-48-like · OXA-23</p><div class="more">Oxacilinases. OXA-48 em Enterobacterales; OXA-23 em Acinetobacter.</div></div>
+    </div>
+    <div class="syn">A classe da enzima define o que a inibe e o que não inibe.</div>
+  </div>
+</section>
+
+<!-- 15 ESBL -->
+<section class="slide" data-title="Quebra · ESBL" data-note="Pergunta oral: ceftriaxona R e carbapenêmico S. Mecanismo provável? ESBL, a confirmar. Erro provável: tratar como conclusão sem confirmar e sem olhar o foco.">
+  <header><div class="chips"><span class="pv pv-b">Quebra</span><span class="pv pv-y">Pegadinha</span></div><h2>ESBL: o padrão que sugere</h2></header>
+  <div class="body cols">
+    <div class="box"><p><b>Hidrolisa</b> penicilinas e cefalosporinas de amplo espectro.</p><p><b>Em geral poupa</b> carbapenêmicos (quando isolada).</p>
+      <p class="mut">Epidemia clássica: CTX-M em E. coli e Klebsiella.</p>
+      <div class="rv"><button class="rv-btn" type="button">Como confirmar?</button><div class="rv-body" hidden>Teste fenotípico (sinergia com inibidor) ou molecular (CTX-M). Também serve à vigilância e ao controle de infecção.</div></div></div>
+    <div><div class="peg">"Sensível" a uma combinação com inibidor <b>não encerra</b> a discussão em infecção grave: depende de CIM, inóculo, foco e protocolo.</div>
+      <div class="dan">O padrão <b>sugere</b>, não prova. Plano = foco + gravidade + protocolo + infectologia.</div></div>
+  </div>
+</section>
+
+<!-- 16 AmpC -->
+<section class="slide" data-title="Quebra · AmpC" data-note="Mnemônica E-C-K: Enterobacter, Citrobacter freundii, Klebsiella aerogenes. Pergunta oral: por que o 'S' de ontem pode falhar hoje? Seleção de mutantes desreprimidos.">
+  <header><div class="chips"><span class="pv pv-b">Quebra</span><span class="pv pv-r">Cuidado</span></div><h2>AmpC: o "S" que muda durante o tratamento</h2></header>
+  <div class="body cols">
+    <div class="box"><h3>Espécies de risco: E · C · K</h3><ul><li><b>E</b>nterobacter cloacae complex</li><li><b>C</b>itrobacter freundii</li><li><b>K</b>lebsiella aerogenes</li></ul>
+      <p class="mut sm">Têm AmpC cromossômica induzível. Outras espécies podem ter AmpC plasmidial.</p></div>
+    <div><div class="dan">Sob pressão do fármaco, seleciona-se mutante com AmpC <b>desreprimida</b>: o isolado inicial "sensível" pode virar resistente.</div>
+      <div class="syn">Em espécie de risco, o laudo de hoje não garante o de amanhã.</div></div>
+  </div>
+</section>
+
+<!-- 17 CARBAPENEMASES -->
+<section class="slide" data-title="Quebra · carbapenemases" data-note="Pergunta oral: por que tipificar a carbapenemase? Define inibidores e controle de infecção. Erro provável: tratar KPC, NDM e OXA-48 como equivalentes.">
+  <header><div class="chips"><span class="pv pv-r">Perigo</span><span class="pv pv-g">OMS · crítico</span></div><h2>Carbapenemases: três famílias, três comportamentos</h2></header>
+  <div class="body">
+    <div class="c3">
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>KPC · classe A</h3><div class="more">Hidrolisa carbapenêmicos. Comum em Klebsiella. Alguns inibidores novos atuam nessa classe.</div></div>
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>NDM · classe B</h3><div class="more">Metalo-β-lactamase (zinco). Inibidores clássicos <b>não</b> a inibem. Costuma vir com outros genes.</div></div>
+      <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>OXA-48 · classe D</h3><div class="more">CIM de carbapenêmico às vezes perto do corte: <b>"S" não exclui</b> a enzima.</div></div>
+    </div>
+    <div class="box red" style="margin-top:12px"><b>Além do fármaco:</b> precauções de contato, comunicação à CCIH, rastreamento conforme o serviço.</div>
+    <div class="syn">Identificar a classe orienta inibidores e controle de infecção; a escolha segue protocolo e infectologia.</div>
+  </div>
+</section>
+
+<!-- 18 MUDA -->
+<section class="slide" data-title="Muda · alteração do alvo" data-note="Clique em cada exemplo. Pergunta oral: PBP2a é qual verbo? Muda. Erro provável: chamar de quebra por ser β-lactâmico.">
+  <header><div class="chips"><span class="pv pv-b">Muda</span></div><h2>Muda: a fechadura troca de formato</h2></header>
+  <div class="body">
+    <div class="c3">
+      <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>PBP2a</h3><p>S. aureus (MRSA)</p><div class="more">mecA/mecC. Baixa afinidade por β-lactâmicos. Marcador: cefoxitina.</div></div>
+      <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>PBP em mosaico</h3><p>S. pneumoniae</p><div class="more">Categoria da penicilina depende do <b>sítio</b> (meníngeo × não).</div></div>
+      <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>gyrA/parC · qnr</h3><p>Quinolonas</p><div class="more">Mutações acumuladas elevam a CIM. Interprete fármaco a fármaco.</div></div>
+      <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>vanA/vanB</h3><p>Enterococcus (VRE)</p><div class="more">D-Ala-D-Lac reduz afinidade por glicopeptídeos.</div></div>
+      <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>erm</h3><p>MLSB</p><div class="more">Metilação ribossômica: pode haver resistência <b>induzível</b> à clindamicina (D-test).</div></div>
+    </div>
+    <div class="syn">O alvo mudou: pergunte se mudou para toda a classe ou só para alguns fármacos.</div>
+  </div>
+</section>
+
+<!-- 19 BARRA -->
+<section class="slide" data-title="Barra · porinas" data-note="Mostre as duas figuras. Pergunta oral: resistência a carbapenêmico sem carbapenemase existe? Sim: porina + ESBL/AmpC. Erro provável: achar que carbapenemase é a única causa.">
+  <header><div class="chips"><span class="pv pv-b">Barra</span></div><h2>Barra: o segurança fecha a porta</h2></header>
+  <div class="body cols">
+    <div class="box svgbox"><h3 style="color:var(--grn)">Porina aberta</h3>
+      <svg viewBox="0 0 300 140" role="img" aria-label="Antibiótico passa pela porina aberta"><rect x="0" y="62" width="120" height="16" fill="#27405f"/><rect x="180" y="62" width="120" height="16" fill="#27405f"/><circle cx="40" cy="20" r="9" fill="#ffd166"/><circle cx="150" cy="30" r="9" fill="#ffd166"/><circle cx="150" cy="100" r="9" fill="#ffd166"/><circle cx="150" cy="125" r="9" fill="#ffd166"/><path d="M150 40 V92" stroke="#3ddc97" stroke-width="4" marker-end="url(#a)"/><text x="190" y="25" fill="#aebfd6" font-size="13">fora</text><text x="190" y="130" fill="#aebfd6" font-size="13">dentro</text></svg></div>
+    <div class="box svgbox"><h3 style="color:var(--red)">Porina perdida</h3>
+      <svg viewBox="0 0 300 140" role="img" aria-label="Antibiótico barrado sem porina"><rect x="0" y="62" width="300" height="16" fill="#27405f"/><circle cx="60" cy="30" r="9" fill="#ffd166"/><circle cx="150" cy="35" r="9" fill="#ffd166"/><circle cx="230" cy="28" r="9" fill="#ffd166"/><path d="M150 47 V58" stroke="#ff6b6b" stroke-width="4"/><text x="190" y="125" fill="#aebfd6" font-size="13">quase nada entra</text></svg></div>
+  </div>
+  <div class="peg">Perda de porina + ESBL/AmpC pode elevar a CIM de carbapenêmicos <b>sem carbapenemase</b>. Exemplos: OmpK35/36 (Klebsiella), OprD (P. aeruginosa).</div>
+</section>
+
+<!-- 20 BOMBEIA -->
+<section class="slide" data-title="Bombeia · efluxo" data-note="Pergunta oral: várias classes com CIM alta ao mesmo tempo sugerem o quê? Efluxo (e mecanismos combinados).">
+  <header><div class="chips"><span class="pv pv-b">Bombeia</span></div><h2>Bombeia: a bomba joga o antibiótico pela janela</h2></header>
+  <div class="body cols">
+    <div class="box svgbox"><svg viewBox="0 0 300 180" role="img" aria-label="Bomba de efluxo expulsa o antibiótico"><circle cx="110" cy="90" r="70" fill="none" stroke="#2ee6c5" stroke-width="5"/><rect x="170" y="70" width="22" height="40" rx="6" fill="#2ee6c5"/><circle cx="100" cy="90" r="9" fill="#ffd166"/><circle cx="125" cy="70" r="9" fill="#ffd166"/><path d="M135 90 H165" stroke="#ffd166" stroke-width="4"/><path d="M196 90 H260" stroke="#ff6b6b" stroke-width="4"/><circle cx="270" cy="90" r="9" fill="#ffd166"/><text x="80" y="170" fill="#aebfd6" font-size="13">célula bacteriana</text></svg></div>
+    <div><ul><li>MexAB-OprM (P. aeruginosa)</li><li>AcrAB-TolC (Enterobacterales)</li><li>Genes plasmidiais (ex.: qepA, oqxAB) com efeito em quinolonas</li></ul>
+      <div class="syn">Várias classes subindo a CIM juntas: pense em efluxo (e em mecanismos combinados).</div></div>
+  </div>
+</section>
+
+<!-- 21 CONTORNA -->
+<section class="slide" data-title="Contorna · bypass metabólico" data-note="Pergunta oral: por que resistência a sulfa e trimetoprima costuma vir junta? Genes no mesmo plasmídeo/integron.">
+  <header><div class="chips"><span class="pv pv-b">Contorna</span></div><h2>Contorna: a moto pega o desvio</h2></header>
+  <div class="body cols">
+    <div class="box"><p>O fármaco bloqueia uma via metabólica; a bactéria usa uma <b>via alternativa</b> ou uma enzima insensível.</p>
+      <ul><li><b>sul</b>: di-hidropteroato sintase alternativa (sulfonamidas)</li><li><b>dfr</b>: di-hidrofolato redutase alternativa (trimetoprima)</li></ul></div>
+    <div><div class="peg">Genes <b>sul</b> e <b>dfr</b> costumam viajar juntos, com outros genes, em plasmídeos e integrons: um pacote.</div>
+      <div class="syn">Contorna = o alvo continua o mesmo; o caminho metabólico é outro.</div></div>
+  </div>
+</section>
+
+<!-- 22 TABELA -->
+<section class="slide" data-title="Tabela-resumo filtrável" data-note="Use os filtros por mecanismo. Pergunta oral: leia a coluna 'pergunta clínica' e responda em voz alta.">
+  <header><div class="chips"><span class="pv pv-g">Revisão</span></div><h2>Mecanismo → efeito → exemplo → pergunta clínica</h2></header>
+  <div class="body"><div data-table></div></div>
+</section>
+
+<!-- 23 COEXISTEM -->
+<section class="slide" data-title="Mecanismos coexistem · simulador" data-note="Marque ESBL e perda de porina: aparece o alerta clássico. Pergunta oral: rótulo substitui antibiograma? Não.">
+  <header><div class="chips"><span class="pv pv-r">Cuidado</span><span class="pv pv-b">Interleaving</span></div><h2>Mecanismos coexistem</h2></header>
+  <div class="body cols">
+    <div class="box"><h3>Isolado hipotético de Enterobacterales</h3><div data-comb></div></div>
+    <div><div class="box" id="combOut" role="status" aria-live="polite"></div></div>
+  </div>
+</section>
+
+<!-- 24 JOGO -->
+<section class="slide" data-title="Jogo: qual verbo?" data-note="Teste ativo (N4). Intercalação (N5): mecanismos misturados. Peça para a turma gritar o verbo antes de clicar.">
+  <header><div class="chips"><span class="pv pv-y">Teste ativo</span></div><h2>Jogo: qual verbo explica?</h2></header>
+  <div class="body"><div data-quiz="0,1,2,3,4,5,6,7,8,9" data-bank="G"></div></div>
+</section>
+
+<!-- 25 DIVISOR 3 -->
+<section class="slide divider" data-title="Nível 3 · Avançado" data-note="Aqui o número vira decisão.">
+  <div class="num" style="color:var(--red)">3</div><h2>Avançado</h2><p class="sub mut">CIM, antibiograma e os limites dos testes.</p>
+</section>
+
+<!-- 26 CIM -->
+<section class="slide" data-title="CIM · simulador" data-note="Mova a CIM: o mesmo número dá categorias diferentes para fármacos diferentes. Pontos de corte FICTÍCIOS. Pergunta oral: posso comparar CIMs entre fármacos? Não.">
+  <header><div class="chips"><span class="pv pv-b">CIM</span><span class="pv pv-y">Pontos de corte fictícios</span></div><h2>CIM: o número só vale ao lado do ponto de corte</h2></header>
+  <div class="body cols">
+    <div><p>Menor concentração que inibe o crescimento visível in vitro (diluições na base 2).</p>
+      <label for="micR" class="sm mut">CIM do isolado</label><input type="range" id="micR" min="0" max="10" value="5"><div class="big" id="micV">2 mg/L</div></div>
+    <div><table><thead><tr><th>Fármaco fictício</th><th>Cortes</th><th>Categoria</th></tr></thead><tbody><tr><td>A</td><td>S ≤ 1 · R &gt; 4</td><td id="micA"></td></tr><tr><td>B</td><td>S ≤ 8 · R &gt; 16</td><td id="micB"></td></tr></tbody></table>
+      <p id="micT" class="sm" role="status" aria-live="polite" style="margin-top:8px"></p></div>
+  </div>
+</section>
+
+<!-- 27 SIR -->
+<section class="slide" data-title="S, I e R no BrCAST/EUCAST" data-note="Ponto central. Pergunta oral: o que significa I? Sensível, aumento da exposição. Erro provável: dizer intermediário. EUCAST v16.1 vigente desde 24/06/2026 (conferido em consulta); sempre confirmar a versão.">
+  <header><div class="chips"><span class="pv pv-g">BrCAST · EUCAST</span><span class="pv pv-y">Pegadinha</span></div><h2>O "I" não é "intermediário"</h2></header>
+  <div class="body">
+    <div class="c3">
+      <div class="box grn"><span class="cat cS">S</span><h3>Sensível, dose padrão</h3>Alta chance de sucesso com o esquema padrão da tabela.</div>
+      <div class="box yel"><span class="cat cI">I</span><h3>Sensível, aumento da exposição</h3>Alta chance <b>se a exposição no foco for aumentada</b> (conforme tabela e serviço).</div>
+      <div class="box red"><span class="cat cR">R</span><h3>Resistente</h3>Alto risco de falha, mesmo aumentando a exposição.</div>
+    </div>
+    <ul style="margin-top:12px" class="sm"><li>No EUCAST, o "I" costuma estar implícito: valores entre o corte de S e o de R.</li><li>Alguns sistemas de laboratório ainda imprimem só a letra "I": confira norma e versão (BrCAST/EUCAST ou CLSI).</li><li>As tabelas são revisadas todo ano (EUCAST v16.1 vigente desde 24/06/2026): <b>use sempre a versão atual</b>.</li></ul>
+  </div>
+</section>
+
+<!-- 28 FENO x GENO -->
+<section class="slide" data-title="Fenótipo × genótipo" data-note="Pergunta oral: gene detectado = resistência clínica? Não necessariamente.">
+  <header><div class="chips"><span class="pv pv-b">Testes</span></div><h2>Fenótipo × genótipo</h2></header>
+  <div class="body"><table><thead><tr><th></th><th>Fenotípico (CIM, disco)</th><th>Genotípico (PCR, sequenciamento)</th></tr></thead><tbody>
+    <tr><td><b>Mede</b></td><td>Comportamento in vitro (resistência expressa)</td><td>Presença de genes/mutações</td></tr>
+    <tr><td><b>Força</b></td><td>Soma de mecanismos, inclusive desconhecidos; base de S/I/R</td><td>Rápido; tipifica carbapenemase; vigilância</td></tr>
+    <tr><td><b>Limite</b></td><td>Inóculo, meio, padronização; demora; heterorresistência</td><td>Só vê o que o painel procura; gene ≠ expressão</td></tr></tbody></table>
+    <div class="syn">Fenótipo e genótipo se complementam; nenhum substitui o contexto clínico.</div></div>
+</section>
+
+<!-- 29 NÃO EXTRAPOLE -->
+<section class="slide" data-title="Não extrapole" data-note="Pergunta oral: quatro eixos em que o resultado NÃO se transfere. Clique em cada um.">
+  <header><div class="chips"><span class="pv pv-r">Cuidado</span></div><h2>Um resultado vale para quatro coisas ao mesmo tempo</h2></header>
+  <div class="body"><div class="c4">
+    <div class="tile mc-q" tabindex="0" role="button"><span class="hint">clique</span><h3>Fármaco</h3><div class="more">Não se transfere para outro da mesma classe sem regra.</div></div>
+    <div class="tile mc-m" tabindex="0" role="button"><span class="hint">clique</span><h3>Espécie</h3><div class="more">Pontos de corte são por espécie.</div></div>
+    <div class="tile mc-b" tabindex="0" role="button"><span class="hint">clique</span><h3>Sítio</h3><div class="more">Ex.: meníngeo × não meníngeo; urinário.</div></div>
+    <div class="tile mc-c" tabindex="0" role="button"><span class="hint">clique</span><h3>Versão</h3><div class="more">A tabela muda: confira a vigente e o laboratório.</div></div>
+  </div><div class="syn">Fármaco · espécie · sítio · versão: se mudou um, o resultado não vale automaticamente.</div></div>
+</section>
+
+<!-- 30 FLUXO -->
+<section class="slide" data-title="Fluxo: síndrome → plano" data-note="Clique em cada etapa. Pergunta oral: em que etapa o antibiograma entra? Quinta: no meio, nunca no começo nem no fim.">
+  <header><div class="chips"><span class="pv pv-g">Raciocínio</span></div><h2>Da síndrome ao plano</h2></header>
+  <div class="body"><div class="steps s7" id="flowSteps"></div><div class="box" id="flowDet" style="margin-top:12px" role="region" aria-live="polite">Clique em uma etapa.</div></div>
+</section>
+
+<!-- 31 SEM MELHORA -->
+<section class="slide" data-title="Sem melhora em 48–72 h" data-note="Pergunta oral: ausência de melhora prova resistência? Não. Erro provável: troca automática de antibiótico.">
+  <header><div class="chips"><span class="pv pv-r">Beira do leito</span><span class="pv pv-y">Pegadinha</span></div><h2>Sem melhora em 48–72 h</h2></header>
+  <div class="body">
+    <div class="dan" style="font-size:1.1em"><b>Ausência de melhora NÃO prova resistência.</b> E não autoriza troca automática.</div>
+    <div class="cols" style="margin-top:12px">
+      <div class="box"><h3>Causas comuns de "falha"</h3><ul><li>Foco não controlado</li><li>Diagnóstico errado</li><li>Colonização tratada como infecção</li><li>Exposição inadequada ao fármaco</li></ul></div>
+      <div class="box red"><h3>Sinais de gravidade</h3><p>Piora hemodinâmica, rebaixamento, falência de órgãos: <b>avaliação imediata</b> pelo protocolo local de sepse/urgência. Não se espera 48–72 h.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 32 ROTA -->
+<section class="slide" data-title="Rota do plantão" data-note="Palácio evolutivo: oito paradas. Clique em cada uma; ficam verdes ao visitar. Pergunta oral: qual parada a turma mais esquece? Geralmente o foco e a exposição.">
+  <header><div class="chips"><span class="pv pv-g">N3 · Rota do plantão</span></div><h2>Reavaliar: 8 paradas na UTI</h2></header>
+  <div class="body"><div class="steps s8" id="routeSteps"></div><div class="box" id="routeDet" style="margin-top:12px" role="region" aria-live="polite">Clique em uma parada.</div><p class="xs mut" id="routeCt"></p></div>
+</section>
+
+<!-- 33 CENARIOS -->
+<section class="slide" data-title="Cenários: o que isso sugere?" data-note="Escolha um cenário e peça hipóteses antes de abrir. Pergunta oral: qual o próximo passo de raciocínio?">
+  <header><div class="chips"><span class="pv pv-y">Intercalação</span></div><h2>Achado no 3º dia: o que isso sugere?</h2></header>
+  <div class="body"><div class="qnav" id="scenBtns" style="flex-wrap:wrap"></div><div class="box" id="scenOut" style="margin-top:10px" role="status" aria-live="polite"></div></div>
+</section>
+
+<!-- 34-38 CASOS -->
+<section class="slide" data-title="Caso 1 · ESBL" data-note="Peça aos grupos que respondam as perguntas antes da cortina."><header><div class="chips"><span class="pv pv-y">Caso 1</span></div><h2>E. coli com padrão de ESBL</h2></header><div class="body" data-case="0"></div></section>
+<section class="slide" data-title="Caso 2 · AmpC" data-note="É o caso do seu Antônio, mas com o antibiograma completo."><header><div class="chips"><span class="pv pv-y">Caso 2</span></div><h2>Suspeita de AmpC</h2></header><div class="body" data-case="1"></div></section>
+<section class="slide" data-title="Caso 3 · carbapenemase" data-note="Nenhum fármaco é resposta universal. Foque no que o laudo precisa trazer."><header><div class="chips"><span class="pv pv-r">Caso 3</span></div><h2>Klebsiella resistente a carbapenêmicos</h2></header><div class="body" data-case="2"></div></section>
+<section class="slide" data-title="Caso 4 · colonização × infecção" data-note="O rótulo ESBL não cria indicação de tratar. A síndrome decide."><header><div class="chips"><span class="pv pv-y">Caso 4</span></div><h2>Cultura positiva: colonização ou infecção?</h2></header><div class="body" data-case="3"></div></section>
+<section class="slide" data-title="Caso 5 · MRSA" data-note="Foco: alteração do alvo e controle de foco em bacteremia por S. aureus."><header><div class="chips"><span class="pv pv-y">Caso 5</span></div><h2>S. aureus resistente à meticilina em hemocultura</h2></header><div class="body" data-case="4"></div></section>
+
+<!-- 39 VOLTA -->
+<section class="slide" data-title="De volta ao seu Antônio" data-note="Fechamento narrativo (N6). Pergunta oral: que verbo? Quebra (AmpC desreprimida), mas o foco intra-abdominal continua sendo hipótese. Não há resposta única de fármaco.">
+  <header><div class="chips"><span class="pv pv-r">Fecho do caso</span></div><h2>De volta ao seu Antônio</h2></header>
+  <div class="body cols">
+    <div class="box red"><p><i>Enterobacter cloacae</i> complex, "S" no início, febre no dia 4, segundo isolado resistente à cefalosporina.</p><p>Qual verbo? E o que mais você investiga?</p>
+      <div class="rv"><button class="rv-btn" type="button">Revelar</button><div class="rv-body" hidden><p><b>Quebra:</b> AmpC desreprimida selecionada sob o fármaco.</p><p><b>E também:</b> foco intra-abdominal (coleção, deiscência), amostra, exposição, ESBL/porina coexistentes.</p><p class="mut sm">O plano segue protocolo e infectologia; não há "resposta única".</p></div></div></div>
+    <div><div class="syn">O herói não é o antibiótico novo: é o raciocínio que olha foco, amostra, exposição e mecanismo.</div></div>
+  </div>
+</section>
+
+<!-- 40 BARALHO -->
+<section class="slide" data-title="Baralho de flashcards" data-note="Clique no cartão para virar. Filtre por mecanismo. Embaralhe para intercalar (N5).">
+  <header><div class="chips"><span class="pv pv-g">Repetição ativa</span></div><h2>Baralho</h2></header>
+  <div class="body"><div data-deck></div></div>
+</section>
+
+<!-- 41 ARENA -->
+<section class="slide" data-title="Arena · quiz final" data-note="Quiz final intercalado. Sem nota. No fim aparece a lista de tópicos para revisitar.">
+  <header><div class="chips"><span class="pv pv-y">Arena</span></div><h2>Arena: quiz final comentado</h2></header>
+  <div class="body"><div data-quiz="0,1,2,3,4,5,6,7,8,9,10,11" data-bank="Q" data-shuffle="1"></div></div>
+</section>
+
+<!-- 42 FRASES -->
+<section class="slide" data-title="Cola de bolso: frases-síntese" data-note="Frase-síntese de uma linha (N4). Clique para revelar cada frase: peça que a turma complete antes.">
+  <header><div class="chips"><span class="pv pv-g">N4 · Síntese</span></div><h2>Cola de bolso: 8 frases</h2></header>
+  <div class="body"><div class="cols" id="synCards"></div></div>
+</section>
+
+<!-- 43 REVISÃO ESPAÇADA -->
+<section class="slide" data-title="Revisão espaçada" data-note="Repetição espaçada (N7): 24 h, 7 dias, 30 dias. Os marcadores ficam salvos neste navegador.">
+  <header><div class="chips"><span class="pv pv-g">N7 · Espaçamento</span></div><h2>Para não esquecer: 24 h · 7 dias · 30 dias</h2></header>
+  <div class="body cols">
+    <div class="box" id="spaced"></div>
+    <div class="box"><h3>Como revisar</h3><ol><li>Recite a frase dos 5 verbos sem olhar.</li><li>Percorra o Palácio da UTI mentalmente.</li><li>Refaça a Arena e o Jogo.</li><li>Releia só as pegadinhas amarelas.</li></ol></div>
+  </div>
+</section>
+
+<!-- 44 FONTES -->
+<section class="slide" data-title="Fontes para consulta" data-note="Reforce: confira sempre a versão mais recente das tabelas e diretrizes. As diretrizes da IDSA são atualizadas com frequência.">
+  <header><div class="chips"><span class="pv pv-g">Fontes</span></div><h2>Fontes para consulta</h2></header>
+  <div class="body">
+    <ol class="sm">
+      <li>OMS, Bacterial Priority Pathogens List 2024: <a href="https://www.who.int/publications/i/item/9789240093461" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">who.int/publications/i/item/9789240093461</a></li>
+      <li>BrCAST, documentos e tabelas atuais: <a href="https://brcast.org.br/documentos/documentos-3/" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">brcast.org.br/documentos/documentos-3/</a></li>
+      <li>EUCAST, Clinical Breakpoint Tables: <a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">eucast.org/…/clinical-breakpoint-tables/</a></li>
+      <li>EUCAST, Expert Rules: <a href="https://www.eucast.org/bacteria/important-additional-information/expert-rules/" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">eucast.org/…/expert-rules/</a></li>
+      <li>IDSA, AMR Guidance (confira a versão mais recente): <a href="https://www.idsociety.org/practice-guideline/amr-guidance/" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">idsociety.org/practice-guideline/amr-guidance/</a></li>
+      <li>Anvisa, Gerenciamento de antimicrobianos: <a href="https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/prevencao-e-controle-de-infeccao-e-resistencia-microbiana/gerenciamento-de-antimicrobianos-em-servicos-de-saude" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">gov.br/anvisa/…/gerenciamento-de-antimicrobianos</a></li>
+      <li>CDC, causas e disseminação da resistência: <a href="https://www.cdc.gov/antimicrobial-resistance/causes/index.html" target="_blank" rel="noopener noreferrer" style="color:var(--blu)">cdc.gov/antimicrobial-resistance/causes/</a></li>
+    </ol>
+    <div class="dan sm"><b>Aviso:</b> material de apoio ao estudo. Não substitui avaliação clínica, supervisão docente, protocolo institucional ou fontes atualizadas. Os links exigem internet; o restante da aula funciona offline.</div>
+  </div>
+</section>
+
+<!-- 45 FIM -->
+<section class="slide cover" data-title="Encerramento" data-note="Feche repetindo a frase dos 5 verbos em coro.">
+  <h1 class="grad">A bactéria quebra, muda, barra, bombeia ou contorna.</h1>
+  <p class="sub">E o herói é o raciocínio: síndrome, amostra, agente, mecanismo, antibiograma, paciente, plano.</p>
+  <div class="sig">Dr. André Rossanno</div>
+</section>
+
+</div></div>
+
+<div id="bar">
+  <button id="bPrev" type="button" aria-label="Slide anterior">◀</button>
+  <button id="bNext" type="button" aria-label="Próximo slide">▶</button>
+  <span id="ct">1 / 1</span><span class="sp"></span>
+  <button id="bMinus" type="button" aria-label="Diminuir letra">A−</button><button id="bPlus" type="button" aria-label="Aumentar letra">A+</button>
+  <button id="bIdx" type="button">Índice (G)</button><button id="bNote" type="button">Notas (N)</button><button id="bProj" type="button">Projetar (P)</button><button id="bFs" type="button">Tela cheia (F)</button>
+</div>
+<div id="idx" class="ov" hidden role="dialog" aria-label="Índice"><h2>Índice <button class="btn sm gh" data-close type="button">Fechar</button></h2><div class="idx" id="idxList"></div></div>
+<div id="notes" class="ov" hidden role="dialog" aria-label="Notas do professor"><h2>Notas do professor <button class="btn sm gh" data-close type="button">Fechar</button></h2><p id="noteTitle" class="mut"></p><div id="notebody"></div></div>
+
+<script>
+/* ==========================================================
+   DADOS
+   ========================================================== */
+var MECH={q:{n:'Quebra',c:'mc-q'},m:{n:'Muda',c:'mc-m'},b:{n:'Barra',c:'mc-b'},bo:{n:'Bombeia',c:'mc-bo'},c:{n:'Contorna',c:'mc-c'},g:{n:'Geral',c:'mc-g'}};
+var TABLE=[
+ {m:'q',ef:'Hidrolisa penicilinas e cefalosporinas de amplo espectro; carbapenêmicos em geral preservados',ex:'ESBL (CTX-M) · E. coli, Klebsiella',q:'Foi confirmado ESBL? Qual o foco e a gravidade?'},
+ {m:'q',ef:'Cefalosporinase; pode ser desreprimida durante o tratamento',ex:'AmpC · Enterobacter, Citrobacter freundii, K. aerogenes',q:'Espécie de risco? "S" hoje garante amanhã?'},
+ {m:'q',ef:'Hidrolisa carbapenêmicos (classe A)',ex:'KPC · Klebsiella pneumoniae',q:'Carbapenemase tipificada? Medidas de controle?'},
+ {m:'q',ef:'Metalo-β-lactamase (zinco); inibidores clássicos não inibem',ex:'NDM, VIM, IMP',q:'O inibidor cobre a classe da enzima?'},
+ {m:'q',ef:'Classe D; CIM de carbapenêmico às vezes perto do corte',ex:'OXA-48-like · Klebsiella, E. coli',q:'"S" a carbapenêmico exclui carbapenemase?'},
+ {m:'m',ef:'PBP2a de baixa afinidade por β-lactâmicos',ex:'MRSA (mecA/mecC)',q:'O foco foi controlado? Qual o marcador?'},
+ {m:'m',ef:'PBP em mosaico; categoria depende do sítio',ex:'S. pneumoniae',q:'O ponto de corte usado corresponde ao sítio?'},
+ {m:'m',ef:'Mutação do alvo; Qnr protege o alvo',ex:'gyrA/parC · qnr · quinolonas',q:'Resistência a uma quinolona prediz as demais?'},
+ {m:'m',ef:'D-Ala-D-Lac reduz afinidade por glicopeptídeos',ex:'VRE (vanA/vanB)',q:'Que rastreamento e precauções o serviço adota?'},
+ {m:'b',ef:'Menos porinas: menos antibiótico entra; com ESBL/AmpC eleva a CIM de carbapenêmicos',ex:'OmpK35/36 · Klebsiella',q:'Carbapenêmico R sem carbapenemase: porina + β-lactamase?'},
+ {m:'b',ef:'Perda de OprD reduz a entrada de carbapenêmicos',ex:'P. aeruginosa',q:'Esse mecanismo afeta os outros β-lactâmicos igual?'},
+ {m:'bo',ef:'Bomba expulsa várias classes',ex:'MexAB-OprM · AcrAB-TolC',q:'Várias classes com CIM alta juntas sugerem o quê?'},
+ {m:'c',ef:'Via alternativa mantém a síntese de folato',ex:'dfr e sul adquiridos',q:'Por que vêm "em pacote" com outros genes?'}
+];
+var FLASH=[
+ {m:'g',f:'Intrínseca × adquirida?',v:'Intrínseca: própria da espécie, previsível. Adquirida: mutação ou gene recebido, varia entre isolados.'},
+ {m:'g',f:'Resistência × tolerância × persistência?',v:'Resistência: CIM sobe (hereditária). Tolerância: morre mais devagar, CIM igual. Persistência: subpopulação transitória.'},
+ {m:'g',f:'O antibiótico cria o mutante?',v:'Não: seleciona variantes que já existiam ou foram adquiridas.'},
+ {m:'g',f:'Colonização × infecção?',v:'Colonização: presente sem lesão nem resposta relevante. Infecção: lesão + resposta + agente plausível no foco.'},
+ {m:'q',f:'Classes de β-lactamases A-B-C-D?',v:'A: ESBL, KPC. B: NDM, VIM, IMP (zinco). C: AmpC. D: OXA-48, OXA-23.'},
+ {m:'q',f:'Padrão típico de ESBL?',v:'Cefalosporina de 3ª geração R com carbapenêmico geralmente preservado; confirmar.'},
+ {m:'q',f:'Espécies de risco para AmpC (E-C-K)?',v:'Enterobacter cloacae complex, Citrobacter freundii, Klebsiella aerogenes.'},
+ {m:'m',f:'O que é PBP2a?',v:'PBP alternativa (mecA/mecC) de baixa afinidade por β-lactâmicos: base do MRSA.'},
+ {m:'m',f:'Por que o sítio importa em S. pneumoniae?',v:'Pontos de corte da penicilina diferem por sítio (meníngeo × não meníngeo).'},
+ {m:'b',f:'Carbapenêmico R sem carbapenemase?',v:'Possível: perda de porinas + ESBL/AmpC (e efluxo).'},
+ {m:'bo',f:'Pista de efluxo?',v:'Várias classes com CIM alta ao mesmo tempo.'},
+ {m:'c',f:'O que é bypass metabólico?',v:'Via alternativa ou enzima insensível (sul, dfr) apesar do fármaco.'},
+ {m:'g',f:'O que é "I" no BrCAST/EUCAST?',v:'Sensível, aumento da exposição. Não é "intermediário".'},
+ {m:'g',f:'Posso extrapolar um resultado?',v:'Não: vale para aquele fármaco, espécie, sítio e versão da tabela.'},
+ {m:'g',f:'Sem melhora em 48–72 h: é resistência?',v:'Não necessariamente: reavalie diagnóstico, foco, amostra, exposição, cobertura e gravidade.'}
+];
+var QUIZ=[
+ {t:'Intrínseca × adquirida',q:'Qual é um exemplo de resistência INTRÍNSECA?',o:['Klebsiella pneumoniae e aminopenicilinas isoladas','E. coli que adquiriu CTX-M','S. aureus com mecA','S. pneumoniae com PBP em mosaico'],a:0,e:'A β-lactamase cromossômica da Klebsiella a torna naturalmente resistente a aminopenicilinas isoladas. As outras são adquiridas.'},
+ {t:'Persistência',q:'Qual descrição corresponde à PERSISTÊNCIA?',o:['Mutação que sobe a CIM de toda a população','Subpopulação transitória tolerante que sobrevive à exposição','Gene de resistência em plasmídeo','Ausência de crescimento em meio padrão'],a:1,e:'Persistência é fenotípica e transitória, sem aumento da CIM. Resistência é hereditária e sobe a CIM.'},
+ {t:'Colonização × contaminação',q:'Hemocultura com coagulase-negativo em UM frasco, sem cateter nem sinais de infecção. Leitura mais plausível?',o:['Infecção grave inequívoca','Contaminação provável','Resistência intrínseca','Persistência'],a:1,e:'Comensal de pele em um frasco, sem síndrome compatível, sugere contaminação. Sempre avalie o contexto.'},
+ {t:'Pressão seletiva',q:'O que o antibiótico faz com a população bacteriana?',o:['Cria mutações dirigidas','Seleciona variantes resistentes que já existiam ou foram adquiridas','Transforma sensíveis em resistentes em minutos','Não altera a população'],a:1,e:'O antibiótico seleciona: elimina os sensíveis e deixa os resistentes se expandirem.'},
+ {t:'Mnemônica',q:'Na mnemônica, "bombeia" corresponde a:',o:['Inativação enzimática','Alteração do alvo','Efluxo','Bypass metabólico'],a:2,e:'Bombeia = efluxo. Quebra = enzimas; muda = alvo; barra = permeabilidade; contorna = bypass.'},
+ {t:'PBP2a',q:'PBP2a em MRSA ilustra qual verbo?',o:['Quebra','Muda','Barra','Bombeia'],a:1,e:'É um alvo alternativo de baixa afinidade: alteração do alvo ("muda").'},
+ {t:'ESBL',q:'E. coli resistente à ceftriaxona e sensível a carbapenêmico: hipótese mais forte?',o:['ESBL','Perda total de porinas','Nenhuma resistência','Carbapenemase classe B'],a:0,e:'O padrão sugere ESBL, mas deve ser confirmado e interpretado com antibiograma completo e contexto clínico.'},
+ {t:'AmpC',q:'Por que Enterobacter cloacae complex "S" a cefalosporina de 3ª geração pode falhar durante o tratamento?',o:['A CIM não existe para essa espécie','Seleção de subpopulações com AmpC desreprimida','O laboratório sempre erra','É intrinsecamente sensível a tudo'],a:1,e:'AmpC induzível: sob pressão do fármaco seleciona-se mutante desreprimido. O "S" inicial não elimina esse risco.'},
+ {t:'S, I e R',q:'No BrCAST/EUCAST, "I" significa:',o:['Intermediário: efeito parcial','Indeterminado: não use','Sensível, aumento da exposição','Resistente de baixo nível'],a:2,e:'"I" = sensível, aumento da exposição, conforme tabela e serviço. Não é "intermediário".'},
+ {t:'48–72 h',q:'Sem melhora em 48–72 h. Qual raciocínio é mais adequado?',o:['Concluir resistência e trocar o antibiótico','Reavaliar diagnóstico, foco, amostra, exposição e cobertura, seguindo o protocolo local','Suspender todos os exames','Repetir o esquema sem reavaliar'],a:1,e:'A falta de melhora não prova resistência: reavalie sistematicamente e discuta com infectologia conforme protocolo.'},
+ {t:'Carbapenemases',q:'Sobre carbapenemases, qual afirmação é mais correta?',o:['Todas são equivalentes e inibidas pelos mesmos inibidores','A classe (A, B ou D) importa: define a atividade de inibidores e orienta controle de infecção','Só existem em Gram-positivos','Aparecem apenas na comunidade'],a:1,e:'KPC (A), metalo-β-lactamases (B) e OXA-48 (D) se comportam diferente. A escolha segue protocolo e infectologia.'},
+ {t:'Mecanismos combinados',q:'ESBL + perda de porina em Klebsiella pode levar a:',o:['Nenhum efeito','CIM de carbapenêmicos aumentada sem carbapenemase','Sensibilidade a todos os β-lactâmicos','Queda da CIM de cefalosporinas'],a:1,e:'Menos entrada + hidrólise do que entra pode elevar a CIM de carbapenêmicos sem carbapenemase.'}
+];
+var V=['Quebra','Muda','Barra','Bombeia','Contorna'];
+var GAME=[
+ {t:'Quebra',q:'"Hidrolisa o anel β-lactâmico antes de o fármaco agir."',a:0,e:'Enzima que destrói o fármaco: quebra.'},
+ {t:'Muda',q:'"PBP2a de baixa afinidade em S. aureus."',a:1,e:'Alvo alternativo: muda.'},
+ {t:'Barra',q:'"Perda de OmpK36 em Klebsiella."',a:2,e:'Porina perdida, menos entrada: barra.'},
+ {t:'Bombeia',q:'"MexAB-OprM: várias classes sobem a CIM juntas."',a:3,e:'Efluxo: bombeia.'},
+ {t:'Contorna',q:'"Genes dfr e sul."',a:4,e:'Via metabólica alternativa: contorna.'},
+ {t:'Muda',q:'"D-Ala-D-Lac em Enterococcus."',a:1,e:'Precursor alterado, alvo mudou: muda.'},
+ {t:'Quebra',q:'"NDM, metalo-β-lactamase dependente de zinco."',a:0,e:'Enzima que hidrolisa: quebra.'},
+ {t:'Barra',q:'"Perda de OprD em P. aeruginosa."',a:2,e:'Porina que deixa de entrar: barra.'},
+ {t:'Muda',q:'"Mutação em gyrA/parC."',a:1,e:'Alvo das quinolonas alterado: muda.'},
+ {t:'Quebra',q:'"AmpC desreprimida durante o tratamento."',a:0,e:'Cefalosporinase em excesso: quebra.'}
+];
+var CASES=[
+ {hist:'Mulher, 72 anos, sonda vesical, febre. Urocultura e hemocultura: E. coli.',abg:[['Ampicilina','R'],['Ceftriaxona','R'],['Ceftazidima','R'],['Cefepima','I'],['Pip-tazo','S'],['Ertapenem','S'],['Meropenem','S'],['Ciprofloxacino','R']],
+  qs:['Que padrão sugere ESBL?','O que significa "I" da cefepima?','"S" a combinação com inibidor encerra a discussão?'],
+  r:['Cefalosporina de 3ª geração R + carbapenêmico S: ESBL provável (CTX-M); confirmar por sinergia com inibidor ou teste molecular.','"I" = sensível, aumento da exposição, conforme tabela e serviço; não é "meio resistente".','Não, em infecção grave: depende da CIM, do inóculo, do foco e do protocolo.'],
+  mec:'Quebra: ESBL (classe A), possivelmente com outros genes associados.',lim:'O padrão sugere, não prova. Faltam foco, gravidade, função renal. Plano por protocolo e infectologia; não há resposta única para ESBL.'},
+ {hist:'Homem, 58 anos, pós-operatório abdominal. Enterobacter cloacae complex em hemocultura, ceftriaxona "S". No dia 4, febre; novo isolado.',abg:[['Ceftriaxona (1º isolado)','S'],['Ceftriaxona (2º isolado)','R'],['Cefepima (2º)','S'],['Ertapenem (2º)','S'],['Pip-tazo (2º)','R']],
+  qs:['Que mecanismo explica a mudança?','Por que o "S" inicial não garante eficácia?','Que outras causas de falha você descarta?'],
+  r:['Seleção de mutante com AmpC desreprimida durante o tratamento.','Espécie com AmpC induzível: o teste inicial não capta esse risco dinâmico.','Foco não controlado (coleção, deiscência), exposição, outro agente, ESBL ou porina junto.'],
+  mec:'Quebra: AmpC cromossômica desreprimida (classe C).',lim:'Não se define o plano só pelo antibiograma. Espécies diferem no risco de AmpC; controle do foco pesa tanto quanto o espectro.'},
+ {hist:'Homem, 66 anos, UTI há 20 dias, uso prévio de vários antimicrobianos. Hemocultura: Klebsiella pneumoniae. Imunocromatografia: NDM positivo.',abg:[['Meropenem','R'],['Ertapenem','R'],['Ceftazidima','R'],['Cefepima','R'],['Pip-tazo','R'],['Ciprofloxacino','R'],['Amicacina','R'],['Colistina','N']],
+  qs:['Por que tipificar a carbapenemase?','Que medidas existem além da terapia?','O que o laudo ainda precisa trazer?'],
+  r:['A classe define o comportamento frente a inibidores; metalo-β-lactamase não é inibida pelos clássicos.','Precauções de contato, CCIH, rastreamento conforme o serviço, revisão de foco e dispositivos.','CIM por método adequado quando indicado e o que foi testado. "N" = sem categoria/não testado.'],
+  mec:'Quebra: carbapenemase classe B (NDM), geralmente com genes associados.',lim:'Este caso não define fármaco: disponibilidade e evidências variam. Decisão com infectologia, microbiologia e CCIH, além do foco.'},
+ {hist:'Homem, 79 anos, UTI, sonda vesical há 12 dias. Urocultura de rotina: K. pneumoniae ESBL, contagem alta. Afebril, estável, sem dor, sem outra fonte. Leucocitúria presente.',abg:[['Ceftriaxona','R'],['Ertapenem','S'],['Ciprofloxacino','R']],
+  qs:['Infecção ou colonização?','Que achados mudariam sua avaliação?','O rótulo "ESBL" muda a indicação de tratar?'],
+  r:['Sem sintomas nem sinais sistêmicos: bacteriúria de sonda (colonização) é a leitura mais provável. Leucocitúria é comum com sonda.','Febre sem outra fonte, instabilidade, dor, alteração mental, obstrução, procedimento urológico, imunossupressão.','Não: a síndrome define o tratamento. Em geral não se trata bacteriúria assintomática (exceções: gestação, procedimento urológico). Reavalie a sonda.'],
+  mec:'Mecanismo: ESBL (quebra), mas o foco do caso é o contexto.',lim:'Uma cultura isolada não distingue colonização de infecção. Reavalie com seriação clínica e protocolo; sinais de gravidade pedem avaliação imediata.'},
+ {hist:'Mulher, 49 anos, cateter venoso central. Duas hemoculturas com S. aureus; cefoxitina indica fenótipo MRSA.',abg:[['Cefoxitina (marcador)','R'],['Oxacilina','R'],['Clindamicina (D-test)','I'],['SMX-TMP','S']],
+  qs:['Que mecanismo explica?','Por que a cefoxitina como marcador?','Que perguntas de foco são essenciais?'],
+  r:['Alteração do alvo: PBP2a (mecA/mecC).','A cefoxitina induz a expressão de mecA no teste e discrimina o fenótipo; o laboratório segue a metodologia padronizada.','Fonte no cateter, focos secundários (endocardite, osteoarticular), culturas de controle, imagem, retirada do dispositivo.'],
+  mec:'Muda: PBP2a (mecA/mecC).',lim:'Ser MRSA não define o plano. S. aureus no sangue raramente é contaminante e exige avaliação de foco; protocolo e infectologia conduzem.'}
+];
+var FLOW=[
+ {t:'Síndrome',d:'Qual síndrome, qual foco, qual gravidade? Exclua não infecciosas; diferencie colonização/contaminação.'},
+ {t:'Amostra',d:'Veio do foco? Antes do antimicrobiano, se possível? Qualidade e volume? Risco de contaminação?'},
+ {t:'Agente',d:'Qual micro-organismo? É plausível para a síndrome ou possível contaminante/colonizante?'},
+ {t:'Mecanismo',d:'Quebra, muda, barra, bombeia ou contorna? Há teste complementar? Podem coexistir.'},
+ {t:'Antibiograma',d:'Norma e versão (BrCAST/EUCAST, CLSI)? CIM e categorias por fármaco; atenção ao "I"; sem extrapolar.'},
+ {t:'Paciente',d:'Gravidade, função renal/hepática, alergias, interações, antimicrobianos recentes, dispositivos, gestação.'},
+ {t:'Plano',d:'Decisão integrada e revisável: foco, protocolo institucional, infectologia/microbiologia/CCIH, reavaliação seriada.'}
+];
+var ROUTE=[
+ {t:'Diagnóstico',d:'O diagnóstico infeccioso ainda é o mais provável? Considerei febre não infecciosa (tromboembolismo, medicamentos, neoplasia, inflamatórias)?'},
+ {t:'Infecção real?',d:'A cultura corresponde à síndrome? O isolado é plausível no local? Pensei em colonização ou contaminação?'},
+ {t:'Amostra',d:'Veio do foco, bem coletada, antes do antimicrobiano quando seguro? Há culturas pendentes ou testes adicionais?'},
+ {t:'Foco',d:'Abscesso, coleção, empiema, necrose, obstrução, corpo estranho ou dispositivo? A imagem certa foi discutida com a equipe?'},
+ {t:'Exposição',d:'O que foi prescrito é o que foi administrado? Função renal e hepática, interações, absorção, penetração no foco: conforme protocolo.'},
+ {t:'Cobertura',d:'O espectro cobre os agentes prováveis? Revi culturas prévias, antimicrobianos recentes e a epidemiologia local?'},
+ {t:'Evolução',d:'Qual a tendência clínica, laboratorial e de imagem? Há sinais de gravidade? A expectativa em 48–72 h é realista?'},
+ {t:'Apoio',d:'Discuti com infectologia/microbiologia/CCIH conforme protocolo? Há suspeita de multirresistente? Comuniquei a equipe e o supervisor?'}
+];
+var SCEN=[
+ {t:'Hemocultura persistentemente positiva',s:'Sugere foco endovascular ou não controlado (endocardite, tromboflebite, dispositivo, abscesso).',a:'Repetir culturas, avaliar dispositivo e imagem; discutir com infectologia conforme protocolo.'},
+ {t:'Coleção na imagem',s:'Controle do foco é a prioridade: antimicrobiano isolado pode ser insuficiente.',a:'Acionar a equipe de drenagem (cirurgia/radiologia intervencionista).'},
+ {t:'Cultura R ao fármaco em uso',s:'O agente é causal com cobertura inadequada, ou é colonizante/contaminante.',a:'Não tratar o laudo: reavalie síndrome, amostra e evolução; ajuste por antibiograma e protocolo, com infectologia.'},
+ {t:'Febre persistente, culturas negativas',s:'Causas não infecciosas, agentes de difícil cultivo, foco oculto, cultura após antimicrobiano.',a:'Rever o diagnóstico e pedir avaliação especializada; não ampliar espectro automaticamente.'},
+ {t:'Melhora, mas cultura R ao fármaco',s:'Possível colonização/contaminação ou cobertura do agente real; a melhora pode ser parcial.',a:'Decisão individualizada com infectologia e protocolo; documente o raciocínio.'},
+ {t:'Piora hemodinâmica',s:'Sepse/choque, foco não controlado ou diagnóstico alternativo grave.',a:'Avaliação imediata pelo protocolo local. Não esperar 48–72 h.'}
+];
+var COMB=[
+ {id:'esbl',n:'ESBL',e:'Sobe a CIM de penicilinas e cefalosporinas de amplo espectro; carbapenêmicos em geral preservados se isolada.'},
+ {id:'ampc',n:'AmpC',e:'Sobe a CIM de cefalosporinas de 3ª geração, cefamicinas e combinações com inibidores clássicos.'},
+ {id:'por',n:'Perda de porina',e:'Menos entrada de β-lactâmicos; mais evidente em carbapenêmicos quando junto de β-lactamase.'},
+ {id:'ef',n:'Bomba de efluxo',e:'Pode subir a CIM de várias classes ao mesmo tempo, em graus variáveis.'},
+ {id:'carb',n:'Carbapenemase',e:'Hidrolisa carbapenêmicos e muitos outros β-lactâmicos; a classe (A, B, D) define os inibidores ativos.'},
+ {id:'qui',n:'gyrA/parC · qnr',e:'Sobe a CIM de quinolonas; interprete fármaco a fármaco.'}
+];
+var SYN=[
+ 'A bactéria quebra, muda, barra, bombeia ou contorna.','O antibiótico seleciona; não cria o mutante.','Cultura positiva não define infecção.','O "I" é sensível com aumento da exposição.',
+ 'Em espécie de risco AmpC, o "S" de hoje não garante o de amanhã.','A classe da carbapenemase importa: A, B, D.','Sem melhora em 48–72 h não prova resistência.','Fármaco, espécie, sítio e versão: não extrapole.'
+];
+
+/* ==========================================================
+   UTILITÁRIOS
+   ========================================================== */
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function cat(c){var t={S:'S',I:'I',R:'R',N:'—'};return '<span class="cat c'+c+'">'+t[c]+'</span>'}
+
+/* ==========================================================
+   MONTADORES (componentes interativos)
+   ========================================================== */
+/* quiz sem nota: feedback explicativo, nova tentativa, lista de tópicos a revisitar */
+function mountQuiz(el){
+  var bank=el.getAttribute('data-bank')==='G'?GAME:QUIZ;
+  var idx=el.getAttribute('data-quiz').split(',').map(Number);
+  if(el.getAttribute('data-shuffle')){for(var s=idx.length-1;s>0;s--){var j=Math.floor(Math.random()*(s+1));var t=idx[s];idx[s]=idx[j];idx[j]=t}}
+  var i=0,ans={},first={};
+  function opts(q){return q.o||V}
+  function render(){
+    if(i>=idx.length){summary();return}
+    var qi=idx[i],q=bank[qi],o=opts(q);
+    el.innerHTML='<div class="qh">Pergunta '+(i+1)+' de '+idx.length+' · sem nota</div><div class="qq">'+q.q+'</div><div class="qo"></div><div class="qfb" role="status" aria-live="polite"></div><div class="qnav"><button class="btn gh sm" data-p type="button">‹ Anterior</button><button class="btn sm" data-n type="button">'+(i===idx.length-1?'Ver resumo':'Próxima ›')+'</button></div>';
+    var box=$('.qo',el),fb=$('.qfb',el);
+    o.forEach(function(txt,k){
+      var b=document.createElement('button');b.type='button';b.textContent=String.fromCharCode(65+k)+') '+txt;
+      b.addEventListener('click',function(){
+        ans[qi]=k;if(first[qi]===undefined)first[qi]=(k===q.a);apply();
+      });box.appendChild(b);
+    });
+    function apply(){
+      var k=ans[qi];if(k===undefined)return;
+      $$('button',box).forEach(function(b,bi){b.disabled=true;if(bi===q.a)b.classList.add('ok');else if(bi===k)b.classList.add('bad')});
+      fb.innerHTML='<div class="'+(k===q.a?'syn':'peg')+'" style="margin-top:0"><b>'+(k===q.a?'Isso mesmo. ':'Quase lá. ')+'</b>'+q.e+'</div><button class="btn gh sm" data-r type="button" style="margin-top:8px">Tentar de novo</button>';
+      $('[data-r]',fb).addEventListener('click',function(){delete ans[qi];render()});
+    }
+    apply();
+    $('[data-p]',el).addEventListener('click',function(){if(i>0){i--;render()}});
+    $('[data-n]',el).addEventListener('click',function(){i++;render()});
+  }
+  function summary(){
+    var rev=idx.filter(function(k){return first[k]===false}).map(function(k){return bank[k].t});
+    var done=Object.keys(ans).length;
+    el.innerHTML='<div class="box grn"><h3>Resumo</h3><p>Respondidas: '+done+' de '+idx.length+'. Não há nota: o objetivo é aprender.</p>'+(rev.length?'<p><b>Para revisitar:</b> '+rev.join(' · ')+'</p>':'<p>Nada a revisitar na 1ª tentativa. Ótimo ritmo.</p>')+'<button class="btn sm" data-b type="button">Recomeçar</button></div>';
+    $('[data-b]',el).addEventListener('click',function(){i=0;ans={};first={};render()});
+  }
+  render();
+}
+function mountTable(el){
+  var f='';
+  function draw(){
+    var chips='<div class="qnav" style="flex-wrap:wrap;margin:0 0 8px"><button class="btn sm '+(f?'gh':'')+'" data-f="" type="button">Todos</button>';
+    ['q','m','b','bo','c'].forEach(function(k){chips+='<button class="btn sm '+(f===k?'':'gh')+'" data-f="'+k+'" type="button">'+MECH[k].n+'</button>'});
+    var rows=TABLE.filter(function(r){return !f||r.m===f}).map(function(r){return '<tr class="'+MECH[r.m].c+'"><td><span class="chip">'+MECH[r.m].n+'</span></td><td>'+r.ef+'</td><td>'+r.ex+'</td><td>'+r.q+'</td></tr>'}).join('');
+    el.innerHTML=chips+'</div><table><thead><tr><th>Verbo</th><th>Efeito</th><th>Exemplo</th><th>Pergunta clínica</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    $$('[data-f]',el).forEach(function(b){b.addEventListener('click',function(){f=b.getAttribute('data-f');draw()})});
+  }
+  draw();
+}
+function mountDeck(el){
+  var f='',order=FLASH.map(function(_,i){return i}),p=0,back=false;
+  function list(){return order.filter(function(i){return !f||FLASH[i].m===f})}
+  function draw(){
+    var L=list();if(p>=L.length)p=0;var c=FLASH[L[p]];
+    var chips='<div class="qnav" style="flex-wrap:wrap;margin:0 0 8px"><button class="btn sm '+(f?'gh':'')+'" data-f="" type="button">Todos</button>';
+    ['q','m','b','bo','c','g'].forEach(function(k){chips+='<button class="btn sm '+(f===k?'':'gh')+'" data-f="'+k+'" type="button">'+MECH[k].n+'</button>'});
+    el.innerHTML=chips+'</div><div class="fc '+MECH[c.m].c+(back?' back':'')+'" tabindex="0" role="button" aria-label="Virar cartão"><small>'+MECH[c.m].n+' · '+(p+1)+' / '+L.length+' · clique para virar</small>'+(back?c.v:'<b>'+c.f+'</b>')+'</div><div class="qnav"><button class="btn gh sm" data-a="p" type="button">‹</button><button class="btn gh sm" data-a="s" type="button">Embaralhar</button><button class="btn sm" data-a="n" type="button">›</button></div>';
+    $$('[data-f]',el).forEach(function(b){b.addEventListener('click',function(){f=b.getAttribute('data-f');p=0;back=false;draw()})});
+    var card=$('.fc',el);function flip(){back=!back;draw()}
+    card.addEventListener('click',flip);card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}});
+    $('[data-a=p]',el).addEventListener('click',function(){p=(p-1+L.length)%L.length;back=false;draw()});
+    $('[data-a=n]',el).addEventListener('click',function(){p=(p+1)%L.length;back=false;draw()});
+    $('[data-a=s]',el).addEventListener('click',function(){for(var i=order.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=order[i];order[i]=order[j];order[j]=t}p=0;back=false;draw()});
+  }
+  draw();
+}
+function mountCase(el,c){
+  el.innerHTML='<div class="cols"><div><div class="box">'+c.hist+'</div><table style="margin-top:10px"><thead><tr><th>Fármaco (fictício)</th><th>Categoria</th></tr></thead><tbody>'+c.abg.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+cat(r[1])+'</td></tr>'}).join('')+'</tbody></table></div>'+
+   '<div><h3>Perguntas</h3><ol>'+c.qs.map(function(q){return '<li>'+q+'</li>'}).join('')+'</ol><div class="rv"><button class="rv-btn" type="button">Revelar resposta comentada</button><div class="rv-body" hidden><ol>'+c.r.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ol><p><span class="pv pv-b">Mecanismo</span> '+c.mec+'</p><div class="dan" style="margin-top:6px"><b>Limites:</b> '+c.lim+'</div></div></div></div></div>';
+}
+
+/* ==========================================================
+   INICIALIZAÇÃO DOS COMPONENTES
+   ========================================================== */
+$$('[data-quiz]').forEach(mountQuiz);
+$$('[data-table]').forEach(mountTable);
+$$('[data-deck]').forEach(mountDeck);
+$$('[data-case]').forEach(function(el){mountCase(el,CASES[+el.getAttribute('data-case')])});
+
+/* pressão seletiva */
+(function(){
+  var N=60,pop,st=$('#simStatus'),grid=$('#petri');
+  function nres(){return pop.filter(function(x){return x}).length}
+  function pct(){return Math.round(nres()/N*100)}
+  function draw(){grid.innerHTML='';pop.forEach(function(v){var s=document.createElement('span');s.className='dot'+(v?' r':'');grid.appendChild(s)})}
+  function reset(){pop=[];for(var i=0;i<N;i++)pop.push(i<2?1:0);for(var j=N-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=pop[j];pop[j]=pop[k];pop[k]=t}draw();st.textContent='Início: '+pct()+'% resistentes. Aplique o antibiótico.'}
+  $('#simAb').addEventListener('click',function(){var killed=N-nres();if(!killed){st.textContent='Todas já resistentes: nada é eliminado.';return}var a=pop.filter(function(x){return x});while(a.length<N)a.push(1);pop=a;draw();st.textContent='Eliminou '+killed+' sensíveis; os resistentes se multiplicaram: '+pct()+'% resistentes.'});
+  $('#simHgt').addEventListener('click',function(){var idx=[];pop.forEach(function(v,i){if(!v)idx.push(i)});if(!idx.length){st.textContent='Todas já resistentes.';return}for(var n=0;n<3&&idx.length;n++){var p=Math.floor(Math.random()*idx.length);pop[idx[p]]=1;idx.splice(p,1)}draw();st.textContent='THG: 3 receberam o gene. Agora '+pct()+'% resistentes.'});
+  $('#simReset').addEventListener('click',reset);reset();
+})();
+
+/* combinação de mecanismos */
+(function(){
+  var host=$('[data-comb]'),out=$('#combOut');
+  COMB.forEach(function(c){var l=document.createElement('label');l.style.display='flex';l.style.gap='10px';l.style.margin='6px 0';l.style.cursor='pointer';l.innerHTML='<input type="checkbox" value="'+c.id+'" style="width:22px;height:22px;accent-color:#5aa9ff"><span>'+c.n+'</span>';host.appendChild(l)});
+  function upd(){
+    var on=$$('input:checked',host).map(function(i){return i.value});
+    if(!on.length){out.innerHTML='<span class="mut">Marque um ou mais mecanismos.</span>';return}
+    var h='<ul class="sm">'+COMB.filter(function(c){return on.indexOf(c.id)>-1}).map(function(c){return '<li><b>'+c.n+':</b> '+c.e+'</li>'}).join('')+'</ul>';
+    if((on.indexOf('esbl')>-1||on.indexOf('ampc')>-1)&&on.indexOf('por')>-1)h+='<div class="peg sm">Combinação clássica: β-lactamase + perda de porina pode elevar a CIM de carbapenêmicos sem carbapenemase.</div>';
+    if(on.length>=3)h+='<div class="dan sm">Possível fenótipo multirresistente: o rótulo não substitui antibiograma, confirmação e contexto.</div>';
+    out.innerHTML=h;
+  }
+  host.addEventListener('change',upd);upd();
+})();
+
+/* CIM */
+(function(){
+  var vals=[0.06,0.125,0.25,0.5,1,2,4,8,16,32,64],r=$('#micR');
+  function c(v,s,rr){return v<=s?'S':(v>rr?'R':'I')}
+  function upd(){var v=vals[+r.value],a=c(v,1,4),b=c(v,8,16),f=String(v).replace('.',',');
+    $('#micV').textContent=f+' mg/L';$('#micA').innerHTML=cat(a);$('#micB').innerHTML=cat(b);
+    $('#micT').textContent='Mesma CIM ('+f+' mg/L): fármaco A = '+a+', fármaco B = '+b+'.'+(a!==b?' A categoria depende do corte de cada fármaco: não compare CIMs entre fármacos.':'')+((a==='I'||b==='I')?' "I" = sensível, aumento da exposição.':'');}
+  r.addEventListener('input',upd);upd();
+})();
+
+/* fluxo e rota */
+(function(){
+  var fs=$('#flowSteps'),fd=$('#flowDet');
+  FLOW.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.className='step';b.innerHTML='<span class="n">'+(i+1)+'</span><b>'+s.t+'</b>';
+    b.addEventListener('click',function(){$$('.step',fs).forEach(function(x){x.classList.remove('on')});b.classList.add('on','seen');fd.innerHTML='<h3>'+(i+1)+'. '+s.t+'</h3>'+s.d});fs.appendChild(b)});
+  var rs=$('#routeSteps'),rd=$('#routeDet'),ct=$('#routeCt'),seen={};
+  ROUTE.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.className='step';b.innerHTML='<span class="n">'+(i+1)+'</span><b>'+s.t+'</b>';
+    b.addEventListener('click',function(){$$('.step',rs).forEach(function(x){x.classList.remove('on')});b.classList.add('on','seen');seen[i]=1;rd.innerHTML='<h3>'+(i+1)+'. '+s.t+'</h3>'+s.d;ct.textContent='Paradas visitadas: '+Object.keys(seen).length+' de '+ROUTE.length});rs.appendChild(b)});
+  var sb=$('#scenBtns'),so=$('#scenOut');
+  SCEN.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.className='btn gh sm';b.textContent=s.t;
+    b.addEventListener('click',function(){$$('button',sb).forEach(function(x){x.classList.add('gh')});b.classList.remove('gh');so.innerHTML='<h3>O que pode estar acontecendo</h3><p>'+s.s+'</p><div class="syn" style="margin-top:6px">'+s.a+'</div>'});sb.appendChild(b)});
+  so.innerHTML='<span class="mut">Escolha um cenário.</span>';
+})();
+
+/* frases-síntese: cada cartão revela a frase */
+(function(){
+  var h=$('#synCards');
+  SYN.forEach(function(t,i){var d=document.createElement('div');d.className='tile';d.tabIndex=0;d.setAttribute('role','button');d.innerHTML='<span class="hint">clique</span><b>Frase '+(i+1)+'</b><div class="more" style="font-size:1em"><b>'+t+'</b></div>';h.appendChild(d)});
+})();
+
+/* revisão espaçada salva no navegador */
+(function(){
+  var h=$('#spaced'),L=['Revisei em 24 h','Revisei em 7 dias','Revisei em 30 dias','Refiz a Arena'],saved={};
+  try{saved=JSON.parse(load('resbact_spaced')||'{}')}catch(e){saved={}}
+  h.innerHTML='<h3>Marcadores</h3>';
+  L.forEach(function(t,i){var l=document.createElement('label');l.style.cssText='display:flex;gap:10px;margin:8px 0;cursor:pointer';l.innerHTML='<input type="checkbox" '+(saved[i]?'checked':'')+' style="width:22px;height:22px;accent-color:#3ddc97"><span>'+t+'</span>';
+    $('input',l).addEventListener('change',function(e){saved[i]=e.target.checked;save('resbact_spaced',JSON.stringify(saved))});h.appendChild(l)});
+})();
+
+/* ==========================================================
+   NAVEGAÇÃO, ESCALA, PROJEÇÃO, ÍNDICE E NOTAS
+   ========================================================== */
+var slides=$$('.slide'),cur=0,fs=1,stage=$('#stage');
+function fit(){
+  var vp=$('#viewport'),w=vp.clientWidth,h=vp.clientHeight,k=Math.min(w/1280,h/720);
+  stage.style.transform='scale('+k+')';stage.style.left=Math.max(0,(w-1280*k)/2)+'px';stage.style.top=Math.max(0,(h-720*k)/2)+'px';
+}
+function setFs(v){fs=Math.max(.8,Math.min(1.5,v));stage.style.setProperty('--fs',fs);save('resbact_fs',String(fs))}
+function go(n){
+  n=Math.max(0,Math.min(slides.length-1,n));cur=n;
+  slides.forEach(function(s,i){s.classList.toggle('active',i===n)});
+  $('#prog').style.width=((n+1)/slides.length*100)+'%';
+  $('#ct').textContent=(n+1)+' / '+slides.length+' · '+slides[n].getAttribute('data-title');
+  save('resbact_slide',String(n));
+  if(location.hash!=='#'+(n+1))try{history.replaceState(null,'','#'+(n+1))}catch(e){}
+}
+function goTitle(t){for(var i=0;i<slides.length;i++){if(slides[i].getAttribute('data-title').indexOf(t)===0){go(i);return}}}
+function toggleOv(id,force){var o=$('#'+id);var show=force===undefined?o.hidden:force;o.hidden=!show;
+  if(show&&id==='notes'){$('#noteTitle').textContent=slides[cur].getAttribute('data-title');$('#notebody').textContent=slides[cur].getAttribute('data-note')||'Sem nota para este slide.'}}
+function buildIdx(){var l=$('#idxList');l.innerHTML='';slides.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.textContent=(i+1)+'. '+s.getAttribute('data-title');if(i===cur)b.className='cur';
+  b.addEventListener('click',function(){go(i);toggleOv('idx',false)});l.appendChild(b)})}
+function reveal(){$$('.slide.active .rv-btn').forEach(function(b){var body=b.nextElementSibling;if(body&&body.hidden)b.click()});$$('.slide.active .tile').forEach(function(t){t.classList.add('open')})}
+function fullscreen(){var d=document;if(!d.fullscreenElement){(d.documentElement.requestFullscreen||function(){}).call(d.documentElement)}else{d.exitFullscreen&&d.exitFullscreen()}}
+function proj(){document.body.classList.toggle('proj');if(document.body.classList.contains('proj'))setFs(fs*1.1);else setFs(fs/1.1);fit()}
+
+document.addEventListener('click',function(e){
+  var t=e.target.closest('.tile');if(t){t.classList.toggle('open');return}
+  var rb=e.target.closest('.rv-btn');if(rb){var body=rb.nextElementSibling;body.hidden=!body.hidden;rb.textContent=body.hidden?'Revelar':'Ocultar';return}
+  var g=e.target.closest('[data-go]');if(g){goTitle(g.getAttribute('data-go'));return}
+  if(e.target.closest('[data-close]')){toggleOv('idx',false);toggleOv('notes',false)}
+});
+document.addEventListener('keydown',function(e){
+  var tag=(e.target.tagName||'').toLowerCase();
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('tile')){e.preventDefault();e.target.classList.toggle('open');return}
+  if(tag==='input'&&e.key!=='Escape')return;
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  var k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||(k===' '&&tag!=='button')){e.preventDefault();go(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(k==='Home')go(0);else if(k==='End')go(slides.length-1);
+  else if(k==='g'||k==='G'){buildIdx();toggleOv('idx')}
+  else if(k==='n'||k==='N')toggleOv('notes');
+  else if(k==='r'||k==='R')reveal();
+  else if(k==='p'||k==='P')proj();
+  else if(k==='f'||k==='F')fullscreen();
+  else if(k==='m'||k==='M')document.body.classList.toggle('rm');
+  else if(k==='+'||k==='=')setFs(fs+.05);else if(k==='-'||k==='_')setFs(fs-.05);else if(k==='0')setFs(1);
+  else if(k==='Escape'){toggleOv('idx',false);toggleOv('notes',false)}
+});
+var tx=0;
+document.addEventListener('touchstart',function(e){tx=e.changedTouches[0].clientX},{passive:true});
+document.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60&&!e.target.closest('input,.body')){go(cur+(dx<0?1:-1))}},{passive:true});
+$('#bPrev').addEventListener('click',function(){go(cur-1)});
+$('#bNext').addEventListener('click',function(){go(cur+1)});
+$('#bMinus').addEventListener('click',function(){setFs(fs-.05)});
+$('#bPlus').addEventListener('click',function(){setFs(fs+.05)});
+$('#bIdx').addEventListener('click',function(){buildIdx();toggleOv('idx')});
+$('#bNote').addEventListener('click',function(){toggleOv('notes')});
+$('#bProj').addEventListener('click',proj);
+$('#bFs').addEventListener('click',fullscreen);
+window.addEventListener('resize',fit);
+document.addEventListener('fullscreenchange',fit);
+
+var s0=parseInt(load('resbact_slide'),10),f0=parseFloat(load('resbact_fs'));
+if(!isNaN(f0))setFs(f0);
+var h0=parseInt((location.hash||'').slice(1),10);
+fit();go(!isNaN(h0)?h0-1:(!isNaN(s0)?s0:0));
+</script>
+</body>
+</html>
