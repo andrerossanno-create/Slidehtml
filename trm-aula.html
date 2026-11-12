@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRM — O exame que localiza a lesão | Dr. André Rossanno</title>
+<meta name="description" content="Aula interativa de trauma raquimedular: tratos, miótomos, dermátomos, reflexos, choque medular, AIS e síndromes medulares.">
+<style>
+/* ============================================================
+   TRAUMA RAQUIMEDULAR — O EXAME QUE LOCALIZA A LESÃO
+   Arquivo único, offline, sem bibliotecas externas.
+   Dr. André Rossanno — memoriapotencial.com.br
+   ============================================================ */
+:root{
+  --papel:#f4f7fa;
+  --carta:#ffffff;
+  --tinta:#12293d;
+  --tinta-2:#41596e;
+  --linha:#d8e3ec;
+
+  --azul:#1282A2;          /* normalidade / conceito */
+  --azul-fundo:#e4f2f7;
+  --azul-forte:#0b5f79;
+
+  --obst:#d1572c;          /* obstrução */
+  --obst-fundo:#fdeee7;
+
+  --verde:#1e8f5e;         /* melhora / resposta */
+  --verde-fundo:#e6f5ee;
+
+  --roxo:#6d4aa8;          /* asma */
+  --roxo-fundo:#f0eafb;
+
+  --dpoc:#7a6a52;          /* DPOC */
+  --dpoc-fundo:#f1ede4;
+
+  --ouro:#a8791b;          /* pegadinha de prova */
+  --ouro-fundo:#fdf3d9;
+
+  --u:9px;                 /* unidade tipográfica: definida por JS */
+  --r:calc(var(--u)*1.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(circle at 12% 8%, #eaf3f8 0%, transparent 45%),
+    radial-gradient(circle at 88% 92%, #f6efe6 0%, transparent 45%),
+    var(--papel);
+  color:var(--tinta);
+  font-family:'Nunito','Trebuchet MS',Arial,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:3px solid var(--azul);outline-offset:3px}
+
+/* ---------- palco 16:9 ---------- */
+#palco{
+  position:relative;
+  width:min(100vw, calc((100vh - 74px) * 16 / 9));
+  height:min(calc(100vh - 74px), calc(100vw * 9 / 16));
+  background:var(--carta);
+  border-radius:calc(var(--u)*1.6);
+  box-shadow:0 calc(var(--u)*2) calc(var(--u)*6) rgba(18,41,61,.13);
+  overflow:hidden;
+}
+.slide{
+  position:absolute;inset:0;
+  padding:calc(var(--u)*4) calc(var(--u)*5.5);
+  display:none;
+  flex-direction:column;
+  overflow:auto;
+  animation:entra .34s ease both;
+}
+.slide.ativo{display:flex}
+@keyframes entra{from{opacity:0;transform:translateY(calc(var(--u)*1.6))}to{opacity:1;transform:none}}
+body.sem-mov .slide{animation:none}
+body.sem-mov *{transition:none!important;animation-duration:.001s!important}
+
+/* ---------- tipografia ---------- */
+.kicker{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  font-size:calc(var(--u)*1.35);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--azul);font-weight:700;margin-bottom:calc(var(--u)*1.2)}
+.kicker.k-obst{color:var(--obst)} .kicker.k-asma{color:var(--roxo)}
+.kicker.k-dpoc{color:var(--dpoc)} .kicker.k-ouro{color:var(--ouro)}
+.kicker.k-verde{color:var(--verde)}
+h1{font-size:calc(var(--u)*6.4);line-height:1.02;font-weight:900;letter-spacing:-.02em}
+h2{font-size:calc(var(--u)*4.3);line-height:1.06;font-weight:900;letter-spacing:-.015em}
+h3{font-size:calc(var(--u)*2.8);line-height:1.15;font-weight:800}
+p,li{font-size:calc(var(--u)*2.05);line-height:1.42;color:var(--tinta-2)}
+.grande{font-size:calc(var(--u)*3);line-height:1.25;color:var(--tinta);font-weight:700}
+.pequeno{font-size:calc(var(--u)*1.5);line-height:1.4}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Consolas,monospace}
+.centro{text-align:center}
+.assin{font-family:'Dancing Script','Segoe Script',cursive;font-size:calc(var(--u)*3.4);color:var(--tinta)}
+strong{color:var(--tinta)}
+.sp{margin-top:calc(var(--u)*2)}
+.sp3{margin-top:calc(var(--u)*3)}
+
+/* frase entre aspas, recorrente na aula */
+.fala{
+  font-size:calc(var(--u)*2.5);line-height:1.3;font-style:italic;font-weight:700;
+  color:var(--tinta);border-left:calc(var(--u)*.55) solid var(--azul);
+  padding-left:calc(var(--u)*1.6);
+}
+.fala.f-obst{border-color:var(--obst)} .fala.f-asma{border-color:var(--roxo)}
+.fala.f-dpoc{border-color:var(--dpoc)} .fala.f-ouro{border-color:var(--ouro)}
+.filo{
+  font-size:calc(var(--u)*2.2);font-style:italic;color:var(--tinta-2);
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+  padding:calc(var(--u)*1.4) 0;
+}
+
+/* ---------- estruturas ---------- */
+.linha-2{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*3);align-items:center;flex:1}
+.linha-3{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*2);align-items:stretch}
+.corpo{flex:1;display:flex;flex-direction:column;justify-content:center;gap:calc(var(--u)*2)}
+.cartao{
+  background:var(--carta);border:calc(var(--u)*.2) solid var(--linha);
+  border-radius:var(--r);padding:calc(var(--u)*2.2);
+}
+.cartao.c-azul{background:var(--azul-fundo);border-color:#bcdfeb}
+.cartao.c-obst{background:var(--obst-fundo);border-color:#f3cdbc}
+.cartao.c-verde{background:var(--verde-fundo);border-color:#bde3d0}
+.cartao.c-asma{background:var(--roxo-fundo);border-color:#d7c8f0}
+.cartao.c-dpoc{background:var(--dpoc-fundo);border-color:#ddd3c0}
+.cartao.c-ouro{background:var(--ouro-fundo);border-color:#eddba8}
+.rotulo{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.3);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.85}
+
+/* ---------- botões ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:calc(var(--u)*.8);
+  background:var(--azul);color:#fff;font-weight:800;
+  font-size:calc(var(--u)*1.9);padding:calc(var(--u)*1.2) calc(var(--u)*2.4);
+  border-radius:calc(var(--u)*.9);transition:transform .15s, box-shadow .15s, background .15s;
+  box-shadow:0 calc(var(--u)*.4) 0 rgba(0,0,0,.12);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn.b-obst{background:var(--obst)} .btn.b-verde{background:var(--verde)}
+.btn.b-asma{background:var(--roxo)} .btn.b-dpoc{background:var(--dpoc)}
+.btn.b-ouro{background:var(--ouro)}
+.btn.b-vazado{background:transparent;color:var(--azul);box-shadow:inset 0 0 0 calc(var(--u)*.25) var(--azul)}
+.btn-fila{display:flex;flex-wrap:wrap;gap:calc(var(--u)*1.2)}
+
+/* ---------- quiz ---------- */
+.quiz{display:flex;flex-direction:column;gap:calc(var(--u)*1.1)}
+.opc{
+  display:flex;align-items:flex-start;gap:calc(var(--u)*1.2);text-align:left;
+  background:#fff;border:calc(var(--u)*.22) solid var(--linha);border-radius:calc(var(--u)*.9);
+  padding:calc(var(--u)*1.25) calc(var(--u)*1.6);font-size:calc(var(--u)*1.85);
+  font-weight:700;color:var(--tinta);transition:border-color .15s,background .15s,transform .12s;
+}
+.opc:hover{border-color:var(--azul);transform:translateX(3px)}
+.opc .marca{font-family:'IBM Plex Mono',monospace;color:var(--azul);font-weight:800;min-width:calc(var(--u)*2)}
+.opc.certa{background:var(--verde-fundo);border-color:var(--verde);color:#12603f}
+.opc.errada{background:var(--obst-fundo);border-color:var(--obst);color:#8f331a}
+.opc.mostra-certa{background:var(--verde-fundo);border-color:var(--verde)}
+.opc[disabled]{cursor:default;transform:none}
+.feedback{
+  display:none;border-radius:calc(var(--u)*.9);padding:calc(var(--u)*1.6);
+  font-size:calc(var(--u)*1.8);line-height:1.35;
+  background:var(--azul-fundo);border-left:calc(var(--u)*.5) solid var(--azul);color:var(--tinta);
+}
+.feedback.aberto{display:block;animation:entra .3s ease both}
+.feedback b{color:var(--azul-forte)}
+
+/* revelação manual (modo ocultar respostas) */
+.oculto.escondido{display:none!important}
+.btn-revelar{
+  align-self:flex-start;background:var(--ouro-fundo);color:var(--ouro);
+  box-shadow:inset 0 0 0 calc(var(--u)*.25) var(--ouro);
+  font-weight:800;font-size:calc(var(--u)*1.7);
+  padding:calc(var(--u)*.9) calc(var(--u)*2);border-radius:calc(var(--u)*.9);
+  display:none;
+}
+.btn-revelar.visivel{display:inline-flex;align-items:center;gap:calc(var(--u)*.7)}
+
+/* ---------- barra inferior ---------- */
+#barra{
+  width:min(100vw, calc((100vh - 74px) * 16 / 9));
+  display:flex;align-items:center;gap:calc(var(--u)*1);
+  padding:calc(var(--u)*.9) calc(var(--u)*1.4);
+}
+.ctrl{
+  background:#fff;border:1px solid var(--linha);border-radius:calc(var(--u)*.8);
+  padding:calc(var(--u)*.75) calc(var(--u)*1.3);font-weight:800;
+  font-size:calc(var(--u)*1.45);color:var(--tinta);
+  display:inline-flex;align-items:center;gap:calc(var(--u)*.6);transition:background .15s,color .15s;
+}
+.ctrl:hover{background:var(--azul-fundo)}
+.ctrl.on{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+.ctrl.discreto{opacity:.72;font-weight:700}
+#contador{font-family:'IBM Plex Mono',monospace;font-weight:700;
+  font-size:calc(var(--u)*1.4);color:var(--tinta-2);min-width:calc(var(--u)*6);text-align:center}
+#trilho{flex:1;height:calc(var(--u)*.7);background:#dde7ef;border-radius:99px;overflow:hidden;cursor:pointer}
+#preenche{height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--verde));
+  border-radius:99px;transition:width .3s ease}
+
+/* ---------- mapa da aula ---------- */
+#mapa{
+  position:fixed;inset:0;background:rgba(10,26,38,.93);z-index:60;
+  display:none;flex-direction:column;padding:3vh 4vw;overflow:auto;
+}
+#mapa.aberto{display:flex}
+#mapa h3{color:#fff;font-size:calc(var(--u)*3);margin-bottom:calc(var(--u)*.6)}
+#mapa .pequeno{color:#9fc0d4}
+#mapaGrade{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:calc(var(--u)*1);margin-top:calc(var(--u)*2);
+}
+.mapa-item{
+  text-align:left;color:#eaf3f8;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);border-radius:calc(var(--u)*.8);
+  padding:calc(var(--u)*1.1) calc(var(--u)*1.3);font-size:calc(var(--u)*1.5);font-weight:700;
+  display:flex;gap:calc(var(--u)*1);transition:background .15s;
+}
+.mapa-item:hover{background:rgba(255,255,255,.18)}
+.mapa-item .n{font-family:'IBM Plex Mono',monospace;color:#6fc4dd;min-width:calc(var(--u)*2.6)}
+.mapa-item.atual{background:var(--azul);border-color:var(--azul)}
+
+/* ---------- modo professor ---------- */
+#prof{
+  position:fixed;right:0;top:0;bottom:0;width:min(30vw,400px);z-index:55;
+  background:#12293d;color:#dceaf3;padding:2.2vh 1.6vw;overflow:auto;
+  transform:translateX(102%);transition:transform .3s ease;box-shadow:-8px 0 24px rgba(0,0,0,.25);
+}
+#prof.aberto{transform:none}
+#prof .cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:calc(var(--u)*1.4)}
+#prof h4{font-size:calc(var(--u)*1.9);color:#fff}
+.prof-bloco{margin-bottom:calc(var(--u)*1.8)}
+.prof-bloco .rot{font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.15);
+  letter-spacing:.12em;text-transform:uppercase;color:#6fc4dd;margin-bottom:calc(var(--u)*.4)}
+.prof-bloco p{font-size:calc(var(--u)*1.5);color:#dceaf3;line-height:1.4}
+#prof .fechar{background:rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;color:#fff;font-weight:800}
+
+/* ---------- desenhos ---------- */
+svg{display:block;max-width:100%;height:auto}
+.svg-cheio{width:100%;height:auto}
+.pulsa{animation:pulsa 1.8s ease-in-out infinite}
+@keyframes pulsa{0%,100%{opacity:1}50%{opacity:.55}}
+.dica{
+  display:inline-block;font-size:calc(var(--u)*1.4);font-weight:800;color:var(--azul);
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;
+}
+
+/* medidor grande de números */
+.num{font-family:'IBM Plex Mono',monospace;font-weight:700;
+  font-size:calc(var(--u)*4.4);line-height:1;color:var(--tinta)}
+.num.n-azul{color:var(--azul)} .num.n-obst{color:var(--obst)} .num.n-verde{color:var(--verde)}
+.unid{font-size:calc(var(--u)*1.7);color:var(--tinta-2);font-weight:700}
+
+/* sliders */
+.slider-linha{display:flex;align-items:center;gap:calc(var(--u)*1.2);margin:calc(var(--u)*.7) 0}
+.slider-linha label{font-size:calc(var(--u)*1.6);font-weight:800;min-width:calc(var(--u)*11)}
+.slider-linha output{font-family:'IBM Plex Mono',monospace;font-weight:700;
+  font-size:calc(var(--u)*1.7);min-width:calc(var(--u)*6);text-align:right}
+input[type=range]{flex:1;accent-color:var(--azul);height:calc(var(--u)*2.4)}
+input[type=range].r-verde{accent-color:var(--verde)}
+
+/* barras comparativas */
+.barra-cx{display:flex;align-items:flex-end;gap:calc(var(--u)*1.6);height:calc(var(--u)*16)}
+.barra{width:calc(var(--u)*4.6);border-radius:calc(var(--u)*.5) calc(var(--u)*.5) 0 0;
+  background:var(--azul);transition:height .35s ease;position:relative}
+.barra.b-pos{background:var(--verde)}
+.barra .tag{position:absolute;top:calc(var(--u)*-2.4);left:50%;transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace;font-size:calc(var(--u)*1.3);font-weight:700;white-space:nowrap}
+.barra .pe{position:absolute;bottom:calc(var(--u)*-2.2);left:50%;transform:translateX(-50%);
+  font-size:calc(var(--u)*1.25);font-weight:800;white-space:nowrap;color:var(--tinta-2)}
+
+/* placar / jogo */
+.placar{font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:calc(var(--u)*2.2)}
+.chip{display:inline-flex;align-items:center;gap:calc(var(--u)*.5);
+  background:#fff;border:1px solid var(--linha);border-radius:99px;
+  padding:calc(var(--u)*.5) calc(var(--u)*1.2);font-size:calc(var(--u)*1.4);font-weight:800}
+.chip.ok{background:var(--verde-fundo);border-color:var(--verde);color:#12603f}
+.chip.no{background:var(--obst-fundo);border-color:var(--obst);color:#8f331a}
+
+/* palácio */
+.palacio-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*1.2)}
+.sala{
+  text-align:left;border-radius:var(--r);padding:calc(var(--u)*1.4);
+  border:calc(var(--u)*.22) solid var(--linha);background:#fff;transition:transform .15s,border-color .15s;
+}
+.sala:hover{transform:translateY(-3px);border-color:var(--azul)}
+.sala .ic{font-size:calc(var(--u)*2.8);line-height:1}
+.sala .tit{font-size:calc(var(--u)*1.7);font-weight:900;margin-top:calc(var(--u)*.4)}
+.sala .desc{font-size:calc(var(--u)*1.35);color:var(--tinta-2);margin-top:calc(var(--u)*.4);display:none}
+.sala.aberta .desc{display:block}
+.sala.aberta{border-color:var(--azul);background:var(--azul-fundo)}
+
+@media (max-width:820px){
+  .linha-2,.linha-3,.palacio-grade{grid-template-columns:1fr}
+  #prof{width:86vw}
+}
+@media print{
+  #barra,#mapa,#prof{display:none!important}
+  .slide{display:flex!important;position:relative;page-break-after:always;height:auto}
+  .oculto.escondido{display:block!important}
+  .feedback{display:block!important}
+}
+
+/* ---------- componentes da aula de TRM ---------- */
+.btn.on{box-shadow:0 0 0 calc(var(--u)*.35) var(--tinta)}
+.btn.b-ouro.b-vazado{background:transparent;color:var(--ouro);box-shadow:inset 0 0 0 calc(var(--u)*.25) var(--ouro)}
+.virar{text-align:left;display:block;width:100%;transition:transform .15s}
+.virar:hover{transform:translateY(-3px)}
+.virar .verso{visibility:hidden}
+.virar.aberta .verso{visibility:visible;animation:entra .3s ease both}
+.virar.aberta .frente{display:none}
+.virar .frente{color:var(--ouro);font-weight:800;margin-top:calc(var(--u)*1)}
+.escada{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(var(--u)*1.4);align-items:end}
+.degrau{background:var(--tinta);color:#fff;border-radius:var(--r) var(--r) 0 0;padding:calc(var(--u)*1.6);
+  display:flex;flex-direction:column;gap:calc(var(--u)*.8);text-align:left;transition:background .2s}
+.degrau:hover{background:#1c3d59}
+.degrau .raiz{font-size:calc(var(--u)*2.8);font-weight:700;color:#f0c75a}
+.degrau .oc{font-size:calc(var(--u)*1.8);line-height:1.35;visibility:hidden}
+.degrau.aberta .oc{visibility:visible;animation:entra .3s ease both}
+.degrau.aberta{background:var(--roxo)}
+select{font-family:inherit;font-size:calc(var(--u)*1.8);font-weight:800;color:var(--tinta);
+  padding:calc(var(--u)*.6) calc(var(--u)*1.2);border-radius:calc(var(--u)*.8);border:calc(var(--u)*.22) solid var(--linha);background:#fff;flex:1}
+.slider-linha label{min-width:calc(var(--u)*17)}
+.sala{cursor:pointer}
+@media (max-width:820px){.escada{grid-template-columns:1fr 1fr}}
+/* compactação: tudo cabe no palco sem rolagem */
+.slide{padding:calc(var(--u)*2.6) calc(var(--u)*4.6)}
+h2{font-size:calc(var(--u)*3.5)}
+h3{font-size:calc(var(--u)*2.4)}
+p,li{font-size:calc(var(--u)*1.8);line-height:1.36}
+.grande{font-size:calc(var(--u)*2.5)}
+.cartao{padding:calc(var(--u)*1.5) calc(var(--u)*1.8)}
+.sp{margin-top:calc(var(--u)*1.3)}
+.sp3{margin-top:calc(var(--u)*2)}
+.kicker{margin-bottom:calc(var(--u)*.7)}
+.opc{padding:calc(var(--u)*.9) calc(var(--u)*1.4);font-size:calc(var(--u)*1.7)}
+.quiz{gap:calc(var(--u)*.8)}
+.feedback{padding:calc(var(--u)*1.2);font-size:calc(var(--u)*1.65)}
+.fala{font-size:calc(var(--u)*2.1)}
+.btn{font-size:calc(var(--u)*1.7);padding:calc(var(--u)*.9) calc(var(--u)*2)}
+.linha-2{gap:calc(var(--u)*2.4)}
+.passo{padding:calc(var(--u)*.9) calc(var(--u)*1.4)}
+.passo p{font-size:calc(var(--u)*1.55)}
+.passo b{font-size:calc(var(--u)*1.7)}
+#maoCena svg,#troncoCena svg,#cordaTratos svg,#cordaSind svg,#cordaAbertura svg{max-height:calc(var(--u)*27);margin:0 auto}
+.num{font-size:calc(var(--u)*3.6)}
+.passo .resp-passo{margin-top:calc(var(--u)*.4)}
+#casoFinal,#martelo{gap:calc(var(--u)*.6)}
+#casoFinal .passo{padding:calc(var(--u)*.7) calc(var(--u)*1.2)}
+#capaC4 p{font-size:calc(var(--u)*1.6)}
+/* ---------- casos clínicos ---------- */
+.ramo-topo{display:flex;justify-content:space-between;align-items:center;gap:calc(var(--u)*1)}
+.ramo-fase{background:var(--obst);color:#fff;font-weight:900;border-radius:999px;padding:calc(var(--u)*.4) calc(var(--u)*1.4);font-size:calc(var(--u)*1.6)}
+.cena{background:#12293d;color:#f3efe4;border-radius:var(--r);padding:calc(var(--u)*1.3) calc(var(--u)*1.6);font-size:calc(var(--u)*1.7);line-height:1.4}
+.ramo-espera{border-style:dashed}
+.ramo-espera p{color:var(--suave,#5b6472)}
+#ramoMoto .opc,#ramoFaca .opc,#ramoResp .opc,#ramoDisr .opc{font-size:calc(var(--u)*1.55);padding:calc(var(--u)*.7) calc(var(--u)*1.2)}
+#ramoMoto .cartao p,#ramoFaca .cartao p,#ramoResp .cartao p,#ramoDisr .cartao p{font-size:calc(var(--u)*1.55)}
+.espelho{display:grid;gap:calc(var(--u)*1.6);align-items:stretch}
+.esp-card p{font-size:calc(var(--u)*1.6)}
+.esp-btn{font-size:calc(var(--u)*1.45);padding:calc(var(--u)*.6) calc(var(--u)*1.2)}
+.esp-ex p{font-size:calc(var(--u)*1.5)}
+.ordem-alvo{display:grid;grid-template-columns:repeat(6,1fr);gap:calc(var(--u)*1)}
+.ordem-slot{min-height:calc(var(--u)*11);border:calc(var(--u)*.22) dashed var(--linha);border-radius:var(--r);padding:calc(var(--u)*1);
+  display:flex;flex-direction:column;gap:calc(var(--u)*.5);font-size:calc(var(--u)*1.45);line-height:1.3;color:var(--tinta)}
+.ordem-slot.cheio{border-style:solid;border-color:var(--obst);background:#fff;animation:entra .3s ease both}
+.ordem-letra{font-size:calc(var(--u)*2.6);min-width:calc(var(--u)*7);justify-content:center;font-family:'IBM Plex Mono',monospace}
+.treme{animation:treme .4s}
+@keyframes treme{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.tabx-dupla{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*1.2)}
+.tabx{width:100%;border-collapse:collapse;font-size:calc(var(--u)*1.55);background:#fff;border-radius:calc(var(--u)*.8);overflow:hidden}
+.tabx th{background:#12293d;color:#f3efe4;text-align:left;padding:calc(var(--u)*.35) calc(var(--u)*.8);font-size:calc(var(--u)*1.4)}
+.tabx td{padding:calc(var(--u)*.3) calc(var(--u)*.8);border-bottom:1px solid #e6e1d6;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.est-grade{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*.9)}
+.est-campo{display:flex;flex-direction:column;gap:calc(var(--u)*.3);font-weight:800;font-size:calc(var(--u)*1.4);border-radius:calc(var(--u)*.8);padding:calc(var(--u)*.4);border:calc(var(--u)*.2) solid transparent}
+.est-campo select{font-size:calc(var(--u)*1.6);padding:calc(var(--u)*.4) calc(var(--u)*.8)}
+.est-campo.ok{border-color:var(--verde);background:#e7f5ee}
+.est-campo.nao{border-color:var(--obst);background:#fbe9e3}
+#estRes p{font-size:calc(var(--u)*1.5)}
+.ramo-erros{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*.3) calc(var(--u)*1.6);margin-top:calc(var(--u)*.8)}
+.ramo-erros p{font-size:calc(var(--u)*1.4);line-height:1.3}
+#espTC .esp-card p{font-size:calc(var(--u)*1.5)}
+#espTC .esp-ex p{font-size:calc(var(--u)*1.4)}
+.espelho + .cartao p{font-size:calc(var(--u)*1.5)}
+#estRes p{font-size:calc(var(--u)*1.4)}
+#estacao .sp{margin-top:calc(var(--u)*1)}
+.ramo-erros p{font-size:calc(var(--u)*1.3)}
+[id^=ramo] .num{font-size:calc(var(--u)*3)}
+#espTC .esp-card{padding:calc(var(--u)*1.1) calc(var(--u)*1.4)}
+#espTC .esp-card p{font-size:calc(var(--u)*1.42)}
+#espTC .btn-fila.sp{margin-top:calc(var(--u)*.8)}
+.ramo-erros p{font-size:calc(var(--u)*1.22);line-height:1.25}
+.ramo-erros{gap:calc(var(--u)*.2) calc(var(--u)*1.4)}
+</style>
+</head>
+<body>
+<div id="palco">
+
+<!-- 1 -->
+<section class="slide ativo" data-p="1" data-t="Abertura — o exame que localiza a lesão">
+  <div class="linha-2">
+    <div>
+      <div class="kicker">Aula interativa · Trauma raquimedular</div>
+      <h1>TRM</h1>
+      <h3 class="sp" style="color:var(--azul)">O exame que localiza a lesão</h3>
+      <p class="sp">Miótomos, dermátomos, reflexos e síndromes medulares à beira do leito.</p>
+      <div class="fala sp3">“Doutor… eu não sinto minhas pernas.”</div>
+      <p class="pequeno sp" style="color:var(--azul)">Guarde a frase. No fim da aula você saberá o que perguntar ao corpo dele.</p>
+      <div class="assin sp3">Dr. André Rossanno</div>
+    </div>
+    <div id="cordaAbertura"></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-p="2" data-t="Filosofia da aula">
+  <div class="corpo centro">
+    <div class="kicker">Filosofia da aula</div>
+    <p class="grande" style="font-size:calc(var(--u)*3.6);max-width:80%;margin:0 auto">A medula escreve no corpo o endereço da própria ferida: em força, em tato e em reflexo. Examinar é aprender a ler essa escrita antes que o tempo a apague.</p>
+    <div class="assin sp3">— Dr. André Rossanno</div>
+    <div class="btn-fila sp3" style="justify-content:center"><button class="btn b-vazado" onclick="revelaBloco('filo1',this)">O que isso muda na prática?</button></div>
+    <div id="filo1" class="filo sp" style="display:none">A tomografia mostra o osso. A ressonância mostra a medula. Quem diz o nível e o prognóstico é o exame físico.</div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-p="3" data-t="Caso de abertura — o motociclista">
+  <div class="kicker k-obst">Caso de abertura · sala vermelha</div>
+  <h2>Motociclista de 24 anos, colar cervical, lúcido</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <div class="cartao c-obst">
+        <p><span class="mono">PA 88 × 54 · FC 58 · SpO₂ 95% · pele quente e seca</span></p>
+        <p class="sp">Braços se movem. Pernas sem movimento. <strong>Nenhum reflexo</strong> nos membros inferiores.</p>
+      </div>
+      <div class="fala f-obst sp3">“É choque neurogênico, professor.”</div>
+    </div>
+    <div>
+      <h3>Qual é a primeira hipótese para a hipotensão?</h3>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>Choque neurogênico: iniciar vasopressor</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>Hemorragia, até prova em contrário</span></button>
+        <button class="opc" data-ok="0"><span class="marca">C</span><span>Choque medular: aguardar os reflexos</span></button>
+      </div>
+      <div class="feedback"><b>B.</b> O padrão (bradicardia, pele quente) combina com neurogênico, mas no trauma ele é diagnóstico de exclusão. Choque medular é fenômeno de reflexo, não de pressão.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== BLOCO A · xABCDE e casos da sala vermelha ===== -->
+<section class="slide" data-p="a1" data-t="Filosofia — a medula espera, o sangue não">
+  <div class="corpo centro">
+    <div class="kicker k-obst">Ato 0 · Antes do exame neurológico</div>
+    <p class="grande" style="font-size:calc(var(--u)*3.6);max-width:80%;margin:0 auto">A medula espera alguns minutos. O sangue não espera nenhum. Primeiro se salva a vida; depois se dá nome à lesão.</p>
+    <div class="assin sp3">— Dr. André Rossanno</div>
+    <div class="btn-fila sp3" style="justify-content:center"><button class="btn b-obst" onclick="revelaBloco('filoX',this)">Por que o sangue vem primeiro?</button></div>
+    <div id="filoX" class="filo sp" style="display:none">A lesão primária já aconteceu no asfalto. O que você ainda controla é o segundo trauma: o sangue que falta, o oxigênio que falta, a pressão que cai.</div>
+  </div>
+</section>
+
+<section class="slide" data-p="a2" data-t="Jogo — ordene o xABCDE">
+  <div class="kicker k-obst">Ato 0 · xABCDE · ATLS 11ª edição</div>
+  <h2>Toque nas letras na ordem do atendimento</h2>
+  <p class="sp">Um erro fica marcado em vermelho e explica por quê.</p>
+  <div id="ordemX" class="sp"></div>
+</section>
+
+<section class="slide" data-p="a3" data-t="xABCDE no TRM — onde a turma erra">
+  <div class="kicker k-obst">Ato 0 · xABCDE no trauma raquimedular</div>
+  <h2>Em cada letra, um erro clássico. Diga qual antes de abrir.</h2>
+  <div class="palacio-grade sp">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🩸</div><div class="tit">x · Sangue que mata</div><div class="desc"><b>Faça:</b> torniquete, compressão, pelve. <b>Erro:</b> “o A sempre vem primeiro”.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🫁</div><div class="tit">A · Via aérea e coluna</div><div class="desc"><b>Faça:</b> estabilização manual em linha; videolaringoscópio. <b>Erro:</b> hiperestender o pescoço.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🎈</div><div class="tit">B · O diafragma</div><div class="desc"><b>Faça:</b> vigiar C3–C5, tosse, capacidade vital. <b>Erro:</b> “está falando, então respira”.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">💉</div><div class="tit">C · Choque</div><div class="desc"><b>Faça:</b> procurar sangue antes de chamar de neurogênico. <b>Erro:</b> noradrenalina antes do eFAST.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🔍</div><div class="tit">D · Neurológico</div><div class="desc"><b>Faça:</b> Glasgow, pupilas e exame motor e sensitivo antes de sedar. <b>Erro:</b> sedar sem documentar.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🛏️</div><div class="tit">E · Exposição</div><div class="desc"><b>Faça:</b> rolamento em bloco, ver o dorso, aquecer, sair da prancha. <b>Erro:</b> horas na prancha rígida.</div></button>
+  </div>
+  <div class="fala f-ouro sp">“3, 4, 5 mantém o diafragma vivo. Acima de T6, o coração perde o acelerador.”</div>
+</section>
+
+<section class="slide" data-p="a4" data-t="Caso 1 — sala vermelha, decisão a decisão">
+  <div class="kicker k-obst">Caso clínico 1 · você é o plantonista</div>
+  <h2>O motociclista, decisão a decisão</h2>
+  <div id="ramoMoto" class="sp"></div>
+</section>
+
+<section class="slide" data-p="a5" data-t="Caso 2 — facada no pescoço">
+  <div class="kicker k-obst">Caso clínico 2 · trauma penetrante</div>
+  <h2>Facada no pescoço: o colar ajuda ou atrapalha?</h2>
+  <div id="ramoFaca" class="sp"></div>
+</section>
+
+<section class="slide" data-p="a6" data-t="Caso espelho — tomografia ou libera?">
+  <div class="kicker k-ouro">Caso espelho · regras de imagem cervical</div>
+  <h2>Três pescoços: tomografia ou libera?</h2>
+  <div id="espTC" class="sp"></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-p="4" data-t="Roteiro — cinco atos">
+  <div class="kicker">Roteiro</div>
+  <h2>Cinco atos para localizar uma lesão medular</h2>
+  <p class="sp">Toque em cada ato para ver a pergunta que ele responde.</p>
+  <div class="palacio-grade sp" style="grid-template-columns:repeat(5,1fr)">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🧵</div><div class="tit">1 · Os fios</div><div class="desc">Que trato leva o quê, e onde ele cruza?</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">💪</div><div class="tit">2 · Motor</div><div class="desc">O que cada raiz MOVE? Miótomos.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🪶</div><div class="tit">3 · Sensitivo</div><div class="desc">Onde cada raiz SENTE? Dermátomos.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🔨</div><div class="tit">4 · Reflexo</div><div class="desc">Que segmento responde ao martelo? Foco da aula.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="ic">🏷️</div><div class="tit">5 · O nome</div><div class="desc">Nível, AIS e síndrome.</div></button>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-p="5" data-t="Ato 1 — toque no trato">
+  <div class="kicker">Ato 1 · Os fios</div>
+  <h2>Toque em um trato do corte da medula</h2>
+  <div class="linha-2 sp">
+    <div><div id="cordaTratos"></div><p class="pequeno centro">Dorso em cima · ventre embaixo</p></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn" onclick="trato('cp')">Coluna posterior</button>
+        <button class="btn b-verde" onclick="trato('ce')">Corticoespinhal</button>
+        <button class="btn b-obst" onclick="trato('et')">Espinotalâmico</button>
+      </div>
+      <div id="tratoPainel" class="cartao sp"><p>Três tratos explicam quase toda síndrome medular. Escolha um.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-p="6" data-t="Onde o trato cruza">
+  <div class="kicker">Ato 1 · Os fios</div>
+  <h2>Faca na metade direita da medula, em T8</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <h3>De que lado o paciente perde a dor?</h3>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>À direita, junto com a força</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>À esquerda, do lado oposto</span></button>
+        <button class="opc" data-ok="0"><span class="marca">C</span><span>Dos dois lados</span></button>
+      </div>
+      <div class="feedback"><b>B.</b> A fibra de dor cruza na própria medula, 1 a 2 segmentos acima de onde entra. Força e posição só cruzam no bulbo.</div>
+    </div>
+    <div>
+      <button class="btn b-ouro" onclick="revelaBloco('cruzaTab',this)">Mostrar a regra</button>
+      <div id="cruzaTab" style="display:none" class="sp">
+        <div class="cartao c-azul"><p><strong>Coluna posterior</strong> (posição, vibração): cruza no bulbo → déficit do <strong>mesmo lado</strong>.</p></div>
+        <div class="cartao c-verde sp"><p><strong>Corticoespinhal</strong> (força): cruza no bulbo → déficit do <strong>mesmo lado</strong>.</p></div>
+        <div class="cartao c-obst sp"><p><strong>Espinotalâmico</strong> (dor, temperatura): cruza na medula → déficit do <strong>lado oposto</strong>.</p></div>
+        <div class="fala f-ouro sp">“Dor cruza rápido. Posição e força esperam o bulbo.”</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-p="7" data-t="MOTOR — braço, C5 a T1">
+  <div class="kicker k-verde">Ato 2 · Só MOTOR · miótomos</div>
+  <h2>Braço: o que cada raiz move?</h2>
+  <p class="sp">Antes de tocar, faça o gesto e diga a raiz. Depois confira.</p>
+  <div class="btn-fila sp" id="mbBotoes"></div>
+  <div id="mbPainel" class="cartao c-verde sp"><p>Toque nas cinco raízes, uma por vez.</p></div>
+  <div id="mbMacete" class="cartao c-ouro sp" style="display:none"><div class="rotulo" style="color:var(--ouro)">Macete motor · faça com a turma</div><div class="grande sp">“Pega, acelera, empurra, aperta, abre.”</div></div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-p="8" data-t="MOTOR — perna, L2 a S1">
+  <div class="kicker k-verde">Ato 2 · Só MOTOR · miótomos</div>
+  <h2>Perna: o que cada raiz move?</h2>
+  <p class="sp">Uma articulação por raiz, descendo do quadril ao pé.</p>
+  <div class="btn-fila sp" id="mpBotoes"></div>
+  <div id="mpPainel" class="cartao c-verde sp"><p>Toque nas cinco raízes, uma por vez.</p></div>
+  <div id="mpMacete" class="cartao c-ouro sp" style="display:none"><div class="rotulo" style="color:var(--ouro)">Macete motor · do quadril ao pé</div><div class="grande sp">“Sobe, chuta, calcanhar, dedão, ponta.”</div><p class="pequeno sp">De S2 a S5 não há músculo-chave: o motor sacral é a contração voluntária do esfíncter anal.</p></div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-p="9" data-t="Jogo MOTOR — que raiz move?">
+  <div class="kicker k-verde">Jogo · só motor</div>
+  <h2>Que raiz move?</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgMotor"></div></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-p="10" data-t="Força grau 3 e o nível motor">
+  <div class="kicker k-verde">Ato 2 · Só MOTOR</div>
+  <h2>C5 com força 4 e C6 com força 3</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <h3>Qual é o nível motor?</h3>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>C6, porque tem força 3</span></button>
+        <button class="opc" data-ok="1"><span class="marca">B</span><span>C5</span></button>
+        <button class="opc" data-ok="0"><span class="marca">C</span><span>C4</span></button>
+      </div>
+      <div class="feedback"><b>B.</b> Nível motor é o músculo-chave mais caudal com força ≥ 3, <b>desde que os de cima tenham força 5</b>. O 3 de C6 não conta porque C5 não é 5.</div>
+    </div>
+    <div>
+      <button class="btn b-verde" onclick="revelaBloco('forcaEsc',this)">Mostrar a escala de força</button>
+      <div id="forcaEsc" class="cartao c-verde sp" style="display:none">
+        <p><span class="mono">0</span> paralisia total · <span class="mono">1</span> contração visível · <span class="mono">2</span> move sem a gravidade</p>
+        <p class="sp"><strong><span class="mono">3</span> vence a gravidade</strong> — a fronteira</p>
+        <p class="sp"><span class="mono">4</span> vence alguma resistência · <span class="mono">5</span> normal</p>
+        <div class="fala sp">“O 3 só conta se o de cima for 5.”</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-p="11" data-t="SENSITIVO — braço e mão">
+  <div class="kicker">Ato 3 · Só SENSITIVO · dermátomos</div>
+  <h2>Braço: onde cada raiz sente?</h2>
+  <div class="linha-2 sp">
+    <div><div id="maoCena"></div><p class="pequeno centro">Toque nos dedos coloridos</p></div>
+    <div>
+      <div class="btn-fila" id="sbBotoes"></div>
+      <div id="sbPainel" class="cartao c-azul sp"><p>Toque nas raízes ou nos dedos.</p></div>
+      <div id="sbMacete" class="cartao c-ouro sp" style="display:none"><div class="rotulo" style="color:var(--ouro)">Macete sensitivo</div><p class="sp"><strong>Desce por fora (C5), passa pela mão (6, 7, 8), sobe por dentro (T1) até a axila (T2).</strong></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-p="12" data-t="SENSITIVO — tronco">
+  <div class="kicker">Ato 3 · Só SENSITIVO · dermátomos</div>
+  <h2>Tronco: toque no marco e diga o nível</h2>
+  <div class="linha-2 sp">
+    <div><div id="troncoCena"></div></div>
+    <div>
+      <div id="stPainel" class="cartao c-azul"><p>Quatro marcos resolvem o nível sensitivo do tronco. Toque em cada linha.</p></div>
+      <div id="stMacete" class="cartao c-ouro sp" style="display:none"><div class="rotulo" style="color:var(--ouro)">Macete sensitivo</div><p class="sp"><strong>“4 no peito, 6 na boca do estômago, 10 no umbigo, 12 na virilha.”</strong></p></div>
+      <div class="btn-fila sp"><button class="btn b-ouro" onclick="revelaBloco('capaC4',this)">Pegadinha da “capa”</button></div>
+      <div id="capaC4" class="cartao c-ouro sp" style="display:none"><p>C4 desce do ombro até logo abaixo da clavícula. Sentir o alto do tórax <strong>não prova</strong> nível torácico: confira o braço.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-p="13" data-t="SENSITIVO — perna, L2 a S5">
+  <div class="kicker">Ato 3 · Só SENSITIVO · dermátomos</div>
+  <h2>Perna: os L na frente, os S atrás</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <div class="rotulo" style="color:var(--verde)">Pela frente · lombares</div>
+      <div class="btn-fila sp" id="spfBotoes"></div>
+      <div class="rotulo sp3" style="color:var(--obst)">Por trás · sacrais</div>
+      <div class="btn-fila sp" id="sptBotoes"></div>
+    </div>
+    <div>
+      <div id="spPainel" class="cartao c-azul"><p>Toque nas oito raízes. Aqui é só tato e agulha, nenhum movimento.</p></div>
+      <div id="spMacete" class="cartao c-ouro sp" style="display:none"><div class="rotulo" style="color:var(--ouro)">Macete sensitivo · a espiral</div><p class="sp"><strong>“Os L descem pela frente, S1 contorna o calcanhar, os S sobem por trás até o ânus.”</strong></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-p="14" data-t="Jogo SENSITIVO — que raiz sente?">
+  <div class="kicker">Jogo · só sensitivo</div>
+  <h2>Que raiz sente aqui?</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgSens"></div></div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-p="15" data-t="Lado a lado — motor × sensitivo">
+  <div class="kicker k-ouro">Síntese · a mesma raiz, duas perguntas</div>
+  <h2>Escolha a raiz. Responda. Depois vire os cartões.</h2>
+  <div class="btn-fila sp" id="ladoBotoes"></div>
+  <div class="linha-2 sp" style="align-items:stretch">
+    <button class="cartao c-verde virar" id="ladoM" onclick="this.classList.add('aberta')"><div class="rotulo" style="color:var(--verde)">MOTOR · o que ela move</div><div class="grande sp verso" id="ladoMt">—</div><p class="pequeno frente">toque para revelar</p></button>
+    <button class="cartao c-azul virar" id="ladoS" onclick="this.classList.add('aberta')"><div class="rotulo" style="color:var(--azul)">SENSITIVO · onde ela sente</div><div class="grande sp verso" id="ladoSt">—</div><p class="pequeno frente">toque para revelar</p></button>
+  </div>
+  <p class="pequeno sp centro">O macete dos gestos é motor e para em S1. A espiral é sensitiva e vai até S4–S5.</p>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-p="16" data-t="Filosofia — o reflexo">
+  <div class="corpo centro">
+    <div class="kicker k-asma">Ato 4 · O reflexo</div>
+    <p class="grande" style="font-size:calc(var(--u)*3.6);max-width:80%;margin:0 auto">O reflexo é a medula respondendo sem pedir licença ao cérebro. Por isso ele conta o que o paciente não consegue contar.</p>
+    <div class="assin sp3">— Dr. André Rossanno</div>
+    <div class="btn-fila sp3" style="justify-content:center"><button class="btn b-asma" onclick="revelaBloco('filo2',this)">Por que isso importa no trauma?</button></div>
+    <div id="filo2" class="filo sp" style="display:none">Força e sensibilidade pedem colaboração. O reflexo funciona no paciente sedado, intubado ou confuso.</div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-p="17" data-t="A escada dos reflexos">
+  <div class="kicker k-asma">Ato 4 · O reflexo · macete central</div>
+  <h2>A escada dos reflexos: conte de 1 a 8</h2>
+  <p class="sp">Diga o reflexo de cada degrau antes de tocar nele.</p>
+  <div class="escada sp">
+    <button class="degrau" style="height:calc(var(--u)*13)" onclick="this.classList.add('aberta')"><span class="mono raiz">S1–S2</span><span class="oc"><b>Aquileu</b><br>“1, 2: calço o sapato”</span></button>
+    <button class="degrau" style="height:calc(var(--u)*17)" onclick="this.classList.add('aberta')"><span class="mono raiz">L3–L4</span><span class="oc"><b>Patelar</b><br>“3, 4: chuto a porta”</span></button>
+    <button class="degrau" style="height:calc(var(--u)*21)" onclick="this.classList.add('aberta')"><span class="mono raiz">C5–C6</span><span class="oc"><b>Bicipital</b> e braquiorradial<br>“5, 6: dobro o braço”</span></button>
+    <button class="degrau" style="height:calc(var(--u)*25)" onclick="this.classList.add('aberta')"><span class="mono raiz">C7–C8</span><span class="oc"><b>Tricipital</b><br>“7, 8: estico o braço”</span></button>
+  </div>
+  <p class="pequeno sp">Graduação: 0 ausente · 1+ diminuído · 2+ normal · 3+ vivo · 4+ com clônus.</p>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-p="18" data-t="Jogo do martelo">
+  <div class="kicker k-asma">Jogo · reflexos</div>
+  <h2>Bati o martelo. Que segmento respondeu?</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgReflexo"></div></div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-p="19" data-t="Reflexos cutâneos e sacrais">
+  <div class="kicker k-asma">Ato 4 · O reflexo</div>
+  <h2>Reflexos cutâneos e sacrais</h2>
+  <p class="sp">Diga o segmento e a resposta esperada. Depois abra o cartão.</p>
+  <div class="palacio-grade sp">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Cutâneo-abdominal</div><div class="desc"><b>T7–T12.</b> Riscar o abdome: o umbigo desvia para o estímulo. T10 é o umbigo.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Cremastérico</div><div class="desc"><b>L1–L2.</b> Riscar a face medial da coxa: o testículo sobe.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Bulbocavernoso</div><div class="desc"><b>S2–S4.</b> Apertar a glande ou tracionar a sonda: o ânus contrai. É reflexo, não é voluntário.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Cutâneo-anal</div><div class="desc"><b>S2–S4.</b> Tocar a pele perianal: o esfíncter contrai.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Cutâneo-plantar</div><div class="desc"><b>L5–S2.</b> Riscar a planta: hálux em extensão é Babinski, sinal de neurônio motor superior.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Sinal de Beevor</div><div class="desc">Ao levantar a cabeça, o umbigo sobe: músculos acima de T10 funcionam, os de baixo não.</div></button>
+  </div>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-p="20" data-t="Neurônio motor superior × inferior">
+  <div class="kicker k-asma">Ato 4 · O reflexo</div>
+  <h2>Lesão em C5–C6, três meses depois</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <h3>Como estão os reflexos?</h3>
+      <div class="quiz sp" data-quiz>
+        <button class="opc" data-ok="0"><span class="marca">A</span><span>Todos abolidos abaixo da lesão</span></button>
+        <button class="opc" data-ok="0"><span class="marca">B</span><span>Todos exagerados, inclusive o bicipital</span></button>
+        <button class="opc" data-ok="1"><span class="marca">C</span><span>Bicipital abolido; tricipital, patelar e aquileu exagerados</span></button>
+      </div>
+      <div class="feedback"><b>C.</b> No nível atingido o arco foi destruído: padrão de neurônio motor inferior. Abaixo dele o freio de cima foi cortado: padrão superior.</div>
+    </div>
+    <div>
+      <button class="btn b-asma" onclick="revelaBloco('nmTab',this)">Comparar os dois padrões</button>
+      <div id="nmTab" style="display:none" class="sp">
+        <div class="cartao c-obst"><div class="rotulo" style="color:var(--obst)">Superior · lesão acima do arco</div><p class="sp">Espástico · reflexos exagerados, clônus · Babinski · atrofia tardia</p></div>
+        <div class="cartao c-azul sp"><div class="rotulo">Inferior · lesão no arco</div><p class="sp">Flácido · reflexos abolidos · plantar flexor ou ausente · atrofia precoce · fasciculações</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-p="21" data-t="Localize a lesão só com o martelo">
+  <div class="kicker k-asma">Aplicação · raciocínio</div>
+  <h2>Localize a lesão só com o martelo</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div class="cartao c-asma">
+      <p>Todos os pacientes estão fora do choque medular. Responda em voz alta e avance.</p>
+      <div class="btn-fila sp3"><button class="btn b-asma" onclick="passoCaso('martelo')">▶ Próximo paciente</button></div>
+    </div>
+    <div id="martelo" class="quiz">
+      <div class="cartao passo"><b>1.</b> Bicipital e tricipital normais. Patelar e aquileu 3+ com Babinski.<div class="resp-passo sp"><p>Lesão entre T1 e L2: os braços estão acima dela, as pernas abaixo.</p></div></div>
+      <div class="cartao passo"><b>2.</b> Bicipital normal. Tricipital abolido. Patelar e aquileu 3+.<div class="resp-passo sp"><p>Lesão em C7–C8: o arco do tríceps foi destruído e tudo abaixo ficou exagerado.</p></div></div>
+      <div class="cartao passo"><b>3.</b> Patelar normal. Aquileu abolido. Anestesia em sela.<div class="resp-passo sp"><p>Segmentos sacrais: cone medular. O patelar, L3–L4, fica acima da lesão.</p></div></div>
+      <div class="cartao passo"><b>4.</b> Patelar e aquileu abolidos, assimétricos, com dor radicular.<div class="resp-passo sp"><p>Raízes: cauda equina. Padrão inferior puro.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 -->
+<section class="slide" data-p="22" data-t="Choque medular — linha do tempo">
+  <div class="kicker k-asma">Ato 4 · O reflexo</div>
+  <h2>Choque medular: arraste o tempo</h2>
+  <div class="slider-linha sp"><label>Tempo após o trauma</label><input type="range" id="sChoque" min="0" max="3" step="1" value="0" oninput="choqueFase()"><output id="oChoque"></output></div>
+  <div class="linha-2 sp" style="align-items:stretch">
+    <div id="choquePainel" class="cartao c-asma"></div>
+    <div class="cartao c-ouro"><div class="rotulo" style="color:var(--ouro)">Regra de plantão</div><p class="sp"><strong>Arreflexia nas primeiras horas não diferencia lesão completa de choque medular.</strong></p><p class="sp">Reexamine em 24 a 72 horas. O retorno do bulbocavernoso avisa que a fase 1 acabou.</p><p class="pequeno sp">Modelo de quatro fases: Ditunno e cols., Spinal Cord 2004. Os tempos variam.</p></div>
+  </div>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-p="23" data-t="Jogo — três choques">
+  <div class="kicker k-obst">Jogo · medular, neurogênico ou hemorrágico?</div>
+  <h2>Que choque é este?</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgChoque"></div></div>
+</section>
+
+<!-- 24 -->
+<section class="slide" data-p="24" data-t="Calculadora do nível neurológico">
+  <div class="kicker k-ouro">Ato 5 · O nome</div>
+  <h2>Monte o exame e calcule o nível neurológico</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <div class="slider-linha"><label>Sensitivo direito</label><select id="nSD" onchange="nivelCalc()"></select></div>
+      <div class="slider-linha"><label>Sensitivo esquerdo</label><select id="nSE" onchange="nivelCalc()"></select></div>
+      <div class="slider-linha"><label>Motor direito</label><select id="nMD" onchange="nivelCalc()"></select></div>
+      <div class="slider-linha"><label>Motor esquerdo</label><select id="nME" onchange="nivelCalc()"></select></div>
+      <p class="pequeno sp">Diga o nível antes de revelar.</p>
+      <div class="btn-fila sp"><button class="btn b-ouro" onclick="revelaBloco('nivelRes',this)">Revelar o nível</button></div>
+    </div>
+    <div>
+      <div id="nivelRes" class="cartao c-ouro" style="display:none"></div>
+      <div class="cartao sp"><p><strong>Sensitivo:</strong> dermátomo mais caudal com tato e agulha normais.</p><p class="sp"><strong>Motor:</strong> músculo-chave mais caudal com força ≥ 3 e os de cima em 5.</p><p class="sp"><strong>Neurológico:</strong> o mais alto dos quatro.</p><p class="pequeno sp">De T2 a L1 não há músculo-chave: o motor acompanha o sensitivo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 -->
+<section class="slide" data-p="25" data-t="AIS — árvore de decisão">
+  <div class="kicker k-ouro">Ato 5 · O nome</div>
+  <h2>Classifique pela AIS respondendo sim ou não</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div>
+      <div id="aisPerg" class="cartao c-ouro"></div>
+      <div class="btn-fila sp"><button class="btn b-verde" onclick="aisResp(1)">SIM</button><button class="btn b-obst" onclick="aisResp(0)">NÃO</button><button class="btn b-vazado" onclick="aisInicio()">Recomeçar</button></div>
+      <div id="aisRes" class="cartao c-verde sp" style="display:none"></div>
+    </div>
+    <div>
+      <div class="fala f-ouro">“O pé impressiona. O ânus decide.”</div>
+      <div class="cartao sp"><div class="rotulo">Os três testes sacrais</div><p class="sp">1. Sensibilidade perianal (tato e agulha)</p><p>2. Pressão anal profunda</p><p>3. Contração anal voluntária</p><p class="pequeno sp">O bulbocavernoso não entra: é reflexo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 26 -->
+<section class="slide" data-p="26" data-t="Simulador de síndromes medulares">
+  <div class="kicker k-ouro">Ato 5 · O nome · simulador</div>
+  <h2>Escolha onde lesar a medula e preveja o quadro</h2>
+  <div class="linha-2 sp">
+    <div><div id="cordaSind"></div><p class="pequeno centro">Área escura = lesão</p></div>
+    <div>
+      <div class="btn-fila">
+        <button class="btn b-vazado" onclick="sindrome('central')">Centro</button>
+        <button class="btn b-vazado" onclick="sindrome('anterior')">Dois terços anteriores</button>
+        <button class="btn b-vazado" onclick="sindrome('hemi')">Metade direita</button>
+        <button class="btn b-vazado" onclick="sindrome('posterior')">Dorso</button>
+      </div>
+      <div id="sindPainel" class="cartao sp"><p>Diga o que o paciente perde antes de revelar.</p></div>
+      <div class="btn-fila sp"><button class="btn b-ouro" id="sindBtn" onclick="sindRevela()" style="display:none">Revelar a síndrome</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 27 -->
+<section class="slide" data-p="27" data-t="Brown-Séquard — os dois lados">
+  <div class="kicker k-ouro">Ato 5 · O nome</div>
+  <h2>Brown-Séquard: toque em cada perna</h2>
+  <p class="sp">Hemissecção à direita. Diga o que cada perna perdeu antes de tocar.</p>
+  <div class="linha-2 sp" style="align-items:stretch">
+    <button class="cartao c-obst virar" onclick="this.classList.add('aberta')"><div class="rotulo" style="color:var(--obst)">Perna direita · lado da lesão</div><div class="verso sp"><p><strong>Paralisia</strong> abaixo do nível</p><p>Perda de <strong>propriocepção e vibração</strong></p><p>Depois do choque: hiperreflexia e Babinski</p><p>Dor e temperatura <strong>preservadas</strong></p></div><p class="pequeno frente">toque para revelar</p></button>
+    <button class="cartao c-azul virar" onclick="this.classList.add('aberta')"><div class="rotulo">Perna esquerda · lado oposto</div><div class="verso sp"><p>Perda de <strong>dor e temperatura</strong></p><p>Começa 1 a 2 segmentos abaixo da lesão</p><p>Força <strong>preservada</strong></p><p>Reflexos normais</p></div><p class="pequeno frente">toque para revelar</p></button>
+  </div>
+  <div class="fala f-ouro sp">“A perna que não mexe sente a agulha. A perna que mexe não sente.”</div>
+</section>
+
+<!-- 28 -->
+<section class="slide" data-p="28" data-t="Jogo — cone ou cauda?">
+  <div class="kicker k-ouro">Jogo · cone medular ou cauda equina?</div>
+  <h2>Cone ou cauda?</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgCone"></div><p class="pequeno sp" style="color:var(--obst)"><strong>Anestesia em sela com retenção urinária pede ressonância e avaliação cirúrgica de urgência, nos dois.</strong></p></div>
+</section>
+
+<!-- 29 -->
+<section class="slide" data-p="29" data-t="Caso integrador — facada no dorso">
+  <div class="kicker k-obst">Caso integrador</div>
+  <h2>Homem, 29 anos, facada no dorso há 2 semanas</h2>
+  <div class="linha-2 sp" style="align-items:flex-start">
+    <div class="cartao c-obst">
+      <p><strong>Perna direita:</strong> força 1/5, não sabe a posição do hálux.</p>
+      <p class="sp"><strong>Perna esquerda:</strong> força 5/5, não sente agulha nem gelo do umbigo para baixo.</p>
+      <p class="sp"><strong>Reflexos:</strong> patelar e aquileu 3+ à direita, com Babinski.</p>
+      <p class="sp"><strong>Sacral:</strong> sente o toque perianal e contrai o esfíncter ao comando.</p>
+      <div class="btn-fila sp3"><button class="btn b-obst" onclick="passoCaso('casoFinal')">▶ Próxima pergunta</button></div>
+    </div>
+    <div id="casoFinal" class="quiz">
+      <div class="cartao passo"><b>1.</b> Qual metade da medula foi lesada?<div class="resp-passo sp"><p>A direita: paralisia e perda de posição ficam do lado da lesão.</p></div></div>
+      <div class="cartao passo"><b>2.</b> Em que nível?<div class="resp-passo sp"><p>Por volta de T8. A perda de dor do lado oposto começa em T10 (umbigo), 1 a 2 segmentos abaixo.</p></div></div>
+      <div class="cartao passo"><b>3.</b> Qual síndrome?<div class="resp-passo sp"><p>Brown-Séquard.</p></div></div>
+      <div class="cartao passo"><b>4.</b> Completa ou incompleta?<div class="resp-passo sp"><p>Incompleta: há sensibilidade e contração voluntária em S4–S5.</p></div></div>
+      <div class="cartao passo"><b>5.</b> Por que os reflexos estão exagerados?<div class="resp-passo sp"><p>Padrão de neurônio motor superior abaixo da lesão, já fora do choque medular.</p></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== BLOCO B · Ato 6 · casos e prática ===== -->
+<section class="slide" data-p="b1" data-t="Filosofia — o segundo trauma é o nosso">
+  <div class="corpo centro">
+    <div class="kicker k-obst">Ato 6 · Casos e prática</div>
+    <p class="grande" style="font-size:calc(var(--u)*3.6);max-width:80%;margin:0 auto">O primeiro trauma foi do asfalto. O segundo é o nosso: hipóxia, hipotensão e pressa no lugar errado.</p>
+    <div class="assin sp3">— Dr. André Rossanno</div>
+    <div class="btn-fila sp3" style="justify-content:center"><button class="btn b-obst" onclick="revelaBloco('aeiou',this)">Quem são os ladrões da medula?</button></div>
+    <div id="aeiou" class="filo sp" style="display:none"><b>A E I O U</b> · Apoptose · Edema · Inflamação · hip<b>O</b>xia · hip<b>U</b>tensão. Os três últimos você controla.</div>
+  </div>
+</section>
+
+<section class="slide" data-p="b2" data-t="Pacote O-P-A-T-T-N">
+  <div class="kicker k-verde">Depois do xABCDE · o pacote de neuroproteção</div>
+  <h2>O-P-A-T-T-N: diga o que cada letra protege</h2>
+  <div class="palacio-grade sp">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">O · Oxigenação</div><div class="desc">Sem hipóxia. Vigiar C3–C5. Intubar antes de cansar.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">P · Pressão</div><div class="desc">PAM com piso de 75–80 e teto de 90–95 mmHg por 3 a 7 dias.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">A · Alinhamento</div><div class="desc">Restrição de movimento seletiva. Rolamento em bloco. Sair da prancha cedo.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">T · Temperatura</div><div class="desc">Sem hipotermia: piora a coagulação e o prognóstico.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">T · Tratar a dor</div><div class="desc">Analgesia sim, mas documente o exame antes de sedar.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">N · Neurocirurgia</div><div class="desc">Descompressão em até 24 h quando possível.</div></button>
+  </div>
+  <p class="pequeno sp">“O pato da medula”: O-P-A-T-T-N. Corticoide não é rotina; as diretrizes divergem e o protocolo do serviço decide. Pressão e cirurgia: AO Spine 2024.</p>
+</section>
+
+<section class="slide" data-p="b3" data-t="Caso espelho — dois hipotensos">
+  <div class="kicker k-obst">Caso espelho · o mesmo número, duas causas</div>
+  <h2>Dois motociclistas com PA 82 × 50</h2>
+  <div id="espChoque" class="sp"></div>
+</section>
+
+<section class="slide" data-p="b4" data-t="Caso espelho — duas fraquezas">
+  <div class="kicker k-ouro">Caso espelho · o que sobrou de cada medula</div>
+  <h2>Duas fraquezas diferentes</h2>
+  <div id="espSind" class="sp"></div>
+</section>
+
+<section class="slide" data-p="b5" data-t="Caso 3 — chegou falando, cansou depois">
+  <div class="kicker k-obst">Caso clínico 3 · as primeiras 24 horas</div>
+  <h2>Chegou falando, cansou depois</h2>
+  <div id="ramoResp" class="sp"></div>
+</section>
+
+<section class="slide" data-p="b6" data-t="Caso 4 — a cefaleia do tetraplégico">
+  <div class="kicker k-obst">Caso clínico 4 · a enfermaria, dois anos depois</div>
+  <h2>A cefaleia que não era enxaqueca</h2>
+  <div id="ramoDisr" class="sp"></div>
+</section>
+
+<section class="slide" data-p="b7" data-t="Filosofia — o exame é um filme">
+  <div class="corpo centro">
+    <div class="kicker">Antes da estação prática</div>
+    <p class="grande" style="font-size:calc(var(--u)*3.6);max-width:80%;margin:0 auto">O primeiro exame é uma fotografia. O diagnóstico é o filme, e só aparece para quem reexamina.</p>
+    <div class="assin sp3">— Dr. André Rossanno</div>
+    <div class="btn-fila sp3" style="justify-content:center"><button class="btn b-vazado" onclick="revelaBloco('filoFilme',this)">Como isso vira método?</button></div>
+    <div id="filoFilme" class="filo sp" style="display:none">Mesmo examinador, mesma técnica, horários anotados. Compare com o exame anterior antes de concluir.</div>
+  </div>
+</section>
+
+<section class="slide" data-p="b8" data-t="Estação prática — classifique o paciente">
+  <div class="kicker k-verde">Estação prática · ficha ISNCSCI</div>
+  <h2>Leia o exame e classifique o paciente</h2>
+  <div id="estacao" class="sp"></div>
+</section>
+
+<section class="slide" data-p="b9" data-t="Tribunal do plantão">
+  <div class="kicker k-ouro">Tribunal do plantão · onde a turma erra</div>
+  <h2>O interno disse. Certo ou errado?</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgTribunal"></div></div>
+</section>
+
+<!-- 30 -->
+<section class="slide" data-p="30" data-t="Cinco pegadinhas">
+  <div class="kicker k-ouro">Pegadinhas de prova e de plantão</div>
+  <h2>O que parece. Toque para ver o que é.</h2>
+  <div class="palacio-grade sp">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Hipotensão com bradicardia é choque neurogênico</div><div class="desc">Primeiro se exclui hemorragia.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Sem reflexos é lesão completa</div><div class="desc">Pode ser choque medular: reexaminar.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Bulbocavernoso presente é lesão incompleta</div><div class="desc">Ele é reflexo. Decide a função voluntária e sensitiva sacral.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Força 3 em C6 dá nível motor C6</div><div class="desc">Só se C5 tiver força 5.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Sente o alto do tórax, então o nível é torácico</div><div class="desc">Pode ser a “capa” de C4.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Macete da perna vale para força e tato</div><div class="desc">Os gestos são motores (L2–S1). A espiral é sensitiva (L2–S5).</div></button>
+  </div>
+</section>
+
+<!-- 31 -->
+<section class="slide" data-p="31" data-t="Desafio de 5 segundos">
+  <div class="kicker">Repetição espaçada dentro da aula</div>
+  <h2>Desafio de 5 segundos</h2>
+  <div class="corpo centro">
+    <div class="cartao c-azul" style="padding:calc(var(--u)*4)">
+      <div class="rotulo" id="flashRot">Estímulo</div>
+      <h2 class="sp" id="flashFrente" style="font-size:calc(var(--u)*4.2)"></h2>
+      <div id="flashVerso" class="sp3" style="visibility:hidden">
+        <h2 style="font-size:calc(var(--u)*3.6);color:var(--verde)" id="flashTexto"></h2>
+        <p class="pequeno sp" id="flashNota"></p>
+      </div>
+    </div>
+    <div class="btn-fila sp3" style="justify-content:center">
+      <button class="btn b-ouro" onclick="flashRevela()">REVELAR</button>
+      <button class="btn" onclick="flashProx()">Próximo →</button>
+    </div>
+    <p class="pequeno" id="flashCont"></p>
+  </div>
+</section>
+
+<!-- 32 -->
+<section class="slide" data-p="32" data-t="Teste final — 12 questões">
+  <div class="kicker k-ouro">Teste final</div>
+  <h2>Teste final</h2>
+  <div class="corpo" style="justify-content:flex-start"><div id="jgFinal"></div></div>
+</section>
+
+<!-- 33 -->
+<section class="slide" data-p="33" data-t="Revisão de 60 segundos">
+  <div class="kicker">Revisão de 60 segundos</div>
+  <h2>Complete o macete antes de abrir</h2>
+  <div class="palacio-grade sp">
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Tratos</div><div class="desc">Dor cruza rápido; força e posição esperam o bulbo.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">MOTOR · braço C5–T1</div><div class="desc">Pega, acelera, empurra, aperta, abre.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">MOTOR · perna L2–S1</div><div class="desc">Sobe, chuta, calcanhar, dedão, ponta.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">SENSITIVO · dermátomos</div><div class="desc">Mão 6, 7, 8. Tronco 4, 6, 10, 12. Perna em espiral: L na frente, S atrás.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Reflexos</div><div class="desc">1-2 sapato, 3-4 porta, 5-6 dobro, 7-8 estico.</div></button>
+    <button class="sala" onclick="this.classList.toggle('aberta')"><div class="tit">Completa ou não</div><div class="desc">O pé impressiona, o ânus decide.</div></button>
+  </div>
+</section>
+
+<!-- 34 -->
+<section class="slide" data-p="34" data-t="Fecho">
+  <div class="corpo centro">
+    <div class="kicker">Para levar</div>
+    <p class="grande" style="font-size:calc(var(--u)*3.4);max-width:82%;margin:0 auto">Proteja primeiro o que ainda está vivo. Depois examine, reexamine, e só então dê nome à lesão. Um nome dado com pressa vira o prognóstico errado de uma vida inteira.</p>
+    <div class="assin sp3">— Dr. André Rossanno</div>
+    <p class="pequeno sp3">Fontes: ISNCSCI revisão 2019 (Rupp e cols., 2021) · Ditunno e cols., Spinal Cord 2004 · ATLS 10ª ed. · Esquemas originais · memoriapotencial.com.br</p>
+  </div>
+</section>
+
+</div><!-- /#palco -->
+
+<!-- ============ BARRA DE CONTROLE ============ -->
+<div id="barra">
+  <button class="ctrl" onclick="vai(-1)" title="Slide anterior (←)">←</button>
+  <button class="ctrl" onclick="vai(1)" title="Próximo slide (→)">→</button>
+  <span id="contador">1 / 49</span>
+  <div id="trilho" onclick="pulaTrilho(event)" title="Clique para navegar"><div id="preenche"></div></div>
+  <button class="ctrl" onclick="abreMapa()" title="Mapa da aula (M)">🗺️ Mapa da aula</button>
+  <button class="ctrl" id="btnOcultar" onclick="alternaOcultar()" title="Ocultar respostas (O)">🙈 Ocultar respostas</button>
+  <button class="ctrl discreto" id="btnProf" onclick="alternaProf()" title="Modo professor (P)">🎓 Professor</button>
+  <button class="ctrl discreto" onclick="telaCheia()" title="Tela cheia (F)">⛶</button>
+</div>
+
+<!-- ============ MAPA DA AULA ============ -->
+<div id="mapa" onclick="if(event.target.id==='mapa')fechaMapa()">
+  <h3>Mapa da aula</h3>
+  <p class="pequeno">49 telas · clique para ir direto · ESC fecha</p>
+  <div id="mapaGrade"></div>
+</div>
+
+<!-- ============ MODO PROFESSOR ============ -->
+<aside id="prof">
+  <div class="cab">
+    <h4>🎓 Modo professor</h4>
+    <button class="fechar" onclick="alternaProf()">fechar</button>
+  </div>
+  <div id="profConteudo"></div>
+</aside>
+
+<style>
+.passo{opacity:.45;transition:opacity .25s}
+.passo.aberto{opacity:1;border-color:var(--azul)}
+.resp-passo{display:none}
+.passo.aberto .resp-passo{display:block}
+.passo b{color:var(--azul);font-size:calc(var(--u)*1.9)}
+.passo p{font-size:calc(var(--u)*1.7)}
+</style>
+
+<script>
+/* ==========================================================
+   1. NÚCLEO — dimensionamento, navegação, mapa, professor
+   ========================================================== */
+var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var atual = 0;
+var TOTAL = slides.length;
+var ocultarRespostas = true;
+
+function ajustaUnidade(){
+  var palco = document.getElementById('palco');
+  var u = palco.clientWidth / 100;
+  document.documentElement.style.setProperty('--u', u + 'px');
+}
+window.addEventListener('resize', ajustaUnidade);
+
+function mostra(i){
+  if(i < 0) i = 0;
+  if(i > TOTAL - 1) i = TOTAL - 1;
+  slides[atual].classList.remove('ativo');
+  atual = i;
+  slides[atual].classList.add('ativo');
+  slides[atual].scrollTop = 0;
+  document.getElementById('contador').textContent = (atual + 1) + ' / ' + TOTAL;
+  document.getElementById('preenche').style.width = ((atual + 1) / TOTAL * 100) + '%';
+  atualizaProf();
+  marcaMapa();
+  aoEntrar(atual);
+}
+function vai(d){ mostra(atual + d); }
+function pulaTrilho(e){
+  var t = document.getElementById('trilho').getBoundingClientRect();
+  mostra(Math.floor((e.clientX - t.left) / t.width * TOTAL));
+}
+
+/* ---- mapa ---- */
+function montaMapa(){
+  var g = document.getElementById('mapaGrade');
+  g.innerHTML = '';
+  slides.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.className = 'mapa-item';
+    b.innerHTML = '<span class="n">' + String(i + 1).padStart(2, '0') + '</span><span>' + (s.dataset.t || '') + '</span>';
+    b.onclick = function(){ mostra(i); fechaMapa(); };
+    g.appendChild(b);
+  });
+}
+function marcaMapa(){
+  var itens = document.querySelectorAll('.mapa-item');
+  for(var i = 0; i < itens.length; i++) itens[i].classList.toggle('atual', i === atual);
+}
+function abreMapa(){ document.getElementById('mapa').classList.add('aberto'); marcaMapa(); }
+function fechaMapa(){ document.getElementById('mapa').classList.remove('aberto'); }
+
+/* ---- tela cheia ---- */
+function telaCheia(){
+  if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+  else if(document.exitFullscreen){ document.exitFullscreen(); }
+  setTimeout(ajustaUnidade, 300);
+}
+
+/* ---- teclado ---- */
+document.addEventListener('keydown', function(e){
+  var alvo = e.target && e.target.tagName;
+  if(alvo === 'INPUT' || alvo === 'TEXTAREA' || alvo === 'SELECT') return;
+  if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); vai(1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); vai(-1); }
+  else if(e.key === 'Home'){ mostra(0); }
+  else if(e.key === 'End'){ mostra(TOTAL - 1); }
+  else if(e.key === 'f' || e.key === 'F'){ telaCheia(); }
+  else if(e.key === 'm' || e.key === 'M'){ document.getElementById('mapa').classList.contains('aberto') ? fechaMapa() : abreMapa(); }
+  else if(e.key === 'p' || e.key === 'P'){ alternaProf(); }
+  else if(e.key === 'o' || e.key === 'O'){ alternaOcultar(); }
+  else if(e.key === 'Escape'){ fechaMapa(); }
+});
+
+/* ---- toque ---- */
+var tx = 0;
+document.getElementById('palco').addEventListener('touchstart', function(e){ tx = e.changedTouches[0].clientX; }, {passive:true});
+document.getElementById('palco').addEventListener('touchend', function(e){
+  var d = e.changedTouches[0].clientX - tx;
+  if(Math.abs(d) > 70) vai(d < 0 ? 1 : -1);
+}, {passive:true});
+
+/* ==========================================================
+   2. MODO OCULTAR RESPOSTAS + MOTOR DE QUIZ
+   ========================================================== */
+function alternaOcultar(){
+  ocultarRespostas = !ocultarRespostas;
+  var b = document.getElementById('btnOcultar');
+  b.classList.toggle('on', ocultarRespostas);
+  b.textContent = ocultarRespostas ? '🙈 Ocultar respostas' : '👁️ Respostas imediatas';
+}
+
+function montaQuizzes(){
+  document.querySelectorAll('[data-quiz]').forEach(function(q){
+    var fb = q.nextElementSibling;
+    if(fb && fb.classList.contains('feedback')){
+      var rb = document.createElement('button');
+      rb.className = 'btn-revelar';
+      rb.textContent = '👁️ REVELAR RESPOSTA';
+      rb.onclick = function(){ revelaQuiz(q); };
+      q.parentNode.insertBefore(rb, fb);
+      q._botao = rb;
+      q._fb = fb;
+    }
+    q.querySelectorAll('.opc').forEach(function(o){
+      o.onclick = function(){
+        if(q._revelado) return;
+        if(ocultarRespostas){
+          q.querySelectorAll('.opc').forEach(function(x){ x.style.borderColor = ''; x.style.background = ''; });
+          o.style.borderColor = 'var(--azul)';
+          o.style.background = 'var(--azul-fundo)';
+          q._escolha = o;
+          if(q._botao) q._botao.classList.add('visivel');
+        } else {
+          q._escolha = o;
+          revelaQuiz(q);
+        }
+      };
+    });
+  });
+}
+function revelaQuiz(q){
+  q._revelado = true;
+  q.querySelectorAll('.opc').forEach(function(o){
+    o.style.borderColor = ''; o.style.background = '';
+    var certo = o.dataset.ok === '1';
+    if(certo) o.classList.add(q._escolha === o ? 'certa' : 'mostra-certa');
+    else if(q._escolha === o) o.classList.add('errada');
+    o.setAttribute('disabled', 'disabled');
+  });
+  if(q._fb) q._fb.classList.add('aberto');
+  if(q._botao) q._botao.classList.remove('visivel');
+}
+
+/* revelação simples de blocos */
+function revelaBloco(id, botao){
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.style.display = 'block';
+  el.style.animation = 'entra .35s ease both';
+  if(botao) botao.classList.add('on');
+}
+
+/* casos clínicos passo a passo */
+function passoCaso(id){
+  var c = document.getElementById(id);
+  var passos = c.querySelectorAll('.passo');
+  for(var i = 0; i < passos.length; i++){
+    if(!passos[i].classList.contains('aberto')){ passos[i].classList.add('aberto'); return; }
+  }
+}
+
+/* ==========================================================
+   3. MODO PROFESSOR — TRM
+   ========================================================== */
+var PROF = {
+1:{o:'Abrir com a frase do paciente e prometer um método de leitura do corpo.',p:'Se ele não sente as pernas, o que você examina primeiro?',r:'ABCDE; depois força, sensibilidade, reflexos e exame sacral.',e:'Querer dar nome à lesão antes de examinar.',f:'Hoje a gente aprende a ler o corpo.'},
+2:{o:'Dar o sentido da aula: o exame físico localiza e prognostica.',p:'O que a tomografia não conta?',r:'O nível neurológico e se a lesão é completa.',e:'Achar que a imagem substitui o exame.',f:'A máquina mostra o osso. Você mostra o nível.'},
+3:{o:'Separar pressão baixa de reflexo ausente.',p:'Bradicardia e pele quente fecham choque neurogênico?',r:'Sugerem, mas hemorragia vem primeiro.',e:'Iniciar vasopressor sem procurar sangue.',f:'Hipotensão no trauma é hemorragia até prova em contrário.'},
+4:{o:'Mostrar o roteiro e fixar motor × sensitivo desde já.',p:'Qual a diferença entre miótomo e dermátomo?',r:'Miótomo: o que a raiz move. Dermátomo: onde ela sente.',e:'Tratar os dois como a mesma tabela.',f:'A mesma raiz responde duas perguntas.'},
+5:{o:'Instalar os três tratos no corte.',p:'Onde fica cada trato: dorso, lado ou frente?',r:'Coluna posterior no dorso, corticoespinhal lateral, espinotalâmico anterolateral.',e:'Colocar a dor no dorso.',f:'Guarde este corte. Ele volta no simulador.'},
+6:{o:'Deduzir o lado do déficit pelo local do cruzamento.',p:'Por que a dor some do outro lado?',r:'Porque a fibra já cruzou na medula.',e:'Dizer que tudo é do mesmo lado.',f:'Dor cruza rápido. Posição e força esperam o bulbo.'},
+7:{o:'Fixar os cinco músculos-chave do braço por gesto.',p:'Façam o gesto: quem dobra o cotovelo?',r:'C5.',e:'Trocar C6 (punho) com C7 (cotovelo).',f:'Pega, acelera, empurra, aperta, abre.'},
+8:{o:'Fixar os cinco músculos-chave da perna.',p:'Quem levanta o dedão?',r:'L5.',e:'Trocar L4 (pé para cima) com S1 (pé para baixo).',f:'Sobe, chuta, calcanhar, dedão, ponta.'},
+9:{o:'Recuperação ativa só de motor.',p:'Responda antes de eu tocar.',r:'Ver feedback.',e:'Responder com o ponto sensitivo.',f:'Aqui é só movimento.'},
+10:{o:'Ensinar a regra do grau 3.',p:'O 3 de C6 vale?',r:'Só se C5 for 5.',e:'Dar o nível pelo último músculo que mexe.',f:'O 3 só conta se o de cima for 5.'},
+11:{o:'Fixar os pontos sensitivos do braço.',p:'Onde sente C7?',r:'Dedo médio.',e:'Dizer que C7 sente no cotovelo, porque é lá que ele move.',f:'Do polegar ao mínimo: 6, 7, 8.'},
+12:{o:'Fixar os quatro marcos do tronco.',p:'O umbigo é qual nível?',r:'T10.',e:'Esquecer a capa de C4.',f:'4 no peito, 6 no estômago, 10 no umbigo, 12 na virilha.'},
+13:{o:'Fixar os pontos sensitivos da perna, frente e trás.',p:'S1 sente onde?',r:'Calcanhar, lado de fora.',e:'Usar a espiral para falar de força.',f:'Os L na frente, os S atrás.'},
+14:{o:'Recuperação ativa só de sensibilidade.',p:'Responda antes de eu tocar.',r:'Ver feedback.',e:'Responder com o movimento.',f:'Aqui é só pele.'},
+15:{o:'Desfazer a confusão motor × sensitivo.',p:'L4: o que move e onde sente?',r:'Puxa o pé para cima; sente no tornozelo por dentro.',e:'Achar que o ponto sensitivo fica sobre o músculo.',f:'Mesma raiz, duas perguntas.'},
+16:{o:'Virar a aula para o reflexo.',p:'Que exame funciona no paciente sedado?',r:'O reflexo.',e:'—',f:'O reflexo não precisa da colaboração de ninguém.'},
+17:{o:'Instalar a escada 1 a 8.',p:'Qual o reflexo do degrau 3–4?',r:'Patelar.',e:'Inverter bíceps e tríceps.',f:'1-2 sapato, 3-4 porta, 5-6 dobro, 7-8 estico.'},
+18:{o:'Recuperação ativa dos reflexos.',p:'Bati no tendão de Aquiles. Que raiz?',r:'S1–S2.',e:'—',f:'Suba a escada de cabeça.'},
+19:{o:'Completar com os reflexos cutâneos e sacrais.',p:'Bulbocavernoso é voluntário?',r:'Não, é reflexo S2–S4.',e:'Usá-lo para classificar AIS.',f:'Aperta na frente, a campainha toca atrás.'},
+20:{o:'Mostrar padrão inferior no nível e superior abaixo.',p:'Por que o bicipital some e o patelar aumenta?',r:'Arco destruído no nível; freio cortado abaixo.',e:'Esperar tudo abolido ou tudo exagerado.',f:'Na lesão medular os dois padrões convivem.'},
+21:{o:'Treinar localização pelo martelo.',p:'Onde é a lesão?',r:'Ver cada passo.',e:'Esquecer que o patelar fica acima do cone.',f:'O martelo é o exame de imagem do pobre.'},
+22:{o:'Ensinar as quatro fases do choque medular.',p:'Arreflexia com 4 horas é lesão completa?',r:'Não se pode afirmar.',e:'Dar prognóstico no primeiro dia.',f:'Reexamine em 24 a 72 horas.'},
+23:{o:'Separar os três choques.',p:'Lesão em T10 hipotenso e taquicárdico: é neurogênico?',r:'Não: abaixo de T6, procure sangue.',e:'Confundir medular com neurogênico.',f:'Um fala de reflexo, o outro de pressão.'},
+24:{o:'Calcular o nível neurológico.',p:'Qual dos quatro manda?',r:'O mais alto.',e:'Escolher o mais baixo.',f:'É o último segmento normal dos dois lados.'},
+25:{o:'Aplicar a AIS como árvore.',p:'Qual a primeira pergunta?',r:'Há função em S4–S5?',e:'Começar pela força das pernas.',f:'O pé impressiona. O ânus decide.'},
+26:{o:'Prever a síndrome pelo local da lesão.',p:'Se eu lesar o centro, quem sofre mais?',r:'Os braços.',e:'Decorar sem olhar o corte.',f:'Olhe o que ficou escuro e diga o que apagou.'},
+27:{o:'Fixar a dissociação do Brown-Séquard.',p:'Qual perna sente a agulha?',r:'A que não mexe.',e:'Colocar tudo do mesmo lado.',f:'A perna que não mexe sente a agulha.'},
+28:{o:'Diferenciar cone de cauda.',p:'Aquileu some e patelar fica: onde?',r:'Cone.',e:'Achar que são a mesma coisa.',f:'Cone é medula; cauda é raiz.'},
+29:{o:'Integrar tudo em um caso.',p:'Lado, nível, síndrome, completa?',r:'Direita, T8, Brown-Séquard, incompleta.',e:'Dar o nível pelo umbigo sem descontar 1 a 2 segmentos.',f:'Agora volte ao motociclista e responda as três perguntas.'},
+30:{o:'Revisar as armadilhas.',p:'Corrija antes de eu abrir.',r:'Ver cada cartão.',e:'—',f:'Erre aqui, para não errar no paciente.'},
+31:{o:'Recuperação rápida.',p:'Cinco segundos, sem consultar.',r:'Ver cartões.',e:'—',f:'Responda antes de eu revelar.'},
+32:{o:'Avaliar.',p:'Justifique antes de escolher.',r:'Ver explicações.',e:'—',f:'Oito questões, sem pressa.'},
+33:{o:'Revisão de 60 segundos.',p:'Complete o macete.',r:'Ver cartões.',e:'—',f:'Hoje à noite, amanhã e em sete dias.'},
+34:{o:'Encerrar.',p:'O que você leva daqui?',r:'Examinar antes de nomear.',e:'—',f:'A medula escreve no corpo. Agora vocês sabem ler.'}
+};
+function alternaProf(){
+  var p = document.getElementById('prof');
+  p.classList.toggle('aberto');
+  document.getElementById('btnProf').classList.toggle('on', p.classList.contains('aberto'));
+  atualizaProf();
+}
+function atualizaProf(){
+  var d = PROF[slides[atual].dataset.p];
+  var c = document.getElementById('profConteudo');
+  if(!d){ c.innerHTML = '<p>—</p>'; return; }
+  c.innerHTML =
+    '<div class="prof-bloco"><div class="rot">Slide ' + (atual + 1) + ' · objetivo</div><p>' + d.o + '</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Pergunta oral</div><p>“' + d.p + '”</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Resposta esperada</div><p>' + d.r + '</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Erro mais provável</div><p>' + d.e + '</p></div>' +
+    '<div class="prof-bloco"><div class="rot">Frase para usar</div><p>“' + d.f + '”</p></div>';
+}
+
+/* ==========================================================
+   4. DESENHOS — corte da medula, mão, tronco
+   ========================================================== */
+var COR = {azul:'#1282A2', obst:'#d1572c', verde:'#1e8f5e', roxo:'#6d4aa8', ouro:'#a8791b'};
+function el(id){ return document.getElementById(id); }
+var cordaN = 0;
+function cordaSVG(o){
+  o = o || {};
+  var id = 'cc' + (++cordaN);
+  function op(k){ return (o.sel && o.sel !== k) ? '.22' : '1'; }
+  function cl(k){ return o.clique ? ' style="cursor:pointer" onclick="trato(\'' + k + '\')"' : ''; }
+  var les = '';
+  if(o.lesao === 'central') les = '<circle cx="150" cy="120" r="62" fill="#3a1410" fill-opacity=".74"/>';
+  if(o.lesao === 'anterior') les = '<path d="M0 70 L96 70 L150 108 L204 70 L300 70 L300 240 L0 240 Z" fill="#3a1410" fill-opacity=".74" clip-path="url(#' + id + ')"/>';
+  if(o.lesao === 'hemi') les = '<rect x="150" y="0" width="150" height="240" fill="#3a1410" fill-opacity=".74" clip-path="url(#' + id + ')"/>';
+  if(o.lesao === 'posterior') les = '<path d="M150 12 C128 12 108 20 96 30 L150 104 L204 30 C192 20 172 12 150 12 Z" fill="#3a1410" fill-opacity=".8"/>';
+  return '<svg viewBox="0 0 300 240" class="svg-cheio" role="img" aria-label="Corte transversal da medula">' +
+    '<defs><clipPath id="' + id + '"><ellipse cx="150" cy="120" rx="140" ry="110"/></clipPath></defs>' +
+    '<ellipse cx="150" cy="120" rx="140" ry="110" fill="#f3ead6" stroke="#12293d" stroke-width="2.5"/>' +
+    '<path d="M150 12 C128 12 108 20 96 30 L150 104 L204 30 C192 20 172 12 150 12 Z" fill="' + COR.azul + '" opacity="' + op('cp') + '"' + cl('cp') + '/>' +
+    '<path d="M138 112 L92 44 L108 38 L150 98 L192 38 L208 44 L162 112 L214 150 C232 180 204 200 190 188 L150 142 L110 188 C96 200 68 180 86 150 Z" fill="#b9b3a6"/>' +
+    '<ellipse cx="58" cy="108" rx="24" ry="32" fill="' + COR.verde + '" opacity="' + op('ce') + '"' + cl('ce') + '/>' +
+    '<ellipse cx="242" cy="108" rx="24" ry="32" fill="' + COR.verde + '" opacity="' + op('ce') + '"' + cl('ce') + '/>' +
+    '<ellipse cx="78" cy="182" rx="24" ry="17" fill="' + COR.obst + '" opacity="' + op('et') + '"' + cl('et') + '/>' +
+    '<ellipse cx="222" cy="182" rx="24" ry="17" fill="' + COR.obst + '" opacity="' + op('et') + '"' + cl('et') + '/>' +
+    '<circle cx="150" cy="120" r="5" fill="#fff"/>' + les + '</svg>';
+}
+var TRATOS = {
+  cp:{n:'Coluna posterior', c:'c-azul', leva:'Propriocepção, vibração e tato fino', cruza:'No bulbo', lado:'Déficit do mesmo lado da lesão', ap:'O “elevador de veludo”'},
+  ce:{n:'Corticoespinhal lateral', c:'c-verde', leva:'Força voluntária', cruza:'No bulbo (pirâmides)', lado:'Déficit do mesmo lado da lesão', ap:'O “elevador do general”'},
+  et:{n:'Espinotalâmico', c:'c-obst', leva:'Dor e temperatura', cruza:'Na medula, 1 a 2 segmentos acima da entrada', lado:'Déficit do lado oposto', ap:'O “elevador de fogo”'}
+};
+function trato(k){
+  var t = TRATOS[k];
+  el('cordaTratos').innerHTML = cordaSVG({sel:k, clique:true});
+  var p = el('tratoPainel');
+  p.className = 'cartao sp ' + t.c;
+  p.innerHTML = '<h3>' + t.n + '</h3><p class="sp"><strong>Leva:</strong> ' + t.leva + '</p><p><strong>Cruza:</strong> ' + t.cruza + '</p><p><strong>Lesão medular:</strong> ' + t.lado + '</p><p class="pequeno sp">' + t.ap + '</p>';
+}
+
+function maoSVG(sel){
+  function f(k, cor){ return (sel === k) ? cor : (sel ? '#e4dccb' : cor); }
+  return '<svg viewBox="0 0 520 540" class="svg-cheio" role="img" aria-label="Mão: polegar C6, dedo médio C7, dedo mínimo C8">' +
+    '<rect x="160" y="270" width="230" height="230" rx="56" fill="#e4dccb"/>' +
+    '<rect x="172" y="110" width="50" height="200" rx="25" fill="#e4dccb"/>' +
+    '<rect x="230" y="78" width="50" height="230" rx="25" fill="' + f('C7', COR.verde) + '" style="cursor:pointer" onclick="expo(\'sb\',\'C7\')"/>' +
+    '<rect x="288" y="104" width="50" height="205" rx="25" fill="#e4dccb"/>' +
+    '<rect x="344" y="160" width="44" height="160" rx="22" fill="' + f('C8', COR.azul) + '" style="cursor:pointer" onclick="expo(\'sb\',\'C8\')"/>' +
+    '<rect x="92" y="262" width="54" height="180" rx="27" fill="' + f('C6', COR.ouro) + '" transform="rotate(-38 119 420)" style="cursor:pointer" onclick="expo(\'sb\',\'C6\')"/>' +
+    (sel === 'C6' || sel === 'C7' || sel === 'C8' ? '<text x="' + ({C6:70, C7:255, C8:410})[sel] + '" y="' + ({C6:230, C7:60, C8:140})[sel] + '" text-anchor="middle" font-size="44" font-weight="900" fill="#12293d" font-family="IBM Plex Mono, monospace">' + sel + '</text>' : '') +
+    '</svg>';
+}
+function troncoSVG(vistos){
+  var L = [['T4',175,'mamilos'],['T6',238,'xifoide'],['T10',325,'umbigo'],['T12',412,'virilha']];
+  var s = '<svg viewBox="0 0 640 470" class="svg-cheio" role="img" aria-label="Tronco com quatro marcos sensitivos">' +
+    '<path d="M110 60 Q230 25 350 60 L370 140 L342 400 Q230 440 118 400 L90 140 Z" fill="#e4dccb"/>' +
+    '<circle cx="170" cy="175" r="9" fill="#12293d"/><circle cx="290" cy="175" r="9" fill="#12293d"/>' +
+    '<path d="M222 228 L230 248 L238 228 Z" fill="#12293d"/>' +
+    '<circle cx="230" cy="325" r="10" fill="none" stroke="#12293d" stroke-width="4"/>' +
+    '<path d="M124 398 Q230 438 336 398" fill="none" stroke="#12293d" stroke-width="4"/>';
+  L.forEach(function(l){
+    var v = vistos[l[0]];
+    s += '<g style="cursor:pointer" onclick="expo(\'st\',\'' + l[0] + '\')">' +
+      '<line x1="60" y1="' + l[1] + '" x2="440" y2="' + l[1] + '" stroke="' + COR.obst + '" stroke-width="5" stroke-dasharray="10 8"/>' +
+      '<rect x="450" y="' + (l[1] - 26) + '" width="180" height="52" rx="12" fill="' + (v ? COR.azul : '#fff') + '" stroke="' + COR.azul + '" stroke-width="3"/>' +
+      '<text x="540" y="' + (l[1] + 9) + '" text-anchor="middle" font-size="24" font-weight="800" fill="' + (v ? '#fff' : COR.azul) + '" font-family="IBM Plex Mono, monospace">' + (v ? l[0] + ' · ' + l[2] : '?') + '</text></g>';
+  });
+  return s + '</svg>';
+}
+
+/* ==========================================================
+   5. INTERAÇÕES
+   ========================================================== */
+/* ---- exploradores (motor e sensitivo) ---- */
+var EXP = {
+  mb:{tipo:'m', cor:'b-verde', itens:{
+    C5:['Dobra o cotovelo','Bíceps, braquial','Pega o copo'],
+    C6:['Levanta o punho','Extensores radiais do carpo','Acelera a moto'],
+    C7:['Estica o cotovelo','Tríceps','Empurra a porta'],
+    C8:['Fecha os dedos','Flexor profundo, dedo médio','Aperta a mão'],
+    T1:['Abre o dedo mínimo','Abdutor do dedo mínimo','Abre os dedos']}},
+  mp:{tipo:'m', cor:'b-verde', itens:{
+    L2:['Dobra o quadril','Iliopsoas','Sobe o degrau'],
+    L3:['Estica o joelho','Quadríceps','Chuta a bola'],
+    L4:['Puxa o pé para cima','Tibial anterior','Anda no calcanhar'],
+    L5:['Levanta o hálux','Extensor longo do hálux','Levanta o dedão'],
+    S1:['Empurra o pé para baixo','Gastrocnêmio, sóleo','Fica na ponta do pé']}},
+  sb:{tipo:'s', cor:'', itens:{
+    C5:['Cotovelo, lado de fora'], C6:['Polegar'], C7:['Dedo médio'], C8:['Dedo mínimo'],
+    T1:['Cotovelo, lado de dentro'], T2:['Ápice da axila']}},
+  st:{tipo:'s', cor:'', itens:{
+    T4:['Linha dos mamilos'], T6:['Apêndice xifoide'], T10:['Umbigo'], T12:['Ligamento inguinal, a virilha']}},
+  sp:{tipo:'s', cor:'', itens:{
+    L2:['Coxa, face anterior'], L3:['Joelho, lado de dentro'], L4:['Tornozelo, maléolo medial'], L5:['Dorso do pé, sobre o 3º dedo'],
+    S1:['Calcanhar, borda de fora'], S2:['Atrás do joelho, fossa poplítea'], S3:['Nádega, sobre o ísquio'], 'S4–S5':['Pele ao redor do ânus']}}
+};
+var expVistos = {mb:{}, mp:{}, sb:{}, st:{}, sp:{}};
+function expBotoes(g, alvo, chaves, cor){
+  var h = '';
+  (chaves || Object.keys(EXP[g].itens)).forEach(function(k){
+    h += '<button class="btn b-vazado" data-exp="' + g + '" data-k="' + k + '" onclick="expo(\'' + g + '\',\'' + k + '\')">' + k + '</button>';
+  });
+  el(alvo).innerHTML = h;
+}
+function expo(g, k){
+  var d = EXP[g], it = d.itens[k];
+  expVistos[g][k] = 1;
+  document.querySelectorAll('[data-exp="' + g + '"]').forEach(function(b){
+    if(expVistos[g][b.dataset.k]) b.classList.remove('b-vazado');
+    b.classList.toggle('on', b.dataset.k === k);
+    if(d.tipo === 'm' && expVistos[g][b.dataset.k]) b.classList.add('b-verde');
+  });
+  var p = el(g + 'Painel');
+  if(d.tipo === 'm'){
+    p.innerHTML = '<div class="rotulo" style="color:var(--verde)">' + k + ' · MOTOR</div><h3 class="sp">' + it[0] + '</h3><p class="sp"><strong>Músculo-chave:</strong> ' + it[1] + '</p><p><strong>Gesto do macete:</strong> ' + it[2] + '</p>';
+  } else {
+    p.innerHTML = '<div class="rotulo" style="color:var(--azul)">' + k + ' · SENSITIVO</div><h3 class="sp">' + it[0] + '</h3><p class="sp">Teste com algodão e com agulha: 0 ausente, 1 alterado, 2 normal.</p>';
+  }
+  if(g === 'sb') el('maoCena').innerHTML = maoSVG(k);
+  if(g === 'st') el('troncoCena').innerHTML = troncoSVG(expVistos.st);
+  if(Object.keys(expVistos[g]).length === Object.keys(d.itens).length){
+    var m = el(g + 'Macete');
+    if(m && m.style.display === 'none'){ m.style.display = 'block'; m.style.animation = 'entra .35s ease both'; }
+  }
+}
+
+/* ---- lado a lado ---- */
+var LADO = {
+  C5:['Dobra o cotovelo','Cotovelo, lado de fora'], C6:['Levanta o punho','Polegar'], C7:['Estica o cotovelo','Dedo médio'],
+  C8:['Fecha os dedos','Dedo mínimo'], T1:['Abre o dedo mínimo','Cotovelo, lado de dentro'],
+  L2:['Dobra o quadril','Coxa, na frente'], L3:['Estica o joelho','Joelho, lado de dentro'], L4:['Puxa o pé para cima','Tornozelo, lado de dentro'],
+  L5:['Levanta o hálux','Dorso do pé'], S1:['Empurra o pé para baixo','Calcanhar, lado de fora'],
+  'S2–S5':['Sem músculo-chave: só o esfíncter anal','Atrás do joelho, nádega e ao redor do ânus']
+};
+function ladoSel(k, b){
+  document.querySelectorAll('#ladoBotoes .btn').forEach(function(x){ x.classList.add('b-vazado'); });
+  if(b) b.classList.remove('b-vazado');
+  el('ladoM').classList.remove('aberta'); el('ladoS').classList.remove('aberta');
+  el('ladoMt').textContent = LADO[k][0]; el('ladoSt').textContent = LADO[k][1];
+}
+
+/* ---- jogos de pergunta e resposta ---- */
+function embaralha(a){
+  a = a.slice();
+  for(var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function paresParaItens(pares, pergunta){
+  return pares.map(function(p){
+    var outros = embaralha(pares.filter(function(x){ return x[0] !== p[0]; })).slice(0, 2).map(function(x){ return x[0]; });
+    var ops = embaralha([p[0]].concat(outros));
+    return {q: pergunta + ' <strong>' + p[1] + '</strong>?', ops: ops, ok: ops.indexOf(p[0]), ex: p[0] + ': ' + p[1] + '.'};
+  });
+}
+var PAR_MOTOR = [['C5','dobra o cotovelo'],['C6','levanta o punho'],['C7','estica o cotovelo'],['C8','fecha os dedos'],['T1','abre o dedo mínimo'],['L2','dobra o quadril'],['L3','estica o joelho'],['L4','puxa o pé para cima'],['L5','levanta o hálux'],['S1','empurra o pé para baixo']];
+var PAR_SENS = [['C5','no lado de fora do cotovelo'],['C6','no polegar'],['C7','no dedo médio'],['C8','no dedo mínimo'],['T1','no lado de dentro do cotovelo'],['T4','nos mamilos'],['T10','no umbigo'],['L3','no joelho, lado de dentro'],['L4','no maléolo medial'],['L5','no dorso do pé'],['S1','no calcanhar, lado de fora'],['S2','atrás do joelho'],['S4–S5','ao redor do ânus']];
+var PAR_REFLEXO = [['S1–S2','aquileu'],['L3–L4','patelar'],['C5–C6','bicipital'],['C7–C8','tricipital'],['S2–S4','bulbocavernoso'],['L1–L2','cremastérico'],['T7–T12','cutâneo-abdominal']];
+function fixos(ops, lista){ return lista.map(function(x){ return {q:x[0], ops:ops, ok:x[1], ex:x[2]}; }); }
+var IT_CHOQUE = fixos(['Medular','Neurogênico','Hemorrágico'], [
+  ['Lesão em C6. PA 80 × 40, FC 52, pele quente e seca. eFAST negativo.',1,'Perda do simpático: hipotensão com bradicardia e pele quente, depois de excluir sangramento.'],
+  ['Fratura de pelve. PA 80 × 40, FC 128, pele fria e pegajosa.',2,'Taquicardia e pele fria: perda de volume.'],
+  ['PA 120 × 80, FC 80. Paraplegia flácida sem nenhum reflexo há 6 horas.',0,'Choque medular é fenômeno de reflexo. A pressão está normal.'],
+  ['Lesão em T10. PA 85 × 50, FC 120.',2,'Abaixo de T6 o simpático cardíaco está preservado: taquicardia com hipotensão é sangue.'],
+  ['Bulbocavernoso ausente no primeiro dia. Voltou no terceiro.',0,'O retorno do reflexo marca o fim da fase 1 do choque medular.'],
+  ['Lesão em T4. PA 82 × 48, FC 50, sem foco de sangramento.',1,'Lesão em T6 ou acima, bradicardia, hemorragia excluída.']
+]);
+var IT_CONE = fixos(['Cone medular','Cauda equina'], [
+  ['Dor radicular intensa e assimétrica.',1,'Raiz dói. Cauda equina.'],
+  ['Déficit simétrico com disfunção esfincteriana precoce.',0,'Segmentos sacrais da medula: cone.'],
+  ['Sinais de neurônio motor superior e inferior misturados.',0,'O cone é medula: padrão misto.'],
+  ['Padrão de neurônio motor inferior puro, flácido.',1,'Raízes: neurônio motor inferior.'],
+  ['Aquileu abolido com patelar preservado.',0,'O arco S1–S2 está no cone. O patelar, L3–L4, fica acima.'],
+  ['Fratura abaixo de L2.',1,'A medula termina em L1–L2. Abaixo disso só há raízes.'],
+  ['Fratura de L1 com anestesia em sela súbita e bilateral.',0,'L1 é onde está o cone. Início súbito e bilateral.']
+]);
+var IT_FINAL = [
+  {q:'Hemissecção direita da medula em T8. O que se espera?', ops:['Paralisia direita e perda de dor à direita','Paralisia direita e perda de dor à esquerda','Paralisia esquerda e perda de dor à direita'], ok:1, ex:'Força do mesmo lado; dor do lado oposto.'},
+  {q:'C5 = 5, C6 = 3, C7 = 1 nos dois lados. Qual o nível motor?', ops:['C5','C6','C7'], ok:1, ex:'C6 tem força ≥ 3 e o de cima, C5, é 5.'},
+  {q:'Não move as pernas, sente o toque perianal, sem contração anal voluntária. AIS?', ops:['A','B','C'], ok:1, ex:'Sensibilidade sacral sem função motora: B, sensitiva incompleta.'},
+  {q:'O reflexo aquileu testa qual segmento?', ops:['L3–L4','L5','S1–S2'], ok:2, ex:'“1, 2: calço o sapato.”'},
+  {q:'Trauma há 4 horas, pernas flácidas e sem reflexos. Interpretação?', ops:['Lesão de neurônio motor inferior','Lesão completa confirmada','Possível choque medular: reexaminar'], ok:2, ex:'Arreflexia precoce não diferencia lesão completa de choque medular.'},
+  {q:'Idoso, queda com hiperextensão cervical. Mãos 1/5, pernas 4/5. Síndrome?', ops:['Centromedular','Anterior','Brown-Séquard'], ok:0, ex:'Braços piores que pernas.'},
+  {q:'Nível sensitivo na altura do umbigo. Qual é?', ops:['T6','T10','T12'], ok:1, ex:'4 no peito, 6 no estômago, 10 no umbigo, 12 na virilha.'},
+  {q:'72 horas de trauma. Bulbocavernoso presente, sem sensibilidade nem contração voluntária sacral. Conclusão?', ops:['Incompleta, porque o reflexo voltou','Provável lesão completa, AIS A','Não dá para classificar'], ok:1, ex:'O reflexo voltou e a função sacral não: a AIS usa função voluntária e sensibilidade.'},
+  {q:'L4: o que move e onde sente?', ops:['Estica o joelho; sente no joelho','Puxa o pé para cima; sente no maléolo medial','Levanta o hálux; sente no dorso do pé'], ok:1, ex:'Motor: dorsiflexão. Sensitivo: tornozelo por dentro.'}
+];
+var JOGOS = {};
+function jogoCria(id, itens, opt){
+  opt = opt || {};
+  JOGOS[id] = {base:itens, opt:opt};
+  jogoReinicia(id);
+}
+function jogoReinicia(id){
+  var j = JOGOS[id];
+  j.fila = j.opt.ordem ? j.base.slice() : embaralha(j.base);
+  j.i = 0; j.ac = 0; j.resp = false;
+  jogoDesenha(id);
+}
+function jogoDesenha(id){
+  var j = JOGOS[id], c = el(id);
+  if(j.i >= j.fila.length){
+    c.innerHTML = '<div class="cartao c-verde"><h3>Resultado: ' + j.ac + ' de ' + j.fila.length + '</h3><p class="sp">' + (j.ac === j.fila.length ? 'Gabaritou.' : 'Refaça até gabaritar: a repetição é o método.') + '</p></div><div class="btn-fila sp"><button class="btn" onclick="jogoReinicia(\'' + id + '\')">Jogar de novo</button></div>';
+    return;
+  }
+  var it = j.fila[j.i], h = '<p class="grande">' + it.q + '</p><div class="quiz sp">';
+  it.ops.forEach(function(o, n){
+    h += '<button class="opc" onclick="jogoResp(\'' + id + '\',' + n + ')"><span class="marca">' + 'ABCD'.charAt(n) + '</span><span>' + o + '</span></button>';
+  });
+  h += '</div><div class="feedback sp" id="' + id + 'Fb"></div><div class="btn-fila sp"><button class="btn" id="' + id + 'Prox" style="display:none" onclick="jogoProx(\'' + id + '\')">Próxima →</button><span class="placar" style="align-self:center">' + (j.i + 1) + ' / ' + j.fila.length + ' · acertos: ' + j.ac + '</span></div>';
+  c.innerHTML = h;
+  j.resp = false;
+}
+function jogoResp(id, n){
+  var j = JOGOS[id];
+  if(j.resp) return;
+  j.resp = true;
+  var it = j.fila[j.i], bs = el(id).querySelectorAll('.opc');
+  for(var k = 0; k < bs.length; k++){
+    if(k === it.ok) bs[k].classList.add(k === n ? 'certa' : 'mostra-certa');
+    else if(k === n) bs[k].classList.add('errada');
+    bs[k].setAttribute('disabled', 'disabled');
+  }
+  if(n === it.ok) j.ac++;
+  var fb = el(id + 'Fb');
+  fb.innerHTML = '<b>' + (n === it.ok ? 'Certo.' : 'Não.') + '</b> ' + it.ex;
+  fb.classList.add('aberto');
+  el(id + 'Prox').style.display = 'inline-flex';
+}
+function jogoProx(id){ JOGOS[id].i++; jogoDesenha(id); }
+
+/* ---- choque medular ---- */
+var FASES = [
+  ['0 a 1 dia','Fase 1 · Arreflexia','Medula abaixo da lesão “desligada”. Paralisia flácida, nenhum reflexo.','Profundos: ausentes · Bulbocavernoso: ausente · Babinski: ausente'],
+  ['1 a 3 dias','Fase 2 · Primeiros reflexos','Voltam os reflexos cutâneos e o bulbocavernoso.','Profundos: ainda ausentes · Bulbocavernoso: presente'],
+  ['1 a 4 semanas','Fase 3 · Hiperreflexia inicial','Os reflexos profundos reaparecem e aumentam.','Profundos: 3+ · Babinski: aparece'],
+  ['1 a 12 meses','Fase 4 · Espasticidade','Hiperreflexia, clônus e Babinski estabelecidos.','Profundos: 3+ a 4+ · Clônus · Espasticidade']
+];
+function choqueFase(){
+  var f = FASES[+el('sChoque').value];
+  el('oChoque').textContent = f[0];
+  el('choquePainel').innerHTML = '<div class="rotulo" style="color:var(--roxo)">' + f[0] + '</div><h3 class="sp">' + f[1] + '</h3><p class="sp">' + f[2] + '</p><p class="sp mono" style="font-size:calc(var(--u)*1.6)">' + f[3] + '</p>';
+}
+
+/* ---- nível neurológico ---- */
+var RAIZES = ['C2','C3','C4','C5','C6','C7','C8','T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12','L1','L2','L3','L4','L5','S1','S2','S3','S4–S5'];
+function nivelMonta(){
+  var ini = {nSD:'C6', nSE:'C7', nMD:'C6', nME:'C5'};
+  Object.keys(ini).forEach(function(id){
+    var h = '';
+    RAIZES.forEach(function(r){ h += '<option' + (r === ini[id] ? ' selected' : '') + '>' + r + '</option>'; });
+    el(id).innerHTML = h;
+  });
+  nivelCalc();
+}
+function nivelCalc(){
+  var v = ['nSD','nSE','nMD','nME'].map(function(id){ return RAIZES.indexOf(el(id).value); });
+  var m = Math.min.apply(null, v);
+  el('nivelRes').innerHTML = '<div class="rotulo" style="color:var(--ouro)">Nível neurológico da lesão</div><div class="num sp">' + RAIZES[m] + '</div><p class="sp">É o mais alto dos quatro: o último segmento íntegro dos dois lados.</p>';
+}
+
+/* ---- AIS ---- */
+var AIS_P = [
+  'Existe alguma função em S4–S5: sensibilidade perianal, pressão anal profunda ou contração voluntária?',
+  'Existe função motora abaixo do nível: contração anal voluntária, ou movimento mais de três níveis abaixo do nível motor?',
+  'Pelo menos metade dos músculos-chave abaixo do nível tem força 3 ou mais?',
+  'Sensibilidade e força estão normais em todos os segmentos?'
+];
+var aisN = 0;
+function aisInicio(){
+  aisN = 0;
+  el('aisRes').style.display = 'none';
+  el('aisPerg').innerHTML = '<div class="rotulo" style="color:var(--ouro)">Pergunta 1</div><p class="grande sp">' + AIS_P[0] + '</p>';
+}
+function aisFim(letra, nome, txt){
+  var r = el('aisRes');
+  r.style.display = 'block';
+  r.innerHTML = '<div class="num n-verde">AIS ' + letra + '</div><h3 class="sp">' + nome + '</h3><p class="sp">' + txt + '</p>';
+  el('aisPerg').innerHTML = '<p>Classificado. Toque em Recomeçar para outro paciente.</p>';
+  aisN = -1;
+}
+function aisResp(sim){
+  if(aisN < 0) return;
+  if(aisN === 0 && !sim) return aisFim('A', 'Completa', 'Nenhuma função sensitiva ou motora em S4–S5.');
+  if(aisN === 1 && !sim) return aisFim('B', 'Sensitiva incompleta', 'Sente em S4–S5, mas não tem função motora abaixo do nível.');
+  if(aisN === 2 && !sim) return aisFim('C', 'Motora incompleta, fraca', 'Menos da metade dos músculos-chave abaixo do nível com força ≥ 3.');
+  if(aisN === 3) return sim ? aisFim('E', 'Normal', 'Exame normal em quem já teve déficit.') : aisFim('D', 'Motora incompleta, forte', 'Metade ou mais dos músculos-chave abaixo do nível com força ≥ 3.');
+  aisN++;
+  el('aisPerg').innerHTML = '<div class="rotulo" style="color:var(--ouro)">Pergunta ' + (aisN + 1) + '</div><p class="grande sp">' + AIS_P[aisN] + '</p>';
+}
+
+/* ---- síndromes ---- */
+var SIND = {
+  central:['Síndrome centromedular','Braços piores que pernas, mãos piores que ombros. Idoso com espondilose e hiperextensão.','A mais comum'],
+  anterior:['Síndrome medular anterior','Perde força, dor e temperatura. Mantém posição e vibração. Território da artéria espinhal anterior.','Pior prognóstico'],
+  hemi:['Síndrome de Brown-Séquard','Do lado da lesão: paralisia e perda de posição. Do lado oposto: perda de dor e temperatura.','Melhor prognóstico'],
+  posterior:['Síndrome medular posterior','Perde posição e vibração. Mantém força, dor e temperatura.','A mais rara']
+};
+var sindAtual = null;
+function sindrome(k){
+  sindAtual = k;
+  el('cordaSind').innerHTML = cordaSVG({lesao:k});
+  el('sindPainel').className = 'cartao sp';
+  el('sindPainel').innerHTML = '<p>Olhe o que ficou escuro. <strong>Quais tratos apagaram? O que o paciente perde?</strong></p>';
+  el('sindBtn').style.display = 'inline-flex';
+}
+function sindRevela(){
+  if(!sindAtual) return;
+  var s = SIND[sindAtual];
+  el('sindPainel').className = 'cartao sp c-ouro';
+  el('sindPainel').innerHTML = '<div class="rotulo" style="color:var(--ouro)">' + s[2] + '</div><h3 class="sp">' + s[0] + '</h3><p class="sp">' + s[1] + '</p>';
+  el('sindBtn').style.display = 'none';
+}
+
+/* ---- flashcards ---- */
+var FLASH = [
+  ['C7 move o quê?','Estica o cotovelo','Tríceps. Empurra a porta.'],
+  ['C7 sente onde?','Dedo médio','Do polegar ao mínimo: 6, 7, 8.'],
+  ['L5 move o quê?','Levanta o hálux','Extensor longo do hálux.'],
+  ['S1 sente onde?','Calcanhar, lado de fora','A espiral contorna o calcanhar.'],
+  ['Reflexo patelar','L3–L4','“3, 4: chuto a porta.”'],
+  ['Reflexo tricipital','C7–C8','“7, 8: estico o braço.”'],
+  ['Nível do umbigo','T10','Sensitivo.'],
+  ['Quem decide se a lesão é completa?','S4–S5','O pé impressiona, o ânus decide.'],
+  ['Bulbocavernoso','S2–S4, reflexo','Não classifica a AIS.'],
+  ['Dor e temperatura cruzam onde?','Na medula','1 a 2 segmentos acima da entrada.'],
+  ['Choque neurogênico','Lesão em T6 ou acima','Hipotensão, bradicardia, pele quente. Diagnóstico de exclusão.'],
+  ['Braços piores que pernas','Centromedular','A mais comum.']
+];
+var flashI = 0;
+function flashMostra(){
+  var f = FLASH[flashI];
+  el('flashFrente').textContent = f[0];
+  el('flashTexto').textContent = f[1];
+  el('flashNota').textContent = f[2];
+  el('flashVerso').style.visibility = 'hidden';
+  el('flashCont').textContent = (flashI + 1) + ' de ' + FLASH.length;
+}
+function flashRevela(){ el('flashVerso').style.visibility = 'visible'; }
+function flashProx(){ flashI = (flashI + 1) % FLASH.length; flashMostra(); }
+
+
+/* ==========================================================
+   7. CASOS CLÍNICOS, ESPELHOS, ESTAÇÃO PRÁTICA
+   ========================================================== */
+Object.assign(PROF, {
+a1:{o:'Colocar a vida antes do nome da lesão.',p:'O que mata primeiro: a medula ou o sangue?',r:'O sangue.',e:'Começar pelo exame neurológico detalhado.',f:'A medula espera alguns minutos. O sangue não espera nenhum.'},
+a2:{o:'Fixar a ordem do xABCDE do ATLS 11.',p:'O que mudou na ordem?',r:'A hemorragia externa exsanguinante vem antes da via aérea.',e:'Dizer que o A é sempre o primeiro.',f:'x antes do A.'},
+a3:{o:'Associar cada letra a um erro de TRM.',p:'Qual o erro do B?',r:'Achar que quem fala respira bem por horas.',e:'—',f:'3, 4, 5 mantém o diafragma vivo.'},
+a4:{o:'Conduzir o caso pela ordem real da sala vermelha.',p:'Peça a resposta da turma antes de clicar.',r:'Ver feedback de cada decisão.',e:'Hipotensão permissiva no TRM; corticoide no lugar da cirurgia.',f:'Cada decisão errada aqui é um segmento a menos amanhã.'},
+a5:{o:'Mostrar que o colar não é rotina no penetrante.',p:'O que o colar esconde?',r:'O hematoma que cresce e a via aérea.',e:'Manter o colar fechado o atendimento inteiro.',f:'No penetrante, o colar esconde o que mata.'},
+a6:{o:'Comparar NEXUS e regra canadense.',p:'Por que o idoso sem dor vai para a tomografia?',r:'Idade ≥ 65 é critério de alto risco na regra canadense.',e:'Liberar o idoso porque “não dói”.',f:'DANDA e o canadense: idade, mecanismo, parestesia.'},
+b1:{o:'Nomear a lesão secundária como responsabilidade da equipe.',p:'Quais ladrões você controla?',r:'Hipóxia e hipotensão (e o edema, em parte).',e:'—',f:'O segundo trauma é o nosso.'},
+b2:{o:'Organizar a neuroproteção depois do xABCDE.',p:'Qual a PAM-alvo?',r:'Piso 75–80, teto 90–95 mmHg, por 3 a 7 dias.',e:'Decorar “PAM 85” como absoluto.',f:'O-P-A-T-T-N: o pato da medula.'},
+b3:{o:'Separar choque neurogênico de hemorrágico pela FC e pelo nível.',p:'Qual a pista que separa?',r:'Frequência cardíaca e nível acima ou abaixo de T6.',e:'Chamar todo hipotenso com TRM de neurogênico.',f:'Quente, lento e baixo × frio, rápido e baixo.'},
+b4:{o:'Ler a síndrome pelo que sobrou.',p:'O idoso com TC normal pode ter alta?',r:'Não: déficit pede RNM.',e:'Desvalorizar queda de baixa energia no idoso.',f:'Braço pior que perna é o centro.'},
+b5:{o:'Antecipar a falência respiratória na lesão cervical.',p:'O que você mede além da oximetria?',r:'Capacidade vital, tosse, PaCO2 e frequência respiratória.',e:'Esperar a saturação cair.',f:'Chegou falando não é garantia de continuar respirando.'},
+b6:{o:'Reconhecer e tratar a disreflexia autonômica.',p:'Qual o primeiro gesto?',r:'Sentar o paciente.',e:'Deitar e dar betabloqueador.',f:'Senta, solta, sonda, e procura o resto.'},
+b7:{o:'Valorizar o reexame seriado.',p:'Por que reexaminar?',r:'Choque medular, piora por edema, melhora: o exame muda.',e:'—',f:'O exame é um filme.'},
+b8:{o:'Praticar a classificação ISNCSCI.',p:'Cada aluno classifica antes de corrigir.',r:'Ver correção.',e:'Ignorar o lado; não fazer o exame sacral.',f:'Quatro níveis, um nome, uma letra.'},
+b9:{o:'Expor os erros mais comuns.',p:'Vote antes de revelar.',r:'Ver explicações.',e:'—',f:'Erre aqui, para não errar no paciente.'}
+});
+
+/* ---- ordenação do xABCDE ---- */
+var ORDEM_X = [
+  ['x','Hemorragia externa exsanguinante','Torniquete, compressão, agente hemostático, cinta pélvica.'],
+  ['A','Via aérea com restrição de movimento da coluna','Estabilização manual em linha; videolaringoscópio se intubar.'],
+  ['B','Respiração e ventilação','Diafragma = C3, C4, C5. Tosse fraca e respiração paradoxal acendem o alerta.'],
+  ['C','Circulação','Hemorragia até prova em contrário; neurogênico é exclusão.'],
+  ['D','Disfunção neurológica','Glasgow, pupilas, força, sensibilidade e exame sacral, antes de sedar.'],
+  ['E','Exposição e ambiente','Rolamento em bloco, inspecionar o dorso, aquecer, sair da prancha.']
+];
+var ordemI = 0;
+function ordemMonta(){
+  ordemI = 0;
+  var h = '<div class="ordem-alvo">';
+  ORDEM_X.forEach(function(x, n){ h += '<div class="ordem-slot" id="oslot' + n + '"><span class="mono">' + (n + 1) + '</span></div>'; });
+  h += '</div><div class="btn-fila sp" id="ordemBotoes">';
+  embaralha(ORDEM_X.map(function(x, n){ return n; })).forEach(function(n){
+    h += '<button class="btn b-obst ordem-letra" data-n="' + n + '" onclick="ordemToca(this)">' + ORDEM_X[n][0] + '</button>';
+  });
+  h += '</div><div id="ordemMsg" class="cartao sp"><p>Comece pela letra que vem primeiro no ATLS 11.</p></div>';
+  h += '<div class="btn-fila sp"><button class="btn b-vazado" onclick="ordemMonta()">Recomeçar</button></div>';
+  el('ordemX').innerHTML = h;
+}
+function ordemToca(b){
+  var n = +b.dataset.n, m = el('ordemMsg');
+  if(n === ordemI){
+    var x = ORDEM_X[n];
+    el('oslot' + n).innerHTML = '<b class="mono" style="font-size:calc(var(--u)*2.6);color:var(--obst)">' + x[0] + '</b><span>' + x[1] + '</span>';
+    el('oslot' + n).classList.add('cheio');
+    b.style.display = 'none';
+    m.className = 'cartao sp c-verde';
+    m.innerHTML = '<p><b>' + x[0] + ' · ' + x[1] + '.</b> ' + x[2] + '</p>';
+    ordemI++;
+    if(ordemI === ORDEM_X.length){
+      m.className = 'cartao sp c-ouro';
+      m.innerHTML = '<p><b>Completo.</b> A novidade do ATLS 11: o <b>x</b> vem antes do A. Sangramento externo que mata em minutos não espera a via aérea.</p>';
+    }
+  } else {
+    b.classList.add('treme');
+    setTimeout(function(){ b.classList.remove('treme'); }, 450);
+    m.className = 'cartao sp c-obst';
+    m.innerHTML = '<p><b>Ainda não.</b> ' + ORDEM_X[n][0] + ' vem depois de ' + ORDEM_X[ordemI][0] + '. Qual ameaça mata mais rápido agora?</p>';
+  }
+}
+
+/* ---- motor dos casos ramificados ---- */
+var RAMOS = {};
+function ramoCria(id, d){ RAMOS[id] = {d:d}; ramoReinicia(id); }
+function ramoReinicia(id){ var r = RAMOS[id]; r.i = 0; r.ac = 0; r.erros = []; ramoDesenha(id); }
+function ramoDesenha(id){
+  var r = RAMOS[id], c = el(id);
+  if(r.i >= r.d.passos.length){
+    var lista = r.erros.length ? '<div class="ramo-erros">' + r.erros.map(function(e){ return '<p>• ' + e + '</p>'; }).join('') + '</div>' : '<p class="pequeno sp">Nenhuma decisão errada.</p>';
+    c.innerHTML = '<div class="linha-2" style="align-items:stretch"><div class="cartao c-verde"><div class="rotulo" style="color:var(--verde)">Fim do caso · acertos</div><div class="num n-verde sp">' + r.ac + ' / ' + r.d.passos.length + '</div></div><div class="cartao c-ouro"><div class="rotulo" style="color:var(--ouro)">Para levar</div><p class="sp"><b>' + r.d.fecho + '</b></p><div class="btn-fila sp"><button class="btn" onclick="ramoReinicia(\'' + id + '\')">Refazer o caso</button></div></div></div>' + (r.erros.length ? '<div class="cartao c-obst sp"><div class="rotulo" style="color:var(--obst)">Decisões para rever · a conduta certa</div>' + lista + '</div>' : lista);
+    return;
+  }
+  var p = r.d.passos[r.i], h = '<div class="ramo-topo"><span class="ramo-fase">' + p.fase + '</span><span class="placar">Decisão ' + (r.i + 1) + ' de ' + r.d.passos.length + ' · acertos: ' + r.ac + '</span></div>';
+  h += '<div class="linha-2 sp" style="align-items:flex-start"><div><div class="cena">' + p.cena + '</div><p class="sp"><b>' + p.q + '</b></p><div class="quiz sp">';
+  p.ops.forEach(function(o, n){ h += '<button class="opc" onclick="ramoResp(\'' + id + '\',' + n + ')"><span class="marca">' + 'ABC'.charAt(n) + '</span><span>' + o[0] + '</span></button>'; });
+  h += '</div></div><div id="' + id + 'Fb"><div class="cartao ramo-espera"><p>Discuta com a turma, escolha e veja <b>por que</b> cada alternativa está certa ou errada.</p></div></div></div>';
+  c.innerHTML = h;
+  r.resp = false;
+}
+function ramoResp(id, n){
+  var r = RAMOS[id];
+  if(r.resp) return;
+  r.resp = true;
+  var p = r.d.passos[r.i], certo = -1;
+  p.ops.forEach(function(o, k){ if(o[1]) certo = k; });
+  var bs = el(id).querySelectorAll('.opc');
+  for(var k = 0; k < bs.length; k++){
+    if(k === certo) bs[k].classList.add(k === n ? 'certa' : 'mostra-certa');
+    else if(k === n) bs[k].classList.add('errada');
+    bs[k].setAttribute('disabled', 'disabled');
+  }
+  var ok = n === certo;
+  if(ok) r.ac++; else r.erros.push(p.fase + ': ' + p.ops[certo][0]);
+  var h = '<div class="cartao ' + (ok ? 'c-verde' : 'c-obst') + '"><p><b>' + (ok ? 'Certo.' : 'Você escolheu ' + 'ABC'.charAt(n) + '.') + '</b> ' + p.ops[n][2] + '</p>' + (ok ? '' : '<p class="sp"><b>Certo é ' + 'ABC'.charAt(certo) + ':</b> ' + p.ops[certo][2] + '</p>') + '</div>';
+  h += '<div class="cartao c-ouro sp"><div class="rotulo" style="color:var(--ouro)">Onde a turma erra</div><p class="sp">' + p.erro + '</p>' + (p.macete ? '<p class="sp"><b>Macete:</b> ' + p.macete + '</p>' : '') + '</div>';
+  h += '<div class="btn-fila sp"><button class="btn" onclick="RAMOS[\'' + id + '\'].i++;ramoDesenha(\'' + id + '\')">' + (r.i + 1 < r.d.passos.length ? 'Próxima decisão →' : 'Ver o desfecho →') + '</button></div>';
+  el(id + 'Fb').innerHTML = h;
+}
+
+var CASO_MOTO = {fecho:'Primeiro a vida (xABCDE), depois o nome da lesão, e cirurgia sem esperar o choque medular passar.', passos:[
+  {fase:'x · Sangue', cena:'Motociclista, 24 anos, colar e prancha. Lúcido: “não sinto minhas pernas”. A calça está encharcada: sangramento pulsátil na coxa direita.',
+   q:'O que você faz primeiro?', ops:[
+    ['Avaliar a via aérea: o A sempre vem primeiro',0,'No ATLS 11 a hemorragia externa exsanguinante vem antes do A. Sangramento arterial mata em minutos.'],
+    ['Torniquete na coxa, mantendo a restrição de movimento da coluna',1,'É o x do xABCDE: controlar o sangue que mata enquanto a coluna segue protegida.'],
+    ['Exame neurológico completo para documentar o déficit',0,'O exame neurológico é o D. Feito agora, você documenta o déficit de um paciente que está sangrando.']],
+   erro:'A turma vê “TRM” e esquece o resto do corpo. A lesão mais chamativa não é a que mata primeiro.', macete:'x antes do A.'},
+  {fase:'A · Via aérea', cena:'Torniquete posto. Ele fala frases curtas, sem ruídos. SpO₂ 93% em ar ambiente.',
+   q:'Qual a conduta de via aérea agora?', ops:[
+    ['Intubar já: todo TRM cervical precisa de via aérea definitiva',0,'Não existe IOT automática no TRM. Ele protege a via aérea agora; a indicação vem da fadiga, da troca gasosa e do nível.'],
+    ['Oxigênio, manter a restrição de movimento e reavaliar sempre; se intubar, estabilização manual em linha e videolaringoscópio',1,'Via aérea pérvia, oxigênio e vigilância. Se precisar intubar, um auxiliar segura a cabeça e a frente do colar é aberta.'],
+    ['Retirar o colar para ele ficar confortável',0,'O colar sai só com estabilização manual em linha. Tirar sem proteção expõe a medula a uma nova lesão.']],
+   erro:'Dois extremos: intubar todo TRM por medo, ou hiperestender o pescoço para ver melhor a glote.', macete:'Mãos na cabeça antes de abrir o colar.'},
+  {fase:'B · Respiração', cena:'O tórax quase não se move. Na inspiração o abdome sobe e o tórax afunda. A tosse é fraca. SpO₂ 95% com cateter.',
+   q:'Como você interpreta esse padrão?', ops:[
+    ['Pneumotórax hipertensivo',0,'Sem desvio de traqueia, sem assimetria, sem hipotensão grave ligada ao tórax. O padrão descrito é muscular.'],
+    ['Intercostais paralisados com o diafragma ainda funcionando: lesão cervical baixa, com risco de cansar',1,'Respiração paradoxal: só o diafragma trabalha. Ele está acima da lesão por enquanto, mas pode entrar em fadiga.'],
+    ['Respiração normal, porque a saturação está boa',0,'A saturação cai tarde. Tosse fraca e respiração paradoxal já são o aviso.']],
+   erro:'Confiar na oximetria. O paciente com TRM cervical satura bem até o momento em que não satura mais.', macete:'3, 4, 5 mantém o diafragma vivo.'},
+  {fase:'C · Choque (1)', cena:'PA 88 × 54, FC 58, pele quente e seca. O torniquete segura a coxa.',
+   q:'Qual o próximo passo?', ops:[
+    ['Noradrenalina: é choque neurogênico',0,'Talvez seja, mas no trauma a hipotensão é hemorragia até prova em contrário. A lesão alta pode esconder a taquicardia de quem sangra.'],
+    ['Procurar sangue: eFAST, raio-X de tórax e pelve; sangue se precisar',1,'Primeiro exclua o sangramento interno: tórax, abdome, pelve, ossos longos e a rua.'],
+    ['Metilprednisolona para proteger a medula',0,'Corticoide não trata choque e não é rotina no TRM.']],
+   erro:'Bradicardia e pele quente “fecham” neurogênico na cabeça do aluno. Neurogênico é diagnóstico de exclusão.', macete:'Quente, lento e baixo ainda pode estar sangrando.'},
+  {fase:'C · Choque (2)', cena:'eFAST negativo, tórax limpo, pelve estável. PA 86 × 50, FC 54. Já recebeu 1 L de cristaloide.',
+   q:'E agora?', ops:[
+    ['Mais 3 L de cristaloide até a PA subir',0,'Neurogênico é vasodilatação, não falta de volume. Excesso de cristaloide leva a edema, inclusive pulmonar.'],
+    ['Noradrenalina com alvo de PAM: piso 75–80 e teto 90–95 mmHg por 3 a 7 dias; atropina se a bradicardia der sintomas',1,'Medula lesada perde a autorregulação: pressão baixa é isquemia. Esse é o alvo da AO Spine 2024 (recomendação fraca).'],
+    ['Hipotensão permissiva: aceitar PAM de 60',0,'Hipotensão permissiva é para o sangramento ainda não controlado. Na medula lesada, PAM baixa é o segundo trauma.']],
+   erro:'Aplicar a hipotensão permissiva do trauma hemorrágico na medula. São objetivos opostos.', macete:'Chão de 75–80, teto de 90–95, uma semana.'},
+  {fase:'D · Neurológico', cena:'Glasgow 15. Bíceps 5, extensão do punho 5, tríceps 0, dedos 0. Pernas 0. Nenhum reflexo nas pernas. Sensibilidade normal até o polegar.',
+   q:'O que você registra?', ops:[
+    ['Lesão completa, AIS A',0,'Sem exame sacral não existe AIS. E arreflexia nas primeiras horas pode ser choque medular.'],
+    ['Nível provisório C6; completude só com o exame sacral e o reexame seriado',1,'C6 move o punho e sente no polegar. A letra AIS sai do exame de S4–S5, repetido nas próximas horas.'],
+    ['Nível C7, porque o tríceps é o primeiro músculo fraco',0,'O nível é o último segmento normal, não o primeiro lesado. C7 é o tríceps, que está zero.']],
+   erro:'Chamar de completo sem tocar no períneo, e nomear o nível pelo primeiro segmento lesado.', macete:'O pé impressiona. O ânus decide.'},
+  {fase:'E · Exposição', cena:'Hora de expor e examinar o dorso. Ele está na prancha rígida desde o resgate.',
+   q:'Qual a conduta?', ops:[
+    ['Manter na prancha até a cirurgia, para proteger a coluna',0,'A prancha é para transporte. Horas sobre ela causam úlcera de pressão em pele sem sensibilidade.'],
+    ['Rolamento em bloco, inspecionar o dorso, tirar da prancha o quanto antes, aquecer e proteger a pele',1,'Rolamento com equipe, palpação da coluna toda, colchão adequado e manta térmica.'],
+    ['Deixá-lo descoberto para facilitar a monitorização',0,'Ele perdeu o controle térmico abaixo da lesão. Hipotermia piora a coagulação.']],
+   erro:'Achar que a prancha protege. Em quem não sente, ela machuca sem avisar.', macete:'A prancha transporta; o colchão trata.'},
+  {fase:'Desfecho · 5 h de trauma', cena:'TC: luxação C6–C7. RNM: compressão medular. Nada mudou no exame.',
+   q:'Qual a conduta?', ops:[
+    ['Metilprednisolona e reavaliar em 48 h',0,'Corticoide não descomprime. Esperar 48 h com a medula comprimida gasta o tempo que importa.'],
+    ['Coluna/neurocirurgia agora: redução e descompressão em até 24 h quando possível, mantendo a PAM',1,'AO Spine 2024: descompressão em até 24 h (recomendação forte), sempre que o paciente estiver estável para ir ao centro cirúrgico.'],
+    ['Esperar o choque medular passar para decidir',0,'O choque medular não muda a indicação. A compressão continua lesando enquanto você espera.']],
+   erro:'Atraso fantasiado de prudência: “vamos ver como evolui”.', macete:'Time is spine.'}
+]};
+
+var CASO_FACA = {fecho:'No trauma penetrante sem déficit, o colar não é rotina: ele esconde o hematoma e atrapalha a via aérea.', passos:[
+  {fase:'Chegada', cena:'Homem, 25 anos, facada na face lateral esquerda do pescoço. Hematoma crescendo, sangramento ativo. Move e sente os quatro membros. Chegou com colar rígido.',
+   q:'O que fazer com o colar?', ops:[
+    ['Manter fechado durante todo o atendimento',0,'O colar cobre o hematoma que cresce e reduz a abertura da boca na hora da intubação.'],
+    ['Abrir e retirar com estabilização manual: penetrante sem déficit não pede colar de rotina',1,'Lesão de coluna instável por arma branca sem déficit é rara. O colar só atrasa o que importa.'],
+    ['Acrescentar prancha e coxins laterais',0,'Mais imobilização, mais atraso. O risco aqui é o vaso e a via aérea.']],
+   erro:'Tratar todo trauma de pescoço como fratura cervical.', macete:'No penetrante, o colar esconde o que mata.'},
+  {fase:'Prioridade', cena:'Sem colar, o hematoma está maior. Voz começando a mudar.',
+   q:'Qual a prioridade?', ops:[
+    ['TC de coluna cervical para excluir fratura',0,'A coluna não é a ameaça. Ele pode perder a via aérea na mesa da tomografia.'],
+    ['Compressão direta do sangramento e via aérea definitiva precoce',1,'Hematoma cervical em expansão e voz alterada: a via aérea pode fechar. Intubar cedo, com a equipe pronta para via cirúrgica.'],
+    ['RNM de coluna',0,'Exame longo, longe da sala de reanimação, num paciente com via aérea ameaçada.']],
+   erro:'Pedir imagem antes de garantir a via aérea.', macete:'x e A primeiro, imagem depois.'},
+  {fase:'Variação', cena:'Mesma facada, mas agora ele chega com fraqueza no braço esquerdo e formigamento na mão.',
+   q:'Muda alguma coisa?', ops:[
+    ['Não: penetrante nunca pede restrição de movimento',0,'Com déficit neurológico, a medula ou a raiz podem estar lesadas: a coluna passa a ser protegida.'],
+    ['Sim: déficit neurológico pede restrição de movimento e imagem da coluna',1,'A regra é seletiva: o que decide é o déficit, não o tipo de trauma.'],
+    ['Sim: dar metilprednisolona',0,'No trauma penetrante o corticoide não tem benefício e aumenta complicações.']],
+   erro:'Transformar uma regra seletiva em regra absoluta, para um lado ou para o outro.', macete:'O déficit decide, não o tipo de trauma.'}
+]};
+
+var CASO_RESP = {fecho:'Na lesão cervical alta, intubar antes de cansar é neuroproteção. A oximetria é a última a avisar.', passos:[
+  {fase:'Chegada', cena:'Rapaz de 19 anos, mergulho em água rasa. Tetraplegia com nível C5. Conversa normalmente, SpO₂ 97% com cateter.',
+   q:'Qual o maior risco nas próximas 24 a 72 horas?', ops:[
+    ['Disreflexia autonômica',0,'A disreflexia aparece depois que o choque medular passa, não nas primeiras horas.'],
+    ['Falência respiratória: fadiga dos músculos que restaram e acúmulo de secreção',1,'Sem intercostais e abdominais, o diafragma trabalha sozinho e a tosse não limpa a secreção.'],
+    ['Choque hemorrágico tardio',0,'Possível em todo trauma, mas o risco que define este caso é respiratório.']],
+   erro:'Achar que quem chega falando é estável.', macete:'Chegou falando não é garantia de continuar respirando.'},
+  {fase:'Vigilância', cena:'Ele vai para a UTI.',
+   q:'Como você vigia a respiração?', ops:[
+    ['Só a oximetria contínua',0,'A saturação cai tarde, ainda mais com oxigênio suplementar.'],
+    ['Capacidade vital seriada, força da tosse, frequência respiratória e PaCO₂',1,'Capacidade vital caindo e PaCO₂ subindo mostram a fadiga antes da hipoxemia.'],
+    ['Raio-X de tórax diário',0,'Mostra atelectasia e pneumonia, não a fadiga que vem antes delas.']],
+   erro:'Monitorar só o número que cai por último.', macete:'Mede a força, não só o oxigênio.'},
+  {fase:'18 horas depois', cena:'Capacidade vital de 2,1 L para 0,9 L (75 kg: 12 mL/kg). PaCO₂ 52 mmHg. Secreção abundante. SpO₂ 94% com oxigênio.',
+   q:'Qual a conduta?', ops:[
+    ['Esperar a saturação ficar abaixo de 90%',0,'A essa altura ele intuba em crise, hipóxico e hipotenso: exatamente o segundo trauma.'],
+    ['Intubação eletiva agora, com estabilização manual em linha e atropina à mão',1,'Capacidade vital abaixo de 15 mL/kg e PaCO₂ acima de 50 indicam ventilação. Controlada é sempre melhor que em crise.'],
+    ['VNI e transferir para a enfermaria',0,'Com secreção abundante e tosse ineficaz, a VNI falha. E enfermaria não é lugar para essa curva.']],
+   erro:'Esperar a crise para intubar. Na lesão cervical alta, intubar cedo é proteger a medula.', macete:'Abaixo de 15 mL/kg, prepare o tubo.'},
+  {fase:'Aspiração', cena:'Já intubado. Durante a aspiração traqueal, a FC cai de 60 para 34 e a PA despenca.',
+   q:'O que está acontecendo?', ops:[
+    ['Choque hemorrágico',0,'Instalou-se em segundos durante a aspiração: é reflexo, não sangue.'],
+    ['Reflexo vagal sem o freio simpático: parar o estímulo, oxigenar, atropina',1,'Na lesão cervical alta, o vago ficou sem oposição. Aspiração e manipulação da via aérea disparam bradicardia grave.'],
+    ['Fibrilação ventricular',0,'É bradicardia, e o gatilho é óbvio: a sonda de aspiração.']],
+   erro:'Não deixar atropina pronta antes de aspirar ou intubar o tetraplégico agudo.', macete:'Acima de T6, o coração perde o acelerador.'}
+]};
+
+var CASO_DISR = {fecho:'Disreflexia é emergência: senta, solta, sonda, e procura o resto. Remover o gatilho trata a crise.', passos:[
+  {fase:'Reconhecer', cena:'Homem, 30 anos, tetraplegia C6 há 2 anos, internado por pneumonia. Cefaleia latejante súbita. PA 200 × 110 (a basal dele é 95 × 60), FC 48. Rosto vermelho e suado; pernas pálidas e frias.',
+   q:'Qual o diagnóstico?', ops:[
+    ['AVC hemorrágico: TC de crânio já',0,'A tríade hipertensão + bradicardia + rubor e suor acima da lesão em tetraplégico tem nome. A TC atrasa a conduta.'],
+    ['Disreflexia autonômica: descarga simpática abaixo da lesão e resposta vagal acima',1,'Um estímulo abaixo do nível dispara o simpático sem freio. O cérebro tenta frear pelo vago: bradicardia, rubor e suor acima da lesão.'],
+    ['Crise de ansiedade',0,'PA 200 × 110 num paciente de basal 95 × 60 é emergência hipertensiva, não ansiedade.']],
+   erro:'Não lembrar que 200 × 110 num tetraplégico é muito mais grave que em outra pessoa: a basal dele é baixa.', macete:'Lesão em T6 ou acima + cefaleia + PA alta = disreflexia até prova em contrário.'},
+  {fase:'Primeiro gesto', cena:'Ele está deitado, gemendo de dor de cabeça.',
+   q:'O que você faz primeiro?', ops:[
+    ['Deixar deitado e dar betabloqueador',0,'Deitado, a PA sobe mais. E o betabloqueador agrava a bradicardia.'],
+    ['Sentar com as pernas para baixo, afrouxar roupas e meias, medir a PA a cada 5 minutos',1,'Sentado, o sangue desce para as pernas e a PA cai. Roupas apertadas também são estímulo.'],
+    ['Esperar passar e reavaliar em uma hora',0,'Disreflexia pode causar convulsão, AVC e edema pulmonar. É emergência.']],
+   erro:'Deitar o paciente, como se faz em quase toda emergência.', macete:'Senta e solta.'},
+  {fase:'O gatilho', cena:'Sentado, roupas soltas. PA 185 × 100.',
+   q:'Qual o gatilho mais comum?', ops:[
+    ['Bexiga distendida ou sonda dobrada',1,'A bexiga é a causa mais comum: verifique a sonda, troque-a ou faça o cateterismo.'],
+    ['Febre da pneumonia',0,'A febre não costuma disparar disreflexia. Procure primeiro bexiga e intestino.'],
+    ['Ansiedade com a internação',0,'O gatilho é um estímulo físico abaixo do nível da lesão.']],
+   erro:'Tratar só a PA e não procurar o estímulo.', macete:'Depois do senta e solta, vem a sonda.'},
+  {fase:'Persistência', cena:'Sonda trocada: 900 mL drenados. PA 170 × 95 e ainda subindo.',
+   q:'E agora?', ops:[
+    ['Furosemida endovenosa',0,'Não há sobrecarga de volume; o problema é a vasoconstrição reflexa.'],
+    ['Anti-hipertensivo de ação curta (nifedipina ou captopril) e continuar procurando: fecaloma, úlcera, unha encravada',1,'Com PA sistólica ≥ 150 mmHg persistente, use um anti-hipertensivo de início rápido e curta duração, e siga procurando o gatilho.'],
+    ['Sedar e manter deitado',0,'Sedar não remove o gatilho, e deitar piora a PA.']],
+   erro:'Achar que, achado um gatilho, acabou a busca. Pode haver dois.', macete:'Senta, solta, sonda, e procura o resto.'}
+]};
+
+/* ---- casos espelho ---- */
+var ESPELHOS = {};
+function espelhoCria(id, d){ ESPELHOS[id] = {d:d, resp:{}}; espelhoDesenha(id); }
+function espelhoDesenha(id){
+  var e = ESPELHOS[id], h = '<div class="espelho" style="grid-template-columns:repeat(' + e.d.casos.length + ',1fr)">';
+  e.d.casos.forEach(function(c, n){
+    h += '<div class="cartao esp-card" id="' + id + 'C' + n + '"><div class="rotulo">' + c.tit + '</div><p class="sp">' + c.txt + '</p><div class="btn-fila sp">';
+    e.d.ops.forEach(function(o, k){ h += '<button class="btn b-vazado esp-btn" onclick="espelhoResp(\'' + id + '\',' + n + ',' + k + ')">' + o + '</button>'; });
+    h += '</div><div class="esp-ex" id="' + id + 'X' + n + '"></div></div>';
+  });
+  h += '</div><div id="' + id + 'Pista" class="cartao c-ouro sp" style="display:none"><div class="rotulo" style="color:var(--ouro)">A pista que separa</div><p class="sp">' + e.d.pista + '</p></div>';
+  h += '<div class="btn-fila sp"><button class="btn b-vazado" onclick="espelhoCria(\'' + id + '\',ESPELHOS[\'' + id + '\'].d)">Recomeçar</button></div>';
+  el(id).innerHTML = h;
+}
+function espelhoResp(id, n, k){
+  var e = ESPELHOS[id];
+  if(e.resp[n] !== undefined) return;
+  e.resp[n] = k;
+  var c = e.d.casos[n], card = el(id + 'C' + n), ok = k === c.ok;
+  card.classList.add(ok ? 'c-verde' : 'c-obst');
+  card.querySelectorAll('.esp-btn').forEach(function(b, j){
+    b.setAttribute('disabled', 'disabled');
+    if(j === c.ok){ b.classList.remove('b-vazado'); b.classList.add(ok ? 'b-verde' : 'b-ouro'); }
+    else if(j === k){ b.classList.remove('b-vazado'); b.classList.add('b-obst'); }
+  });
+  el(id + 'X' + n).innerHTML = '<p class="sp"><b>' + (ok ? 'Certo.' : 'É ' + e.d.ops[c.ok].toLowerCase() + '.') + '</b> ' + c.ex + '</p>';
+  if(Object.keys(e.resp).length === e.d.casos.length){
+    var p = el(id + 'Pista'); p.style.display = 'block'; p.style.animation = 'entra .35s ease both';
+  }
+}
+var ESP_TC = {ops:['Tomografia','Libera'], pista:'<b>NEXUS · DANDA:</b> Dor na linha média, Alerta alterado, déficit Neurológico, Drogas, dor distrAtiva: um “sim” e não libera. <b>Canadense:</b> ≥ 65 anos, mecanismo perigoso ou parestesia mandam imagem, mesmo sem dor.', casos:[
+  {tit:'Paciente A', txt:'72 anos, colisão traseira simples. Sem dor na linha média, sem déficit, andando no PS.', ok:0, ex:'Pela regra canadense, idade ≥ 65 já é alto risco. A coluna do idoso quebra com pouca energia.'},
+  {tit:'Paciente B', txt:'30 anos, colisão traseira simples. Sentado no PS, dor cervical que começou horas depois, sem dor na linha média, gira 45° para os dois lados.', ok:1, ex:'Nenhum fator de alto risco, fatores de baixo risco presentes e rotação de 45° preservada: liberado sem imagem.'},
+  {tit:'Paciente C', txt:'22 anos, alcoolizado, sem dor cervical, sem déficit.', ok:0, ex:'Intoxicação invalida o exame: o NEXUS não libera. “Não dói” não vale para quem bebeu.'}
+]};
+var ESP_CHOQUE = {ops:['Neurogênico','Hemorrágico'], pista:'<b>Acima de T6, o coração perde o acelerador.</b> Quente, lento e baixo sugere neurogênico; frio, rápido e baixo é sangue. Cuidado: os dois podem coexistir, e betabloqueador ou marca-passo escondem a taquicardia.', casos:[
+  {tit:'Paciente A · lesão em C6', txt:'PA 82 × 50, FC 52, pele quente e seca. eFAST negativo, tórax e pelve sem sangramento.', ok:0, ex:'Lesão acima de T6, bradicardia, pele quente e sangramento excluído: noradrenalina com alvo de PAM.'},
+  {tit:'Paciente B · lesão em T11', txt:'PA 82 × 50, FC 124, pele fria e pegajosa. eFAST com líquido no espaço de Morrison.', ok:1, ex:'Abaixo de T6 o simpático do coração está preservado: a taquicardia continua contando a verdade. É sangue, provavelmente fígado ou baço.'}
+]};
+var ESP_SIND = {ops:['Centromedular','Anterior','Brown-Séquard'], pista:'<b>Olhe o que sobrou.</b> Braço pior que perna é o centro. Só sobraram posição e vibração: a frente foi perdida, sobrou o dorso. Força de um lado e dor do outro é a metade.', casos:[
+  {tit:'Paciente A · 74 anos', txt:'Queda da própria altura, bateu a testa (hiperextensão). Mãos 1/5, pernas 4/5. TC: espondilose, sem fratura.', ok:0, ex:'Idoso com canal estreito e hiperextensão. TC normal com déficit pede RNM, não alta.'},
+  {tit:'Paciente B · 19 anos', txt:'Mergulho, flexão do pescoço. Força 0 abaixo de C6, não sente agulha nem calor, mas sente o diapasão e sabe a posição dos dedos.', ok:1, ex:'Força e dor perdidas, posição e vibração preservadas. Território da artéria espinhal anterior: o pior prognóstico.'}
+]};
+
+/* ---- estação prática ISNCSCI ---- */
+var MUSC = ['C5','C6','C7','C8','T1','L2','L3','L4','L5','S1'];
+var ESTACAO = [
+  {nome:'Paciente 1 · mergulho, 19 anos',
+   d:[5,3,0,0,0,0,0,0,0,0], e:[5,3,0,0,0,0,0,0,0,0],
+   sens:'Tato e agulha normais até <b>C6</b> dos dois lados; ausentes daí para baixo.',
+   sacral:'Tato S4–S5 ausente · agulha ausente · pressão anal profunda ausente · contração anal voluntária ausente.',
+   r:{sd:'C6', se:'C6', md:'C6', me:'C6', nnl:'C6', ais:'A'},
+   ex:'C6 tem força 3 e C5 tem 5: o 3 conta. Nada em S4–S5: AIS A, que só se confirma depois do choque medular.'},
+  {nome:'Paciente 2 · moto, 34 anos',
+   d:[5,2,0,0,0,0,0,0,0,0], e:[5,4,1,0,0,0,0,0,0,0],
+   sens:'Direita normal até <b>C5</b>. Esquerda normal até <b>C6</b>.',
+   sacral:'Tato S4–S5 presente · agulha ausente · pressão anal profunda ausente · contração anal voluntária ausente.',
+   r:{sd:'C5', se:'C6', md:'C5', me:'C6', nnl:'C5', ais:'B'},
+   ex:'Cada lado tem o seu nível; o neurológico é o mais alto dos quatro: C5. Ele sente o toque em S4–S5, mas não tem contração voluntária: AIS B, mesmo sem mexer as pernas.'},
+  {nome:'Paciente 3 · queda de laje, 45 anos',
+   d:[5,5,5,5,5,3,3,2,1,1], e:[5,5,5,5,5,3,3,2,1,1],
+   sens:'Tato e agulha normais até <b>T10</b> (umbigo) dos dois lados; alterados abaixo.',
+   sacral:'Tato S4–S5 presente · agulha presente · pressão anal profunda presente · contração anal voluntária presente.',
+   r:{sd:'T10', se:'T10', md:'T10', me:'T10', nnl:'T10', ais:'C'},
+   ex:'De T2 a L1 não há músculo-chave: o nível motor acompanha o sensitivo (T10). L2 tem força 3, mas os segmentos acima dele estão lesados. Abaixo do nível, só 4 dos 10 músculos-chave têm força ≥ 3: menos da metade, AIS C.'}
+];
+var estI = 0;
+function estacaoDesenha(){
+  var p = ESTACAO[estI], h = '<div class="linha-2" style="align-items:flex-start;grid-template-columns:1.15fr 1fr"><div><div class="rotulo">' + p.nome + ' · ' + (estI + 1) + ' de ' + ESTACAO.length + '</div>';
+  h += '<div class="tabx-dupla sp"><table class="tabx"><tr><th>Motor</th><th>D</th><th>E</th></tr>';
+  for(var i = 0; i < 5; i++) h += '<tr><td>' + MUSC[i] + '</td><td>' + p.d[i] + '</td><td>' + p.e[i] + '</td></tr>';
+  h += '</table><table class="tabx"><tr><th>Motor</th><th>D</th><th>E</th></tr>';
+  for(i = 5; i < 10; i++) h += '<tr><td>' + MUSC[i] + '</td><td>' + p.d[i] + '</td><td>' + p.e[i] + '</td></tr>';
+  h += '</table></div><p class="pequeno sp"><b>Sensitivo:</b> ' + p.sens + '</p><p class="pequeno"><b>Sacral:</b> ' + p.sacral + '</p></div><div>';
+  var campos = [['sd','Sensitivo D'],['se','Sensitivo E'],['md','Motor D'],['me','Motor E'],['nnl','Neurológico'],['ais','AIS']];
+  h += '<div class="est-grade">';
+  campos.forEach(function(c){
+    var lista = c[0] === 'ais' ? ['—','A','B','C','D','E'] : ['—'].concat(RAIZES);
+    h += '<label class="est-campo" id="est_' + c[0] + '"><span>' + c[1] + '</span><select>' + lista.map(function(x){ return '<option>' + x + '</option>'; }).join('') + '</select></label>';
+  });
+  h += '</div><div class="btn-fila sp"><button class="btn b-verde" onclick="estacaoCorrige()">Corrigir</button><button class="btn b-vazado" onclick="estacaoProx()">Próximo paciente →</button></div><div id="estRes" class="sp"></div></div></div>';
+  el('estacao').innerHTML = h;
+}
+function estacaoCorrige(){
+  var p = ESTACAO[estI], acertos = 0, total = 0, h = '';
+  Object.keys(p.r).forEach(function(k){
+    var lab = el('est_' + k), v = lab.querySelector('select').value, ok = v === p.r[k];
+    total++; if(ok) acertos++;
+    lab.classList.remove('ok', 'nao'); lab.classList.add(ok ? 'ok' : 'nao');
+    if(!ok) h += (h ? ' · ' : '') + lab.querySelector('span').textContent + ' <b>' + p.r[k] + '</b>';
+  });
+  el('estRes').innerHTML = '<div class="cartao ' + (acertos === total ? 'c-verde' : 'c-ouro') + '"><p><b>' + acertos + ' de ' + total + '.</b> ' + (h ? 'Gabarito dos errados: ' + h : '') + '</p><p class="sp">' + p.ex + '</p></div>';
+}
+function estacaoProx(){ estI = (estI + 1) % ESTACAO.length; estacaoDesenha(); }
+
+/* ---- tribunal ---- */
+var IT_TRIBUNAL = fixos(['Certo','Errado'], [
+  ['“TRM cervical hipotenso: começo noradrenalina antes do eFAST.”',1,'Hemorragia primeiro. Neurogênico é diagnóstico de exclusão.'],
+  ['“Ele fala e satura 97%: a via aérea está garantida pelas próximas horas.”',1,'Lesão cervical alta cansa em horas. Meça a capacidade vital.'],
+  ['“TC de coluna normal com déficit neurológico: tiro o colar e dou alta.”',1,'TC vê osso. Déficit pede RNM.'],
+  ['“Lesão incompleta com compressão pode esperar a cirurgia eletiva.”',1,'Incompleta é medula que ainda funciona. Descompressão em até 24 h.'],
+  ['“Metilprednisolona é obrigatória em todo TRM nas primeiras 8 horas.”',1,'Não é rotina; as diretrizes divergem.'],
+  ['“No TRM isolado, aceito hipotensão permissiva.”',1,'Hipotensão permissiva é para hemorragia não controlada. Medula pede PAM com piso de 75–80.'],
+  ['“Tirar da prancha rígida o quanto antes.”',0,'A prancha é para transporte. Em pele sem sensibilidade, ela causa úlcera.'],
+  ['“Bulbocavernoso presente prova lesão incompleta.”',1,'É reflexo. Quem decide é a função voluntária e sensitiva sacral.'],
+  ['“No ATLS 11, o sangramento externo exsanguinante vem antes da via aérea.”',0,'xABCDE: o x vem primeiro.'],
+  ['“Documento o exame neurológico antes de sedar, quando é seguro.”',0,'Sem esse exame, ninguém saberá depois se ele melhorou ou piorou.'],
+  ['“Tetraplégico com cefaleia e PA 200 × 110: deito e dou betabloqueador.”',1,'Disreflexia: senta, solta, sonda. Betabloqueador piora a bradicardia.'],
+  ['“Facada no pescoço sem déficit: colar rígido de rotina.”',1,'No penetrante sem déficit, o colar esconde o hematoma e atrapalha a via aérea.']
+]);
+
+/* ---- itens novos nos flashcards e no teste final ---- */
+FLASH.push(
+  ['xABCDE: o que é o x?','Hemorragia externa exsanguinante','ATLS 11ª edição: vem antes da via aérea.'],
+  ['3, 4, 5','Mantém o diafragma vivo','Nervo frênico.'],
+  ['PAM no TRM agudo','Piso 75–80 · teto 90–95 mmHg','Por 3 a 7 dias · AO Spine 2024.'],
+  ['Disreflexia autonômica','Senta, solta, sonda','Lesão em T6 ou acima.'],
+  ['Quente, lento e baixo','Choque neurogênico','Frio, rápido e baixo é sangue.'],
+  ['Capacidade vital < 15 mL/kg','Prepare a intubação','Com PaCO₂ > 50, ventile.']
+);
+IT_FINAL.push(
+  {q:'Pelo ATLS 11, qual o primeiro passo da avaliação primária?', ops:['Via aérea com proteção cervical','Controle da hemorragia externa exsanguinante','Exame neurológico'], ok:1, ex:'xABCDE: o x vem antes do A.'},
+  {q:'Choque neurogênico confirmado. Qual o alvo de PAM mais aceito hoje?', ops:['Hipotensão permissiva, PAM de 60','Piso de 75–80 e teto de 90–95 mmHg por 3 a 7 dias','PAM acima de 110'], ok:1, ex:'AO Spine 2024, recomendação fraca com evidência de baixa qualidade.'},
+  {q:'Tetraplégico C6 com cefaleia, PA 200 × 110 e FC 48. Primeiro gesto?', ops:['Deitar e dar betabloqueador','Sentar, afrouxar roupas e checar a sonda','TC de crânio'], ok:1, ex:'Disreflexia autonômica: senta, solta, sonda.'}
+);
+
+function iniciarCasos(){
+  ordemMonta();
+  ramoCria('ramoMoto', CASO_MOTO);
+  ramoCria('ramoFaca', CASO_FACA);
+  ramoCria('ramoResp', CASO_RESP);
+  ramoCria('ramoDisr', CASO_DISR);
+  espelhoCria('espTC', ESP_TC);
+  espelhoCria('espChoque', ESP_CHOQUE);
+  espelhoCria('espSind', ESP_SIND);
+  estacaoDesenha();
+  jogoCria('jgTribunal', IT_TRIBUNAL);
+}
+
+/* ==========================================================
+   6. INICIALIZAÇÃO
+   ========================================================== */
+function aoEntrar(i){}
+function iniciar(){
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.body.classList.add('sem-mov');
+  ajustaUnidade();
+  montaMapa();
+  montaQuizzes();
+  document.getElementById('btnOcultar').classList.add('on');
+
+  el('cordaAbertura').innerHTML = cordaSVG({});
+  el('cordaTratos').innerHTML = cordaSVG({clique:true});
+  el('cordaSind').innerHTML = cordaSVG({});
+  expBotoes('mb', 'mbBotoes');
+  expBotoes('mp', 'mpBotoes');
+  expBotoes('sb', 'sbBotoes');
+  expBotoes('sp', 'spfBotoes', ['L2','L3','L4','L5']);
+  expBotoes('sp', 'sptBotoes', ['S1','S2','S3','S4–S5']);
+  el('maoCena').innerHTML = maoSVG(null);
+  el('troncoCena').innerHTML = troncoSVG({});
+  var lb = '';
+  Object.keys(LADO).forEach(function(k){ lb += '<button class="btn b-ouro b-vazado" onclick="ladoSel(\'' + k + '\',this)">' + k + '</button>'; });
+  el('ladoBotoes').innerHTML = lb;
+  ladoSel('L4', el('ladoBotoes').children[7]);
+  jogoCria('jgMotor', paresParaItens(PAR_MOTOR, 'Que raiz'));
+  jogoCria('jgSens', paresParaItens(PAR_SENS, 'Que raiz sente'));
+  jogoCria('jgReflexo', paresParaItens(PAR_REFLEXO, 'Que segmento testa o reflexo'));
+  jogoCria('jgChoque', IT_CHOQUE);
+  jogoCria('jgCone', IT_CONE);
+  jogoCria('jgFinal', IT_FINAL, {ordem:true});
+  var tf = document.querySelector('[data-t^="Teste final"]');
+  if(tf) tf.dataset.t = 'Teste final — ' + IT_FINAL.length + ' questões';
+  choqueFase();
+  nivelMonta();
+  aisInicio();
+  flashMostra();
+  if(window.iniciarCasos) iniciarCasos();
+  mostra(0);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+else iniciar();
+
+</script>
+</body>
+</html>
